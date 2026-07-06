@@ -1,0 +1,309 @@
+"""
+SQLite storage for Vietnam stock data.
+
+Tables:
+    prices      (symbol, date, close)
+    shares      (symbol, year, quarter, shares)
+    net_profit  (symbol, year, quarter, net_profit)
+
+quarter is an integer 1-4.
+Save functions skip existing rows by default; pass override=True to overwrite.
+"""
+
+import sqlite3
+from pathlib import Path
+from contextlib import contextmanager
+
+import pandas as pd
+
+DB_PATH = Path(__file__).parent / "stock_data.db"
+
+
+@contextmanager
+def _conn():
+    con = sqlite3.connect(DB_PATH)
+    con.execute("PRAGMA journal_mode=WAL")
+    try:
+        yield con
+        con.commit()
+    finally:
+        con.close()
+
+
+def init_db():
+    """Create tables if they don't exist."""
+    with _conn() as con:
+        con.executescript("""
+            CREATE TABLE IF NOT EXISTS prices (
+                symbol  TEXT     NOT NULL,
+                date    TEXT     NOT NULL,   -- ISO date: YYYY-MM-DD
+                close   REAL     NOT NULL,   -- VND
+                PRIMARY KEY (symbol, date)
+            );
+
+            CREATE TABLE IF NOT EXISTS shares (
+                symbol   TEXT     NOT NULL,
+                year     INTEGER  NOT NULL,
+                quarter  INTEGER  NOT NULL,  -- 1, 2, 3, or 4
+                shares   REAL     NOT NULL,
+                PRIMARY KEY (symbol, year, quarter)
+            );
+
+            CREATE TABLE IF NOT EXISTS net_profit (
+                symbol      TEXT     NOT NULL,
+                year        INTEGER  NOT NULL,
+                quarter     INTEGER  NOT NULL,  -- 1, 2, 3, or 4
+                net_profit  REAL     NOT NULL,  -- VND
+                PRIMARY KEY (symbol, year, quarter)
+            );
+
+            CREATE TABLE IF NOT EXISTS vn30_members (
+                symbol        TEXT  NOT NULL,
+                date_added    TEXT  NOT NULL,  -- ISO date: first effective trading day
+                date_removed  TEXT,            -- ISO date: first day no longer in index, NULL = still active
+                PRIMARY KEY (symbol, date_added)
+            );
+        """)
+
+
+# ---------------------------------------------------------------------------
+# Write
+# ---------------------------------------------------------------------------
+
+def save_prices(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
+    """
+    Save daily prices for a symbol.
+    df must have a DatetimeIndex and a 'close' column.
+
+    override=False : skip rows that already exist  (default)
+    override=True  : overwrite existing rows
+    """
+    rows = {
+        str(date.date()): float(row["close"])
+        for date, row in df.iterrows()
+    }
+
+    with _conn() as con:
+        existing = {
+            r[0] for r in con.execute(
+                f"SELECT date FROM prices WHERE symbol = ? AND date IN ({','.join('?'*len(rows))})",
+                (symbol, *rows.keys())
+            ).fetchall()
+        }
+
+        to_save = rows if override else {d: v for d, v in rows.items() if d not in existing}
+        skipped = len(rows) - len(to_save)
+
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO prices (symbol, date, close) VALUES (?, ?, ?)",
+                [(symbol, d, v) for d, v in to_save.items()],
+            )
+
+    print(f"  [prices]     {symbol}: saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def save_shares(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
+    """
+    Save quarterly outstanding shares for a symbol.
+    df must have columns: year (int), quarter (int), shares (float).
+
+    override=False : skip rows that already exist  (default)
+    override=True  : overwrite existing rows
+    """
+    rows = {
+        (int(row["year"]), int(row["quarter"])): float(row["shares"])
+        for _, row in df.iterrows()
+    }
+
+    with _conn() as con:
+        existing = set()
+        for (y, q) in rows:
+            r = con.execute(
+                "SELECT 1 FROM shares WHERE symbol=? AND year=? AND quarter=?", (symbol, y, q)
+            ).fetchone()
+            if r:
+                existing.add((y, q))
+
+        to_save = rows if override else {k: v for k, v in rows.items() if k not in existing}
+        skipped = len(rows) - len(to_save)
+
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO shares (symbol, year, quarter, shares) VALUES (?, ?, ?, ?)",
+                [(symbol, y, q, v) for (y, q), v in to_save.items()],
+            )
+
+    print(f"  [shares]     {symbol}: saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def save_net_profit(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
+    """
+    Save quarterly net profit for a symbol.
+    df must have columns: year (int), quarter (int), net_profit (float).
+
+    override=False : skip rows that already exist  (default)
+    override=True  : overwrite existing rows
+    """
+    rows = {
+        (int(row["year"]), int(row["quarter"])): float(row["net_profit"])
+        for _, row in df.iterrows()
+    }
+
+    with _conn() as con:
+        existing = set()
+        for (y, q) in rows:
+            r = con.execute(
+                "SELECT 1 FROM net_profit WHERE symbol=? AND year=? AND quarter=?", (symbol, y, q)
+            ).fetchone()
+            if r:
+                existing.add((y, q))
+
+        to_save = rows if override else {k: v for k, v in rows.items() if k not in existing}
+        skipped = len(rows) - len(to_save)
+
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO net_profit (symbol, year, quarter, net_profit) VALUES (?, ?, ?, ?)",
+                [(symbol, y, q, v) for (y, q), v in to_save.items()],
+            )
+
+    print(f"  [net_profit] {symbol}: saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+# ---------------------------------------------------------------------------
+# Read
+# ---------------------------------------------------------------------------
+
+def load_prices(symbol: str) -> pd.DataFrame:
+    """Load all daily prices for a symbol. Returns DataFrame indexed by date."""
+    with _conn() as con:
+        df = pd.read_sql(
+            "SELECT date, close FROM prices WHERE symbol = ? ORDER BY date",
+            con, params=(symbol,)
+        )
+    if df.empty:
+        return df
+    df["date"] = pd.to_datetime(df["date"])
+    return df.set_index("date")
+
+
+def load_shares(symbol: str) -> pd.DataFrame:
+    """Load all quarterly shares for a symbol. Returns DataFrame with year, quarter, shares."""
+    with _conn() as con:
+        df = pd.read_sql(
+            "SELECT year, quarter, shares FROM shares WHERE symbol = ? ORDER BY year, quarter",
+            con, params=(symbol,)
+        )
+    return df
+
+
+def load_net_profit(symbol: str) -> pd.DataFrame:
+    """Load all quarterly net profit for a symbol. Returns DataFrame with year, quarter, net_profit."""
+    with _conn() as con:
+        df = pd.read_sql(
+            "SELECT year, quarter, net_profit FROM net_profit WHERE symbol = ? ORDER BY year, quarter",
+            con, params=(symbol,)
+        )
+    return df
+
+
+def save_vn30_members(rows: list[tuple[str, str, str | None]], override: bool = False) -> dict:
+    """
+    Save VN30 membership rows.
+    Each row is (symbol, date_added, date_removed) — date_removed may be None.
+
+    override=False : skip rows with existing (symbol, date_added)
+    override=True  : overwrite existing rows
+    """
+    with _conn() as con:
+        existing = {
+            r[0] for r in con.execute("SELECT symbol || '|' || date_added FROM vn30_members").fetchall()
+        }
+        to_save = rows if override else [r for r in rows if f"{r[0]}|{r[1]}" not in existing]
+        skipped = len(rows) - len(to_save)
+
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO vn30_members (symbol, date_added, date_removed) VALUES (?, ?, ?)",
+                to_save,
+            )
+
+    print(f"  [vn30_members] saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def load_vn30_members(as_of: str | None = None) -> pd.DataFrame:
+    """
+    Load VN30 membership records.
+    If as_of (ISO date string) is given, return only symbols active on that date.
+    Otherwise return the full membership history.
+    """
+    with _conn() as con:
+        if as_of:
+            df = pd.read_sql("""
+                SELECT symbol, date_added, date_removed
+                FROM vn30_members
+                WHERE date_added <= ?
+                  AND (date_removed IS NULL OR date_removed > ?)
+                ORDER BY symbol
+            """, con, params=(as_of, as_of))
+        else:
+            df = pd.read_sql(
+                "SELECT symbol, date_added, date_removed FROM vn30_members ORDER BY date_added, symbol",
+                con
+            )
+    return df
+
+
+def list_symbols() -> list[str]:
+    """Return all symbols that have price data."""
+    with _conn() as con:
+        rows = con.execute("SELECT DISTINCT symbol FROM prices ORDER BY symbol").fetchall()
+    return [r[0] for r in rows]
+
+
+def summary() -> pd.DataFrame:
+    """Show a summary of stored data per symbol."""
+    with _conn() as con:
+        df = pd.read_sql("""
+            SELECT
+                p.symbol,
+                p.price_days,
+                p.price_from,
+                p.price_to,
+                COALESCE(s.share_quarters, 0)  AS share_quarters,
+                COALESCE(n.profit_quarters, 0) AS profit_quarters
+            FROM (
+                SELECT symbol, COUNT(*) AS price_days, MIN(date) AS price_from, MAX(date) AS price_to
+                FROM prices GROUP BY symbol
+            ) p
+            LEFT JOIN (
+                SELECT symbol, COUNT(*) AS share_quarters FROM shares GROUP BY symbol
+            ) s ON s.symbol = p.symbol
+            LEFT JOIN (
+                SELECT symbol, COUNT(*) AS profit_quarters FROM net_profit GROUP BY symbol
+            ) n ON n.symbol = p.symbol
+            ORDER BY p.symbol
+        """, con)
+    return df
+
+
+if __name__ == "__main__":
+    init_db()
+    print(f"Database initialized at: {DB_PATH}")
+
+    existing = list_symbols()
+    if existing:
+        print(f"\nStored symbols: {existing}")
+        print("\nSummary:")
+        print(summary().to_string(index=False))
+        print("\nShares (VNM):")
+        print(load_shares("VNM").to_string(index=False))
+        print("\nNet Profit (VNM):")
+        print(load_net_profit("VNM").to_string(index=False))
+    else:
+        print("No data stored yet.")
