@@ -80,9 +80,10 @@ def get_shares(symbol: str) -> pd.DataFrame:
     """
     bs = _stock(symbol).finance.balance_sheet(period="quarter", lang="en")
 
-    paid_in_row = bs[bs["item_en"].str.contains("Paid-in capital", case=False, na=False)]
+    # Non-banks: "Paid-in capital"; Banks: "Charter capital"
+    paid_in_row = bs[bs["item_en"].str.contains("Paid-in capital|Charter capital", case=False, na=False)]
     if paid_in_row.empty:
-        raise ValueError(f"[vnstock] 'Paid-in capital' row not found for {symbol}")
+        raise ValueError(f"[vnstock] No paid-in/charter capital row found for {symbol}. Rows: {bs['item_en'].tolist()}")
 
     records = []
     for q in _quarter_cols(bs):

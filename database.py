@@ -57,6 +57,14 @@ def init_db():
                 PRIMARY KEY (symbol, year, quarter)
             );
 
+            CREATE TABLE IF NOT EXISTS pe_history (
+                date             TEXT  PRIMARY KEY,  -- ISO date: YYYY-MM-DD
+                pe_ratio         REAL,               -- aggregate P/E, NULL if incalculable
+                total_market_cap REAL,               -- Σ(price × shares) in VND
+                total_ttm_profit REAL,               -- Σ(TTM net profit) in VND
+                member_count     INTEGER             -- number of stocks included
+            );
+
             CREATE TABLE IF NOT EXISTS vn30_members (
                 symbol        TEXT  NOT NULL,
                 date_added    TEXT  NOT NULL,  -- ISO date: first effective trading day
@@ -256,6 +264,62 @@ def load_vn30_members(as_of: str | None = None) -> pd.DataFrame:
                 "SELECT symbol, date_added, date_removed FROM vn30_members ORDER BY date_added, symbol",
                 con
             )
+    return df
+
+
+def save_pe_history(df: pd.DataFrame, override: bool = False) -> dict:
+    """
+    Save aggregate P/E history.
+    df must have columns: date (str YYYY-MM-DD), pe_ratio, total_market_cap,
+                          total_ttm_profit, member_count.
+
+    override=False : skip rows with existing date
+    override=True  : overwrite existing rows
+    """
+    with _conn() as con:
+        existing = {
+            r[0] for r in con.execute("SELECT date FROM pe_history").fetchall()
+        }
+        rows = df.to_dict("records")
+        to_save = rows if override else [r for r in rows if r["date"] not in existing]
+        skipped = len(rows) - len(to_save)
+
+        if to_save:
+            con.executemany(
+                """INSERT OR REPLACE INTO pe_history
+                   (date, pe_ratio, total_market_cap, total_ttm_profit, member_count)
+                   VALUES (:date, :pe_ratio, :total_market_cap, :total_ttm_profit, :member_count)""",
+                to_save,
+            )
+
+    print(f"  [pe_history] saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def load_pe_history(start: str | None = None, end: str | None = None) -> pd.DataFrame:
+    """
+    Load aggregate P/E history, optionally filtered by date range.
+    Returns DataFrame indexed by date with columns: pe_ratio, total_market_cap,
+    total_ttm_profit, member_count.
+    """
+    where, params = [], []
+    if start:
+        where.append("date >= ?")
+        params.append(start)
+    if end:
+        where.append("date <= ?")
+        params.append(end)
+
+    clause = ("WHERE " + " AND ".join(where)) if where else ""
+    with _conn() as con:
+        df = pd.read_sql(
+            f"SELECT date, pe_ratio, total_market_cap, total_ttm_profit, member_count "
+            f"FROM pe_history {clause} ORDER BY date",
+            con, params=params
+        )
+    if not df.empty:
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.set_index("date")
     return df
 
 
