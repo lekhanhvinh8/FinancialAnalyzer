@@ -60,7 +60,7 @@ def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFra
 
     # ── Reindex to daily, forward-fill only (no look-ahead) ──────────────────
     full_index = dates.union(shares_ts.index).union(profit_ts.index)
-    daily_shares = shares_ts.reindex(full_index).ffill().reindex(dates)
+    daily_shares = shares_ts.reindex(full_index).ffill().bfill().reindex(dates)
     daily_ttm    = profit_ts.reindex(full_index).ffill().reindex(dates)
 
     result = pd.DataFrame({"shares": daily_shares, "ttm_profit": daily_ttm})
