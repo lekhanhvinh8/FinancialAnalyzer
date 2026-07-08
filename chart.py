@@ -194,25 +194,52 @@ def pe_chart(
         customdata=df["member_count"],
     ))
 
-    # ── Rolling mean MA ───────────────────────────────────────────────────────
+    # ── P/E rolling mean MA ───────────────────────────────────────────────────
     mean_y = _rolling_mean(pe_values, mean_window)
     fig.add_trace(go.Scatter(
         x=pe_dates, y=mean_y,
-        mode="lines", name=f"Mean MA({mean_window})",
+        mode="lines", name=f"P/E Mean MA({mean_window})",
         line=dict(color="#e377c2", width=1.5, dash="solid"),
         yaxis="y1",
-        hovertemplate="Mean MA: %{y:.2f}x<extra></extra>",
+        hovertemplate="P/E Mean MA: %{y:.2f}x<extra></extra>",
     ))
 
-    # ── Rolling median MA ─────────────────────────────────────────────────────
+    # ── P/E rolling median MA ─────────────────────────────────────────────────
     median_y = _rolling_median(pe_values, median_window)
     fig.add_trace(go.Scatter(
         x=pe_dates, y=median_y,
-        mode="lines", name=f"Median MA({median_window})",
+        mode="lines", name=f"P/E Median MA({median_window})",
         line=dict(color="#17becf", width=1.5, dash="dash"),
         yaxis="y1",
-        hovertemplate="Median MA: %{y:.2f}x<extra></extra>",
+        hovertemplate="P/E Median MA: %{y:.2f}x<extra></extra>",
     ))
+
+    # ── Price rolling mean MA ─────────────────────────────────────────────────
+    price_mean_trace = None
+    price_median_trace = None
+    if idx_price is not None and not idx_price.empty:
+        price_dates  = idx_price.index.strftime("%Y-%m-%d").tolist()
+        price_values = idx_price.tolist()
+        price_mean_y   = _rolling_mean(price_values, mean_window)
+        price_median_y = _rolling_median(price_values, median_window)
+
+        fig.add_trace(go.Scatter(
+            x=price_dates, y=price_mean_y,
+            mode="lines", name=f"Price Mean MA({mean_window})",
+            line=dict(color="#9467bd", width=1.5, dash="solid"),
+            yaxis="y2",
+            hovertemplate="Price Mean MA: %{y:,.0f}<extra></extra>",
+        ))
+        price_mean_trace = True
+
+        fig.add_trace(go.Scatter(
+            x=price_dates, y=price_median_y,
+            mode="lines", name=f"Price Median MA({median_window})",
+            line=dict(color="#8c564b", width=1.5, dash="dash"),
+            yaxis="y2",
+            hovertemplate="Price Median MA: %{y:,.0f}<extra></extra>",
+        ))
+        price_median_trace = True
 
     # ── Current value marker ──────────────────────────────────────────────────
     fig.add_trace(go.Scatter(
@@ -244,7 +271,14 @@ def pe_chart(
         margin=dict(l=60, r=80, t=80, b=60),
     )
 
-    return fig, pe_dates, pe_values
+    price_data = None
+    if idx_price is not None and not idx_price.empty:
+        price_data = (
+            idx_price.index.strftime("%Y-%m-%d").tolist(),
+            idx_price.tolist(),
+        )
+
+    return fig, pe_dates, pe_values, price_data
 
 
 # ── Trace index helpers (must match add_trace order above) ────────────────────
@@ -261,8 +295,8 @@ def save_chart(
     fig: go.Figure,
     pe_dates: list,
     pe_values: list,
+    price_data: tuple | None = None,
     path: str = "pe_chart.html",
-    bands: bool = True,
 ) -> str:
     """
     Save the P/E chart as a self-contained HTML file with interactive
@@ -270,21 +304,46 @@ def save_chart(
 
     Returns the saved file path.
     """
-    # Identify mean/median trace indices (0-based)
     n = len(fig.data)
-    mean_idx   = n - 3   # second-to-last before marker
-    median_idx = n - 2   # last before marker
+    has_price_ma = price_data is not None
+    # Trace layout (from add_trace order):
+    # 0=cheap, 1=fair, 2=expensive, 3=idx_price, 4=pe,
+    # 5=pe_mean, 6=pe_median, [7=price_mean, 8=price_median,] last=marker
+    pe_mean_idx    = n - (5 if has_price_ma else 3)
+    pe_median_idx  = n - (4 if has_price_ma else 2)
+    price_mean_idx   = n - 3 if has_price_ma else -1
+    price_median_idx = n - 2 if has_price_ma else -1
 
     plot_html = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
 
-    dates_json  = json.dumps(pe_dates)
-    values_json = json.dumps(pe_values)
+    pe_dates_json   = json.dumps(pe_dates)
+    pe_values_json  = json.dumps(pe_values)
+    price_dates_json  = json.dumps(price_data[0] if price_data else [])
+    price_values_json = json.dumps(price_data[1] if price_data else [])
+
+    price_controls = ""
+    if has_price_ma:
+        price_controls = """
+  <div class="divider"></div>
+  <span style="font-weight:600;color:#555">Price</span>
+  <div class="ma-group">
+    <span class="dot" style="background:#9467bd"></span>
+    <label><input type="checkbox" id="priceMeanVisible" checked> Mean MA</label>
+    <input type="number" id="priceMeanWindow" value="200" min="2" max="2000" step="10">
+    <span style="color:#888">days</span>
+  </div>
+  <div class="ma-group">
+    <span class="dot" style="background:#8c564b;border-top:2px dashed #8c564b;height:0"></span>
+    <label><input type="checkbox" id="priceMedianVisible" checked> Median MA</label>
+    <input type="number" id="priceMedianWindow" value="200" min="2" max="2000" step="10">
+    <span style="color:#888">days</span>
+  </div>"""
 
     controls_html = f"""
 <style>
   #ma-controls {{
     font-family: sans-serif; font-size: 13px;
-    display: flex; gap: 32px; align-items: center;
+    display: flex; gap: 20px; align-items: center;
     padding: 10px 16px; background: #f8f9fa;
     border: 1px solid #dee2e6; border-radius: 6px;
     margin-bottom: 8px; flex-wrap: wrap;
@@ -294,92 +353,115 @@ def save_chart(
     width: 70px; padding: 3px 6px; border: 1px solid #ced4da;
     border-radius: 4px; font-size: 13px;
   }}
-  .ma-group {{ display: flex; align-items: center; gap: 10px; }}
-  .dot {{ width: 14px; height: 3px; display: inline-block; border-radius: 2px; }}
-  .dot-mean   {{ background: #e377c2; }}
-  .dot-median {{ background: #17becf; border-top: 2px dashed #17becf; height: 0; }}
+  .ma-group {{ display: flex; align-items: center; gap: 8px; }}
+  .dot {{ width: 16px; height: 3px; display: inline-block; border-radius: 2px; }}
+  .divider {{ width: 1px; height: 28px; background: #ced4da; margin: 0 4px; }}
 </style>
-
 <div id="ma-controls">
+  <span style="font-weight:600;color:#555">P/E</span>
   <div class="ma-group">
-    <span class="dot dot-mean"></span>
-    <label><input type="checkbox" id="meanVisible" checked> Mean MA</label>
-    <input type="number" id="meanWindow" value="200" min="2" max="2000" step="10">
+    <span class="dot" style="background:#e377c2"></span>
+    <label><input type="checkbox" id="peMeanVisible" checked> Mean MA</label>
+    <input type="number" id="peMeanWindow" value="200" min="2" max="2000" step="10">
     <span style="color:#888">days</span>
   </div>
   <div class="ma-group">
-    <span class="dot dot-median"></span>
-    <label><input type="checkbox" id="medianVisible" checked> Median MA</label>
-    <input type="number" id="medianWindow" value="200" min="2" max="2000" step="10">
+    <span class="dot" style="background:#17becf;border-top:2px dashed #17becf;height:0"></span>
+    <label><input type="checkbox" id="peMedianVisible" checked> Median MA</label>
+    <input type="number" id="peMedianWindow" value="200" min="2" max="2000" step="10">
     <span style="color:#888">days</span>
   </div>
-  <button onclick="updateMA()" style="padding:4px 14px;cursor:pointer;border-radius:4px;border:1px solid #aaa;">Apply</button>
+  {price_controls}
+  <button onclick="updateMA()" style="padding:4px 14px;cursor:pointer;border-radius:4px;border:1px solid #aaa;margin-left:8px">Apply</button>
 </div>
 """
 
+    price_js = ""
+    if has_price_ma:
+        price_js = f"""
+  const priceDates  = {price_dates_json};
+  const priceValues = {price_values_json};
+  const priceMeanIdx   = {price_mean_idx};
+  const priceMedianIdx = {price_median_idx};
+
+  const pmw = parseInt(document.getElementById('priceMeanWindow').value)   || 200;
+  const pdw = parseInt(document.getElementById('priceMedianWindow').value) || 200;
+  const pmVisible = document.getElementById('priceMeanVisible').checked;
+  const pdVisible = document.getElementById('priceMedianVisible').checked;
+
+  Plotly.restyle(gd,
+    {{ y: [rollingMean(priceValues, pmw)],   name: ['Price Mean MA(' + pmw + ')'],   visible: [pmVisible ? true : 'legendonly'] }},
+    [priceMeanIdx]
+  );
+  Plotly.restyle(gd,
+    {{ y: [rollingMedian(priceValues, pdw)], name: ['Price Median MA(' + pdw + ')'], visible: [pdVisible ? true : 'legendonly'] }},
+    [priceMedianIdx]
+  );"""
+
+    price_checkbox_js = ""
+    if has_price_ma:
+        price_checkbox_js = f"""
+document.getElementById('priceMeanVisible').addEventListener('change', function() {{
+  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [{price_mean_idx}]);
+}});
+document.getElementById('priceMedianVisible').addEventListener('change', function() {{
+  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [{price_median_idx}]);
+}});
+['priceMeanWindow','priceMedianWindow'].forEach(id => {{
+  document.getElementById(id).addEventListener('keydown', e => {{ if (e.key === 'Enter') updateMA(); }});
+}});"""
+
     script = f"""
 <script>
-const peDates  = {dates_json};
-const peValues = {values_json};
-const meanIdx   = {mean_idx};
-const medianIdx = {median_idx};
+const peDates   = {pe_dates_json};
+const peValues  = {pe_values_json};
+const peMeanIdx   = {pe_mean_idx};
+const peMedianIdx = {pe_median_idx};
 const gd = document.getElementById('peChart');
 
 function rollingMean(arr, w) {{
   return arr.map((_, i) => {{
     if (i < w - 1) return null;
-    let s = 0;
-    for (let j = i - w + 1; j <= i; j++) s += arr[j];
+    let s = 0; for (let j = i - w + 1; j <= i; j++) s += arr[j];
     return s / w;
   }});
 }}
-
 function rollingMedian(arr, w) {{
   return arr.map((_, i) => {{
     if (i < w - 1) return null;
-    const slice = arr.slice(i - w + 1, i + 1).slice().sort((a, b) => a - b);
-    const mid = Math.floor(slice.length / 2);
-    return slice.length % 2 === 0 ? (slice[mid - 1] + slice[mid]) / 2 : slice[mid];
+    const sl = arr.slice(i - w + 1, i + 1).slice().sort((a, b) => a - b);
+    const m = Math.floor(sl.length / 2);
+    return sl.length % 2 === 0 ? (sl[m-1] + sl[m]) / 2 : sl[m];
   }});
 }}
 
 function updateMA() {{
-  const mw = parseInt(document.getElementById('meanWindow').value)   || 200;
-  const dw = parseInt(document.getElementById('medianWindow').value) || 200;
-  const mVisible = document.getElementById('meanVisible').checked;
-  const dVisible = document.getElementById('medianVisible').checked;
-
-  const meanY   = rollingMean(peValues, mw);
-  const medianY = rollingMedian(peValues, dw);
-
-  // Update label in legend
-  const mLabel = 'Mean MA(' + mw + ')';
-  const dLabel = 'Median MA(' + dw + ')';
+  const mw = parseInt(document.getElementById('peMeanWindow').value)   || 200;
+  const dw = parseInt(document.getElementById('peMedianWindow').value) || 200;
+  const mVis = document.getElementById('peMeanVisible').checked;
+  const dVis = document.getElementById('peMedianVisible').checked;
 
   Plotly.restyle(gd,
-    {{ y: [meanY],   name: [mLabel],  visible: [mVisible  ? true : 'legendonly'] }},
-    [meanIdx]
+    {{ y: [rollingMean(peValues, mw)],   name: ['P/E Mean MA(' + mw + ')'],   visible: [mVis ? true : 'legendonly'] }},
+    [peMeanIdx]
   );
   Plotly.restyle(gd,
-    {{ y: [medianY], name: [dLabel],  visible: [dVisible  ? true : 'legendonly'] }},
-    [medianIdx]
+    {{ y: [rollingMedian(peValues, dw)], name: ['P/E Median MA(' + dw + ')'], visible: [dVis ? true : 'legendonly'] }},
+    [peMedianIdx]
   );
+  {price_js}
 }}
 
-// Also wire up checkboxes for instant toggle (no recompute needed)
-document.getElementById('meanVisible').addEventListener('change', function() {{
-  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [meanIdx]);
+document.getElementById('peMeanVisible').addEventListener('change', function() {{
+  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peMeanIdx]);
 }});
-document.getElementById('medianVisible').addEventListener('change', function() {{
-  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [medianIdx]);
+document.getElementById('peMedianVisible').addEventListener('change', function() {{
+  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peMedianIdx]);
 }});
-
-// Apply on Enter key in inputs
-['meanWindow','medianWindow'].forEach(id => {{
-  document.getElementById(id).addEventListener('keydown', e => {{
-    if (e.key === 'Enter') updateMA();
-  }});
+['peMeanWindow','peMedianWindow'].forEach(id => {{
+  document.getElementById(id).addEventListener('keydown', e => {{ if (e.key === 'Enter') updateMA(); }});
 }});
+{price_checkbox_js}
 </script>
 """
 
@@ -403,7 +485,7 @@ document.getElementById('medianVisible').addEventListener('change', function() {
 if __name__ == "__main__":
     import sys, os
     idx = sys.argv[1] if len(sys.argv) > 1 else "vn30"
-    fig, pe_dates, pe_values = pe_chart(index=idx, bands=True)
+    fig, pe_dates, pe_values, price_data = pe_chart(index=idx, bands=True)
     path = f"pe_{idx}.html"
-    save_chart(fig, pe_dates, pe_values, path)
+    save_chart(fig, pe_dates, pe_values, price_data, path)
     os.startfile(path)
