@@ -71,6 +71,13 @@ def init_db():
                 date_removed  TEXT,            -- ISO date: first day no longer in index, NULL = still active
                 PRIMARY KEY (symbol, date_added)
             );
+
+            CREATE TABLE IF NOT EXISTS vndiamond_members (
+                symbol        TEXT  NOT NULL,
+                date_added    TEXT  NOT NULL,
+                date_removed  TEXT,
+                PRIMARY KEY (symbol, date_added)
+            );
         """)
 
 
@@ -262,6 +269,42 @@ def load_vn30_members(as_of: str | None = None) -> pd.DataFrame:
         else:
             df = pd.read_sql(
                 "SELECT symbol, date_added, date_removed FROM vn30_members ORDER BY date_added, symbol",
+                con
+            )
+    return df
+
+
+def save_vndiamond_members(rows: list[tuple[str, str, str | None]], override: bool = False) -> dict:
+    with _conn() as con:
+        existing = {
+            r[0] for r in con.execute("SELECT symbol || '|' || date_added FROM vndiamond_members").fetchall()
+        }
+        to_save = rows if override else [r for r in rows if f"{r[0]}|{r[1]}" not in existing]
+        skipped = len(rows) - len(to_save)
+
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO vndiamond_members (symbol, date_added, date_removed) VALUES (?, ?, ?)",
+                to_save,
+            )
+
+    print(f"  [vndiamond_members] saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def load_vndiamond_members(as_of: str | None = None) -> pd.DataFrame:
+    with _conn() as con:
+        if as_of:
+            df = pd.read_sql("""
+                SELECT symbol, date_added, date_removed
+                FROM vndiamond_members
+                WHERE date_added <= ?
+                  AND (date_removed IS NULL OR date_removed > ?)
+                ORDER BY symbol
+            """, con, params=(as_of, as_of))
+        else:
+            df = pd.read_sql(
+                "SELECT symbol, date_added, date_removed FROM vndiamond_members ORDER BY date_added, symbol",
                 con
             )
     return df
