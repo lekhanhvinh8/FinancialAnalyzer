@@ -1,10 +1,10 @@
 """
-Aggregate P/E calculation for VN30.
+Aggregate P/E calculation for VN30 and VN Diamond.
 
 Formula:
     P/E(date) = Σ(price_i × shares_i) / Σ(TTM_profit_i)
 
-    summed over all VN30 members active on that date that have
+    summed over all active index members on that date that have
     both price and at least 4 quarters of net profit available.
 
 TTM (Trailing Twelve Months) for a stock on date D:
@@ -12,14 +12,29 @@ TTM (Trailing Twelve Months) for a stock on date D:
 
 Shares on date D:
     most recent quarterly shares whose quarter-end ≤ D.
+    Backfilled from oldest known value for dates before first quarter.
 
 Note: the free vnstock tier provides only the latest 4 quarters of
-fundamentals. Historical P/E coverage depends on how far back the
-oldest available quarter falls.
+balance-sheet data. Shares are bfill-approximated for earlier dates.
 """
 
 import pandas as pd
 import database as db
+
+_MEMBER_LOADERS = {
+    "vn30":      db.load_vn30_members,
+    "vndiamond": db.load_vndiamond_members,
+}
+
+_PE_SAVERS = {
+    "vn30":      db.save_pe_history,
+    "vndiamond": db.save_pe_vndiamond,
+}
+
+_PE_LOADERS = {
+    "vn30":      db.load_pe_history,
+    "vndiamond": db.load_pe_vndiamond,
+}
 
 
 def _quarter_end(year: int, quarter: int) -> pd.Timestamp:
@@ -40,7 +55,7 @@ def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFra
     if len(profit_df) < 4 or shares_df.empty:
         return None
 
-    # ── Shares: one value per quarter-end, then ffill ────────────────────────
+    # ── Shares: one value per quarter-end, bfill + ffill ─────────────────────
     shares_ts = pd.Series(
         shares_df["shares"].values,
         index=[_quarter_end(int(r.year), int(r.quarter)) for _, r in shares_df.iterrows()],
@@ -58,24 +73,34 @@ def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFra
         .set_index("quarter_end")["ttm"]
     )
 
-    # ── Reindex to daily, forward-fill only (no look-ahead) ──────────────────
+    # ── Reindex to daily, bfill+ffill shares, ffill TTM (no look-ahead) ──────
     full_index = dates.union(shares_ts.index).union(profit_ts.index)
     daily_shares = shares_ts.reindex(full_index).ffill().bfill().reindex(dates)
     daily_ttm    = profit_ts.reindex(full_index).ffill().reindex(dates)
 
     result = pd.DataFrame({"shares": daily_shares, "ttm_profit": daily_ttm})
-    return result.dropna()  # dates where either is still unknown → excluded
+    return result.dropna()
 
 
-def calc_pe_history(start: str | None = None, end: str | None = None) -> pd.DataFrame:
+def calc_pe_history(
+    index: str = "vn30",
+    start: str | None = None,
+    end: str | None = None,
+) -> pd.DataFrame:
     """
-    Calculate daily aggregate P/E for VN30 over [start, end].
+    Calculate daily aggregate P/E for `index` over [start, end].
 
-    Defaults to the full date range covered by price data.
+    index: "vn30" or "vndiamond"
 
     Returns a DataFrame with columns:
         date (str), pe_ratio, total_market_cap, total_ttm_profit, member_count
     """
+    index = index.lower()
+    if index not in _MEMBER_LOADERS:
+        raise ValueError(f"Unknown index '{index}'. Choose from: {list(_MEMBER_LOADERS)}")
+
+    load_members = _MEMBER_LOADERS[index]
+
     # ── Gather all price data ────────────────────────────────────────────────
     symbols = db.list_symbols()
     prices: dict[str, pd.Series] = {}
@@ -106,30 +131,23 @@ def calc_pe_history(start: str | None = None, end: str | None = None) -> pd.Data
     for date in all_dates:
         date_str = date.date().isoformat()
 
-        # Active VN30 members on this date
-        members = set(db.load_vn30_members(as_of=date_str)["symbol"].tolist())
+        members = set(load_members(as_of=date_str)["symbol"].tolist())
 
         total_mcap   = 0.0
         total_profit = 0.0
         count        = 0
 
         for sym in members:
-            if sym not in prices:
+            if sym not in prices or date not in prices[sym].index:
                 continue
-            price_series = prices[sym]
-            if date not in price_series.index:
-                continue
-            if sym not in fundamentals:
-                continue
-            fd = fundamentals[sym]
-            if date not in fd.index:
+            if sym not in fundamentals or date not in fundamentals[sym].index:
                 continue
 
-            price  = price_series[date]
-            shares = fd.loc[date, "shares"]
-            ttm    = fd.loc[date, "ttm_profit"]
+            price  = prices[sym][date]
+            shares = fundamentals[sym].loc[date, "shares"]
+            ttm    = fundamentals[sym].loc[date, "ttm_profit"]
 
-            if ttm <= 0:  # skip loss-making or zero-profit stocks from denominator
+            if ttm <= 0:
                 continue
 
             total_mcap   += price * shares
@@ -155,17 +173,14 @@ def calc_pe_history(start: str | None = None, end: str | None = None) -> pd.Data
 if __name__ == "__main__":
     db.init_db()
 
-    print("Calculating aggregate P/E history …")
-    pe_df = calc_pe_history()
-
-    valid = pe_df.dropna(subset=["pe_ratio"])
-    print(f"\nCalculated {len(pe_df)} dates, {len(valid)} with valid P/E\n")
-
-    if not valid.empty:
-        print(valid.tail(10).to_string(index=False))
-
-        db.save_pe_history(pe_df)
-
-        print("\nRecent P/E from database:")
-        stored = db.load_pe_history()
-        print(stored.dropna().tail(10).to_string())
+    for idx in ["vn30", "vndiamond"]:
+        print(f"\n{'='*55}")
+        print(f"Calculating {idx.upper()} aggregate P/E …")
+        pe_df = calc_pe_history(index=idx)
+        valid = pe_df.dropna(subset=["pe_ratio"])
+        print(f"  {len(pe_df)} dates, {len(valid)} with valid P/E")
+        if not valid.empty:
+            print(f"  Range: {valid.iloc[0]['date']} → {valid.iloc[-1]['date']}")
+            print(f"  P/E range: {valid['pe_ratio'].min():.2f}x – {valid['pe_ratio'].max():.2f}x")
+            print(f"  Current:   {valid.iloc[-1]['pe_ratio']:.2f}x")
+            _PE_SAVERS[idx](pe_df, override=True)

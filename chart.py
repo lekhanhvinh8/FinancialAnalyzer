@@ -1,14 +1,15 @@
 """
-VN30 Aggregate P/E chart module.
+VN30 / VN Diamond Aggregate P/E chart module.
 
 Usage:
     from chart import pe_chart
-    fig = pe_chart()           # interactive Plotly figure
-    fig.show()                 # open in browser
-    fig.write_html("pe.html")  # save as HTML
+    fig = pe_chart()                        # VN30, full history
+    fig = pe_chart(index="vndiamond")       # VN Diamond
+    fig.show()                              # open in browser
+    fig.write_html("pe.html")              # save as HTML
 
     # or with options:
-    fig = pe_chart(start="2018-01-01", bands=True, min_members=20)
+    fig = pe_chart(start="2018-01-01", bands=True, min_members=5)
 """
 
 import pandas as pd
@@ -16,19 +17,22 @@ import plotly.graph_objects as go
 
 import database as db
 
+_PE_LOADERS = {
+    "vn30":      db.load_pe_history,
+    "vndiamond": db.load_pe_vndiamond,
+}
 
-# ── Percentile band levels ────────────────────────────────────────────────────
-_BANDS = {
-    "Cheap (25th pct)":     (0,  25, "rgba(46,160,67,0.12)"),
-    "Fair (25–75th pct)":   (25, 75, "rgba(255,200,0,0.10)"),
-    "Expensive (75th pct)": (75, 100, "rgba(220,53,69,0.12)"),
+_INDEX_LABELS = {
+    "vn30":      "VN30",
+    "vndiamond": "VN Diamond",
 }
 
 
 def load_pe(
+    index: str = "vn30",
     start: str | None = None,
     end: str | None = None,
-    min_members: int = 10,
+    min_members: int = 5,
 ) -> pd.DataFrame:
     """
     Load P/E history from DB, filtered by date range and minimum member count.
@@ -36,9 +40,13 @@ def load_pe(
     min_members: exclude dates where fewer than this many stocks contributed
                  (early history with sparse data is less representative).
     """
+    index = index.lower()
+    loader = _PE_LOADERS.get(index)
+    if loader is None:
+        raise ValueError(f"Unknown index '{index}'. Choose from: {list(_PE_LOADERS)}")
     db.init_db()
-    df = db.load_pe_history(start, end)
-    df = df.reset_index()  # date is the index in load_pe_history
+    df = loader(start, end)
+    df = df.reset_index()
     df = df.dropna(subset=["pe_ratio"])
     df = df[df["member_count"] >= min_members]
     df["date"] = pd.to_datetime(df["date"])
@@ -46,29 +54,34 @@ def load_pe(
 
 
 def pe_chart(
+    index: str = "vn30",
     start: str | None = None,
     end: str | None = None,
-    min_members: int = 10,
+    min_members: int = 5,
     bands: bool = True,
-    title: str = "VN30 Aggregate P/E",
+    title: str | None = None,
 ) -> go.Figure:
     """
     Build an interactive Plotly figure of VN30 aggregate P/E over time.
 
     Parameters
     ----------
+    index       : "vn30" or "vndiamond"
     start       : ISO date string, e.g. "2018-01-01"
     end         : ISO date string, e.g. "2026-07-06"
-    min_members : minimum number of VN30 members that must contribute for a
-                  date to be included (default 10)
+    min_members : minimum members contributing for a date to be included (default 5)
     bands       : draw percentile bands (cheap / fair / expensive) if True
-    title       : chart title
+    title       : chart title (auto-generated if None)
 
     Returns
     -------
     plotly.graph_objects.Figure
     """
-    df = load_pe(start, end, min_members)
+    index = index.lower()
+    label = _INDEX_LABELS.get(index, index.upper())
+    if title is None:
+        title = f"{label} Aggregate P/E"
+    df = load_pe(index, start, end, min_members)
     if df.empty:
         raise ValueError("No P/E data in the requested range.")
 
@@ -162,5 +175,7 @@ def pe_chart(
 
 
 if __name__ == "__main__":
-    fig = pe_chart(min_members=10, bands=True)
+    import sys
+    idx = sys.argv[1] if len(sys.argv) > 1 else "vn30"
+    fig = pe_chart(index=idx, bands=True)
     fig.show()

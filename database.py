@@ -78,6 +78,14 @@ def init_db():
                 date_removed  TEXT,
                 PRIMARY KEY (symbol, date_added)
             );
+
+            CREATE TABLE IF NOT EXISTS pe_vndiamond (
+                date             TEXT  PRIMARY KEY,
+                pe_ratio         REAL,
+                total_market_cap REAL,
+                total_ttm_profit REAL,
+                member_count     INTEGER
+            );
         """)
 
 
@@ -310,41 +318,32 @@ def load_vndiamond_members(as_of: str | None = None) -> pd.DataFrame:
     return df
 
 
-def save_pe_history(df: pd.DataFrame, override: bool = False) -> dict:
-    """
-    Save aggregate P/E history.
-    df must have columns: date (str YYYY-MM-DD), pe_ratio, total_market_cap,
-                          total_ttm_profit, member_count.
+def save_pe_vndiamond(df: pd.DataFrame, override: bool = False) -> dict:
+    return _save_pe_table("pe_vndiamond", df, override)
 
-    override=False : skip rows with existing date
-    override=True  : overwrite existing rows
-    """
+
+def load_pe_vndiamond(start: str | None = None, end: str | None = None) -> pd.DataFrame:
+    return _load_pe_table("pe_vndiamond", start, end)
+
+
+def _save_pe_table(table: str, df: pd.DataFrame, override: bool) -> dict:
     with _conn() as con:
-        existing = {
-            r[0] for r in con.execute("SELECT date FROM pe_history").fetchall()
-        }
+        existing = {r[0] for r in con.execute(f"SELECT date FROM {table}").fetchall()}
         rows = df.to_dict("records")
         to_save = rows if override else [r for r in rows if r["date"] not in existing]
         skipped = len(rows) - len(to_save)
-
         if to_save:
             con.executemany(
-                """INSERT OR REPLACE INTO pe_history
+                f"""INSERT OR REPLACE INTO {table}
                    (date, pe_ratio, total_market_cap, total_ttm_profit, member_count)
                    VALUES (:date, :pe_ratio, :total_market_cap, :total_ttm_profit, :member_count)""",
                 to_save,
             )
-
-    print(f"  [pe_history] saved {len(to_save)}, skipped {skipped}")
+    print(f"  [{table}] saved {len(to_save)}, skipped {skipped}")
     return {"saved": len(to_save), "skipped": skipped}
 
 
-def load_pe_history(start: str | None = None, end: str | None = None) -> pd.DataFrame:
-    """
-    Load aggregate P/E history, optionally filtered by date range.
-    Returns DataFrame indexed by date with columns: pe_ratio, total_market_cap,
-    total_ttm_profit, member_count.
-    """
+def _load_pe_table(table: str, start: str | None, end: str | None) -> pd.DataFrame:
     where, params = [], []
     if start:
         where.append("date >= ?")
@@ -352,18 +351,25 @@ def load_pe_history(start: str | None = None, end: str | None = None) -> pd.Data
     if end:
         where.append("date <= ?")
         params.append(end)
-
     clause = ("WHERE " + " AND ".join(where)) if where else ""
     with _conn() as con:
         df = pd.read_sql(
             f"SELECT date, pe_ratio, total_market_cap, total_ttm_profit, member_count "
-            f"FROM pe_history {clause} ORDER BY date",
+            f"FROM {table} {clause} ORDER BY date",
             con, params=params
         )
     if not df.empty:
         df["date"] = pd.to_datetime(df["date"])
         df = df.set_index("date")
     return df
+
+
+def save_pe_history(df: pd.DataFrame, override: bool = False) -> dict:
+    return _save_pe_table("pe_history", df, override)
+
+
+def load_pe_history(start: str | None = None, end: str | None = None) -> pd.DataFrame:
+    return _load_pe_table("pe_history", start, end)
 
 
 def list_symbols() -> list[str]:
