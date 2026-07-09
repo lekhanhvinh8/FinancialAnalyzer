@@ -1,0 +1,2695 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 32,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "GVR",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8850107402468,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6508468262486,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2336688814083,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 259964985294,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 57572232422,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 116379463487,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 529711701298,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1923314262394,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1037581219261,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 30323860224,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2960895481655,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2513382444521,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2250751648382,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 556,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8518896849465,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6023205186173,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2482449743213,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 335817594429,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 81319192888,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 154066538052,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1228583068557,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1413877136169,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6601048861,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 59578598024,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1407276087308,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1135974706299,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1001028183272,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 250,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9296201037269,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6646110991457,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2648291685988,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 265241346301,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 66915806181,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 133345231029,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 579168852287,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2159849528349,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 459083165652,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 25746385557,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2618932694001,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2187281385238,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1897263225431,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 474,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6017859341875,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4390193562999,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1626477963982,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 323776399477,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 77390392036,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 108981569246,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 532606563355,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1287062217798,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 550385221296,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 55786378976,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1837447439094,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1523650070393,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1403971688666,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 351,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5681992269243,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4039982227934,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1636979508579,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 236898888858,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 84194141544,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 93937970474,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 420642417847,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1285802125070,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 278437322439,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10698257498,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1564239447509,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1355779311046,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1184647986486,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 292,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9318340386727,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6224831209462,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3075758175191,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 377636598199,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 102641892583,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 186083667599,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 836931764239,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2431516834830,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 275276834451,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 103779385861,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2706793669281,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2398071470878,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1973132981260,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 493,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7717064516661,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6120216246593,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1595557306640,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 226341384691,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 90611538741,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 149742398163,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 511327965650,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1074842475888,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 231564294402,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4625687111,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1306406770290,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1120720347536,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 943784293874,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 236,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4623246995280,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3449661362894,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1172522602881,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 234749867975,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 115438249227,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 103142955456,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 414876080373,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 832800271561,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 350615724746,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 58985085761,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1183415996307,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 994533411779,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 863533206334,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 216,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4590332818742,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3509404184202,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1075961021437,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 227012695063,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 111295000759,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 113258877553,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 363421903579,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 708588202091,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 69904904176,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -6409732518,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 778493106267,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 650031612043,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 475562877828,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 119,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7606796775985,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5988029282265,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1603147767569,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 351474636629,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 131307660080,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 217989967254,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 667488455333,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1022911284147,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 648913640276,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 85074962616,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1671824924423,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1416186494914,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1164396441326,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 291,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6199494449985,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4960823962572,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1234500140683,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 284534445967,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 117057555695,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 158520644698,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 452076047623,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 522510452724,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 99675909739,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -268869885910,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 622186362463,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 493609528788,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 312834952228,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 78,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4275512491593,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3303509781549,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 969133175395,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 284625757150,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 156944214992,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 110693509122,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 397092567681,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 597540881449,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 295662195907,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 8512240699,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 893203077356,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 717295276074,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 554252334859,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 139,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4142023748446,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3129291450388,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1005877717111,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 231072827584,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 142846700070,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 109152371012,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 362073524376,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 611737886742,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 336141664807,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -11140062495,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 947879551549,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 755683239147,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 549814288419,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 120,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9036882413863,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7324787264121,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1687992436017,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 267533421785,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 230959874440,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 219507914427,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 555652948896,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1078009338309,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 581468916433,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 128604218270,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1659478254742,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1310884188482,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 911627228169,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 228,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5853642946833,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4266681857870,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1580495485169,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 231814732990,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 153519352788,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 131585763036,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 445507383006,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1129156333566,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 51494908029,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 47458614237,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1180651241595,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 993856195178,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 835095017470,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 209,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5573711879252,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4062944408393,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1495915988541,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 240569052186,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 169171933560,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 127052063931,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 397482245338,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1116968194655,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 307637034494,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 74189396757,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1424605229149,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1199099020104,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1067809940501,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 267,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4904892296352,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3423294894497,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1470201220854,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 178205420457,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 145263525945,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 113335568582,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 345319078963,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1097300827630,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 401974353942,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 52812359809,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1499275181572,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1315596939387,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1055094302936,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 264,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9678063314211,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7091410915286,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2564448673197,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 264161298537,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 225410616240,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 192881557496,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 462476619558,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1999150527369,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 98955330823,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 51309348929,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2098105858192,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1786649060827,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1437516575306,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 359,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6160837535669,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4061708499728,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2089335719569,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 175462631625,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 176023070976,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 116240605132,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 421390700946,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1581310400186,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 88652415109,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 30166426046,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1669962815295,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1533483373924,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1240537299054,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 310,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5689946869142,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4058900485253,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1628673275242,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 198184195940,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 143416373217,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 102760391238,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 576011551429,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1090708908547,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 266760925473,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 86039753249,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1357469834020,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1159991338784,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 845779537229,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 211,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4854675960019,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3453444417865,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1396202501411,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 186493312156,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 46942365300,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94345889159,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 309551664395,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1246629989704,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 57347112298,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 114774094991,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1303977102002,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1216240071198,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 817931255109,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9063293635676,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6684033305103,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2370377657027,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1634637418240,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 482673836108,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 180388607498,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 680506993991,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2759943694605,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 892649224626,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 98498056935,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3652592919231,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3197273215077,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2667672106086,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 667,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6168018253375,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4913699876937,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1250482463855,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 924322145643,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 340319825941,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 135753963067,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 363331677019,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1378198792016,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 84874128512,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 42799648545,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1463072920528,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1191343806419,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 982616408910,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 246,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3320135542929,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2605430451156,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 710399163340,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 226124736092,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 171163499482,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 64241235239,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 295820834268,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 474952794084,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 123389750678,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 69654463641,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 598342544762,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 513447387142,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 454203878725,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 114,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2752481844194,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2231783161685,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 512812265883,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 239897945433,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 152128522572,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 62657282630,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 257539485349,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 350007144120,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 52211180300,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 69622223355,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 402218324420,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 336535429549,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 226189777980,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 57,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7131788790943,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5266669335986,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1858408555238,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 261322422859,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 230754215135,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 137773992086,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 580544719011,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1246352939002,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 738543026361,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 75694887137,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1984895965363,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1681927401284,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1462732685638,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 366,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5336614600534,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3941851574727,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1392162419845,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 147059657977,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 186865575737,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 117534180865,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 391357922899,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 946338100290,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 470408905149,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 102873701969,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1416747005439,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1219476562260,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 980399375748,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 245,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4199673387366,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3413472663679,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 784061004425,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 205797146903,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 188548468718,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 93436233236,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 327344182173,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 509304740411,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 353352590473,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 128775473210,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 862657330884,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 743819976494,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 635531204183,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 159,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3416222217281,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2781237828788,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 632793576704,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 101589792578,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 135482264546,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 80234869457,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 283463951900,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 280096012981,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 129096766046,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 44893729602,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 409192779027,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 314834378135,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 209004912384,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 52,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7812961364518,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6008254130527,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1797250858515,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 334252610523,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 417680411531,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 180235133604,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 561519025085,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1039425379011,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1319811731049,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 67356480193,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2359237110060,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1863489601680,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1464310626142,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 366,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4850815747566,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3879465727083,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 967808174306,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 170978115909,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 186338530770,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 115392946229,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 317469585940,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 581678735744,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 34238236794,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 62093508468,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 615916972538,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 488493030528,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 456057090941,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GVR",
+            "year": 2017,
+            "quater": 2,
+            "type": "HX",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8115526345792,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6411236569784,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1699539009707,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 273508679335,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 378065583498,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 172953248999,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 713744182820,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 853450344331,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 966997701327,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 145165670606,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1820448045658,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1526891104212,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1272354034910,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

@@ -1,0 +1,2775 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 33,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "VHM",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 65114237000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 33744651000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 31369586000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4509708000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3791950000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 371877000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 941917000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 30774661000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -47867000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1111000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 30726794000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 25625356000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 25551945000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 6221,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 103009532000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 69387042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 33622490000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7587191000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5837944000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 308402000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2431942000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 32631057000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 354766000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -336000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 32985823000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 26798195000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 26726426000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16419972000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13954311000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2465661000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7899526000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3447484000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 447836000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1230670000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5240127000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 180246000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 930000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5420373000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4435641000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4183929000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19022223000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14498383000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4523840000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9151125000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3385789000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 300983000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1246203000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 8742571000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 363052000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 581000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9105623000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8348170000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7553449000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1839,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15697917000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 10539988000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5157929000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4640393000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3859512000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 732197000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1372522000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3835055000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4424000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 964000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3839479000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2652034000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2688954000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 655,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 33136430370403,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 21179868352008,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 11956562018395,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 10500200616740,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2961134862816,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1295414306147,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2281021348876,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 15920106998611,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -67382775376,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 914881315,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 15852724223235,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 14103690776630,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11536820215797,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2674,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 33323141733937,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 23571915601258,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9751226132679,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5497628246741,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1555045939064,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1628885861241,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1108581585270,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 10956999834272,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -120377757459,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 658840427,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10836622076813,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8980120567869,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7866075402778,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1806,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 28218233268513,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19904000177901,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 8314233090612,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 8124161522567,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2457436397347,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 865439553829,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 779690581593,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 12336569018895,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -88572282455,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 740938485,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 12247996736440,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 10608692686287,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 10783838434875,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2477,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8211200976406,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6436814667592,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1774386308814,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1956064868090,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1369113822199,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 386666572632,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 525020669780,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1450545868773,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -34205335597,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 895756480,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1416340533176,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 904239205045,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 884697241043,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 203,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8697576000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7815379000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 882197000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4912522000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1759740000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 477771000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2421096000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1147253000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 175874000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 11141000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1323127000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 891350000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 825689000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 190,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 32724102219758,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17767196606385,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 14956905613373,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1845229055508,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 953504001195,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 682506837373,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 635937071224,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 14528120446867,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -321935534186,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -2066312222,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 14206184912681,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 10723541447336,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 10694762512390,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2456,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 32833044398179,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19617915177519,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 13215129220660,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2155242151565,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 398545877240,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1277904370986,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 572148503797,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 13122869383291,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -589547295620,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1096763089,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 12533322087671,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 9713911802586,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 9652449870785,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2217,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 29298556696258,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 22655498533928,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6643058162330,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 11293776707722,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 876644582804,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1014318564559,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 543870463898,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 15502528478787,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -428472199565,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 527219996,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 15074056279222,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11922891710986,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11917324024946,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2737,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 31193321374323,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 16108638929223,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 15084682445100,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1489916617099,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2413080407700,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1117675711598,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 601975413435,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 12474192199670,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6697785086,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 32324670204,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 12467494414584,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8952487686698,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 8927802289546,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2050,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17804867466830,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8508992879205,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9295874587625,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 10922350503204,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 862293115854,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 743243551892,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 546078107656,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 18070152122306,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 878531371723,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3541806879,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 18948683494029,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 14575173361643,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 14493845048337,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3329,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4529957000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3138785000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1391172000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1209667000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 708890000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 353850000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 493625000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1055153000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 201503000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10679000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1256656000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 622087000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 508877000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 117,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8923490000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5057521000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3865969000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3828959000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 477418000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 326742000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1077408000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5824060000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 61563000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10700000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5885623000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4724937000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4540066000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1043,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23412970000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9314354000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 14098616000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3731525000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1087566000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1014182000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1938095000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 13790298000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 335925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 14126223000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11986291000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11932494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2740,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20679433634520,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7031667534555,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 13647766099965,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1393589079129,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 512234390252,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 276110850557,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 384051888155,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 13891171766650,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -79665913461,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 22213716520,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 13811505853189,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11195102102740,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11166794765845,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2586,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 28725193000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14368754000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 14356439000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 575884000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 614354000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 578500000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 516960000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 13233129000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18183000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10620000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 13251312000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 10302846000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 10232466000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3111,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 12986441000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6774097000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6212344000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2307064000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 360609000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 456893000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 668093000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7054458000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 30533000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 20645000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 7084991000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5477762000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5396149000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1640,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21512001000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14213763000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7298238000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 10175493000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1189877000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 779650000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 838466000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 14665738000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 181980000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 14847718000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11559552000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11502494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3497,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 26482588000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17367779000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9114809000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1119267000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1204365000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1126436000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 450101000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7453174000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 49304000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 7502478000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 6146258000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 6058321000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1842,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16377455000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9922859000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6454596000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1007198000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 701164000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 581071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 260739000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5918820000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -888406000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5030414000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3800763000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3758480000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1143,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6519224000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3570342000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2948882000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 8590964000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 634134000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 244860000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 533280000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 10127572000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10123548000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7645065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 6843831000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2080,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14183719000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4165309000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 10018410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1388026000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 588733000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1211830000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1021602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 8584271000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 60413000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 8644684000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 6858460000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5981384000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1796,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10906062775311,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4140442059199,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6765620716112,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2339859130152,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 787381857773,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 364088888147,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 280780496211,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7673228604133,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -47566252063,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 7625662352070,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 6141630142315,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5470441640343,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1633,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20917153113931,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11628204308237,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9288948805694,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2377988162931,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 684165076638,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 345301847892,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 619565865486,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 10017904178609,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 39692841287,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10057597019896,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8455525328066,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7243256176951,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5852604619187,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4523910388003,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1328694231184,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2939913591760,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 506807457518,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 232894070940,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 193874842808,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3335031451678,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 23174071095,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3358205522773,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2687049531952,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2540181452387,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 758,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16400476808132,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13665617581802,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2734859226330,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3643962356836,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 842083184347,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 540614716921,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 420664022036,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4575459659862,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -67418307507,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4508041352355,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2557932584556,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2347122150101,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 701,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6878187706502,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4222016510818,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2656171195684,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3684787979790,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 717800149646,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 218318842332,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 287475556609,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5117332501392,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9085502024,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -32125495,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5126418003416,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4039352129784,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3847998897453,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1149,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5433646951058,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3718614375865,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1715032575193,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4394016860017,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 657436073993,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 281520649671,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 205287713988,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4964804997558,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 20280691414,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4985085688972,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3882035153218,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3825237580385,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1428,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VHM",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10534720626555,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7675976136549,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2858744490006,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1196041808872,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 300576531586,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 530642690729,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 198375240249,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3025350948863,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1843491505557,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 159112549,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4868842454420,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3986313311741,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3906326412106,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1994,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

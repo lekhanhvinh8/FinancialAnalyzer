@@ -1,0 +1,5575 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Thu nhập lãi thuần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Lãi/lỗ thuần từ hoạt động dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lãi/lỗ thuần từ hoạt động kinh doanh ngoại hối và vàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán đầu tư",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Lãi/lỗ thuần từ hoạt động khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Thu nhập từ góp vốn, mua cổ phần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Chi phí hoạt động",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh trước chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông của Ngân hàng mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 68,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "EIB",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1379982000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 35594000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -10415000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1923000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 120586000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 451000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 870783000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 657338000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 318974000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 338364000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 269160000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 269160000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1690894000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": -107573000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 115564000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6002000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -14061000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 151878000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 453000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1369429000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 473728000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1010550000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -536822000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -472482000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -472482000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1465006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9725000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 100121000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 13189000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1284000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 82508000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 400000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 924649000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 747584000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 187494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 560090000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 444688000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 444688000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1469401000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 192065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 162669000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9495000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -6447000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 141123000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 395000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1110411000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 858290000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 201420000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 656870000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 506244000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 506244000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1354384000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 146283000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 201742000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3255000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -7779000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 109193000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 387000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 848873000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 958592000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 126938000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 831654000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 658489000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 658489000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1518085000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 742070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 185171000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1005000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 596076000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 384000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 967366000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2075425000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 264956000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1810469000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1435504000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1435504000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1535871000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 102898000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 281925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -40231000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 89177000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 332000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 864338000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1105634000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 201981000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 903653000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 721211000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 721211000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1358029000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 110653000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 83681000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -24291000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 48788000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 330000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 634615000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 942575000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 281527000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 661048000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 527251000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 527251000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1397536000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 128466000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 24113000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -18731000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 639687000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 909440000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1261955000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 254471000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1007484000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 804549000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 804549000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 868736000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 115578000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 77174000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 141497000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 31679000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 278000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 757989000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 476953000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 170013000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 306940000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 241811000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1094223000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 123831000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 184676000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4451000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 73809000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 272000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 768946000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 712316000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 177795000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 534521000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 422618000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1236609000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 146425000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 199957000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -5935000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 89904000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 274000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 704433000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 962801000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 92120000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 870681000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 696121000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1437602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 184968000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 254863000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -26371000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7477000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 277000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1218949000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 639867000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 111549000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 528318000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 403592000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1491922000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 105327000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 79028000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -19508000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22198000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4923000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 702113000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 981777000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -296261000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1278038000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1023545000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1417523000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 124334000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 118907000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89416000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 272051000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 223000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 798811000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1223643000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 129966000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1093677000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 871387000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1244924000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 99186000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 153306000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 44013000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 126240000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 220000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 700520000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 967369000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 158336000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 809033000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 647228000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 985847000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 138537000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 128874000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 25827000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 129410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 686107000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 726313000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 487538000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 238775000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 191173000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 737381000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 77084000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 67752000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 43488000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20919000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 188000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 473658000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 473154000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 61404000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 411750000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 329441000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 983409000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 84797000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 102309000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7487000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 61866000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 189000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 777116000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 462941000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 122541000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 340400000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 272695000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 817665000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 132447000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 95279000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22595000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 41637000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 437000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 577278000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 532782000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 318641000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 214141000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 172128000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 859773000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 201217000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 66040000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7072000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 88725000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 190000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 586831000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 636186000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 400272000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 235914000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 199061000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 838579000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 102685000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 113104000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 29295000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2490000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 494505000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 598654000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 46816000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 551838000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 430123000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 759410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 88565000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 165862000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12176000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 51601000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 179000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 728221000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 349572000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 255368000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 94204000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 74928000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 855974000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 75491000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 53608000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 29154000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 36403000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 990000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 629128000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 422492000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -35078000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 457570000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 366069000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 796887000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 134370000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 132498000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 102158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 93893000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 179000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 676985000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 583000000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 590707000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -7707000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -16302000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 759893000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 90671000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 77202000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 59162000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 100518000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 298000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 604437000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 483307000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 142888000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 340419000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 271862000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 834535000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 79063000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 20205000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21393000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 52163000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2680000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 745633000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 264406000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -36353000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 300759000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 240903000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 829051000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 79432000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 23209000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 46346000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 37554000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1502000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 673693000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 343401000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -6950000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 350351000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 280528000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 899557000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 94387000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 120170000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -81676000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 109000000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -2029000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1047163000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 92246000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 401589000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -309343000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -246694000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 803229000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 94687000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 23666000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -20192000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 44956000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 580787000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 365559000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 150751000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 214808000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 169923000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 836747000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 79177000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 68024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10296000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24956000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -101000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 637868000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 381231000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 19647000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 361584000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 292880000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 667362000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 78407000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 57213000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -24461000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 46658000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 521545000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 635086000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 711638000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 151559000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 560079000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 444481000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 693626000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 95418000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 24475000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 32714000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 305323000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 125126000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 597887000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 678795000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 118180000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 560615000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 447759000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 601983000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 80035000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 56419000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16787000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 74754000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -4630000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 537613000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 287735000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 227950000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 59785000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 48529000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 684786000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 81866000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 69783000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7440000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 45303000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2344000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 539347000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 352175000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 125402000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 226773000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 190103000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 687423000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 73874000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 77155000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5682000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5730000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -15192000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 531222000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 303450000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 133044000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 170406000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 136439000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 697083000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 81003000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 99699000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 13769000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 17064000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1875000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 556338000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 354155000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 165856000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 188299000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 149898000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 719536000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 81031000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 37912000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12297000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 33637000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1210000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 500684000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 384939000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 261851000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 123088000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 98337000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 743742000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 68087000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 89566000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -562000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10454000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -2622000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 535719000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 372946000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 324169000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 48777000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 36729000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 921718000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 69731000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 32662000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -779000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6715000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 82000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 662473000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 367656000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 337190000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 30466000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 23968000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2015,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 952029000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 73790000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -6624000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -818000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26746000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1855000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 696434000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 346834000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 935495000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -588661000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -463022000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2015,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 891795000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 77025000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2689000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10858000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -6339000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 533084000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 442944000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 332063000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 110881000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 83433000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 658127000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 74386000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 28779000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -2125000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 37071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -154000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 600671000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 195413000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 166429000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 28984000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 26934000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2015,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 895739000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 66840000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 37871000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10467000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1451000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 474365000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 538003000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 538003000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 415124000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 474462000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 100903000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 28181000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -280175000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -7587000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 604944000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -289160000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 588816000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -877976000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -677875000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 706494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 88930000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 51302000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3717000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1838000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5118000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 482419000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 367546000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 84483000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 283063000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 218974000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 692898000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 87567000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 52555000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -12000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4180000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -17985000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 454511000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 364692000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 145750000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 218942000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 169066000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 836379000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 68513000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 38216000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -15000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13397000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1355000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 463081000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 494764000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 50000000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 444764000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 345919000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 493953000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 70308000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -229665000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -164000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16482000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 85120000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 643693000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -207659000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 120449000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -328108000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -221618000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 688631000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 72264000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 56516000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -597000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 162669000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -54000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 504096000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 475333000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 75591000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 399742000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 298284000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 743710000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 72610000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 61433000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1030000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10265000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 63871000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 480622000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 470237000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 104227000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 366010000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 289291000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 809924000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 59838000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -1862000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1398000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14673000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1275000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 493072000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 389378000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 389378000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 291906000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 856105000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 54179000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -182121000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -113000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 516631000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -3016000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 789284000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 452381000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 39324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 413057000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 313138000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1155848000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 55942000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -12468000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -185000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15104000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 16263000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 586790000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 643714000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 82382000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 561332000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 414059000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2012,
+            "quater": 2,
+            "type": "M",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1414229000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 63372000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -46479000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -267000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14748000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1838000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 475945000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 971496000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 116390000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 855106000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 640285000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1471918000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 68018000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -56306000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -7402000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12599000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -24357000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 441084000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1023386000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1212000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1022174000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 771911000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1607410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 148239000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -40158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -10000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 388658000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 109475000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 741456000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1472158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 106711000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1365447000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1020719000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1443854000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 92952000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -18702000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -316000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6993000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 60000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 473128000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1051713000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 42585000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1009128000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 756221000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2011,
+            "quater": 2,
+            "type": "HX",
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2252361000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 323769000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -29297000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -291263000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -50156000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 695316000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1803564000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 121582000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1681982000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1261519000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1195,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2011,
+            "quater": 1,
+            "type": null,
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2010,
+            "quater": 4,
+            "type": null,
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2010,
+            "quater": 3,
+            "type": "N",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 798022624399,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 65851108583,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 20397217373,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 310887436,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -21073601812,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 90841336532,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 16240612115,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 263169878019,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 707420306607,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 689273237291,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 519418927546,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2010,
+            "quater": 2,
+            "type": "X",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1155498000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 114465000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 59904000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -506000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -6595000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20543000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 12957000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 422262000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 934004000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 22789000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 911215000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 712741000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2010,
+            "quater": 1,
+            "type": null,
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2009,
+            "quater": 4,
+            "type": null,
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2009,
+            "quater": 3,
+            "type": "N",
+            "content": "",
+            "time": "Q3-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 472954319755,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 51552632746,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 46972669059,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5722912996,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2465565523,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 38007535305,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4208168471,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 227844256242,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 394039547613,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 41851178328,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 352188369285,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 266300152401,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2009,
+            "quater": 2,
+            "type": "N",
+            "content": "",
+            "time": "Q2-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 463684214080,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 44849047139,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7432150059,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -2075072496,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 169866711101,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20062946612,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11988976519,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 197775695731,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 518033277283,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 88637682474,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 429395594809,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 334023024797,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "EIB",
+            "year": 2009,
+            "quater": 1,
+            "type": null,
+            "content": "",
+            "time": "Q1-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

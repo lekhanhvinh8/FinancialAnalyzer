@@ -1,0 +1,5815 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Thu nhập lãi thuần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Lãi/lỗ thuần từ hoạt động dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lãi/lỗ thuần từ hoạt động kinh doanh ngoại hối và vàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán đầu tư",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Lãi/lỗ thuần từ hoạt động khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Thu nhập từ góp vốn, mua cổ phần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Chi phí hoạt động",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh trước chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông của Ngân hàng mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 71,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "SHB",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5497241000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1288732000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 65123000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3445000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 599912000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 16783000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1283156000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6188080000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1532181000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4655899000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3725963000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3725963000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3830762000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1318508000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 72188000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -58000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 71937000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 492231000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7623000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2107960000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3685231000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 891404000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2793827000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2259937000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2259937000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5323821000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 874533000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 69395000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 444000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4063000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 143658000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -9042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1628203000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4778669000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1490449000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3288220000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2606723000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2606723000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9126756000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 684576000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 68196000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89887000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 357921000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -23293000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1620706000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8683337000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4140819000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4542518000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3606511000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3606511000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5543669000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 329251000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 48409000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 56128000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 71597000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1947000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1059418000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4991583000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 621079000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4370504000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3496350000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3496350000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8283811000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 754928000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 38517000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2141000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -109984000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 428382000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 6178000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2276373000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7127600000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4632726000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2494874000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1981599000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1981599000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3261808000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 144726000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -25716000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 24000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 74788000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 388962000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7111000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1160910000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2690793000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 517380000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2173413000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1739931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1739931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4098592000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 224343000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 21023000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24151000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 165739000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7698000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1195279000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3346267000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 503617000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2842650000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2275286000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2275286000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5170071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 148542000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 52460000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 456213000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7540000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1114655000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4725213000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 708192000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4017021000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3209284000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3209284000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5356054000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 134246000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 45021000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 34224000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 282989000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -44293000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1192502000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4615739000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3880765000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 734974000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 579065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 579065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4421543000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 37894000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 107792000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11543000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12370000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1546063000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3045079000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 619788000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2425291000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2058692000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4133798000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 129295000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 64569000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9748000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94484000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 675212000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1115587000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3991519000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1538691000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2452828000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2060208000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5843911000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 222324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 64831000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 988000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 69952000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1667000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1209770000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4993903000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1373956000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3619947000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2881168000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4292071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 246893000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 20423000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 33977000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 109505000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2143000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1262779000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3442233000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2818636000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 623597000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 478547000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4820791000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 254526000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 18521000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 92525000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 130717000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1179434000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4137646000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 879457000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3258189000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2590623000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4209564000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 220922000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 49072000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 27925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 246055000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2083000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 944796000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3810825000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1189403000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2621422000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2096051000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4222746000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 157264000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 28270000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 65920000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 209239000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 10230000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 995024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3698645000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 472143000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3226502000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2581681000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4774049000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 177334000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 33431000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 174856000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 803429000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 17259000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1349761000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4630597000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1169223000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 938705000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3965594000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 146616000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 35466000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 475344000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 37084000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 911760000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3748344000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1879540000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1868804000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1494652000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4461426000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 131881000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 18200000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 242494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 86040000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1250483000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3689558000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2258452000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1431106000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1145341000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2225849000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 126549000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 53515000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 51866000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94793000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2083000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 890605000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1664050000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1664050000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1330095000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3312612000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 187672000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 59884000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 897919000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 171469000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1212003000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3417553000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2612241000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 805312000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 642423000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2530372000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 120247000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 56486000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 381998000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 71804000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 570000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1157726000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2003751000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1056622000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 947129000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 757336000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2319338000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 94423000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 30629000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11940000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6239000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 833000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 881396000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1582006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 663809000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 918197000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 743189000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1684058000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 111687000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44934000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1949000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5910000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1667000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1070706000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 779499000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 779499000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 614374000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2481760000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 342633000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 99202000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 314768000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 144074000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 417000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1285847000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2097007000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1281867000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 815140000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 650689000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2254814000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 32637000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 26018000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 113550000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10447000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 668000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1023122000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1415012000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 714181000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 700831000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 559648000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1742080000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 193051000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 17109000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11660000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18960000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 791982000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1190878000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 373229000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 817649000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 642158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1352782000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 125384000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 13942000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 30854000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18546000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1250000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 799188000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 743570000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 743570000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 594365000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2192710000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 475468000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 10245000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6086000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 111074000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1170654000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1624929000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 620837000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 494024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1174231000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 61189000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 24500000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10511000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1150000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 696540000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 578972000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 230771000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 348201000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 278661000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1098020000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 46910000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -811000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 235444000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21605000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1052000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 677716000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 724504000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 182614000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 541890000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 432792000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1073024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 58407000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 27549000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 28385000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7160000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 625518000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 569007000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 66150000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 502857000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 402285000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2141608000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 330129000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43307000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5240000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22393000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3323000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1220000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 816683000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1730537000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1122772000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 607765000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 477938000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 716931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 844410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 30346000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14454000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9364000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 163243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 900000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 630423000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1149225000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 620242000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 528983000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 425794000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1181108000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 103463000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -15552000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -6398000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -28843000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 696000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 639054000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 595429000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 100749000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 494680000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 400919000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 924533000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 77535000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 27544000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1133000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -200000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21763000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 553602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 498706000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 191600000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 307106000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 245042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1840419000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 192387000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 31671000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1347000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5883000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 30900000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 885775000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1216832000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 840887000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 375945000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 311622000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 717163000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 57715000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 29860000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 906000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 325706000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 476000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 623534000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 508292000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 244692000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 263600000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 203464000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 769203000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 60579000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -3366000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 63000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2478000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1465000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 901000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 541996000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 289327000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 69408000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 219919000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 179849000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 888494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27378000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 26114000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 453000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 39964000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 750000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 506872000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 473239000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 168289000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 304950000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 244346000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2015,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1171186000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 152205000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 21802000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1086000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7099000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20983000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5030000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 623630000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 755761000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 456801000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 298960000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 239506000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2015,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 811382000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 37886000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 23295000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 222000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2645000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 119410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 284000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 608841000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 386283000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 138815000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 247468000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 192899000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 840878000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 38311000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 10884000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2058000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -51845000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9247000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3041000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 342478000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 510096000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 238544000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 271552000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 213650000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2015,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 616774000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 23006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 35584000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 794000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 165000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 100000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 209000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 460070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 216562000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 7966000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 208596000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 165708000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2014,
+            "quater": 4,
+            "type": "N",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 972818407897,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 96659921492,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 18695171087,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -3303997782,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -743794962,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 854946729,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 272895040,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 521877069515,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 563376479986,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 281663588604,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 281712891382,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 226009770214,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 734938747319,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 28973921684,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 13831965329,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3997857996,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -23686862975,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 34251024372,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4834894305,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 430884409562,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 366257138468,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 130716620970,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 235540517498,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 190402429306,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 726269723774,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 176910282590,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 28914311741,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -2614707822,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -6316227484,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27357120615,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 6165592000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 294675379011,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 662010716403,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 433762787275,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 228247929128,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 185692991315,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 349554276226,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 26710717410,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5009688259,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1957707822,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 50891227484,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8345879385,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 65408000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 381775620989,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 60759283597,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -215933787275,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 276693070872,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 216589008685,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 670816787491,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12069866746,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -66918123889,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 711325021,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3820789312,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10912917657,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2578069000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 407477964908,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 218872087806,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -68517035295,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 287389123101,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 217074208638,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 550115962848,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 40022664651,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 38359371493,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9999276930,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3069064975,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9198714681,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1684594978,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 378989968693,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 267321551913,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 46934658099,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 220386893814,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 236115472057,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 555330450044,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 54432079601,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 33971724308,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1568881222,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -9893779449,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -663989580,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1682402800,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 350934155343,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 285493613603,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 179476829718,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 183069561413,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 141155582180,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 427622549956,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 33655920399,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 57987275692,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -3398881222,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 501779449,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15329989580,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 301597200,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 455595844657,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 76404386397,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -141208829718,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 217613216115,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 163068425291,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 321991052651,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 33203466552,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -3145209997,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3750732282,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 120680351220,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 752114253982,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 6656321452,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 653274514124,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 581976454018,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -550871456583,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1132847910601,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1132435683845,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 384891123328,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25022488880,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5466802936,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -2966753398,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -5391549613,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16782372816,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4088913995,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1042531820144,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -614638421200,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1092121595446,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -1706760016646,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -1706769222040,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 415544714669,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 23864154328,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 20489370429,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -587207647,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3472416461,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 88664570150,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 293093750,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 312630521113,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 246418415700,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -54331515305,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 300749931005,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 222616727884,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 568419285331,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 71964845672,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 11944629571,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3196780000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4440882486,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -40097587,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 960290200,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 291509351764,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 369377263909,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 68633097752,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 300744166157,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 224620939444,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 517571985786,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 127771914994,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 484819575,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -17677649200,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -7689384920,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 70150550214,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2026192500,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 339034689453,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 353603739496,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 59388384112,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 294215355384,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 221168064663,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 579642088152,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 28452919520,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 18063474196,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3148245175,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 992426846,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 775158200,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 303723967427,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 321053854312,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 24629931773,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 296423922539,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 222511731454,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2011,
+            "quater": 2,
+            "type": null,
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2011,
+            "quater": 1,
+            "type": "N",
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 393539747701,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 38209847088,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1691793078,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1793400000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 40091500,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3651146553,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 325206200,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 227207667386,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 212043564734,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 202367303842,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 151856779432,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2010,
+            "quater": 4,
+            "type": "N",
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 414846997088,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25490403268,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 19532692299,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -683472068,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 17680122805,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2649993296,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 541726000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 243652481779,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 236405980909,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 178734340641,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 134185270085,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2010,
+            "quater": 3,
+            "type": "N",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 242788836997,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11271050198,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5152586280,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 300000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 40081186698,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 32047222771,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -141500000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 169828646922,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 161670736022,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 159227312435,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 119385109326,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2010,
+            "quater": 2,
+            "type": "HX",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 245187736366,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 23103921790,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -340118724,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9910000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 52664947400,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 6526767200,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 140645562608,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 195337691424,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 36758000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 158579691424,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 120574460368,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2010,
+            "quater": 1,
+            "type": "N",
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 212316263634,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 45899078210,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 28786118724,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1179052600,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 163232800,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 127257437392,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 161086308576,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 161086308576,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 120855539632,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2009,
+            "quater": 4,
+            "type": "N",
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 201112539134,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 49936005503,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 23688761699,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 37789199400,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1348511915,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1227220000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 164692649643,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 147712564178,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 78866107214,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 62235945343,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2009,
+            "quater": 3,
+            "type": "N",
+            "content": "",
+            "time": "Q3-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 143431255475,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6481495086,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 14007427533,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 824298600,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -767739724,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 9049336000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 68663427265,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 104362645705,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 83247119347,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 62435339510,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2009,
+            "quater": 2,
+            "type": null,
+            "content": "",
+            "time": "Q2-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2009,
+            "quater": 1,
+            "type": "N",
+            "content": "",
+            "time": "Q1-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 112125646412,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 251923251,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5118982576,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -211699724,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4756717179,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 41167565009,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 80874004685,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 80874004685,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 60655503514,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2008,
+            "quater": 4,
+            "type": null,
+            "content": "",
+            "time": "Q4-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SHB",
+            "year": 2008,
+            "quater": 1,
+            "type": null,
+            "content": "",
+            "time": "Q1-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

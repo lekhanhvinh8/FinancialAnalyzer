@@ -1,0 +1,3975 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 48,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "NLG",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1279401152222,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 898474872034,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 380926280188,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 68222638347,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 91588002956,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 102277704361,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 85966608851,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 176253373546,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 703466092,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 6936771179,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 176956839638,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 109516870300,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 68223693278,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 128,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1704152132207,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 918937430888,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 785214701319,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 534192581857,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 362880874966,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 271153195475,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 167714565101,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 560051222141,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6883597431,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 42392574507,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 566934819572,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 504868412213,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 347722290041,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 679,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1877218621324,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1049763211007,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 827455410317,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29030879199,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 136372487459,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 208075808502,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 201022766164,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 316400147191,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13448638384,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 5384919800,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 329848785575,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 234048067926,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 145962934607,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 356,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 772555911115,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 440758059296,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 331797851819,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 43288016702,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 48388612902,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 121139951391,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 85244840252,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 140598965426,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8478359926,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 20286501450,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 149077325352,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 97537781984,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 99329545807,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 238,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1291159914501,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 878347824670,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 412812089831,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 48094220472,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 99001908310,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 99284896697,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 138768880363,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 131832614154,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10527264326,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 7981989221,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 142359878480,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 109854673067,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 108356851947,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 261,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6368541228568,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3644052925311,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2724488303257,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 39610615095,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 153135894267,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 639099088211,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 258748836138,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1728767159101,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18343255385,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 15652059365,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1747110414486,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1327233245244,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 496723705334,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1232,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 370575024423,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 242284606180,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 128290418243,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 21432645938,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 60008397123,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27999139966,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 136166873481,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -58009969408,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18904703363,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 16441376981,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -39105266045,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -40386811205,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -52374159647,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -136,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 204643091067,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 118105411704,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 86537679363,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 25667172205,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 50550210595,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 32913754537,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 111629808631,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -58726144113,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12159977704,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 24162778082,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -46566166409,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -65005927754,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -76847110994,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -197,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1635961484491,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 944162992602,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 691798491889,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 127716556751,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 87111422783,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 186977810202,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 167291164072,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 591389816455,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 19181703906,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 213255164872,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 610571520361,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 481836157275,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 289807847759,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 711,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 356979949380,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 207210558447,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 149769390933,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 32040129694,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 66351291918,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 72374780736,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 124983606680,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7547010892,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4400679689,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 89447169599,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3146331203,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 70936603417,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 66309940842,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 163,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 953347465831,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 392561104360,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 560786361471,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 40537975772,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 74521162191,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 128026167740,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 122217353455,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 313753143353,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6205555163,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 37193489496,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 319958698516,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 231472150648,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 120809108506,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 297,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 235132891025,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 75449742590,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 159683148435,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 45770503740,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 76533717490,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 37066573702,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 141346606926,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 28816564270,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5589564448,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 78309810213,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 34406128718,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 16232523010,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 6809504466,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 18,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1629030474887,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 814628976212,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 814401498675,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 306975572543,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 69491507319,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 186284914230,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 199154321043,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 688465460149,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16186322879,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 22019131523,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 704651783028,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 589733333050,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 437077771375,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1138,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 881714640535,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 523622813289,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 358091827246,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29057763524,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 47985695819,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 107225640002,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 160134293688,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 71803961261,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7225949950,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 79029911211,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 50881625746,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7906518432,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 21,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1240687933919,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 679332498157,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 561355435762,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 26144642946,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 42410165949,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 158195820244,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 149822766316,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 239591281001,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2337264697,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2519954802,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 241928545698,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 192279745957,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 110659019487,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 209,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 587408368324,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 337298997681,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 250109370643,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 23479877762,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 38691565722,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 59206599885,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 134509769089,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 41187751893,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3033807668,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 6438184,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 44221559561,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 32650841578,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 630401146,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4418040663757,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2872587525170,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1545453138587,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 56451883619,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 51541048789,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 380361058911,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 222480437531,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 943818011150,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5951259377,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -3704465825,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 949769270527,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 768581098056,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 361378871007,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1005,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 150941135190,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 74550364761,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 76390770429,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 371610826905,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 18628196809,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8978612957,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 127680883728,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 292716160520,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1225124187,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2256680,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 293941284707,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 294931888142,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 297143589151,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2387,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 400773524013,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 284505393212,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 116268130801,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9006530545,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21026851227,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16297783297,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 103384858908,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 47345674166,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 506257444,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 62780506252,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 47851931610,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 48139359575,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 47003646412,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 157,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 235764175742,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 195648416414,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 40115759328,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7791378766,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21166104901,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10429328825,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 127257423307,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -78963656408,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 427309249397,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 31982062531,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 348345592989,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 366306557365,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 365300219353,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1280,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 918450344745,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 668021896903,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 250428447842,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 648756196176,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 81438055576,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 42330003487,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 128695329496,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 744553572031,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5773338131,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 97832316572,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 750326910162,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 633047353535,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 626815707791,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2383,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 683433579639,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 515126072523,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 125003925202,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16352207379,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11633725815,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9949441747,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 79285733084,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 41613832900,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2334446675,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1126600965,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 43948279575,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 32318748488,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 29262180465,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 116,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 241937846123,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 103663640033,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 138274206090,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46134599972,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6210640959,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7832092889,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 90065732524,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 86126388704,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5790894412,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 5826049014,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 80335494292,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 67882315239,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 68244092005,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 270,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 416200981528,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 259299416252,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 156901565276,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15467130745,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3234822963,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6951301662,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 68732833652,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 130313572796,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9803839695,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 36863835052,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 140117412491,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 116968364732,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 110421778909,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 437,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1221269278394,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 739517986068,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 481751292326,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 21926542368,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1578509265,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 45990999003,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 93574451008,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 476746387050,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 244045478109,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 114212511632,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 720791865159,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 559552687099,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 547827510678,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2235,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 392044218851,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 149836261032,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 239647506258,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41626425710,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7251364399,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18262209658,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 77195091045,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 176993299966,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 812995687,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1571966900,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 177806295653,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 162753625771,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 146493175015,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 624,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 603072026961,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 353628388235,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 249443638726,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 40902867670,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21242246509,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 33237909961,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 69432543529,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 171249461935,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 652417690,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4815655538,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 171901879625,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 133351426235,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 120513355456,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 496,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 332275706000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 236663031514,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 95612674486,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15687950669,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 14376686745,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21795746969,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 65365581717,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 18193658316,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 137094236211,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 8431048592,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 155287894527,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 151126038862,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 145241359070,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 672,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1330126517856,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 692246234413,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 637880283443,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 32864774274,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11759604939,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 44930861868,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 56248634828,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 560248572373,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4608689173,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2442616291,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 564857261546,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 449872433296,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 420061128422,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2122,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 871098289790,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 507951218001,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 363147071789,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 34766985267,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4155222031,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 61571178763,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 44477968219,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 290133460750,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2898676041,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2475189689,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 293032136791,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 235646135310,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 183367194081,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 949,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 539234626875,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 358279114990,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 180955511885,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 18281680442,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3912104380,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 58654288572,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 46567790726,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 90795332583,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1808266919,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 692323934,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 92603599502,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 62851821257,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 31714552484,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 199,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1524644711635,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 984669644155,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 539975067480,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29770301160,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7067392732,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 134292061124,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 72653488730,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 354771993436,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3499483460,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -960432618,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 358271476896,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 291415244378,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 183097269842,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1134,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 377079372279,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 235462080896,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 139569143665,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 30009820038,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4640873892,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 30016178764,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 42155922791,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 92767809270,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 619848579,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1821014,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 93387657849,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 71500409099,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 41933958121,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 260,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1007269268822,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 471194925924,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 534589876508,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 19592758590,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12520337044,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 31114511468,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 40684405196,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 467953795232,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 897209429,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1909586158,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 468851004661,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 369823933674,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 288881786686,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1783,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 255850907537,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 175041591331,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 80809316206,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15377984552,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5108133958,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 23088001445,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 39679451040,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 28311714315,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1420088602,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 29731802917,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 23425194399,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 21104028694,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 145,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 862273486677,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 491756100089,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 370517386588,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 12221779415,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10864800933,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 72991648757,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 55219811185,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 243935250151,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2940462656,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 272345023,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 246875712807,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 199198313289,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 182691725531,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1256,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 603792341742,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 460793083157,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 142999258585,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6603923501,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9665692882,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 40456992147,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 38580959964,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 60899537093,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 394504780,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 61294041873,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 51328158916,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 35140860697,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 242,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 692985436680,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 485626951130,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 207358485550,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3876950738,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3320550164,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 51497160907,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 39110669516,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 117470337963,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2355323591,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 163282262,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 119825661554,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 94897302682,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 85812589042,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 566,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 374747554946,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 256991205082,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 117756349864,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1325398813,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3098778833,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 23674128064,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 37226422252,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 55245701790,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1099798429,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 163282262,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 56345500219,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 42146394991,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 41572564355,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 308,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 241548008244,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 158101051081,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 80384097526,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 10625416519,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3772494338,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15591864268,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 32990272686,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 38810211873,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1643670608,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 155329120,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 37321870385,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 26855536806,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 26327187647,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 206,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 501026716840,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 307872647212,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 192283552183,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 17387770366,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 43721737166,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 47597506152,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 122833353051,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 22215479552,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 144861900760,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 111822868708,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 111930349157,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 985,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 135777227668,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 85985799186,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 48881511037,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2660550958,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4511892616,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7420092673,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 28934241869,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7927010352,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 588917932,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 8590813758,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5234183763,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 231943178,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 185017766864,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 131638845898,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 52759163967,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3297429403,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2810975790,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13188309320,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 26790949443,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 10563539031,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 27296187,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10862896722,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 9363156111,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4844312334,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 45,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 47507533104,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 37258274256,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 10249258848,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4183056335,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 8531885498,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6510706720,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 24079191406,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -26018967007,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1000657446,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -25021999886,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -23199995033,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -21671780295,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -185,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 403253093068,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 319200062238,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 84053030830,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6437152881,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1143028136,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 33603749168,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 46148698917,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13450051016,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 73129847150,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 56368797166,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 54407725632,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 596,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 255682715088,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 167801396006,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 80902845953,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1100647643,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9501139802,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12871139952,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 19216009982,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 34607727693,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 295183517,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 34845933154,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 33046045978,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 25797749111,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 282,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 84324181510,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 57505423976,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 26818757534,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1020541851,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -32435910690,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7794681439,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34753256974,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -25564420572,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 358449303,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -25190848588,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -26642537404,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -28232053805,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21361078566,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13383808207,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6926997240,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1316589512,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10808348073,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4243705642,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 28251742244,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -35274857804,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -277119996,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -35542631718,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -36263276282,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -33738863343,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -369,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

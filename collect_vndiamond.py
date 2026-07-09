@@ -3,7 +3,12 @@ Collect prices + fundamentals for VN Diamond members not already in the DB.
 
 Prices and shares: vnstock (VCI source)
 Net profit history: CafeF API (backfill to earliest available quarter)
+Raw JSON responses saved to data/raw/cafef/ for auditing.
 """
+
+import sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 import time
 from datetime import date
@@ -11,6 +16,8 @@ from datetime import date
 import database as db
 from sources import vnstock, cafef
 from seed_vndiamond import VNDIAMOND_SNAPSHOTS
+
+RAW_DIR = "data/raw/cafef"
 
 db.init_db()
 
@@ -48,7 +55,7 @@ def _call_with_retry(fn, *args, label="", **kwargs):
         except Exception as e:
             msg = str(e)
             if any(k in msg.lower() for k in ("rate", "limit", "20/", "exceeded")):
-                print(f"  Rate limited — waiting {_RETRY_WAIT}s (attempt {attempt}/{_RETRIES})")
+                print(f"  Rate limited -- waiting {_RETRY_WAIT}s (attempt {attempt}/{_RETRIES})")
                 time.sleep(_RETRY_WAIT)
             else:
                 raise
@@ -56,7 +63,7 @@ def _call_with_retry(fn, *args, label="", **kwargs):
 
 
 for i, symbol in enumerate(need_prices, 1):
-    print(f"[{i:02d}/{len(need_prices)}] {symbol} — prices + shares")
+    print(f"[{i:02d}/{len(need_prices)}] {symbol} -- prices + shares")
     try:
         prices = _call_with_retry(vnstock.get_prices, symbol, START, END, label=symbol)
         db.save_prices(symbol, prices)
@@ -76,11 +83,12 @@ for i, symbol in enumerate(need_prices, 1):
 # ── Net profit via CafeF ──────────────────────────────────────────────────────
 print()
 for i, symbol in enumerate(need_profit, 1):
-    print(f"[{i:02d}/{len(need_profit)}] {symbol} — net profit (CafeF)")
+    print(f"[{i:02d}/{len(need_profit)}] {symbol} -- net profit (CafeF)")
     try:
-        profit = cafef.get_net_profit(symbol)
+        profit = cafef.get_net_profit(symbol, raw_dir=RAW_DIR)
         db.save_net_profit(symbol, profit, override=True)
-        print(f"  net_profit: {len(profit)} quarters")
+        codes = profit["source_code"].unique().tolist()
+        print(f"  net_profit: {len(profit)} quarters, codes={codes}")
     except Exception as e:
         print(f"  ERROR profit: {e}")
         errors.append((symbol, "net_profit", str(e)))

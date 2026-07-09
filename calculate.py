@@ -22,18 +22,21 @@ import pandas as pd
 import database as db
 
 _MEMBER_LOADERS = {
-    "vn30":      db.load_vn30_members,
-    "vndiamond": db.load_vndiamond_members,
+    "vn30":       db.load_vn30_members,
+    "vndiamond":  db.load_vndiamond_members,
+    "vnfinlead":  db.load_vnfinlead_members,
 }
 
 _PE_SAVERS = {
-    "vn30":      db.save_pe_history,
-    "vndiamond": db.save_pe_vndiamond,
+    "vn30":       db.save_pe_vn30,
+    "vndiamond":  db.save_pe_vndiamond,
+    "vnfinlead":  db.save_pe_vnfinlead,
 }
 
 _PE_LOADERS = {
-    "vn30":      db.load_pe_history,
-    "vndiamond": db.load_pe_vndiamond,
+    "vn30":       db.load_pe_vn30,
+    "vndiamond":  db.load_pe_vndiamond,
+    "vnfinlead":  db.load_pe_vnfinlead,
 }
 
 
@@ -66,6 +69,11 @@ def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFra
     profit_df = profit_df.sort_values(["year", "quarter"]).reset_index(drop=True)
     profit_df["quarter_end"] = profit_df.apply(
         lambda r: _quarter_end(int(r.year), int(r.quarter)), axis=1
+    )
+    # Coalesce: kqkd_14 (parent shareholders) -> kqkd_13 (consolidated) -> kqkd_10 (brokers)
+    profit_df["net_profit"] = profit_df["kqkd_14"].where(
+        profit_df["kqkd_14"].notna(),
+        profit_df["kqkd_13"].where(profit_df["kqkd_13"].notna(), profit_df["kqkd_10"])
     )
     profit_df["ttm"] = profit_df["net_profit"].rolling(4).sum()
     profit_ts = (
@@ -173,7 +181,7 @@ def calc_pe_history(
 if __name__ == "__main__":
     db.init_db()
 
-    for idx in ["vn30", "vndiamond"]:
+    for idx in ["vn30", "vndiamond", "vnfinlead"]:
         print(f"\n{'='*55}")
         print(f"Calculating {idx.upper()} aggregate P/E …")
         pe_df = calc_pe_history(index=idx)

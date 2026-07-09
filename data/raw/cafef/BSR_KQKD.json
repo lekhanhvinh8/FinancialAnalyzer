@@ -1,0 +1,2775 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 33,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "BSR",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 45919538260329,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 36412959508264,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9506578752065,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 529221264918,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 250612691281,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 277470970446,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 272277081450,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 9235439273806,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13186802820,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9248626076626,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8265520701385,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 8264713781616,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1651,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 37621442363611,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 33979997508658,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3641444854953,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 450508316618,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 92493764982,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 281733904983,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 280017612867,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3437707888739,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5481496070,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3443189384809,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3034548007464,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3034013069975,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 606,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 35290234805794,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 34281707958038,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1008526847756,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 552907003729,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 163753501370,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 195072820474,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 145723355513,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1056884174128,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5578127281,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1051306046847,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 908594978790,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 907545618973,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 293,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 36772242585394,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 35741877990365,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1030364595029,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 445536602055,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 121829206631,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 190422984395,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 189998863910,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 973650142148,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7583837535,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 981233979683,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 846912239248,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 845889011338,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 273,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 31894592097760,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 31512257003126,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 382335094634,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 464519353041,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 102819368758,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 156767119055,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126044194829,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 461223765033,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10295106391,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 471518871424,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 399450059245,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 398719235293,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 129,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 35968283214610,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 35816209648481,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 152073566129,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 410154522226,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 280358876613,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 214467492802,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 177384475865,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -109982756925,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7938949234,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -102043807691,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -89126262492,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -89842824046,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -29,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 31945856725324,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 33415461176332,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -1469604451008,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 553741907200,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 125430021099,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 164343838625,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 128663064192,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -1334299467724,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4967528694,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -1329331939030,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -1209491222470,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -1210167499868,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -390,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 24428608016630,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 23930400615503,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 498207401127,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 745783066229,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 138040456003,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 125273609397,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 144808128034,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 835868273922,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4363811771,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 840232085693,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 768546211604,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 767747438165,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 248,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 30689342319179,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 29433738639800,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1255603679379,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 520333176015,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 256078265390,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 147940996871,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 111190934713,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1260726658420,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10652486309,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1271379144729,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1115449983227,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1143819690777,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 369,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 41932747445582,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 39404042832083,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2528704613499,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 959360620094,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 351076303392,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 356282487093,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 242747839673,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2537958603435,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8272535759,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2546231139194,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2268867776261,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2279145204147,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 735,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 37755693648206,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 33925168600833,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3830525047373,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 419867846446,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 318860173788,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 176396640176,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 136611904983,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3618524174872,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1909256290,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3620433431162,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3235304304170,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3260330768040,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1052,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 33669033433011,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 32491415462906,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1177617970105,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 714615641541,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 92931937793,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 176117290426,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 158042223925,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1465142159502,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7266634729,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1472408794231,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1326437740773,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1339432531307,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 432,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34065891416777,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 31994381792095,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2071509624682,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 809925714997,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 638914578983,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 325325728724,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 88510953990,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1828684077982,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 14481245039,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1843165323021,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1620939131507,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1629199786444,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 525,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 40429748620195,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 38702997674464,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1726750945731,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 648187699510,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 238852082464,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 319760666234,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 225101334081,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1591224562462,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 29432670951,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1620657233413,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1494567134762,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1498602141545,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 483,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 39570169484985,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 38913015728948,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 654043840480,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 345497425923,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 237588865831,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 156502065623,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 94844374378,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 510605960571,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3661459969,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 514267420540,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 454937340568,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 478614001622,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 154,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 52391131816173,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 41705493471894,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 10685638344279,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 292146970649,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 254715851238,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 191900215623,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 96089163167,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 10435080084900,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 31330128252,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10466410213152,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 9909756263183,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 9926699126427,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3202,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34783091199100,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 32171267741552,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2611823457548,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 356119368929,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 189425865921,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 248873204725,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 87548975565,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2442094780266,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21341187199,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2463435967465,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2312231722439,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2324074255274,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 750,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34522481246651,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 31316764780071,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3174850698934,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 240899309956,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 183208813851,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 223619935161,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 154597175817,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2854324084061,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24379173163,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2878703257224,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2674984946687,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2683985893890,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 866,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17683055031137,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17035690835799,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 643542525287,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 290582996105,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 147646450190,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 207630307140,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 84272413263,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 494576350799,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5177497680,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 499753848479,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 470547561848,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 476067227696,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 154,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 27859886072961,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25992206579175,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1867679493786,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 304060275931,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 159596662714,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 176812274789,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 79194897178,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1756135935036,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2295424373,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1758431359409,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1695651386314,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1704214093421,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 550,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21048655068878,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19008418257187,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2040236811691,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 199744393353,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 132166208307,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 193843857653,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 67340096354,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1846631042730,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2149832896,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1848780875626,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1848377697215,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1856468589754,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 599,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17134510012534,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15762995537833,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1371514474701,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 171897360672,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 84921272341,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 141812387913,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75070555102,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1241607620017,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5599845542,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1247207465559,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1246295863827,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1254374672998,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 405,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9097968959922,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8816395335400,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 281573624522,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 133101872301,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 93971658677,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94989142286,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 66048507666,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 159666188194,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4773705080,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 164439893274,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 162863303784,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 173033101904,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 56,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13736905920230,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15615509749990,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -1878603829760,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 273345937643,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 95416060477,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 150442157609,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 59185650364,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -1910301760567,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13295022573,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -1897006737994,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -1898144826875,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -1894246679839,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -611,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17991039747422,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19981871052542,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -1990831305120,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 116767611355,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 244412270597,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 164323981412,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 65782385424,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -2348582331198,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3212321921,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -2345370009277,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -2347531088151,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -2330285178179,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -752,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 28889737207217,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27074791749012,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1814945349205,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 158147041880,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 103786063632,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 176219382443,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 102913263482,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1590173681528,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 14715444155,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1604889125683,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1507438003922,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1516894100217,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 448,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23012446889456,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 22271196124650,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 741250764806,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 164818827274,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 44761421794,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 171696283924,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 89916650279,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 599695236083,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24490662593,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 624185898676,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 589411207780,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 597726984796,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 193,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 27844709230672,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27225413956036,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 619293274636,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 108995542790,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 104247743295,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 185686789964,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 130630951881,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 307723332286,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9315199363,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 317038531649,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 299169340610,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 311378635458,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 100,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23070461526118,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 22214227244999,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 856233021119,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 100806324714,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 104578462766,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 174992934253,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 59976994352,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 617490954462,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13658176793,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 631149131255,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 597785325421,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 607950222664,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 196,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 29237942444059,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 30068987336292,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -831044892233,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 205436718906,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 135127006657,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 196516546403,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 117861427300,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -1075113153687,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3733409562,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -1071379744125,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -1026805486102,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -1010231319341,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -326,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 26820125963784,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25096167684364,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1723958279420,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 137605503140,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 384042479957,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 178602706084,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 52558515777,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1246360080742,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3943245732,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1250303326474,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1185105211466,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1201837608922,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 32900662421063,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 30183873079903,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2716789341160,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 142255345957,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 169801309552,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 220187783498,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 124003598014,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2345051996053,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2025928695,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2347077924748,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2211224703706,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2211224703706,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 54489918376520,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 48279008500629,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6210905415571,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 573551802085,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 444084084334,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 407246824676,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 220716527018,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5712409781628,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10605992598,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5723015774226,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5430487391820,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5460989912624,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

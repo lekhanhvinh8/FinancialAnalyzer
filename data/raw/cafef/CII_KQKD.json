@@ -1,0 +1,6295 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 77,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "CII",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 859077794790,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 385022856192,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 448442659662,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 90897905725,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 329384564835,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20732829248,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 104277007863,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 84946163441,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -11901933119,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 73044230322,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 40767538707,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 20976186616,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 27,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 850650749804,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 355441149115,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 469266077093,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 249445366913,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 417484265767,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 17068713955,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 139651820060,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 144506644224,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 184976144,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 144691620368,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 135780716860,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 75028353857,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 122,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 740098660112,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 366473200957,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 348013180219,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 181275237236,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 303084225005,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 23215519496,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 109546011686,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 93442661268,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -29830951673,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 63611709595,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 56127012605,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11059838723,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 10,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 776687434371,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 330061314241,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 420900458694,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 231991326970,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 374197604525,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20709467665,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 108643622383,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 149341091091,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -35088323416,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 114252767675,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 110202673629,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 35735640802,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 59,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 721287742607,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 270936337536,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 424687028735,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 170165679287,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 345197325058,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21487101350,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 99413810894,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 128754470720,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -18660611900,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 110093858820,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 95605159565,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 18073806169,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 34,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 811114596888,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 367462951720,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 389186654184,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 187803340213,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 357817426121,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22656852999,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 145066602427,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 51449112850,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -20689670872,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 30759441978,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 99833878192,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5947019009,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 10,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 732208153912,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 287621955919,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 418937555421,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 179202972567,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 347349782104,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 19535884940,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 96950886815,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 134303974129,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -18496222034,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 115807752095,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 95467156558,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5950412420,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 10,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 903666792442,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 406602007526,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 471452505980,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 532309602418,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 450842243809,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24460075463,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 186612178504,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 341968138449,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2324104386,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 120527827,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 339644034063,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 322879832340,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 259431235667,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 752,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 769870446844,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 323314511259,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 409247288649,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 576017380304,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 489852520090,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 33696979833,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 202329279562,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 200399062761,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -25542388914,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -58986826707,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 174856673847,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 167294560682,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 122736871672,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 414,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 761191914602,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 466340874674,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 265725736992,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 270620945474,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 371770485124,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12914420640,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 68132450599,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 107253214775,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3280171504,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 23723888672,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 103973043271,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 96226310477,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 21507940866,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 63,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 868899153559,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 641605158705,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 201681715918,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 461939329081,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 454826811660,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 17560409921,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 104058794144,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 85544828361,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 253918494,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1630200913,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 85798746855,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 83346636319,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 36335060843,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 113,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 776820626587,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 472394654442,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 275656185315,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 217289837969,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 342451263655,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15751536354,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 86124986397,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 68750791775,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4785512109,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 20132554897,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 73536303884,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 34841703701,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7125739618,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 27,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1905356313402,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1562623116669,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 302565581266,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 233802152559,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 352857601811,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21943038405,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 134766038608,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 77538260829,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3209625366,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 50737205828,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 80747886195,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 43608497443,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3948192575,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2209161685297,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1854610940189,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 329214208892,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 177432519016,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 322910709589,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18644646209,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 87928336611,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 97773098584,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1742829062,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 20610063085,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 99515927646,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 51677661340,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7391111471,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 6,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1000717564174,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 495127903655,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 452999104308,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 199834135235,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 320984355668,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18635542142,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 106447668901,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 183239874155,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -392330428,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -23525798677,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 182847543727,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 126841236408,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 73804564125,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 96,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 752216132942,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 452747195902,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 259001248827,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 915696410290,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 361777596292,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 17642478776,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 102215625636,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 713364857157,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1332837409,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 20302898744,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 712032019748,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 685225560737,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 646805002745,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2681,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 660608171038,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 585692895004,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 58533009394,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 175829451013,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 481136659030,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18662604362,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126388079066,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -412863101118,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -9920970294,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -21038219067,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -422784071412,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -372428595284,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -375078194715,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1563,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 260598234336,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 189240683953,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 69499388948,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 373958611498,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 278034272414,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9757491809,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 109889075880,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 66285460809,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -636774028,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 20508300466,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 65648686781,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 10647372846,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2323998080,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 10,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1094031846661,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 686492483847,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 382363208131,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 246030409001,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 362911971897,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22917593922,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 119335347817,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 111285735470,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 23496690426,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -11942968026,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 134782425896,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 56821102502,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 12921599073,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 51,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 968791345796,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 649414382656,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 314134031351,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 188081268262,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 286313883512,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9721654938,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 121019121422,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 103166771041,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5016658736,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 18006131300,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 98150112305,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 48077875402,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4411053865,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 18,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2812101722323,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2066603927602,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 363780544557,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 228810453965,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 214657190142,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 79950720734,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 192212436896,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 108584650322,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 20937540395,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2813999572,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 129522190717,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 77453632524,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 8122840011,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 36,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1826188440637,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1484088814467,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 336974686016,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 289194276532,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 308318713971,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 65947810661,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 153930477161,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 110118397695,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3692815368,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 12146436940,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 113811213063,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 81200404554,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 30255381189,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 125,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 657007130394,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 392988277043,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 258893913197,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 250807165449,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 317591734114,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9483530755,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 129259991798,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 52996846244,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 51777380122,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -368975735,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 104774226366,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 116356989701,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 18298864413,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 38,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 490961037995,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 288180891239,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 183840837352,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 575075939802,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 251761943081,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8240825799,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 123125928272,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 365127625830,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -31064006038,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -10660454172,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 334063619792,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 274827119848,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 245958828068,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 992,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 365354631216,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 222027066898,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 125637496582,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 712423528265,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 347921191674,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10422343691,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 153933307199,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 339621567385,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 44787739414,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 13837385102,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 384409306799,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 309982947755,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 266263198903,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1020,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 449333719729,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 306286820114,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 137921945003,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 781784105206,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 260456731158,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10324647901,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 124023157203,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 537517204227,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 96743759525,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 12615690280,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 634260963752,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 494912544702,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 410145602507,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1573,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 457744044042,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 307469865983,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 145022556331,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 354592494638,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 319381956458,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9538614350,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 92254292834,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 89034755935,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 51373607071,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10594568608,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 140408363006,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 252414794305,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 73440645430,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 296,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 578087339995,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 403257077295,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 169592900848,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 134610076561,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 157550079518,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8574608725,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 113555657601,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 22485058104,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 49987529701,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -2037573461,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 72472587805,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 39733434457,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -5510236774,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -22,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 501688387689,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 324352170930,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 173213839020,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 152379954995,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 182907931123,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13790594007,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 131815111474,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 10478294615,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 76627031326,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 13398137204,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 87105325941,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 25127075631,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 15772395196,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 62,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 626186550745,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 404217017541,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 217826884189,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 154914773415,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 185550841337,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7590635579,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 130323601658,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 52342356266,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 48168356960,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3065777236,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 100510713226,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 57282860065,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 29721603080,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 115,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 923448125042,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 702765046002,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 216108745829,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 162175272737,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 181100452251,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9356960285,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 128648111577,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 64838522201,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 52238723828,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 5660027748,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 117077246029,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 75501165098,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 32677325116,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 126,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 684593144243,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 514685660876,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 165797637352,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 140096034074,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 135231630012,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8454736666,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126367062082,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 38452225626,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 50422986293,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2611982960,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 88875211919,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 51469269337,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2243304959,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 9,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 637714979857,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 481130314048,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 143320823512,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 198120950010,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 166054253715,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8991039838,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 176649935527,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3032421805,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 84330252126,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 13285877363,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 87362673931,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 60857484139,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 10630566644,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 21,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 449554127431,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 286370391351,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 121892265325,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 101109159083,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 146396557543,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8683717498,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126791583528,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -43493929530,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 30289843840,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 15376504631,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -13204085690,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -37963681288,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -65870005368,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -893,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 875031920914,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 761592014074,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 105824739153,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 540015686314,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 164683606010,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -6136607760,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 121944082098,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 355525871191,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 33381710376,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -9823473928,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 388907581567,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 375122602010,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 348465634019,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1246,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 143883691146,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 98828681649,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 41159240497,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1349824327054,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 57000065430,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15753961981,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 62936198003,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1196237825761,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 29955805112,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -59055516376,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1226193630873,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1222310392289,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1227333368951,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4833,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 383189943323,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 298743487136,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 80552456187,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 271936241237,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 77494316188,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4137476326,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 152789593905,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 119024875053,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6234874469,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 957564048,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 125259749522,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 93795690108,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 90619030831,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 95,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 335205512755,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 197879641730,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 131180532547,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 829217779158,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 126745712158,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8772628423,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 81988241488,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 751751612291,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4450060193,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 8859882655,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 747301552098,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 691941062605,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 600026576420,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2434,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 290889392605,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 187285453877,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 97382715104,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 279630961552,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 125045451186,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4482767197,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 42537128940,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 222819065181,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -697670054,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 17870735848,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 222121395127,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 181625828240,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 139093805484,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 560,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 230205141880,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 134551912373,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 89491420161,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 123255121485,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 125428746017,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7492973835,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -4518845933,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 104561957255,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -435302801,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 20218289528,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 104126654454,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 46530960719,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 25698352871,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 107,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 322617530617,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 116842965928,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 200203449787,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 541589606682,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 226513451292,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 65920976841,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 26915766629,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 390097903015,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -290884526,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -32344958692,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 357462059797,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 382294783199,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 365917105566,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1870,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1017694530436,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 883311861409,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 128693317596,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 359480826292,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 70352277578,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 68171707143,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75852540619,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 261544795051,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -812696928,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 272353415700,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 265381205005,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 143140537763,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1168,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 222944367772,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 94391717756,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 123303663290,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 108538709806,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 40973785123,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 58635981392,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 15994399227,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 117802567212,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 527486720,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 105035855034,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 81722511448,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 70865237902,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 626,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1220828580894,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1085650043761,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 130359028510,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 133864765023,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 70011679623,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 60771736888,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 16648470248,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 93956000200,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -409376057,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 98677657236,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 96914415534,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 78325845683,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 694,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 207441837433,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 77072817674,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 126471699870,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 27922689392,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 45856188798,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 41868710578,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 15250610150,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 71519906590,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4433378765,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 121749003657,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 97731999916,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 93500184783,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 828,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 248956117749,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 133982697802,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 110129354325,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 72444531696,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 38114143350,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 38220698960,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 26633728686,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 75157416460,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4651846210,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 99879523466,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 83712299399,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 71554646976,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 634,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 397600956941,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 136775357160,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 254625393438,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 93261437392,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 54173929492,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 155751516444,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11465381041,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 79007964466,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2363247029,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 72545894357,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 62234056620,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 52232213621,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 463,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 95474292382,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 36012654741,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 59461637641,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7532867686,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 33571052729,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 28907714935,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 9936847618,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -37757923860,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 209599962,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -83861846486,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -74091299426,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -75725234562,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -671,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 76064641739,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 29697930127,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 46309762612,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 127988718953,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 37597999883,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27324125752,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 26929141784,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 79281684390,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 410098479,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 71008149978,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 41153059086,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 32258681698,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 286,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 83863882088,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 40520501281,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43316563807,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 283891819326,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 66192500991,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26446167165,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 50110900007,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 143095071485,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1926088415,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 149244241571,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 57641622750,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 57205162687,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 507,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 89946909297,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 41547913910,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 48285045387,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 305101292005,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22874370037,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25958861197,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 15091513569,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 238099308692,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 807197983,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 241563080699,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 204989037356,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 187726400571,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2263,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 47174055570,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6725073197,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 40448982373,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 180982067037,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 33519528047,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24937044523,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4676319038,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 134320309111,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -85210835,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 149220093643,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 149026962078,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 111915900458,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1488,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 51461814484,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9387284454,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 42074530030,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 65651473994,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 29075753857,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25845768079,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4036649320,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 80257186989,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 88518646965,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 75056843048,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 60117979940,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 800,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 51381758173,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7445206801,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43936551372,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 271007908409,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 46976015275,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26794622605,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13086066354,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 38445608404,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -605789859,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 30092778059,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 26863389531,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 32942684499,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 438,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 53610676988,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7830571827,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 45780105161,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 110473336281,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 42569049489,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24059310676,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2802606433,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 112029474425,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1966780363,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 121395598617,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 119749960225,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 102191164281,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1360,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2011,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 93848731651,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15682469408,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 78166262243,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 211622033674,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 73261419527,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 50209160486,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8286511316,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -10532734853,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 92778112,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -7337006659,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -7337006659,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 28458092908,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2011,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 50067418442,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8505510410,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 41561908032,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 119151631065,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 36542027333,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26276716231,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3517589373,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 81895318700,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 56948382,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 90894094618,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 77893095868,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 77889533513,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1037,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2010,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 50701498477,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7612801564,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43088696913,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 50679954791,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24438341827,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25692311622,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 14149321783,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 33722116965,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 77184532,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 42919891522,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 40332334036,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38519672940,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 544,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2010,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 41982261504,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2341448224,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 39640813280,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46323152554,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 13728313214,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25135325225,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3379081845,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 31693844280,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1095933195,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 38992174820,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 38259639561,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 43694737569,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 522,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2010,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 51864869010,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7469950773,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44394918237,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 324583451295,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 59374482802,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26512218601,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3306640413,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 278669505180,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 307224008,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 287990802919,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 222586072353,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 219340450004,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2010,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 53486584133,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6608306569,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 46878277564,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 82279375649,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10886829652,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26147475215,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3144867143,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 84505638051,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 178125322,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 90005003597,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 73606615502,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 73590930143,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2009,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 53922712311,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6782594665,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 47140117646,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 130223991638,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25680838555,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8938589568,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 111544028428,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -18109345,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 117035615572,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 100284915645,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 100284915645,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2403,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2009,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 59162484965,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7581090524,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 51581394441,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 95214675225,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12230416406,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26676057661,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2549417897,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 104116664623,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1067803491,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 111257767097,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 97931916708,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 97641366709,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2343,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2009,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 45193317433,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 235307169,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44958010264,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 51342222036,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24851063895,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2309741251,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 74068999981,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 34849253,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 74103849234,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 65686063948,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 65686063948,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1724,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2009,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 44311719217,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 150896504,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44160822713,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 36493435431,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6883511348,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24324310651,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1931153858,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 49060333203,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1228357961,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 50288691164,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 48520799948,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 48520799948,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1271,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2008,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 44128411366,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 341916608,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43786494758,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 33927562070,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9977281577,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20936685912,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4189464533,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 38959006684,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -575544951,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 38383461733,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 33754073767,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 33754073767,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 852,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2008,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 45252212110,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 367648003,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44884564107,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 51696894438,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10612681746,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22222112478,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1794072698,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 61749723029,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1096164301,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 62845887330,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 56040196678,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 56040196678,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1401,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2008,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 44519806611,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 314257354,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44205549257,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 11594086049,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7525415999,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24966962078,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1753557875,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 21443302112,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 87737347,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 21531039459,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 20316072796,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 20316072796,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 524,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2008,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 95145417275,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 43428383908,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 51717033367,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 25104058393,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6880858772,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 28572131736,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2035316384,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 39256830587,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 177041827,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 39433872414,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 37174790022,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 37174790022,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1025,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2007,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 44803715967,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19676816,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44784039151,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16384926255,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9299449151,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26821481005,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1488617513,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 17342877966,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2884528208,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 14458349758,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 14532973122,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 14532973122,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 430,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2007,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 44796127066,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 159196528,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44636930538,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41451802900,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25251241808,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3256074734,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 39159848420,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1622636625,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 40782485045,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 35624099796,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 35624099796,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 600,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2007,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 43896640801,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 75440000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43821200801,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 18137128916,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24157904279,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1726082756,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 26075858248,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1647844118,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 27723702366,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 24350691146,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 24350691146,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 812,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2007,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 43927915555,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 130745455,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43797170100,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14656024494,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 8733303148,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25015862397,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1663685403,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 23008644834,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1180384853,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 24189029687,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 21340792553,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 21340792553,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 710,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2006,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 39929329594,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 141860000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 39787469594,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1376684122,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22502239191,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -563814294,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 12612247347,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1344748159,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 13956995506,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11768298053,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11768298053,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 392,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2006,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 41749439541,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 64950000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 41684489541,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 8738981002,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10130411589,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22147481347,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1489965119,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 9996894857,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 811784222,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10808679079,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 9739972433,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 9739972433,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 325,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2006,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 41268104814,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 90900000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 41177204814,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14940804431,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10376764137,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21908270098,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2221212996,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 19811762014,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 949157113,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 20760919127,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 18500233034,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 18500233034,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CII",
+            "year": 2006,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 43676411680,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 159300000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 43517111680,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 859012624,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10178635926,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24820900181,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1087926960,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 8288661237,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 245643124,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 8534304361,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7680873925,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7680873925,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

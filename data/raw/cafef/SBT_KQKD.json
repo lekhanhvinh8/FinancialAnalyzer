@@ -1,0 +1,5255 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 64,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "SBT",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6870949137824,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6270142993307,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 576070022832,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 261283757721,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 425015519011,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 186302847324,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 196550956880,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 176746103501,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1680227298,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 147261646163,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 178426330799,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 198303062118,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 203404146173,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 256,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7303758191034,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": -6547766505718,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 741515686009,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 265783972048,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -392684723195,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -180582693620,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -167374813882,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 239619774056,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -8765087503,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -27037653304,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 230854686553,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 214829901394,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 216674232046,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 271,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7552187295690,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6708248935801,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 830233561905,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 344306408245,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 434329164374,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 190062842438,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 197834779980,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 302393924980,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -38508183985,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -49919258378,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 263885740995,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 230904181458,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 211595007604,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 239,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6832179509327,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5980831365207,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 840878127791,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 319345635744,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 531567571517,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 164307770455,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 186172700973,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 279356015224,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -14462193919,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1180294634,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 264893821305,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 227835116055,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 217204989499,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 246,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9502228615210,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8584241612719,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 906213445051,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 279608486272,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 516866696204,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 164335959675,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 273703090164,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 225159790619,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1558739977,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -5756394661,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 223601050642,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 213707499815,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 180305334080,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 200,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6171519158517,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5373779155598,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 785416778602,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 300855996493,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 499295146098,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 205490384783,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 182585467116,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 188233162637,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12768963175,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -10668614461,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 201002125812,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 187575803175,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 204351792330,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 230,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7027770176367,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6275213709359,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 744830826949,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 438340801372,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 599704397199,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 220500177210,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 179438883355,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 221648375891,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3431837866,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 38120205334,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 225080213757,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 168952700229,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 142502183950,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 147,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6375572129283,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5669628475579,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 696870030472,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 413200027709,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 538284649991,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 152452552574,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 139433917536,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 255095091364,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2274842783,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -24803846716,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 252820248581,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 216864549457,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 194787957703,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 245,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6849286967000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5999486028854,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 800970665422,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 284755127085,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 563004144152,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 162087704947,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 205911783903,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 139763368130,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -15822493426,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -14958791375,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 123940874704,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 76943409723,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 74675388819,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 76,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5721411106007,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5050860234477,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 659327997012,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 304855395028,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 502482007295,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 155136796463,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 164430209191,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 130944386636,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21486528498,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -11189992455,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 152430915134,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 152887575095,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 149389092836,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 212,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6981132221733,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6384728596652,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 587021248496,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 297152834678,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 414029947508,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 170230920296,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 143116506728,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 163927328610,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -13908312816,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 7130619968,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 150019015794,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 122145643437,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 103547854050,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 81,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5323977654436,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4643120547826,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 665835553114,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 259522954917,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 339527024941,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 158631073012,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 137017171560,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 286184469027,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3906426385,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -3998769491,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 282278042642,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 261715863153,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 225868733478,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 327,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5515771828574,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4987428164022,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 520498669735,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 274821377564,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 298340289167,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 167602184927,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 188790467578,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 159894234656,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 40541790490,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 19307129029,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 200436025146,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 170304511942,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 167425817334,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 458,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3534409387112,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2904429079711,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 611501907152,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 168337960257,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 236583932978,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 153821552745,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 155922541683,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 239482904354,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -18000200818,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 5971064351,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 221482703536,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 206756788758,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 205187896328,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 314,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5004339787107,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4325875738946,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 664317976438,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 336641175005,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 171235844568,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 186312725846,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 169600791571,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 473671351739,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -162810154832,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -138437719,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 310861196907,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 241267027160,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 214818775764,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 306,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4318953453501,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3814494247527,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 497445043097,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 346189209399,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 302335199484,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 144544253640,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 147834330480,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 257157394775,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5324738645,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 8236925883,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 262482133420,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 194858579595,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 195117749550,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 265,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4156909796732,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3471952818863,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 680546738909,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 208921127970,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 301660068898,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 135284274390,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 195744260085,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 255480708164,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5454732494,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1298555342,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 250025975670,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 195359284215,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 197124598085,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 312,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3188755486959,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2679656632211,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 501691098552,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 96306101421,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 179082596808,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 110451133975,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 108254981262,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 204640133019,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10528828910,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4431645091,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 215168961929,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 192341056619,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 192008908513,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 306,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3855283050904,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3356045416760,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 494791052262,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 143240777231,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 225270244901,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 167081770815,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 100017158092,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 164524958067,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6441962579,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 18862302382,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 170966920646,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 139546530236,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 138207844779,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 445,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3659949863305,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3191728220784,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 464601764207,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 72543703039,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 211359827235,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 107037207502,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75261051613,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 137544059364,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3492335176,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -5943321532,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 134051724188,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 103843678733,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 98662828320,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 150,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3754334451939,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3215512075606,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 512396922364,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 95227749892,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 174083014355,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 118910906606,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 59425256423,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 276236282582,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1124774278,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 21030787710,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 275111508304,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 224614306563,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 240458609373,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 383,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2980904735797,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2450582038374,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 524168493702,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 65032563112,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 227217197459,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 145365453393,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 115424136679,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 105802554378,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5727610432,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4608285095,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 111530164810,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 95873640234,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 73489314605,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 328,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3087393289106,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2894193984709,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 186501265069,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 354963434614,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 218430031137,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 119563969721,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 150447955746,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 46809550197,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5067526652,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -6213192882,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 51877076849,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 9222659993,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 12191195514,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3821,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3183954849526,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3016975609203,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 163709768620,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 225404503567,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 216969247204,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 72826819299,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 58067558565,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 41250647119,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3030985990,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 44281633109,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 35581053010,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 37812489877,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 67,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2860426362565,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2658555848709,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 197439837662,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 336442983295,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 230136180484,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 127166964464,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 102046433558,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 75468268029,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 706474590,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 935025578,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 76174742619,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 29426648256,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 31587873395,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 50,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2519351620453,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2215615651099,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 290778365586,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 348204019089,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 168417269743,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94567045631,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 103446905621,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 276539083860,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9879366916,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3987920180,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 286418450776,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 284147444955,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 288995944456,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 459,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2018,
+            "quater": 2,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2785888529972,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2631861070103,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 145189255731,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 238623025060,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 232203122316,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 105252011485,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 136937451810,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -91785957789,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 112850106110,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1205652969,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 21064148321,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -23876411185,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -23011279972,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -301,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2018,
+            "quater": 1,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2525806562997,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2382313255364,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 141024938321,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 219713500453,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 166808452479,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 74358007998,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75939281285,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 44983234530,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2749188311,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1350537518,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 42234046219,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 36701163219,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 37902949417,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 77,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2237648691025,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1830448437870,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 334057239822,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 119499731152,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 186520666363,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 75170301549,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 123569141019,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 70935459240,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 125259394175,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2638597197,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 196194853415,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 149684354898,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 150511951055,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 288,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2745148128474,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2372939306236,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 358254364358,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 168107399427,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 181992486069,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 82451357530,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 98401159128,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 165772725417,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6932505770,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2255964359,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 158840219647,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 137886908610,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 141568222437,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 320,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3915094021129,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3481641979454,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 420405185103,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 348652919997,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 296690382821,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 117531997392,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 161088195503,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 211554658501,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6329919916,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 17807129117,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 217884578417,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 175678445045,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 174069009964,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 435,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1565534948555,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1361469022336,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 200555672906,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 125214602068,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 129907186687,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 29936279359,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 57063005639,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 113103555094,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2471688144,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4239751805,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 115575243238,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 88385181870,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 87152873670,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 395,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1281281829666,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1093200052468,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 187912439473,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 50036823041,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 80268477474,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 30273957966,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 45778518800,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 79339972538,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2998706494,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -2288335736,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 82338679032,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 80337213932,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 80110611757,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1138147360892,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1001095260418,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 136855521791,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 75566840391,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 64052274056,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27421106310,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 35644401518,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 86475189833,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2905468208,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1170609535,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 89380658041,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 83457325336,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 83474036924,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 291,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1196160083013,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1052446895159,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 142963858134,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46262536674,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 77199029406,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15016833693,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 30727215034,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 101692850505,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3732137054,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 35409533830,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 105424987559,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 100674262788,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 100778298349,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 423,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 906633165831,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 760359539030,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 146248985026,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 56474587730,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 57217705559,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14644973530,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 36828709261,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 90954465385,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -688633389,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -3077719021,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 90265831996,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 75292458557,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 75735039162,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 393,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1122082834919,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 944072485120,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 169545930135,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 85565286817,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 77724178879,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 28094687454,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 33264927430,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 115351991734,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2722012175,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -675431455,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 118074003909,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 113858921841,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 113841819437,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 696,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 552490058048,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 463632223613,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 87769117521,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 24293154125,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 16691696593,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21441475522,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 17451030035,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 56311078818,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2177867425,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 80726929538,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 76848874700,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 76557553717,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 533,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 561730459529,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 487275160315,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 73289051913,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 18873000134,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19348953591,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16243389695,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 19196818654,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 30621248779,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1318324950,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 43557752083,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 38305898819,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38018363929,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 265,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 504173347998,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 457506293366,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44516738557,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 19399085659,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 20156239920,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14444434335,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 17525928825,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 34880341368,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3692023474,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 55479428234,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 47887884089,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 47887884089,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 333,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 453274003730,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 399825923957,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 53085493060,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29512143206,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24047934371,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16235487029,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11369151587,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 19463242195,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 952121922,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 27682284091,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 25071175253,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 25071175253,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 175,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 747475498729,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 649270765729,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 97085932947,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 36337529442,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 20774966498,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 17124038323,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 19511963234,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 123703791792,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2408610592,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 126112402384,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 107642721321,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 107642721321,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 561770894768,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 499976161011,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 61307977441,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 38839947355,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 34925947206,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13148453660,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 12991667943,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 45952798860,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1566483494,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 47519282354,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 42377856092,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 42377856092,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 413561385090,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 359893975019,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 53270393398,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 42902931989,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 20897783114,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9101126109,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 14731468920,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 40982584436,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 104208048,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 41086792484,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 36976136845,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 36976136845,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 499610103802,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 429918065167,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 69316963370,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 36572711474,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19129051427,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9213984505,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 17241589393,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 59816342126,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 957983617,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 60774325743,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 52009952728,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 52009952728,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 395,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1478665189491,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1185757083991,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 291564364523,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 208602315916,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 58600769088,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27698166915,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 38364734011,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 277528515002,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1526676900,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 279055191902,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 252540164965,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 252540164965,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1972,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 539591977773,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 429334243188,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 109986028970,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 149476963595,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 23670278840,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10437351184,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11424593095,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 116289396099,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 856483956,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 117145880055,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 115111983977,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 115111983977,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 638440802673,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 497225404742,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 140173563451,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 20524974330,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24929683720,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10162849987,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13024943714,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 112300583248,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 235119982,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 112535703230,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 95251123655,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 95251123655,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 745,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 612188255556,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 454614815748,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 156237929929,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 48036498584,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10751435596,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7756322573,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13957018297,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 145901543300,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 568379798,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 146469923098,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 149008516604,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 149008516604,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 425768821329,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 320784293145,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 104281090570,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15351494745,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11471143001,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5085039751,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8139438173,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 97399993164,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 331456090,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 416276425766,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 86300445630,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 86300445630,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2011,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 468680549955,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 325366601670,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 142675160851,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 44458029281,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19203303891,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7038069790,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7797944973,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 122493072642,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 474017574,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 122967090216,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 126278088808,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 126278088808,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2011,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 546345826060,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 346171109735,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 200174716325,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 21069652479,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7240196995,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5472069774,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8492603724,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 194915024728,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 662861568,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 195577886296,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 184060903295,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 184060903295,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1303,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2010,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 313005409195,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 224616463034,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 87249531064,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 24970101464,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 346191286,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5682495432,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13397834876,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 91995856212,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 83716568,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 92079572780,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 83136495088,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 83136495088,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2010,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 398209961356,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 232129712758,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 166080248598,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6567256378,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 8912194932,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4660215447,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7272012723,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 152927521686,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 225146323,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 153152668009,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 145414035824,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 145414035824,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2010,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 394581158515,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 261691193784,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 132484763643,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 22848880553,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12417474361,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6533055433,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11765576846,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 124391377556,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 157557015,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 124548934571,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 116325653767,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 116325653767,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2010,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 226317383841,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 143970610489,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 82211901352,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14956666517,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5353957370,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3664349002,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7723547802,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 80123397524,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2388146,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 80125785670,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 76119496386,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 76119496386,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2009,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 223793281661,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 149530340803,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 73759649619,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16516432843,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 825135196,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4613009863,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5077122663,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 99731541617,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3148404174,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 102879945791,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 97735948502,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 97735948502,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2009,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 220925230854,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 159879190528,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 60578390420,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2525806339,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1818323477,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3892403120,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5763775625,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 51611200299,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12136535,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 51623336834,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 49042169992,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 49042169992,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2009,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 173197010707,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 133421177919,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 39594545930,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1347985757,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3308882116,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3218461012,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2727066006,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 40921665644,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4425210,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 40926090854,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 38879786311,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38879786311,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2009,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 153891067584,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 124915662475,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 28938176706,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 11439411383,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1753834534,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2953260346,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5203879260,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 30463557333,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7783555,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 30471340888,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 28947773844,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 28947773844,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2008,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 108294150541,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 105758558878,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2370936856,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 17674724731,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2933869648,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5607850932,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -37688835916,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 129956597,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -37558879319,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -34405182676,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -34405182676,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2008,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 98440557934,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 73024745682,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 25415812252,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 12203143066,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 338096911,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3834920488,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4469890208,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 28904462563,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 237839247,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 29142301810,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 27685186720,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 27685186720,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2008,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 146642637198,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 106806716937,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 39784282561,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9349167893,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 335953180,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4150878035,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4200302720,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 40434640009,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5000497,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 40439640506,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 38417658481,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38417658481,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SBT",
+            "year": 2008,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 209945447522,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 161960616111,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 47804033844,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14924598952,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 355356193,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4375529334,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5599363270,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 52383302181,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 427150,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 52383729331,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 49764542864,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 49764542864,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 351,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

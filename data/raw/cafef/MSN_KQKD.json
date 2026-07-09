@@ -1,0 +1,5015 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 61,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "MSN",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 24075239000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 16113727000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7906027000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 425056000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1894801000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4089684000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1369051000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2318740000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1437000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1341193000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2320177000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1973577000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1245794000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 819,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23300560000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15990388000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7255437000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 320932000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1604397000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3807505000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 906060000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2642686000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24691000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1384279000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2667377000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2295343000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1473959000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 969000000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21255663000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14722324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6441502000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 829131000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2041610000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3356425000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1001710000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2135503000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16568000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1264615000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2152071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1865752000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1208655000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 795,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18425059000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12625712000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5689428000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 367427000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1387959000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3328768000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 956663000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1624535000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 221738000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1241070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1846273000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1619376000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1032192000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 682,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18946395000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12702295000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6194243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 576758000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1882532000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3709832000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 849360000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1519370000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -297001000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1190093000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1222369000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 983040000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 393500000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 260,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 22735941000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15638991000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7062540000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1967701000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1917003000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3604582000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 905824000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3366541000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -709911000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 763709000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2656630000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1546558000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 691055000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 457,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21574637000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15066285000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6420610000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 854509000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2032036000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3678318000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1129210000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1593712000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -27962000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1158157000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1565750000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1301013000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 701071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 463,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18942352000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13600060000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5254838000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 574011000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1899341000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3579977000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 971437000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 626631000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7032000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1248537000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 633663000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 478851000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 104356000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 73,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20860307000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15014087000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5767833000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 644411000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1614622000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3820368000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1030071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 893065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 54768000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 945882000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 947833000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 516776000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 50110000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 35,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20244809000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14215276000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5939635000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 420977000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2386183000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3623606000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 956812000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 442988000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 139917000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1048977000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 582905000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 484513000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 48376000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 34,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18696931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13281084000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5327477000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 689805000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2139281000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3432137000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 902880000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 466572000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -15681000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 923588000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 450891000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 429187000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 105294000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 74,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18714952000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13620060000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5086167000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 650012000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1989427000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3316244000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 860239000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 547804000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 33541000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 977535000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 581345000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 439451000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 214915000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 151,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20722018000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15088612000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5554169000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 654309000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1822737000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3250042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 922716000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 962309000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -59004000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 749326000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 903305000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 803554000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 447050000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 315,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19577827000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14098747000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5424308000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 330194000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1666642000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3284082000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 985235000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 963369000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -54477000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1144826000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 908892000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 840984000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 543155000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 383,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17862146000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12866613000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4967440000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 585014000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1576125000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2933387000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1025072000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1269508000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -8321000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1251638000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1261187000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1214873000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 980911000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 692,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18218759000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13100229000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5089107000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1006046000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1296138000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3044028000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 921291000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2027556000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 46210000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1193860000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2073766000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1894973000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1595880000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1352,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23989594000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 16950557000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6877246000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6011282000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1560899000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3306185000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1083981000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7929270000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 67532000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 991807000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 7996802000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7118856000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 6436813000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5452,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23903900000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17508621000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6096188000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 326610000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1366192000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3083017000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1170650000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1736820000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 126246000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 933881000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1863066000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1586332000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1147456000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 972,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21577402000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 16372047000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4847247000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 245419000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1396712000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2668793000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 907764000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1143791000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1928000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1024394000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1141863000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1053462000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 791243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 673,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20320723000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15662741000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4314120000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 216267000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1382728000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2728343000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 902574000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 463301000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 23752000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 946559000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 487053000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 342731000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 187370000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 160,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 22100147000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 16384772000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5214759000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 177224000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1420426000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3537186000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 519668000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 746003000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 227294000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 831300000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 973297000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 584393000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 265226000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 226,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20614349000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15396469000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4817839000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 158539000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1277077000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3315413000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 850418000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 210020000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 890382000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 676550000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1100402000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 972565000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 851502000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 728,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18149931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13871798000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3894584000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 977810000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1076091000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3206947000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 869247000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 324589000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -13194000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 604480000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 311395000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 54408000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 195362000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 167,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18003892000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13676072000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3961515000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 117090000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 783077000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3106541000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 801563000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -84838000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24583000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 527738000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -60255000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -216353000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -78108000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -67,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11395953000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7596401000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3379286000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 237953000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 519873000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1163085000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 654919000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1929590000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 91613000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 650228000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2021203000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1748166000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1447983000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1239,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9323735000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6536281000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2431594000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 791269000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 594563000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1063296000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 472296000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1644867000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1022421000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 552159000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2667288000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2424860000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2227890000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1916,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9622617000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6583116000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2667287000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 86589000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 556823000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 956005000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 485740000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1288554000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -13196000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 533246000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1275358000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1191751000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1016304000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 873,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8476442000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5697141000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2462981000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 72372000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 529303000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 812509000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 490453000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1149865000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -8624000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 446777000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1141241000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 999838000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 865394000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 744,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11889236000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8019375000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3538507000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 142897000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 678083000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1404730000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 632290000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1450784000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -11315000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 484483000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1439469000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1285390000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1137506000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 979,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9450824000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6397520000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2773834000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 125365000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 840287000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 934405000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 451403000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1115520000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -18264000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 442416000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1097256000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 918067000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 748010000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 710,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9407602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6376830000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2807558000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1547263000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 791154000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1018219000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 479370000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2536447000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1378000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 470369000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2535069000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2395571000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2214913000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2114,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8631085000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5512483000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2761510000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 86268000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 781390000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 956899000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 452325000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1174236000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2206000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 517072000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1172030000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1022477000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 816068000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 779,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10537884000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6776191000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3393149000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1045093000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1070217000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1267135000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 550099000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2362754000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -20944000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 811963000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2341810000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2141487000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1889920000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1734,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9691656000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6526489000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2906109000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 89181000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 776747000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1207412000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 462358000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1102457000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -10280000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 553684000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1092177000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 948465000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 757638000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 655,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9913448000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6615913000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2862930000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 136226000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 926011000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1601934000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 462706000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 361951000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -8686000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 353446000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 353265000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 254909000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 218063000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 189,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8837248000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6070243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2469622000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 134160000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 922609000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1214391000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 437194000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 354725000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3340000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 325137000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 351385000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 262829000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 237043000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 206,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13628488000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9075263000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4073723000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 218699000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 968824000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1604875000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 562560000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1431403000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4353000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 275240000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1427050000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1238774000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 943886000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 835,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11443435000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7724908000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3281824000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 168708000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 860218000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1194561000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 476922000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1233504000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6258000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 314673000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1227246000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1053534000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 813228000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1065,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10808050000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7210329000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3162391000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 163764000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 729138000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1173528000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 377210000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1293212000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -16383000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 246933000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1276829000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1086695000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 780988000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1032,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9220203000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6356479000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2412147000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 218023000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 733046000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 997539000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 519689000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 522988000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -7710000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 143092000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 515278000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 393494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 253342000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 335,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5347123000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2914991000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2340771000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1218176000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 883144000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 284200000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1967057000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 236500000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2157554000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1848352000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1385475000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1855,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4056217000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2362782000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1631139000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 80324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 641790000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 258302000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 406689000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -12269000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 345868000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 232712000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 28024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 38,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4189433000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2578841000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1545099000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 79159000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 739854000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 721649000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 257180000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 80578000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 15728000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 98484000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -66918000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -226723000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2753803000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1632394000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1082619000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 193308000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 618254000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 248676000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 92085000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6424000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 137825000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 22896000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -106607000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -143,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4477016000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2450158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1987282000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 344655000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 658349000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 325815000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1019836000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -19035000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 941301000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 687226000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 178602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 250,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3274033000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1840616000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1394398000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 92349000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 591193000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 216852000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 556775000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1957000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 492721000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 308661000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 114648000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2779714000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1624772000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1111321000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 87361000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 50593000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 386078000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 216026000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 512753000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9765000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 464465000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 266355000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 135858000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1575226000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1026687000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 507299000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 139756000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 64602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 345967000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 176442000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 51550000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 80165000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 116815000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 35131000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 619000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3709992000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2124107000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1530304000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 123604000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 413496000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 222845000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 961081000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8004000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 598662000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 412848000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 136297000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 192,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2701124000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1588558000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1084571000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 128542000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 65862000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 376479000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 198489000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 557682000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 67748000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 619891000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 480993000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 316799000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2559050000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1486209000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1038113000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 194532000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 160593000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 302172000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 194207000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 682192000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 92139000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 770421000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 673710000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 499288000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1605084000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 978495000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 559058000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 361606000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 224387000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 112791000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 466196000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4005000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 554142000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 450016000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 349945000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2906116000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1557412000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1253447000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 311706000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 391464000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 165935000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 972758000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1205000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1273027000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1133788000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 894730000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1330000000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1454632000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 784106000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 623257000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 399691000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 232243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 81109000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 591098000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 633586000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 547590000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 422076000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 631000000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2011,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2878255000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1658410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1180216000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 469904000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 384890000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 141499000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 928967000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -957000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 971243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 823928000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 652933000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2011,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1338940000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 758816000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 567106000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 186891000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 176128000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 43056000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 395514000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 601000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 433897000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 388858000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 337818000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 656,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2010,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2150839000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1166754000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 933681000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1772924000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 352969000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126499000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2141173000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1426000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2282453000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2227055000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2061765000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4192,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2010,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1416684000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 794252000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 610702000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 90315000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 224588000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 38686000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 371482000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 373401000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 323488000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 236573000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 487,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2010,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1225513000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 686730000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 530110000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 71023000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 187001000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34346000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 332728000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2832000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 338718000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 320760000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 239789000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 494,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2010,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 896541000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 539753000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 322623000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 65360000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 187227000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 23683000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 127458000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 148000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 140612000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 124406000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 96571000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 199,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MSN",
+            "year": 2009,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1463640123005,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 860603087266,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 492480803515,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 81108321347,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 214311612999,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 39873293939,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 267939580982,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4219059913,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 276430724538,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 254759274876,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 178238264668,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

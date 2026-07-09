@@ -1,0 +1,6535 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 80,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "REE",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2477131941855,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1424596398499,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1046155527859,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 136767059629,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 174008767137,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 30256932769,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 105504045877,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1047013783760,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7369513700,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 173860942055,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1054383297460,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 938744544933,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 714242590433,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1319,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2880569955215,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1838005260004,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1039572471789,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 120305948399,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 166856895411,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 38245618981,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 291665747812,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 896664107981,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -32524653728,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 233553949997,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 864139454253,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 768661395236,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 149228234477,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1144,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2555163684559,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1620172166882,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 931990166099,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 101765887253,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 184462283981,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 30156121131,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 125170439843,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 936561565081,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -9591274778,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 242594356684,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 926970290303,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 824812238009,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 674227109814,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1245,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2516317393384,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1660322958720,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 853184849901,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 119534219469,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 201173435473,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 30840656754,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 136792059453,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 826710781484,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1121224111,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 222797863794,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 827832005595,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 739155211889,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 623499781848,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1151,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2073499861859,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1117906047949,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 950457203395,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 110150181670,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 190666721407,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20461990371,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 92701532459,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 896896237698,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1156063620,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 140119096870,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 898052301318,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 816792228833,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 611403988759,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1298,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2336151622410,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1318386508614,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1015236010848,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 108097556165,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 190042913684,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 35981220607,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 197403337584,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 976047064798,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8411117894,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 276140969660,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 984458182692,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 882812179580,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 679323559704,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1442,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2031363520580,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1341809177613,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 687614810029,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 62616197585,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 185252307207,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 29114089397,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 109606176398,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 633324602447,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -553494428,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 207066167835,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 632771108019,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 561514791992,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 479845620624,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1020,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1842191313391,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1096123885981,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 741349487528,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 70161494649,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 223279127406,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18733863540,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 95958602242,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 594698457274,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4065166058,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 121159068285,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 598763623332,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 548910121936,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 480481502873,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1176,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2066479652230,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1142839529331,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 922369879553,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 64622863401,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 228348862409,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 29544975862,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 314954286372,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 681092157949,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 452195672,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 266947539638,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 681544353621,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 643488709866,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 504113990500,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1233,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1965035068054,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1308106091522,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 653588078020,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 48567357504,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 276436606919,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21179072116,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 97384773465,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 525058061475,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1350742365,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 217903078451,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 526408803840,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 465167602319,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 449650172679,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1100,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2176244902112,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1294587295448,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 879566304670,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 65896468401,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 255217131046,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22621017009,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 148394002157,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 691835498958,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4584163856,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 172604876099,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 696419662814,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 623745363129,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 489418038259,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1197,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2371561956920,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1114447520402,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1254387381910,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 58567040015,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 256207210125,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 19177580205,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 101935676111,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1144667447807,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7578255361,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 209033492323,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1152245703168,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1054781852849,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 745081716319,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2096,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3071627212216,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1718642315683,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1351601969972,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 59440157945,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 247035288492,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27306263413,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 304278910328,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1145279137025,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -84832189433,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 312857471341,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1060446947592,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 968037746739,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 719192597490,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2024,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2233394383618,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1315625120220,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 917595206377,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 61443352886,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 253166359146,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21919911461,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 105656476303,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 956578709623,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -32355462433,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 358282897270,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 924223247190,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 834374854519,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 680855250194,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1916,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2024627177824,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1127008141217,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 895927893244,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 43584099093,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 225440728422,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 19906313336,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 86245011899,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 836471843886,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8260664686,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 228551905206,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 844732508572,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 755283818097,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 596815193593,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1679,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2045444213396,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 895050025249,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1150362343420,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 38067160452,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 217565023137,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 19775841202,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 83664130705,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1045174581200,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1635834958,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 177750072372,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1046810416158,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 955361037242,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 693336998049,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2236,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1900074959577,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1035267840950,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 862621495221,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 240932397807,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 200603044947,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 33835185602,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 156915453315,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1024524321878,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8138825057,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 312324112714,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1032663146935,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 923783956640,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 791798655170,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2562,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1636918080846,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 972735035139,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 663679587899,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46389419845,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 220247422987,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20518380497,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75293048748,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 528780521084,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2074581905,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 134770365572,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 530855102989,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 470046278255,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 383399380383,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1241,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1185473542508,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 746519129683,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 436333265651,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 111622276863,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 94654509669,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15575898613,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 66127285470,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 537078790703,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1413066294,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 165480941941,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 538491856997,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 471790340937,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 415811685438,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1345,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1666261171065,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1208509788011,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 457337871918,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 73472168646,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 116733208900,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 29619176851,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126297912984,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 715469377100,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8304075864,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 457309635271,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 723773452964,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 664237281523,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 651249072379,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2100,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1504303153321,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1078539108432,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 425048468766,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 40343386979,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 135889892947,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18479454291,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 63546623859,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 411641969943,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9292744445,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 164166085295,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 420934714388,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 367599987179,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 347012755150,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1119,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1289756572520,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 896134284888,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 393422387514,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41973971776,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 92937176363,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20147929962,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 38913273025,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 459400317834,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2869558964,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 176002337894,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 462269876798,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 403409685603,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 373760926895,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1205,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1183767993544,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 850703875846,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 330056940592,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 66089944207,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 127671240521,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14488799968,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 56455596602,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 314809641515,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1650071701,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 117278393807,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 316459713216,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 278095747862,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 255894367559,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 825,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1328161733720,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1028301752204,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 296527146671,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 124112942241,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 110273742749,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21981441120,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 89908061815,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 521223164387,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 648579548,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 322746321159,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 521871743935,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 477435125624,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 449244701342,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1449,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1227675986047,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 928687767951,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 298432810497,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 94255391957,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 82087982733,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18326725563,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 43843529533,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 453516469982,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7772658711,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 205086505357,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 461289128693,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 413724819420,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 402981535367,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1300,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1259492400305,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 914387885504,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 344259759661,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 65151530918,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 32881572204,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21764603075,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 47939499454,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 518948612361,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1805789134,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 212122996515,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 520754401495,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 458309086857,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 434301876097,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1401,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1081370793461,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 772241448748,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 306993254140,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 158457686431,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 160385421552,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16207468653,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 40585113173,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 415422912828,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 889345424,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 167149975635,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 416312258252,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 370175501899,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 352077479538,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1136,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1635964771804,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1250370347699,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 384907588698,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46814176416,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -2754089183,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 30887847512,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 91852435630,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 646800317822,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4860736421,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 335064746667,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 651661054243,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 583606772004,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 550918378318,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1777,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1194508642256,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 897891880509,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 295444658138,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 43845412751,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 126810033160,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24502810353,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 45487311451,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 340087366299,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3142540123,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 197597450374,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 343229906422,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 312404002258,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 293670696090,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 947,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1223159054874,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 996164866578,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 225552250705,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 171247919848,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7744672464,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20979881931,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 38066619975,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 634084318085,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5813177070,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 304075321902,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 639897495155,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 572393622438,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 557982780044,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1801,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1051217231971,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 728154257438,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 322165874482,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41617781891,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -20329368255,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22213598000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 41371165799,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 482614736131,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 600925490,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 162086475302,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 483215661621,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 416345388482,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 381408391916,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1231,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1669430998306,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1125194843088,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 542484721521,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 45840413840,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 100138516881,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 36253398604,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 106589181937,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 493865351847,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3564050924,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 148521313908,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 497429402771,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 423791417739,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 338106510447,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1091,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1083688960819,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 770915816115,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 312191458484,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 44025174312,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 34145200136,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 20343647924,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 41261558380,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 444383354490,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3364889227,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 183917128134,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 447748243717,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 398031316164,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 371386522877,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1198,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1157161166804,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 884392346631,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 271678444780,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 55228995991,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 115100709377,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15873533671,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 58761598853,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 373344997705,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1697237582,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 236173398835,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 375042235287,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 352186345690,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 336809467441,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1086,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1088954310594,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 786370145861,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 301945639453,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29461291076,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 25395710042,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22123549650,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34143241884,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 400063949828,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 848968814,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 150319520875,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 400912918642,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 348801913911,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 330770623577,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1067,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1302107707807,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 873186709017,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 428375147719,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 174682558731,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21310476935,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 35782273466,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 103018005292,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 722713250961,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 461988004,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 279766300204,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 723175238965,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 654415624555,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 620497132860,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2001,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 937663871621,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 663768606521,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 273876785100,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 80768153153,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12880916074,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 24561170776,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 42701774436,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 310459595983,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2480610649,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 35958519016,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 312940206632,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 264184143414,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 245977785212,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 793,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 869048536910,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 624629684030,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 242534622101,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 331407760420,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 14457472663,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14650541957,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34707646904,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 204122062875,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2583987126,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -306004658122,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 206706050001,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 161160451842,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 143988154038,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 493,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 554296577086,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 322337817456,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 230576458697,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 98754424038,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19593154168,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13997913663,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 33593500701,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 147337365321,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1704662954,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -114808948882,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 149042028275,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 109910461804,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 98750211382,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 366,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 684090856672,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 429685774303,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 254076101843,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 231813626188,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21530886003,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15043169544,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 40671568468,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 299713374823,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3144359092,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -108930729193,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 193927004722,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 257798975609,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 237633577990,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 907,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 804372810254,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 535397879422,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 268766117919,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 101542454032,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7152018855,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12651183442,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 70733836047,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 274822176267,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 213057645,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 451692115875,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 406831978859,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 381056799271,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1428,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 654379282486,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 455797092688,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 198383173434,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 158285504325,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9098065488,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10128852969,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 32436644138,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 304695136199,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -831329427,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 291749233446,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 254965062744,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 243478291379,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 917,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 619502421284,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 446976447874,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 172272006022,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 169209625713,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12041430115,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12949612823,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4703839003,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 309351007063,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1491172420,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 241082508074,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 205759617154,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 205797465142,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 552458987387,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 388794730126,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 163037144516,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29829429772,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9122359119,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9641405019,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 23371524393,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 154390193743,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 51818726553,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 277925248648,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 231153324580,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 231729505377,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 879,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 729772196687,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 580804611270,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 148815761994,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 87101818902,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -15501103928,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15570262272,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75527269071,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 111926410295,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 849945212,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 158993551426,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 136256613002,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 136330265720,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 552,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 560846649542,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 405296565675,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 155440532503,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 125727659030,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 14297282431,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10334261984,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 20233102730,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 228271499540,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1736402241,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 230424983224,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 199871521977,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 199869152218,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 817,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 611010337709,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 452705268980,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 157572825274,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 106335866495,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12750720825,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14943744316,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 48590773317,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 171257465474,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1466490827,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 554765618265,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 529416901256,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 529413361723,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2165,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 512929940102,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 371492201278,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 141268819485,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 47197779786,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 14597006052,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8754331719,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 21823337471,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 142251856875,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1068063934,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 143319920809,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 110182802671,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 110180134283,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 450,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 661000631949,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 496781792988,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 163132128092,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 63596977494,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9957406689,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18612375774,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 62023696149,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 123939517201,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1414076256,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 177907219325,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 176740974237,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 176738628693,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 723,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 552360002274,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 403726336384,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 148304637397,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 44925671400,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9265973103,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13135842333,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 30013349196,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 94800317748,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1042949980,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 95843267728,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 76816913758,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 76807833073,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 314,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 674339908339,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 522149006852,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 152032673917,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 82618417371,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10659915930,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12382336313,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 21584013315,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 196429862715,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 570526265,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 189047092243,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 148654606366,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 148649536884,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 612,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 509515004602,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 385841852737,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 123651128427,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 322571099924,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7911746231,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7646450245,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 22225639708,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 334889495712,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 375769691,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 335265265403,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 255633504220,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 255628402921,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1067,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 512501816000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 346571870000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 165872526000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 137185683000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11543783000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 21453329000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 47092527000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 197556631000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1916002000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 245233463000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 195444308000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 195437907000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 816000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 440165166000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 304641520000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 135506476000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 83251503000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -2869346000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12575718000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 30097781000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 173166464000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 495193000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 388562339000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 147000425000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 146993054000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 668000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2011,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 455794284000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 300842415000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 154905278000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 62429175000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24614810000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14195710000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34080520000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 106108076000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1781710000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 100123683000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 79398700000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 78721046000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 423000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2011,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 398999625000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 263091343000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 135872276000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 63479052000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22768543000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1721221000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 36039005000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 113022788000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1754211000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 114776999000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 92676483000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 92086492000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 494,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2010,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 626832705000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 438274156000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 188497115000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 67564101000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3030959000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 23747672000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 70535117000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 159281026000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1859743000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 161140769000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 120187812000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 120296895000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 688,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2010,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 458887980000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 332615949000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 127155374000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 35508834000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2475007000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 11706085000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34923341000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 80309799000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3175633000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 83485432000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 64389264000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 65791491000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 385,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2010,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 388746237000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 291015365000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 97327193000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 22905363000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1173201000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14284280000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 240998000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 97175946000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1676746000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 98852692000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 73490731000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 73904150000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2010,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 353499797000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 233246853000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 119433490000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 33223761000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2075635000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7916128000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34907438000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 106268177000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3300030000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 109568207000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 86280898000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 86155075000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1063,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2009,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 415906651000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 276846837000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 137724283000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 124435013000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2603104000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15634260000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 44136782000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 103133472000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 604749000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 103738221000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 97460865000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 95033750000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2009,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 288117463000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 166715852000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 119974126000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14589297000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1248453000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10880552000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 32888605000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 89287841000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 303889000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 89591730000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 71159036000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 70744485000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 873,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2009,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 330931520000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 213617311000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 115458286000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 45216876000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1556183000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 11628275000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 38597716000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 213434400000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2342342000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 215776742000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 190796140000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 190890773000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2355,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2009,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 146615708000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 55071081000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 88364271000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29497691000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2941686000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6668634000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 29012416000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 76596477000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2498899000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 79095376000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 77456147000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 78693589000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 971,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2008,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 332400713015,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 240878873665,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 86977606412,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 51251702926,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13533015631,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34186981866,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7739758063,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1983363018,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9723121081,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 12505174350,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 12451672516,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2008,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 248040942187,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 161493384791,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 82406458749,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 98978649201,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7916128263,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 24260810494,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 12731825377,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1112426137,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 13844251514,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 9828703998,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 9628151506,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2008,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 309668139960,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 210401681740,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 91682106984,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 19638081141,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4821921281,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7920975492,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 22293379842,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -60156773207,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3399669412,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -56757103795,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -64083819754,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -63750699217,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2008,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 278907593166,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 201767494414,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 73494396159,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 13238864517,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3288511485,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6815908929,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 21897024128,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -107326568575,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1174488049,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -106152080526,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -110711348351,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -110715428802,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2007,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 415355819761,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 303714576987,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 105424579478,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 72985211529,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8873947832,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 32258125868,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 95280532953,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4523401576,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 99803934529,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 99803934529,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 99242009523,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2007,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 253853849098,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 181201923915,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 69006621318,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 27590798089,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4889575422,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 17260392433,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 63548840841,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 709266236,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 64258107077,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 64258107077,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 64009276571,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2007,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 286521548026,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 215837880124,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 65330186878,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 62411786081,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5754718384,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 21092174239,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 97675377979,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 839745709,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 97583483688,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 97583483688,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 97501079403,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2007,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 187834121504,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 122834306293,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 61834591713,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 127305420037,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4710688140,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 15100413358,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 166822042898,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 650566613,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 129014135176,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 129014135176,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 128859172534,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2006,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 388630454546,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 301263460909,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 84729371792,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46900756735,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4301278587,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 18600715113,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 104739189770,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -576259294,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 104091383595,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 104091383595,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 103990559237,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2006,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 209477365919,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 160430523934,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 47583192132,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 18309710728,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2592519427,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 14108569078,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 50319539240,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2728165895,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 53047705135,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 53047705135,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 52994536606,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2006,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 265321991891,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 212255716897,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 52329235509,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4282105866,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2284748671,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 12616141041,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 34446165668,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4772700,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 34450938368,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 34450938368,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 34409102688,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2006,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 181958088739,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 137415668292,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 39067728243,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 91570621774,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1499249865,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 12812600260,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 114149018089,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 29258933,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 108234260190,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 108234260190,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 108182857027,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2005,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2005",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 129117263708,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 89348000144,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 36484811406,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 11475579319,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3150933521,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 18586501685,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 23219628354,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6720400556,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 14624054297,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 14624054297,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 14572426549,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2005,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2005",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 105588515729,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 64361488800,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 37783926733,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1501867003,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2450932252,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 14099948771,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 20712977962,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 906694648,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 21619672610,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 21619672610,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 21581137214,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2005,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2005",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 140590841350,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 96670052562,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 38340051248,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5489597939,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2520403770,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11306352239,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 27975430796,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 217360305,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 28192791101,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 28192791101,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 28137715019,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "REE",
+            "year": 2005,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2005",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 90623724195,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 56688188748,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 30663134247,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5514085588,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2773650931,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 10487429284,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 20742084431,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3769113029,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 16972971402,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 16972971402,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 16908170835,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

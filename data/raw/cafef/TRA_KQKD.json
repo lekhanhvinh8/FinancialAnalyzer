@@ -1,0 +1,5815 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 71,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "TRA",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 644175762861,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 266458880443,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 366387919981,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 8922415355,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2266230862,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 177051631293,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 96438949065,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 99553524116,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5663443839,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 93890080277,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 68246825428,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 61612959818,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 757102324512,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 356984796481,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 392345631075,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7284727707,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1372667362,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 190271610431,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 110353242773,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 97632838216,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3021135555,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 100653973771,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 77543151517,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 70777882061,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 681273102898,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 276129198328,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 399636762146,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6372065237,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2507542484,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 225560108813,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 80507924794,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 97433251292,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2352610709,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 95080640583,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 78298719684,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 68004349873,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 705794637147,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 354612357539,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 350560278257,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6195781821,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2869542229,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 188941758679,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 78054265473,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 86890493697,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5551081160,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 92441574857,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 74792385838,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 69187157904,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 556273455756,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 268368871430,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 286532893968,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6492392714,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2461143479,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 156060126707,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 74402934260,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 60101082236,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 278771831,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 60379854067,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 47733092693,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 41716948339,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 605861431486,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 287455883679,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 318087168563,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5258280403,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2091875414,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 141611286381,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 77204558549,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 102437728622,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 549528594,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 102987257216,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 81343159048,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 79368335641,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 567236588909,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 264912161866,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 298849891315,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4854721124,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 516766403,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 166006454859,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 82433339472,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 54748051705,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -13622824,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 54734428881,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 43707527942,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38209981420,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 620874400437,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 305735087731,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 314354528002,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5477571446,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2288800492,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 157012901827,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 68638505242,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 91891891887,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -844522665,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 91047369222,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 72318922069,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 67492504818,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 547987592354,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 242330506101,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 305162079631,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7382610652,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 647238917,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 160414152032,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 76679614644,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 74803684690,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1065507145,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 75869191835,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 59999094104,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 53954172882,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 584373279382,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 292416138135,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 292111733960,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7630423644,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1653124154,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 139256895656,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 77445155023,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 81386982771,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -7710794686,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 73676188085,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 56763804375,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 53355971232,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 577474720003,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 277309625967,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 298592089708,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9816219474,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2097714240,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 153601296046,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 71374265059,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 81335033837,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7026254982,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 88361288819,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 70323052632,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 65306992130,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 517915355668,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 207556192397,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 309547061985,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 11079756907,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 470371245,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 150723178356,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 68360581733,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 101072687558,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2547478896,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 98525208662,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 78580338100,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 72212752862,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 620058469783,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 274427803576,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 344683278096,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2418155403,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 640335482,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 170792267172,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 80007669491,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 95661161354,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4443771837,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 100104933191,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 79431877234,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 72905463301,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 582809793571,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 272726273996,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 307780609568,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5657630498,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 502211817,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 163440774428,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 96288495131,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 53206758690,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1003883197,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 54210641887,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 42369549369,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38615377691,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 605649303955,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 262795584982,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 341477583609,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4530620582,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 394719979,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 176512708486,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 72084182993,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 97016592733,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 743390890,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 97759983623,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 76912316652,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 71801071323,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 592565178373,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 217389885729,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 372754250282,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4683291150,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 879401990,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 181855639754,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 87559919452,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 107142580236,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2332722142,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 104809858094,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 85131131268,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 75857451699,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 627410589521,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 297195889835,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 326797880766,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3519707318,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 537426080,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 144371013309,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75953393110,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 109455755585,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2950359919,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 112406115504,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 88605160891,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 83426220336,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 586404023745,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 273844702034,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 312903334545,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5587741965,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1580961599,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 81771885810,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 86255532282,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -244456517,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -148882696819,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 86011075765,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 69910326711,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 63460592783,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 557829316149,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 266718023641,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 289908883967,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2775207659,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1512588008,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 70948920360,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 84102083587,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3658606200,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -136120499671,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 87760689787,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 68765157708,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 62863085907,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 474492171080,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 206678323479,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 265039691533,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1339896545,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1746251850,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 57743028270,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 69416458128,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -59361909,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -137473849830,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 69357096219,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 55292615852,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 51039668572,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 604649293477,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 266980592879,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 335048131857,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2350066308,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1973630475,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94058054795,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 89272452827,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 508332164,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -152094060068,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 89780784991,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 75313693629,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 66483417766,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 460041556581,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 208822097594,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 249801472935,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2068556540,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2811567841,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 56392493086,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 63898738703,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 688361100,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -128767229845,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 64587099803,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 51165832292,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 48479231967,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 457091621137,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 228266901060,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 227603929451,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1920192846,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3263033386,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 119877617127,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 48178472678,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 58204999106,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 377995435,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 58582994541,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 49024003732,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 42626229244,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 392553105375,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 173386775070,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 218960111438,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 778406975,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3480270695,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 107251669398,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 55722107566,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 53284470754,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 413624919,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 53698095673,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 41244048336,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38198191090,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 540429026143,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 226505131001,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 312743306891,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1461560168,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3871826236,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 166088964055,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 63206241086,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 81037835682,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 404007470,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 81441843152,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 62694755150,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 56646839805,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 375667622901,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 173545468224,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 201651464711,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 808622680,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4714556145,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 102129619266,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 52379935209,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 43235976771,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -702484859,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 42533491912,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 34933090547,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 31411121374,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 432971548871,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 179236952750,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 250610581001,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1524721491,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4654589504,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 150484169682,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 61399570438,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 35596972868,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 296720682,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 35893693550,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 27602192685,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 25208589982,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 366994039943,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 190723695006,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 175422868838,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 978749805,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4564274644,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 70941009130,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 45909785743,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 54986549126,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 33159660,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 55019708786,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 45402188119,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 40183989094,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 535350750622,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 249016536249,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 282423049291,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1279341079,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4162609113,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 59887538374,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 85653435951,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1825361965,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -133998806932,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 87478797916,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 71002574677,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 65224758639,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 472667188477,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 223574461892,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 243641475386,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 283992360,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3571816521,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 139556160534,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 50038946064,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 50758544627,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 128758659,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 50887303286,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 41824403746,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 34784402109,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 434375819411,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 211794555975,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 221111766017,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 687030605,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2824936977,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 137239045863,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 56121239898,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 25613573884,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24863667,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 25638437551,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 20980676922,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 18641651017,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 366641804942,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 180589463807,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 184916269570,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 231893531,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1794383263,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 75397812227,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 56404740339,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 51551227272,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 654539592,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 52205766864,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 40917613978,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 37578850317,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 907,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 562956283817,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 240607640239,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 316587971837,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1951020624,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 630440954,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 155776248093,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 62473226690,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 99590823275,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 424667431,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -68253449,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 100015490706,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 81678297492,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 75471569107,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 452806625267,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 210249066500,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 241436222612,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 360055938,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 929984576,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 113377298117,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 52422776044,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 75077686106,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 445942413,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 11466293,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 75523628519,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 60945960673,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 56229457869,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 459664837689,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 192941157448,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 264315605303,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 538232662,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 812777906,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 123297465669,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 53193671405,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 87408831171,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2473284195,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -141091814,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 84935546976,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 67102327210,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 67553719049,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 405244659277,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 183199995487,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 218848652782,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 766330439,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 517455570,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 111085108418,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 46707246822,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 61196163347,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 596248563,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -109009064,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 61792411910,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 50314227378,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 41422420705,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 496838323701,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 237519532081,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 258786426242,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6763587762,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 20770491987,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 116383698228,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 55335164129,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 73089353308,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 352194068,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 28693648,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 73441547376,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 57480583134,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 56427986997,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 486268954729,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 232153869710,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 251326553995,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1832250575,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19174426003,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 121246858089,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 41187179111,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 71530409151,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 504799991,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -19932215,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 72035209142,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 58254660211,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 53217171424,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 513912724254,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 255791089986,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 252855346045,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3426796149,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 18245889390,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 118164976402,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 45131126982,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 74758793889,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 68976747,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 18644469,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 74827770636,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 61049185874,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 50344950705,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 494996047958,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 263073878030,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 231251491764,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3364039317,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24461674727,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 108255207524,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 40387651254,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 61555871158,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1022332130,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 44873582,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 62578203288,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 51177731825,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 50257663343,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2015,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 541215120524,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 305111371917,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 234960582390,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3310489993,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 15594540025,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 98849734486,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 43893815574,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 79935388112,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 210737226,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2405814,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 80146125338,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 63481011621,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 57494533362,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2015,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 478260022919,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 248729147342,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 229319373050,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1939919219,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 20901051695,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 111436672308,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 38646776389,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 60352334061,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1031341676,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 77542184,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 61383675737,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 49733270970,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 45934804494,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 500383144771,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 266310658381,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 233471963864,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1207698773,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22009696399,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 114832620013,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 43523032331,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 54393779433,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 263341755,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 79465540,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 54736586728,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 42702333038,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 36811716746,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2015,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 461784520189,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 249943547918,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 211151853348,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2536220986,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 18261682351,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 104785830311,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 35950833511,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 54782451260,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 901500998,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 92723099,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 55776675357,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 45733556548,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 39593405091,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 515696560367,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 289283973571,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 225513627830,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2079624204,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 748542504,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 89843066812,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 36951333324,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 64000707916,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2821485232,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 61602167771,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 45255106771,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 42271858293,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 415033831845,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 220394390349,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 192971102562,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1491872846,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 778026289,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94032371452,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 33171625818,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 61497650462,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 519539660,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 62036066432,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 50242045878,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 43206929099,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 435372495991,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 247177577846,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 182773902360,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 714427229,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 986969319,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 89110499307,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 33839837637,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 59246351709,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 769413882,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 60135456281,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 46111574064,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 40924213079,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 292172050772,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 178070643469,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 112536383420,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1462548711,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1400028525,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 58670911148,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 24347307821,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 29548297555,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2523368504,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 27053747498,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 21422593878,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 19082120037,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 407520843790,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 229445516175,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 175567671310,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2645194024,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3085118409,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 79811464849,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 43247776148,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 52063343826,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -336866935,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 51795108746,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 34902893369,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 29215148289,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 429245809802,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 235244759654,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 191847403350,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1933579942,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4820908875,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94083627954,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 32849933909,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 61793807159,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 499923206,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 62777035564,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 48298401389,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 43685784055,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 417631869446,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 231118574217,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 183195745493,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 419459240,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5925995804,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 81427048060,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 32281426848,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 62712987620,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2992427933,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 65735267880,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 48899719581,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 42392403185,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 436685697496,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 265421472149,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 170522984077,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 619604198,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6780204348,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 86676660330,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 27572680382,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 50103884593,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 321349098,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 50437531664,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 38930418091,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 33966345174,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2753,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 410474599815,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 241379205707,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 164502293907,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 561569302,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6601559083,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 74531988255,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34181707850,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 49513657085,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5040758071,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 53739946044,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 39250507777,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 32874075735,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 352364226071,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 199077928624,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 152133876877,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 87092359,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7812681304,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 69598335711,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 28481929598,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 46328022623,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 33057692,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 46462791211,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 36431113809,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 36550780171,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 336355377705,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 193697414294,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 141091169524,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 973719460,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10585326253,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 63689883070,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 24264992471,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 43515619721,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 248206156,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 44473296895,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 29159677609,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 27439875905,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 309777978368,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 187691410559,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 121130223670,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 202649302,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9657193206,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 58169734792,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 23674179595,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 29633047404,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -444592377,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 29188455027,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 23309451075,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 19488889818,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1580,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 298668046280,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 174814454196,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 122277687315,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3236124051,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7719189808,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 57733699575,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 29912582172,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 27866076072,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1262190212,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 26603885860,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 21289681285,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 19278701110,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 254898111819,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 147026353081,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 103366379687,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2469971786,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 491448519,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 46260749307,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 14733716576,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 39907400011,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -50953206,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 39856446805,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 26804478232,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 26804478232,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2172,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2011,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 312310048273,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 202684922105,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 106294089194,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 572929808,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5303006987,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 49545806603,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 16487881335,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 34640868905,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 229483663,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 34870352568,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 25319429225,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 25319429225,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2011,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 207379102965,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 139140642792,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 67188590364,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1646660762,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3792439594,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 28429257676,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11333279893,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 22865679112,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 141180771,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 23006859883,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 17382467848,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 17382467848,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1409,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2010,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 250407035829,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 187809997070,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 60150321066,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3097493718,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2900554518,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26195098938,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13153448440,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 20670101428,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 49581125,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 20719682553,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 15485189659,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 15485189659,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1414,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2010,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 224173048406,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 145886794774,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 73470646782,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 526296928,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2493659007,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 35186522074,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11235210416,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 24940215332,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 140915030,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 25081130362,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 18819368068,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 18819368068,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1789,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2010,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 187254317238,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 116979290207,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 68511881787,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 422553790,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2772686629,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27388043668,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13415146033,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 25065734661,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1575760,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 25067310421,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 16481498829,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 16481498829,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2010,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 208718848582,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 145042950369,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 62664713890,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 240451987,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1732381788,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 29550101109,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 9799581690,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 20876049782,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -666404,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 20875383378,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 15729624646,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 15729624646,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1542,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2009,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 211631751728,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 143141495311,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 66595440884,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 840797438,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1468128606,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 31620171871,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 14330853481,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 18514063404,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4333553656,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 14180509748,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 9702649361,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 9702649361,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1297,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2009,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 192799830430,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 138528935458,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 53253539256,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 640564955,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1219392730,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 23809802897,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8049986704,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 20814921880,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -630357115,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 20184564765,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 15102211742,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 15102211742,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1867,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2009,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 172388932660,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 118557744891,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 52207830729,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1320250735,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 970718481,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25450267594,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8114034319,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 18631203610,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 27849801,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 18659053411,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 13994290058,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 13994290058,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2009,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 176946470018,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 132039755732,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 42716342891,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1299323359,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 859356081,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16896308519,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 10138914078,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 15709719485,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9579,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 15709729064,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11782296798,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11782296798,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2008,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 207835347642,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 166280468694,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 40751268971,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1231420942,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 662509818,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 17017699795,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 6777799418,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 17257626005,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 30875738,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 17288501743,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11465759995,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11465759995,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1433,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2008,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 187655934239,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 145442488592,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 40395981578,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1203529101,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1009471943,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 15565664464,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 9644794923,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 15371321606,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -293102909,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 15078218697,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 12511936031,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 12511936031,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "TRA",
+            "year": 2008,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 213685536976,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 175164981465,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 37128861727,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1958471366,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1711723009,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16126045927,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 9313640928,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 11935923229,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 127506802,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 12063430031,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11621694948,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11621694948,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

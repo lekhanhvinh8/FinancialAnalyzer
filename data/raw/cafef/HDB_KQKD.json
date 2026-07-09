@@ -1,0 +1,3735 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Thu nhập lãi thuần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Lãi/lỗ thuần từ hoạt động dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lãi/lỗ thuần từ hoạt động kinh doanh ngoại hối và vàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán đầu tư",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Lãi/lỗ thuần từ hoạt động khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Thu nhập từ góp vốn, mua cổ phần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Chi phí hoạt động",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh trước chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông của Ngân hàng mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 45,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "HDB",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8483022000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 847069000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 321875000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -6177000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 48960000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 168690000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 89403000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2587015000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7365827000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1258493000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 6107334000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4902140000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4766642000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 952,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9755610000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 874358000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 316501000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4428000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 848331000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 371917000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 159141000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3819923000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8510363000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1991086000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 6519277000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5220156000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5107218000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7763322000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1187168000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 343463000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4397000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4797000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 158221000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 55114000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2487980000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7028502000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2294002000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4734500000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3798817000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3646638000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9819158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1331560000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 423977000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 241355000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19526000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -272338000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 72649000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2782029000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8853858000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4141072000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4712786000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3676059000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3514860000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7408100000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 733290000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 188241000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 389280000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -16744000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 478817000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 23569000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2524523000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6680030000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1324795000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5355235000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4357672000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4234754000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1212,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8202720000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 423479000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 234621000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6162000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 141619000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 393549000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 45980000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3540462000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5907668000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1831864000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4075804000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3237228000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3114654000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7773445000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 412110000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 123899000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 141710000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -88800000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 150584000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 22024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2951077000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5583895000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1093488000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4490407000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3545636000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3423876000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7160350000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 356762000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 174886000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -78664000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 65351000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 73380000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2454639000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5297426000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1269851000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4027575000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3213172000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3109772000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1075000000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7472503000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 591784000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 283333000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -92086000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 111106000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -108981000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2630124000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5627535000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1242405000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4385130000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3447615000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3343895000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4916148000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 317959000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 185863000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29936000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 516324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 114897000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4101000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2301873000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3783355000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 636089000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3147266000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2515158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4954515000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 600864000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 145057000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 75910000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 515414000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 121631000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2238587000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4174804000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1433167000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2741637000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2179528000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4840808000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 677195000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -49550000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 27963000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24161000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 131606000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5224000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1958618000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3698789000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 956090000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2742699000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2193712000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 830,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4932102000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 820017000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -65593000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 351000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3876000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 185845000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2671102000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3197744000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 945792000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2251952000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1799451000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4484850000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 693273000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 96502000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -8813000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -11513000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 139972000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2000925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3393346000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 680925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2712421000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2169487000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4551225000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 835243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 80329000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -12837000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19346000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 103713000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 4533000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2033070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3548482000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 772314000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2776168000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2220093000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4043391000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 608285000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 22999000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 38285000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 308663000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 98560000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2252000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1925612000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3196823000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 669308000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2527515000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2020439000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 963,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3752996000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 741131000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 91897000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -9494000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 36982000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 16323000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1656610000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2973225000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 988067000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1985158000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1588870000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3306282000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 328914000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 20574000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 35667000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -11835000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26331000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1411602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2294331000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 403307000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1891024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1513039000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3468701000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 543972000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 42453000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 54977000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 55665000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 88243000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1682984000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2571027000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 477774000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2093253000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1671475000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3362798000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 313421000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 24324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 19782000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 396401000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 51740000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1631572000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2536894000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 436712000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2100182000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1680115000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 981,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3212161000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 320979000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 93324000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 54445000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24922000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 258852000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1872114000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2092569000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 655763000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1436806000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1146485000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3021583000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 256212000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 30484000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -17173000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 28065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 76717000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 72640000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1562467000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1906061000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 432226000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1473835000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1178686000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2780364000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 142042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 18928000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4212000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 119040000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 130533000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 260000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1130489000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2064890000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 407958000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1656932000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1320397000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2883597000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 158110000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 24920000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 63695000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -32218000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 52741000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1607759000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1543086000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 292438000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1250648000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1001305000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 992,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2888034000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 160738000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 54814000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 39223000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2847000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 197998000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1366195000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1977459000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 407220000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1570239000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1256341000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2504870000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 149117000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -296000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14105000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 75491000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 127751000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1284028000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1587010000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 349486000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1237524000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 989040000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2323741000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 144173000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 80905000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -2674000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 33535000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 100821000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 27069000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1292906000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1414664000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 305733000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1108931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 896228000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2029910000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 141848000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 94380000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 29805000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 128076000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 41713000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1137368000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1328364000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 226644000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1101720000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 878726000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 814,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2161165000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 97277000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 169545000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1885000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6348000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 224927000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1184272000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1473105000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1120704000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 892065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1768706000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 115441000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 51052000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16069000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 8126000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 103021000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 53618000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1148111000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 967922000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 146552000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 821370000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 655631000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1884382000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 114577000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 55020000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 26835000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 166928000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 90075000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 26111000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1099993000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1263935000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 248139000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1015796000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 819901000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1831440000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 110879000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 22698000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 83317000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 160114000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 72138000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 22431000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1009080000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1293937000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 247179000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1046758000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 833914000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 772,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1744818000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 73271000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7481000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1972000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -18323000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 121186000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 250000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1158046000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 768665000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 264160000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 504505000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 416840000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1863886000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 35110000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 32138000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5234000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 342925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 122287000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 37000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1051472000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1350145000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 318952000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1031193000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 824533000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1410024000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 50601000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 56288000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 3898000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 117189000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 31143000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 43098000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 990128000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 722113000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 228392000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 493721000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 403424000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1356097000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 32265000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 34006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1452000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 43105000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 22067000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 495000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 893980000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 592603000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 205256000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 387347000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 309596000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1176407000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 41546000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 44123000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 33356000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5341000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 17165000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8810000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 831101000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 495647000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 353320000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 142327000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 115346000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1172805000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 29989000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 52126000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -16569000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 20065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10608000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 128020000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 769277000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 627767000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 286389000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 341378000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 297772000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1020925000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27316000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 46400000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 20596000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 7885000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9697000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 454000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 700006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 433267000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 143543000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 289724000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 230659000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 241,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2014,
+            "quater": 2,
+            "type": "M",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 133388562357,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17417213536,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 14042627210,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 144642282083,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9527062785,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 19047377400,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 345840249034,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -7775123663,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -34116025615,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 26340901952,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 24718084925,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 318720918866,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 41291883664,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 11767715805,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 62471022157,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10727184456,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 120000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 408874392182,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 36224332766,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 5074165268,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 31150167498,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 23302653872,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2013,
+            "quater": 3,
+            "type": "N",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 226178716341,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15289445616,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -24633158579,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9724225448,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 11481151996,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 26115734777,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 236793212534,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 27362903065,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 19610290404,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 7752612661,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 6237416555,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2013,
+            "quater": 2,
+            "type": "N",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": -5265696059,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9873292976,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -5972299997,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15670641975,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 111596139560,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -7086477670,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 115781920549,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 134157885247,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 100439636087,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 36538586453,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 63901049634,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 76806681267,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2013,
+            "quater": 1,
+            "type": "N",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 130408438346,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6780117061,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -3906474729,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 28788264966,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 171627044781,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 819693600,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 212386252601,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 122130831424,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 47312985867,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 74817845557,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 56306099364,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "HDB",
+            "year": 2011,
+            "quater": 3,
+            "type": null,
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

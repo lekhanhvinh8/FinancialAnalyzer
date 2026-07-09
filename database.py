@@ -2,9 +2,9 @@
 SQLite storage for Vietnam stock data.
 
 Tables:
-    prices      (symbol, date, close)
-    shares      (symbol, year, quarter, shares)
-    net_profit  (symbol, year, quarter, net_profit)
+    prices           (symbol, date, close)
+    shares           (symbol, year, quarter, shares)
+    net_profit       (symbol, year, quarter, net_profit)
 
 quarter is an integer 1-4.
 Save functions skip existing rows by default; pass override=True to overwrite.
@@ -50,14 +50,16 @@ def init_db():
             );
 
             CREATE TABLE IF NOT EXISTS net_profit (
-                symbol      TEXT     NOT NULL,
-                year        INTEGER  NOT NULL,
-                quarter     INTEGER  NOT NULL,  -- 1, 2, 3, or 4
-                net_profit  REAL     NOT NULL,  -- VND
+                symbol   TEXT     NOT NULL,
+                year     INTEGER  NOT NULL,
+                quarter  INTEGER  NOT NULL,  -- 1, 2, 3, or 4
+                kqkd_14  REAL,               -- profit attr. to parent shareholders (primary for P/E)
+                kqkd_13  REAL,               -- total consolidated profit after tax
+                kqkd_10  REAL,               -- securities broker template (SSI, VCI, etc.)
                 PRIMARY KEY (symbol, year, quarter)
             );
 
-            CREATE TABLE IF NOT EXISTS pe_history (
+            CREATE TABLE IF NOT EXISTS pe_vn30 (
                 date             TEXT  PRIMARY KEY,  -- ISO date: YYYY-MM-DD
                 pe_ratio         REAL,               -- aggregate P/E, NULL if incalculable
                 total_market_cap REAL,               -- Σ(price × shares) in VND
@@ -80,6 +82,21 @@ def init_db():
             );
 
             CREATE TABLE IF NOT EXISTS pe_vndiamond (
+                date             TEXT  PRIMARY KEY,
+                pe_ratio         REAL,
+                total_market_cap REAL,
+                total_ttm_profit REAL,
+                member_count     INTEGER
+            );
+
+            CREATE TABLE IF NOT EXISTS vnfinlead_members (
+                symbol        TEXT  NOT NULL,
+                date_added    TEXT  NOT NULL,
+                date_removed  TEXT,
+                PRIMARY KEY (symbol, date_added)
+            );
+
+            CREATE TABLE IF NOT EXISTS pe_vnfinlead (
                 date             TEXT  PRIMARY KEY,
                 pe_ratio         REAL,
                 total_market_cap REAL,
@@ -165,32 +182,39 @@ def save_shares(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
 def save_net_profit(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
     """
     Save quarterly net profit for a symbol.
-    df must have columns: year (int), quarter (int), net_profit (float).
+    df must have columns: year (int), quarter (int), kqkd_14, kqkd_13, kqkd_10 (float or None).
 
     override=False : skip rows that already exist  (default)
     override=True  : overwrite existing rows
     """
+    def _f(v):
+        return float(v) if v is not None and str(v) != "nan" else None
+
     rows = {
-        (int(row["year"]), int(row["quarter"])): float(row["net_profit"])
+        (int(row["year"]), int(row["quarter"])): (
+            _f(row.get("kqkd_14")), _f(row.get("kqkd_13")), _f(row.get("kqkd_10"))
+        )
         for _, row in df.iterrows()
     }
 
     with _conn() as con:
-        existing = set()
-        for (y, q) in rows:
-            r = con.execute(
-                "SELECT 1 FROM net_profit WHERE symbol=? AND year=? AND quarter=?", (symbol, y, q)
-            ).fetchone()
-            if r:
-                existing.add((y, q))
+        if override:
+            existing = set()
+        else:
+            existing = {
+                (r[0], r[1]) for r in con.execute(
+                    f"SELECT year, quarter FROM net_profit WHERE symbol=?", (symbol,)
+                ).fetchall()
+            }
 
-        to_save = rows if override else {k: v for k, v in rows.items() if k not in existing}
+        to_save = {k: v for k, v in rows.items() if k not in existing}
         skipped = len(rows) - len(to_save)
 
         if to_save:
             con.executemany(
-                "INSERT OR REPLACE INTO net_profit (symbol, year, quarter, net_profit) VALUES (?, ?, ?, ?)",
-                [(symbol, y, q, v) for (y, q), v in to_save.items()],
+                "INSERT OR REPLACE INTO net_profit "
+                "(symbol, year, quarter, kqkd_14, kqkd_13, kqkd_10) VALUES (?, ?, ?, ?, ?, ?)",
+                [(symbol, y, q, v14, v13, v10) for (y, q), (v14, v13, v10) in to_save.items()],
             )
 
     print(f"  [net_profit] {symbol}: saved {len(to_save)}, skipped {skipped}")
@@ -225,10 +249,12 @@ def load_shares(symbol: str) -> pd.DataFrame:
 
 
 def load_net_profit(symbol: str) -> pd.DataFrame:
-    """Load all quarterly net profit for a symbol. Returns DataFrame with year, quarter, net_profit."""
+    """Load all quarterly net profit for a symbol.
+    Returns DataFrame with columns: year, quarter, kqkd_14, kqkd_13, kqkd_10."""
     with _conn() as con:
         df = pd.read_sql(
-            "SELECT year, quarter, net_profit FROM net_profit WHERE symbol = ? ORDER BY year, quarter",
+            "SELECT year, quarter, kqkd_14, kqkd_13, kqkd_10 "
+            "FROM net_profit WHERE symbol = ? ORDER BY year, quarter",
             con, params=(symbol,)
         )
     return df
@@ -364,12 +390,54 @@ def _load_pe_table(table: str, start: str | None, end: str | None) -> pd.DataFra
     return df
 
 
-def save_pe_history(df: pd.DataFrame, override: bool = False) -> dict:
-    return _save_pe_table("pe_history", df, override)
+def save_pe_vn30(df: pd.DataFrame, override: bool = False) -> dict:
+    return _save_pe_table("pe_vn30", df, override)
 
 
-def load_pe_history(start: str | None = None, end: str | None = None) -> pd.DataFrame:
-    return _load_pe_table("pe_history", start, end)
+def load_pe_vn30(start: str | None = None, end: str | None = None) -> pd.DataFrame:
+    return _load_pe_table("pe_vn30", start, end)
+
+
+def save_vnfinlead_members(rows: list[tuple[str, str, str | None]], override: bool = False) -> dict:
+    with _conn() as con:
+        existing = {
+            r[0] for r in con.execute("SELECT symbol || '|' || date_added FROM vnfinlead_members").fetchall()
+        }
+        to_save = rows if override else [r for r in rows if f"{r[0]}|{r[1]}" not in existing]
+        skipped = len(rows) - len(to_save)
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO vnfinlead_members (symbol, date_added, date_removed) VALUES (?, ?, ?)",
+                to_save,
+            )
+    print(f"  [vnfinlead_members] saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def load_vnfinlead_members(as_of: str | None = None) -> pd.DataFrame:
+    with _conn() as con:
+        if as_of:
+            df = pd.read_sql("""
+                SELECT symbol, date_added, date_removed
+                FROM vnfinlead_members
+                WHERE date_added <= ?
+                  AND (date_removed IS NULL OR date_removed > ?)
+                ORDER BY symbol
+            """, con, params=(as_of, as_of))
+        else:
+            df = pd.read_sql(
+                "SELECT symbol, date_added, date_removed FROM vnfinlead_members ORDER BY date_added, symbol",
+                con
+            )
+    return df
+
+
+def save_pe_vnfinlead(df: pd.DataFrame, override: bool = False) -> dict:
+    return _save_pe_table("pe_vnfinlead", df, override)
+
+
+def load_pe_vnfinlead(start: str | None = None, end: str | None = None) -> pd.DataFrame:
+    return _load_pe_table("pe_vnfinlead", start, end)
 
 
 def list_symbols() -> list[str]:

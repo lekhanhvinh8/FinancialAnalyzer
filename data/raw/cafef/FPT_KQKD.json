@@ -1,0 +1,6295 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 77,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "FPT",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 12485836704352,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8235107316087,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4244889890688,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 415863869179,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 367211384721,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1002337155317,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1210282662926,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2747763827050,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 56080454626,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 666841270147,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2803844281676,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2476789833481,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2487371587099,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1460,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20258866135395,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13171300027162,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7054150330247,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 553701777401,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 476741111428,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2045175725062,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1892395897574,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3477285510758,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21119093147,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 283746137174,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3498404603905,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2988148562554,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2502704371686,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1168,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17225507121683,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 10685654746292,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6518866479010,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 613110473502,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 352575079871,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1916582832643,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1647276732839,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3346375732746,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28362865344,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 130833425587,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3374738598090,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2901545752650,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2434841434732,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1036,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16658335760739,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 10603672997092,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6021040042975,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1236993026877,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 531366215070,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1790295896888,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1913706634404,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3129379259205,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11624002430,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 106714935715,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3141003261635,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2740242077853,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2257433265298,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1529,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16064980391264,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9756793038194,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6301347904266,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 573331893191,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 311343769364,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1828785929282,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1877437056836,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2993843378813,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 30850132036,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 136730336838,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3024693510849,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2595557480309,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2174301386525,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1478,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17651065378940,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11128844453966,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6478973351926,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 576398372443,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 831375395433,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1684353616264,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1735410040472,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2922046994779,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 37620496313,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 117814322579,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2959667491092,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2493502474938,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2086993221115,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 994,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15972397069700,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9743866051351,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6158955664406,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 326689006856,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 308178806879,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1563862943636,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1807957864952,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2948226004570,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -39605371196,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 142580948775,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2908620633374,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2478597622500,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2088852212408,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1430,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14093297397476,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8582462733612,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5510465680087,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 457092979986,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 334065273301,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1368948625743,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1823471776014,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2515527123032,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18054931520,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 74454138017,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2533582054552,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2160265289642,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1798030863528,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1416,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14695806584757,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9058549143162,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5631863560161,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 520345470835,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 527556384763,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1316156285395,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1979944371544,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2386698290464,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 48394509127,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 58146301170,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2435092799591,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2051240770981,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1728399961335,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 925,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13761831884948,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8265376008841,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5496368967016,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 516203046415,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 406428287129,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1434174354947,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1773504449852,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2438361031885,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -9210572026,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 39896110382,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2429150459859,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2075869356025,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1739340360244,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1373,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 12484515133084,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7850539957865,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4633824307037,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 623044115643,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 287498451679,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1238296534096,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1475558757945,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2189766371273,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28366262074,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -65748307687,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2218132633347,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1855582255636,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1509219531243,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1373,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11683021258544,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7113499882609,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4567879000694,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 676476546426,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 496815340139,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1101871534159,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1592492464630,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2096933282136,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 23710364962,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 43757073944,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2120643647098,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1809799453894,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1493562580890,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1361,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13053462794764,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7801152486947,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5241273784162,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 526329659816,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 644381295008,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1481341041915,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1761816901184,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1978262144383,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10766486531,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 98197938512,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1989028630914,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1619891968108,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1351601105816,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1235,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11148779552748,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6789073328096,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4359485692257,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 549704414876,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 413926492214,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1131402372888,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1461418832201,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1993657541909,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 34367278015,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 91215132079,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2028024819924,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1755997461589,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1453716280969,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1329,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10096707659064,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6080957072181,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4015103018778,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 506153596903,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 336841342149,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1016359820282,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1418038122633,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1836170115803,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21674510629,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 86152785186,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1857844626432,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1561574291434,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1250820478811,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1145,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9731832420600,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5776932551838,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3953321292553,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 415786301903,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 267572525432,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1007092497146,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1530572234992,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1772700579087,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6347267593,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 208830242201,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1779047846680,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1538558114474,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1238879424986,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1365,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10714772437502,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6609687457941,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4094368175339,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 372542134940,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 366884116683,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1225942020370,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1406871909119,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1739745644406,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 20656581061,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 272533380299,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1760402225467,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1559814684889,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1301522104628,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1001,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8687049614341,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5474243222947,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3250928734025,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 332266541305,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 272888215242,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 804023830463,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1071115122466,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1583035594235,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 55537177649,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 147867487076,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1638572771884,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1374615075418,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1124838737907,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1242,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8663555503232,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5181318450067,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3460388834754,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 240540286743,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 361830175777,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 829919009383,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1135363718331,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1523659692591,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 15804825883,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 149843474585,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1539464518474,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1259666449892,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1000031075983,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1105,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7605674678535,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4691800715286,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2894526954668,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 325440423279,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 141136993354,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 852114921328,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 961763590894,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1380037491735,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16713719602,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 115085619364,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1396751211337,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1150702623504,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 906142681183,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1156,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8700729240329,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5195783662734,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3470920950243,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 223126152055,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 152060434779,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 858582754238,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1355121201405,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1423198361419,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24121678983,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 94915649543,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1447320040402,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1252588701741,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 982843692181,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 857,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7578691043196,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4554350312294,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2998778191778,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 218188627566,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 108899945949,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 627451667728,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1178990862353,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1369402467106,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16476504780,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 67778123792,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1385878971886,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1148631372113,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 928887800638,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1187,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6997263488982,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4258247824386,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2721754673951,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 202241950450,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 106159096432,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 606378140166,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1012792679359,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1268042508885,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 17450599118,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 69375800441,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1285493108003,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1084221988395,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 878710517512,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1121,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6645014371789,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4006186532912,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2624378378526,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 178339694711,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 181045734457,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 620220561506,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 954039290004,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1127536485672,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 14753383155,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 80123998402,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1142289868827,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 936962574852,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 747105139040,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1101,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8146869581144,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5049159596679,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3071028277517,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 206123383314,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 171720224922,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 727169234250,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1309144643796,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1135574754296,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21489257592,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 66457196433,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1157064011888,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 971910149589,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 757233806198,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 710,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7138804848615,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4321648868311,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2782725269232,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 165793907640,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 130422355652,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 559023139084,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1031084693003,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1347402673251,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21068354620,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 119413684118,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1368471027871,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1159711956246,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 960108010842,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1418,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6834181383787,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4247788982478,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2578129542120,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 164115058319,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 204225331566,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 566455497992,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 931280807507,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1164535589481,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 14093160819,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 124252626107,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1178628750300,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 986167232252,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 791704283229,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1171,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5672126363409,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3387149316396,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2279330299668,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 153577698004,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 121303122605,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 488586048888,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 980588763923,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 937234021911,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 23132699704,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 94803959655,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 960366721615,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 793922828754,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 626304276321,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1021,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6975082049864,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4381235841117,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2571210747456,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 216866279123,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89173349173,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 665496334471,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1057696129042,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1086434591271,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28098412095,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 110723377378,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1114533003366,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 926431851589,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 786460440897,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 913,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6047729557924,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3740388690646,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2295670242789,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 124076383785,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 66603046663,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 507534958450,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 900927435586,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1057301204429,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6624278426,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 112620018554,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1050676926003,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 890263825176,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 724917924600,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1184,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5479349328640,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3473590126697,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2000672597403,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 112699870321,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 70016554956,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 451959254396,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 829766036904,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 879551998573,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 26762221776,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 117921377105,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 906314220349,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 759028833509,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 594282345873,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 971,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4756965340838,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2895208284813,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1855560326804,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 153492560984,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 142295399439,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 422707405722,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 770426481175,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 771385943104,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9392267748,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 97762341652,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 780778210852,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 652768432266,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 509013722111,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 959,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 12661494286639,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9645315336292,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2850422016373,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1135241449538,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 128504532260,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 868666020456,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1104104575075,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1922129774999,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18065106280,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 37741436879,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1940194881279,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1567243541084,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1419645450459,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2279,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10973968764817,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8415361412069,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2415836625376,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 174827996803,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 138678362738,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 756295421886,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 824284528308,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 882252175539,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -599428566,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10845866292,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 881652746973,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 744030996034,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 582640652429,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1100,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10089127514119,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7515123047941,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2431579550839,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 162595733071,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 188908861760,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 722126928368,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 914566795502,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 779116749765,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4366208915,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10544051485,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 783482958680,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 670457222268,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 511685684994,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 967,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9606952451575,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7342606178604,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2075513389017,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 165921890251,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 200267169456,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 729390435161,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 692060517287,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 629910969468,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13333825283,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10193812104,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 643244794751,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 540339933466,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 412899887329,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 899,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 12615351927832,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9612445517435,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2787127572335,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 240044516526,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 279516757986,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 840785657504,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 930675552502,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 986045555922,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16251683350,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 9851435054,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1002297239272,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 831526825567,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 661138145325,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1026,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9964309674574,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7538707301267,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2216581048829,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 139922422113,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 192112127954,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 698480385735,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 724849944238,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 749013779691,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5072353739,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 7952766676,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 754086133430,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 667465797097,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 467811292728,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1020,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9213317509766,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7024976073110,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1933550359469,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 159032637935,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 223845440891,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 575833289549,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 629558175148,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 673287672405,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 20409131113,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 9941580589,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 693696803518,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 629352774842,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 515166269454,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1125,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8702590304172,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6780366914104,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1686151346915,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 161405373886,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 124384876152,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 597560642366,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 578217447989,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 554781334344,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7964301598,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 7387580051,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 562745635942,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 446508621590,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 345690044702,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 870,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11744376267762,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9942463484782,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1801912782980,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 98267830949,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 133871524773,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 523476460522,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 531229058610,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 711603570024,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3908392559,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 715511962583,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 590509065135,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 456633177454,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1152,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15333191333048,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13564975357078,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1768215975970,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 109430790906,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 91952795323,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 542275938406,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 593725112616,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 612409548679,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 19634089998,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 644948381520,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 533636174519,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 450528882174,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1310,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13477214908109,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11870554158755,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1606660749355,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 98394902661,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 49194248354,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 415170114454,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 621219823005,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 590932786532,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11261839271,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 612212537257,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 503721533462,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 389097954831,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1131,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3374172538652,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1722524485706,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1554003572904,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 75899632592,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 47212296680,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 387407906436,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 526030515916,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 628383604662,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21774546728,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 657860328457,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 557458338029,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 427585557091,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10867321675354,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9522263035169,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1345058640185,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 83919239549,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 35506573224,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 344492563430,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 456174862257,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 566862962628,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 17458114030,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 594654844739,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 480953443122,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 361517383294,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1314,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11283426979266,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9645313343949,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1638113635317,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 183905929068,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 33207510570,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 477727928366,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 608518128319,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 676635490861,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 33263198675,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 718838697468,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 541223545101,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 474009965778,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1727,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 12000599396256,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 10654524368153,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1346075028103,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 60335678666,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 33765560183,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 344080456027,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 450431684294,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 546818928837,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11178986020,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 562529454864,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 465109484951,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 330589868211,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1206,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9336561564148,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7971355071365,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1365206492783,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 78484913031,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 29936292950,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 296759398864,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 387784949630,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 675879966784,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 19618375642,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 702324732689,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 584298999929,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 444785653324,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1625,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8611039318749,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7417863368376,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1193175950373,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 62994839537,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 35581809119,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 254508011272,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 386688876377,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 551903080046,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21258051517,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 574384079642,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 474680965326,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 358322731666,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1309,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10020774589431,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8509643228189,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1511131361242,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 323149521980,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 73434953424,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 310733967450,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 629009626073,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 626199635350,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 25100565783,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 651363516979,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 544580754395,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 448954028815,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1651,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9869741097197,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8734212498716,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1135528598481,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 129245974632,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 68950952012,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 237161566241,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 412907545179,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 524002754564,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 22844375893,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 550116408391,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 451929839903,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 338402486653,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1247,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2303973868513,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1198476642140,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1105497226373,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 123643167426,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 80201149007,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 209350258482,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 309168712160,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 593236193082,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 17720191985,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 627161730197,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 529497087584,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 412340790623,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1211,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8937351712804,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7820009646938,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1117342065866,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 109579928886,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 55413903128,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 166009269036,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 378298879601,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 559792155841,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5002878392,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 577918953719,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 460416867590,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 340629594240,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1577,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2011,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13832026163451,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12178538952968,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1653487210483,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 120361598180,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 54626306021,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 259466488820,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 717798738813,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 661051063148,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13377282840,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 648646193384,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 579689033747,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 462745854717,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2163,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2011,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10140718445305,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8896496577129,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1244221868176,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 222314527371,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 99415900391,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 224360183425,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 441166014818,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 624350909597,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7344766810,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 662377972927,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 539532839703,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 513325729457,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2064,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2011,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9329771741836,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8038828497601,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1290943244235,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 167928466738,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 91544648188,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 190289243276,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 444244201684,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 648887842575,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8649243160,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 688296445377,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 553046337882,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 415457206026,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2148,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2011,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10199095223055,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9038265555939,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1160829667116,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 131297652948,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 99144295476,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 145728454797,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 367487461452,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 474631357272,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 15970443532,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 515704303957,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 416327420333,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 296626348927,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1534,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2010,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10198524365711,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8901564447602,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1296959918109,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 129939307593,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 86390220075,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 298279526577,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 450749049018,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 424497157378,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 19154132843,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 473653259585,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 428709297880,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 303827942489,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1587,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2010,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 12602884150568,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11474978859077,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1127905291491,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 194863280387,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 103227497357,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 345529484562,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 360609146133,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 422730414997,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9044450808,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 461572440494,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 372830693666,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 281037265327,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1468,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2010,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9768624877145,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7867724187679,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1900900689466,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 216150991371,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 126604097606,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 229590544780,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 692088194008,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1008365372470,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28256286667,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1086900547136,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 889681435933,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 678185763453,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2010,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8017530294033,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7008264736290,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1009265557743,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 115615898143,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 74331818876,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 225020455433,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 331566679785,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 420106042050,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 15368348455,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 455055592790,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 384408901783,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 290085439216,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2021,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2009,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14983873055400,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13611984678970,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1371888376430,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 96123946593,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 65270240504,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 374656468442,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 480497825666,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 356011801417,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 45650798667,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 430387837930,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 366566329891,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 288213001038,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1998,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2009,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8377066572367,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7326870841010,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1050195731357,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 39136902610,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 15691418509,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 242066112873,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 313772356311,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 484836547905,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -17912368877,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 484911167036,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 405963336708,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 322159689505,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2286,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2009,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9271528221342,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8330595992693,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 940932228649,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41518976952,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 15559246108,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 231727049560,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 299051206682,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 377960869146,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3469507741,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 395272053314,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 314614644421,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 231858588920,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1228,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2009,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7438681961628,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6562715076603,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 875966885025,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 26431500922,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 13268048840,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 210887581354,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 239217006931,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 380665380695,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4072030643,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 391636349041,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 317119764016,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 219520438833,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1557,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2008,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9113084423428,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8097055011902,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1016029411526,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 69678221575,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11551066410,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 276734563268,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 311879365059,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 415498988952,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 19275767939,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 405659838622,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 360778927483,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 330495944285,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2372,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2008,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7464327557045,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6743361239634,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 720966317411,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41366828472,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 18787551797,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 248591992676,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 182949705474,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 197335110593,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8461060207,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 205796170800,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 175794816820,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 120468793981,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1280,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2008,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8830457309255,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7868946427145,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 961510882110,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 44281125615,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 28091216966,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 221924587177,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 243747355324,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 327591134130,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13321895110,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 327896021194,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 272586538607,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 201584238213,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2170,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2008,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8410878418510,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7713978488806,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 689552083559,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41779476549,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22055490966,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 224881381018,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 171321848557,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 287887890370,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 15936979715,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 303028036417,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 246358756044,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 186105081419,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2015,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2007,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9376397268196,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8480643526017,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 895753742179,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 25557548196,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12391631002,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 306982874635,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 241904153188,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 350400324376,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13841553975,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 367188590461,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 312744291573,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 272506664760,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2951,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2007,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6238109420272,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5757725257923,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 480384162349,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 8071533017,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10205903777,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 172098572134,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 177750046383,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 116782376080,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 36447285120,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 153229661200,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 128385384361,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 87811782043,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 955,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2007,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6070562308072,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5509316749370,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 561245558702,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5532058064,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11091556679,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 134534139655,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 147170754656,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 268288470953,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 31221536890,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 299510007843,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 256617200268,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 210921693967,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2312,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2007,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5663584718970,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5260653226564,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 402931492406,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 10100065262,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9609988640,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 110290430549,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126899651618,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 162197301132,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 44524550472,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 206721851604,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 179455640477,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 155046633674,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2550,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2006,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7142553479904,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6527895995878,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 614657484026,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4400134658,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10717172016,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 191998515097,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 166782274124,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 243988265223,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28176347652,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 272164612875,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 240014708508,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 228361752948,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4060,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2006,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5452430864402,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5117664290338,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 334766574064,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2414402109,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 17565523215,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 116417204719,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 111974295096,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 87352925161,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 19602436051,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 106955361212,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 93248216255,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 68345979301,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1249,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2006,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4550007414307,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4187343249709,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 362664164598,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2894554124,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 13247636788,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 94631812018,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 94029262223,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 155707015704,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2260151446,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 157967167150,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 148533551914,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 114930731593,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2100,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "FPT",
+            "year": 2006,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4262641090677,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4027749988494,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 234891102183,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1600334304,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 16430343469,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 74992787107,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 74730665974,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 71424839308,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 547127920,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 71971967228,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 53387970146,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38881961709,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 710,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

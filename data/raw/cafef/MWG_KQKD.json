@@ -1,0 +1,3815 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 46,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "MWG",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 46709163270992,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 36751850587457,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9710101439316,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 857866587527,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 421767358286,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5284908877085,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1523180115533,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3347123417867,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -19539117976,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 9011741928,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3327584299891,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2757557020527,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2714430853106,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1849,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 43097378598913,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 34804147834619,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 8046244888262,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 836153921612,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 390297766478,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4942111524432,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1060394369967,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2495518121755,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5666766665,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 5922972758,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2501184888420,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2086492115257,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2071646268173,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1562,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 40091343632319,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 32374320274746,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7478186877900,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 809068897431,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 410743275636,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4570833491508,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1119414262509,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2190441447033,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -18090280954,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4176701355,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2172351166079,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1783665633985,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1770898917304,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1198,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 37844160678840,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 30051267999814,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7568700660156,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 768832246965,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 402454468644,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4703283205201,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1201666094080,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2041250769970,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -13046014594,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 11121630774,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2028204755376,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1657529120910,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1648146246704,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1117,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 36332913479242,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 28934547803004,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7200410615205,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 693293667931,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 339023162705,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4403006343750,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1214599786616,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1940204764365,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5543377145,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3129774300,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1934661387220,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1547833768676,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1545937090941,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1058,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34793923302149,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27986951875213,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6586968902119,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 635695584388,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 189071963171,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5123108197082,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 916356723640,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 996550122732,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 38921131266,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2422520118,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1035471253998,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 852144126290,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 847004382205,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 580,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34361569620937,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27254757625648,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6891911062303,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 575388786548,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 330440626256,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4848950073481,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 967618855194,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1320438170928,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -252392770321,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 147877008,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1068045400607,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 805786501540,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 800149979434,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 547,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34384590572937,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 26826357532252,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7307714001700,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 580108784951,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 293717254558,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5056436083812,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 813335766167,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1697652402567,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -181609309275,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -26681279547,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1516043093292,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1172384028448,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1172276912467,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 802,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 31685017802969,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 24773875738668,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6712616110899,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 585309449376,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 375235765525,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4821343255507,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 868456238101,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1212404728664,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6201463483,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -20485572478,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1206203265181,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 902973572442,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 902437167555,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 617,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 31653210181975,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25235028171607,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6186460530542,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 603394491753,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 418580725428,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5607079567766,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 300975912573,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 463218816528,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -244293593216,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 218925223312,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 90318027995,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 90257557591,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 62,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 30520841321411,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25644729636740,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4642927650213,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 619115610735,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 444911058770,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4278767149898,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 341530615165,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 196834437115,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -14818349994,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 182016087121,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 38815863119,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 38739225905,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 26,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 29725046708024,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 24023662436242,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5441168007649,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 585368718654,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 396875094839,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5211133500533,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 229156805109,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 189371325822,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -59586850020,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 129784475802,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 17413949383,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 17405665662,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 11,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 27335086613676,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 21891312170662,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5214499851787,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 359084893949,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 295779227945,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4784685911213,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 324692291418,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 168427315160,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -9460733499,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 158966581661,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 21281314442,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 21266943546,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 15,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 30877778203705,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 22658872494961,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7929508657513,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 311780141173,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 381546829485,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6603486449711,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 292045055541,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 964210463949,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -30832189828,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 933378274121,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 619022103133,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 619040753469,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 422,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 32322456456197,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 24619955468038,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7392024379589,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 348740404454,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 434637150382,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5342606252861,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 316220813071,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1647300567729,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -229460421920,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1417840145809,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 906779169373,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 906245995691,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 618,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34702840342036,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27001321732513,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7336418239260,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 297757553066,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 360157346540,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5070491080685,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 500331314841,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1703196050260,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1052726107,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1702143324153,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1130668779267,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1130010994744,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 770,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 36819173885619,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 28342412527151,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 8124264091499,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 354859205630,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 206279128125,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5036030591147,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1239442359834,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1997371218023,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5622411452,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2002993629475,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1445244373166,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1444465283401,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2026,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 36497281090978,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 28763440176908,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7374889732595,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 384466254503,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 225421690718,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4853008363114,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 665959677027,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2026737523831,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 23175605850,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 11771267592,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2049913129681,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1563313129235,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1562485583796,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -511,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 24504825927283,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 18244500199927,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6088713325766,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 288605719929,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 164678840728,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4270432006893,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 975182680390,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 965787264168,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2343896585,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1238253516,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 968131160753,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 785802158883,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 785385401306,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1298,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 31982973207655,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 24514835467434,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7143583385671,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 304726396651,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 170842215768,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4444441417035,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1201412393639,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1628200473034,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2229947066,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -3413282846,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1625970525968,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1213678402418,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1213029685285,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2518,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 31156445464032,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 23803198263371,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7024945551502,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 288290505677,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 152802395191,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4245130637303,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1088365871334,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1823976591260,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3592342881,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -2960562091,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1827568934141,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1338632983354,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1337968607833,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2897,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 27512501260337,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20919028286020,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6274665061539,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 243144091635,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 146675802931,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4259169057232,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 783692075325,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1328358972915,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5372797309,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 86755229,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1333731770224,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 942297050127,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 941797225373,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2079,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 26021650222198,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19963833875800,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5749720009774,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 256718662733,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 132146267492,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3753486734557,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 840336742769,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1279239845942,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -959916474,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1229081747,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1278279929468,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 951032437374,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 950539857407,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2100,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 26593356800952,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20515417227877,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5770141784886,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 169372877774,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 137081235663,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3538368435696,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1000645132631,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1262259100661,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -8596738702,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1160758009,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1253662361959,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 894423546241,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 893911685549,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1975,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 29673745407169,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 23193243003252,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6159970416264,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 124886150525,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 178248207665,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3782774603302,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 779757887442,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1542672013436,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1389332266,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1403854944,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1544061345702,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1132119675765,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1131519014830,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2500,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 25715675898405,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20045942182105,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5365047209406,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 181644877411,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 156475108555,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3694582632786,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 519659543977,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1174063108341,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5506348410,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1911693158,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1179569456751,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 860021780421,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 859569325382,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 25485647042510,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20201528951239,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4940556989101,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 178021267344,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 146141603987,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3284926182944,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 550013718611,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1136427967214,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 674348671,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1068783689,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1137102315885,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 855532341725,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 855080927073,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1930,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 26974108534093,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 21855341767100,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4748417207807,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 161373403339,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 133783120237,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2991594813512,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 391155206736,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1392800112243,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2817165528,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -457358418,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1395617277771,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1079565544800,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1079178522876,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2435,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 25309615197439,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20583631772568,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4433777897397,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 110138306257,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 133355012065,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2466179088970,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 612954410734,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1331392243779,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9765910510,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -35448106,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1341158154289,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1041120420081,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1040440771716,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2347,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21325491158215,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17285079141932,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3753171592218,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 107457997390,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 110938695420,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2449962176671,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 384883295221,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 916023167040,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2914920975,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1177744744,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 918938088015,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 693104096894,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 692026128797,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21211714779754,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17205031495334,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3702551200708,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 86456996199,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 104974336364,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2436749840647,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 390396333632,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 854343455912,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1809025346,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -2544230352,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 856152481258,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 647634950829,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 647365345687,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 22127707569982,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17945292260387,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3861641561350,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 71909377837,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 105700047545,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2464220418793,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 397865044350,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 965030927222,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3212044796,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -734501277,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 968242972018,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 732106331015,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 731968384767,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23123987297900,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 18788756341782,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3974763408788,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 76259503803,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 114960070907,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2308808752645,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 588469226877,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1038784862162,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4200165466,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1042985027628,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 807463681396,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 807364271657,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2547,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19028964278642,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15674487404309,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3044212971543,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 97381438950,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 65372146469,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1978929491665,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 369266030797,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 728026741562,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6015873651,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 734042615213,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 572257278320,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 571938063923,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16737183159439,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13557089585624,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2823731985216,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 52990268221,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 46022363187,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1781401852839,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 333003556240,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 716294481171,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2956222179,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 719250703350,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 565070319711,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 564760585870,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1836,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16011968765655,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13032373764086,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2621871673459,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 52899468604,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 56013720500,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1671086020890,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 300054602242,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 647616798431,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2793363700,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 650410162131,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 511445204817,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 511166965837,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1661,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2017,
+            "quater": 1,
+            "type": "HX",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15920424482973,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12934074171216,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2651962636725,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 47238632352,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 65471277078,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1585643955972,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 344580281321,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 703505754706,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2102797246,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 705608551952,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 558124316501,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 557814014790,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3624,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14351999892427,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11641490003545,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2195937312580,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 64311236062,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 39160759705,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1380710800673,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 388001814720,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 452375173544,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4613099356,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 456988272900,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 315813724139,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 355614537352,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11485627403054,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9292028024223,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1834279483542,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 23665294725,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 25233169135,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1093576513674,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 220956950102,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 518178145356,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -19495723307,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 498682422049,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 387522593306,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 387306874232,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2642,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10088490300471,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8427887914933,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1594695522291,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 18878070091,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 25827120384,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 906270169711,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 164004691813,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 517471610474,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7841119613,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 525312730087,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 416885591029,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 416648132505,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2841,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9686559206064,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8037820417725,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1589193994149,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 28473099854,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 29864812122,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 907142376168,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 161813484489,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 518846421224,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6080668663,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 524927089887,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 418025112363,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 417790778118,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2849,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5393881804724,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4550369113468,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 812902089223,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15061084415,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10027792414,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 490950712310,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 45559955662,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 281424713252,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5411688136,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 286836401388,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 222636114931,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 221181685567,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1584,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4859826391577,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4146012520233,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 690703142327,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 26334402729,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5444208588,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 417052118827,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 57968898695,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 236571838014,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4073947318,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 240645785332,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 185659962439,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 184477868077,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3965553364843,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3311179822494,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 633942684833,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 20994310821,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -5084574236,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 356161732856,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 71619432832,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 222060463886,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5227380301,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 227287844187,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 176369799410,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 175231381483,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2794,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3418809240774,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2960189834294,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 526872366029,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 8135566419,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 313202941,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 291020278586,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 60972565041,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 182684431395,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2183994174,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 184868425569,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 143052130713,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 142183801628,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "MWG",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3592460251060,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2943224280344,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 544601206122,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15871034434,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10419429996,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 285066940101,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 49982370870,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 215002228415,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 393159592,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 215395388007,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 168662324043,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 166212980645,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

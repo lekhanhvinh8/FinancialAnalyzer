@@ -1,0 +1,3415 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 41,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "SAB",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6538755308695,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4052082990905,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2405096634600,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 264375213097,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 14437156234,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 900339945103,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 236063669520,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1548337807937,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -471247104,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1547866560833,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1245443936996,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1184838235961,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 897,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6972989928134,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4242463707346,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2594087986960,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 256707772369,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1785166234,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1325820629983,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 263704092762,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1393436087242,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -20968931030,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 130379884424,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1372467156212,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1119088558720,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1062388614644,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 800,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6509183599271,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4050234333036,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2386343244952,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 251611132941,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -78186630167,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 981288337744,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 233280188525,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1562857632874,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 132930952378,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 61285151083,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1695788585252,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1403724992261,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1360541153913,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1032,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6867333006980,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4356268929121,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2448065385654,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 255243028080,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 15117680647,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 916441248237,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 239298328912,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1566161276770,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4661158446,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 33710120832,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1561500118324,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1250676288766,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1207496669486,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 913,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5899500354875,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3938664433825,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1872064207227,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 243085541738,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 91111026238,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 798819252172,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 247276682656,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1030831420191,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -8621491551,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 52888632292,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1022209928640,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 799635237312,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 793113384493,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 599,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9048632840427,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6433184640631,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2499326726285,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 268487039624,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -4487618119,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1429400492822,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 229906607275,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1243067931856,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3931183266,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 130073647925,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1239136748590,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 990770562859,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 965458506669,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 733,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7737388215882,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5391899712720,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2278208888485,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 253590755449,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12464565152,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 867894877500,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 224468201063,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1477832754527,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6774640134,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 50860754308,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1471058114393,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1161359723086,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1119097179306,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 853,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8135104562722,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5645843203726,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2440442723491,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 266344194542,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 8220884069,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 902281014716,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 176489145552,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1647671845702,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -13401189218,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 27875972006,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1634270656484,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1318921504823,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1248288726219,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 954,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7243134635043,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5083293361314,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2100218230004,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 278656181876,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 8590131912,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 841980122799,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 208549883706,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1308388655878,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5495547180,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -11365617585,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1302893108698,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1023721636143,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 997268619176,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 758,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8580952917995,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6064659377808,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2455727755251,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 346613696066,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 15528556143,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1338740891061,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 214018287934,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1266895106535,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -17965132762,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 32841390356,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1248929973773,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 966518936923,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 946647653441,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 719,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7504075941598,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5182137916658,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2232765957290,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 373131633964,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19396559741,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1112062729381,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 204452640392,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1346632440433,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1734087498,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 76646778693,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1344898352935,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1074046828611,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1044408963102,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1589,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8381589764258,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5824262761534,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2487879066294,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 354413768251,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 17219852644,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1167073474371,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 200013094048,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1536090302886,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -11730564846,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 78103889404,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1524359738040,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1210439760285,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1159244592128,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1768,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6240141466838,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4298944721980,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1914989725400,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 358409422073,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21288714153,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 861350744768,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 182207597561,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1253013927195,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -791587648,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 44461836204,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1252222339547,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1004047469890,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 967303860017,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1469,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10131946421601,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7215615568862,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2813588705556,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 324044164085,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 31503508249,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1612396044064,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 200308163933,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1358639126405,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1327441361,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 65213973010,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1359966567766,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1075882702416,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1043337169730,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1580,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8679384682954,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5940919284814,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2694158912722,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 284273475636,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 13226929386,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1152713360551,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 210066739331,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1731340174177,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -14213462479,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 128914815087,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1717126711698,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1394596557404,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1341941071312,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2046,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9066250399834,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5922532171779,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3085913021393,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 253439018467,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 26529346987,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1011692726370,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 165365631116,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2209744713331,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5116372905,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 73980377944,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2204628340426,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1793094231574,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1667877287817,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2554,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7358317619392,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5129310041296,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2177046287413,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 228804104459,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10733332408,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 755266142154,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 164925126088,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1529935986457,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1759712615,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 55010195235,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1531695699072,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1236224485890,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1170695898236,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1779,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9090471438991,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6511805224558,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2492041871361,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 262381331690,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10044816873,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 946942340208,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 170807966554,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1723621364891,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -639279009,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 96993285475,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1722982085882,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1400091609399,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1313729469068,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1994,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4322481442367,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3140769580677,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1141567091993,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 222929704799,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2723463678,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 608094954216,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 159503041402,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 597780402489,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1132032891,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3605064993,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 598912435380,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 471924522285,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 443965141857,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 636,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7271859632895,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4963084978792,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2263184540322,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 216904379300,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -7343976541,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1100553991152,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 96338600667,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1303202067973,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 682705147,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 12661763629,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1303884773120,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1070945398503,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 998721516151,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1505,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5893194879260,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4149521698338,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1711771307817,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 417381706068,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 17359863597,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 844777343793,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 171066646789,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1155629009171,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 75485946190,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 59679849465,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1231114955361,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 986344017051,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 920836214228,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1528,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7905320305131,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5397087868646,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2468274227598,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 239953417054,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 42250549725,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 754295011022,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 139733278845,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1862387109368,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9216820008,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 90438304308,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1871603929376,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1533756490471,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1465792116422,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2214,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8106584370341,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5579652554380,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2472465519731,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 238673205859,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 24013836212,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 750027856987,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 209279647616,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1806317182721,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16023671928,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 78499797946,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1822340854649,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1470415807896,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1393014190798,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2046,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7184968541392,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4927884582852,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2207139483124,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 226730792757,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 19105894502,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 794505301726,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 211607411214,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1466200658712,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6378230323,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 57548990273,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1472578889035,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1215691734622,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1164460451724,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1773,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4938749407435,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3555604046684,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1353215553996,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 269044219200,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 20079097127,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 560208611348,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 141385006840,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 941505885345,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3788767560,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 40918827464,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 945294652905,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 716981937265,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 700230101246,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1031,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9812095732754,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7181884978097,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2547198018880,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 267743284104,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 98302533226,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 903901753854,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 517138474052,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1417971640297,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11366966516,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 122373098445,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1429338606813,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1090840834986,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1008415600410,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1462,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9804331840294,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7346798519028,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2398635849505,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 251070983705,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -14319721967,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 763534225029,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 181277264334,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1808054528845,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -6866100571,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 88839463031,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1801188428274,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1459307929018,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1386489843709,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2062,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9179377757847,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6674203727429,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2413562401425,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 198779893800,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12800748500,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 644166172570,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 183283817366,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1863460234358,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8118775325,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 91368677569,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1871579009683,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1530065733259,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1437739381337,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2164,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9337984767378,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7145543584727,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2191232422204,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 172258343686,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -3773973299,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 691688565982,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 166142369393,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1585119846038,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1049265844,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 75686042224,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1584070580194,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1289933211279,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1220719093709,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1789,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10405394201218,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8221930686119,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2184096472239,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 173865200456,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 36858948263,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 934070403000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 350337425936,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1123768615492,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8826865539,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 87073719996,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1132595481031,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 918781978049,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 863114997960,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1258,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8563388540570,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6703128018595,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1859588154579,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 173942627626,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22523224988,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 663930244122,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 182732215708,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1271832712498,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3951241585,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 107487615111,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1275783954083,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1034757254049,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 974874396940,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1432,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9238772645055,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7073446579438,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2096460373035,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 144806678085,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -25310265657,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 576565408967,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 204043334644,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1556623617606,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13271211432,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 70655044440,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1569894829038,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1291036298420,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1223472448101,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1820,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7827060217282,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5865908105398,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1943994172544,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 137735877257,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5373050591,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 593817038296,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 176764136578,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1395524468729,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13258745788,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 89748644393,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1408783214517,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1155733920250,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1113529896722,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1736,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10536969803416,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7917665539578,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2549556102041,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 152745033190,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -94266178076,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 846518126770,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 306761414665,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1765908316312,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24293531036,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 122620544440,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1790201847348,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1418828089224,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1300112238091,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1927,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8105659445798,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5929708007307,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2125404100463,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 134375469804,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11520583789,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 711469159954,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 195255225997,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1424507389803,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -13254990297,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 82972789276,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1411252399506,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1151718713750,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1098207039530,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1612,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8306971135952,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6413355444217,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1887213699695,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 78263965702,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5401714346,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 431977415062,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 185323390112,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1499985943696,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 34654314005,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 157210797819,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1534640257701,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1237042450889,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1167774391975,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1821,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7479512795447,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4972172182922,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2505961573362,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 145347786557,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11867885743,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1070543824135,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 162610654298,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1435134915010,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13301891783,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 28847919267,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1448436806793,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1187962620527,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1126780680605,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1758,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8844060044253,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6575385836236,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2258120516070,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 172208247504,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 31051130379,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1122079154668,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 290164049331,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1105777695349,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 90592180543,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 118743266153,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1196369875892,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 996772852954,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 927245745399,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1446,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7077499036344,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5119230107585,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1953825160629,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 381868081563,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 15844864450,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 663862270917,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 170736243946,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1486934708714,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 39038443462,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1684845834,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1525973152176,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1272956431743,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1228453462520,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1916,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7611729033338,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5451072376256,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2154031905525,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 177692300116,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 16652829870,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 486749179374,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 168470024930,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1786460511243,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -27807965403,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 126608339776,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1758652545840,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1401919169003,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1370298360580,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2137,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "SAB",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7132989484007,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5227120166455,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1903550321835,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 98898610242,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21088923254,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 619465779904,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 148417613456,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1219835992204,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5698874254,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 6359376741,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1225534866458,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 983481359132,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 948923588581,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1480,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

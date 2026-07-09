@@ -21,18 +21,21 @@ import plotly.graph_objects as go
 import database as db
 
 _PE_LOADERS = {
-    "vn30":      db.load_pe_history,
-    "vndiamond": db.load_pe_vndiamond,
+    "vn30":       db.load_pe_vn30,
+    "vndiamond":  db.load_pe_vndiamond,
+    "vnfinlead":  db.load_pe_vnfinlead,
 }
 
 _INDEX_LABELS = {
-    "vn30":      "VN30",
-    "vndiamond": "VN Diamond",
+    "vn30":       "VN30",
+    "vndiamond":  "VN Diamond",
+    "vnfinlead":  "VN Fin Lead",
 }
 
 _INDEX_PRICE_SYMBOL = {
-    "vn30":      "VN30",
-    "vndiamond": "VNDIAMOND",
+    "vn30":       "VN30",
+    "vndiamond":  "VNDIAMOND",
+    "vnfinlead":  "VNFINLEAD",
 }
 
 _DEFAULT_PCT_WINDOW = 1260   # ~5 years of trading days

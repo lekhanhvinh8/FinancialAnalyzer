@@ -1,0 +1,4295 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 52,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "GAS",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 38034487298288,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 33511417706493,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4508191324775,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 384755468683,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 118408271484,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 623721077879,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 396928659943,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3754223754396,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 459901455,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 334970244,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3754683655851,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2994115272577,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2944603136328,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1220,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 43706104716897,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 39890266518331,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3792804090670,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 428311439319,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 82785588700,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 630754891701,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1763015602591,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1763597883667,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -20624994554,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 19038436670,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1742972889113,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1387429975481,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1361084899485,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 558,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 35711043233606,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 31587801013302,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4102333886924,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 396554976676,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 85778280778,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 690136384446,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 525973477554,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3209052703186,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3078415063,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 12051982364,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3205974288123,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2612819725552,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2549118933504,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1067,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 30103972384355,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25126468378917,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4953952865746,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 401552949675,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 100459839323,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 569501759353,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": -1282797122580,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5978744151042,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2858369781,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10402811717,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5981602520823,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4808599034503,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4747605078583,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1985,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 25675428574505,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 21585918203089,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4089510371416,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 357168545828,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 117666445383,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 599658773024,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 317842385886,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3411597287253,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 17288198547,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 85974302,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3428885485800,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2762782490472,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2756531237258,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1177,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 24960846410089,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20900958213404,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4044159122961,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 419753041491,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 140949317288,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 668833753996,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1097693949210,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2569059016020,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -10761995933,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 12623872062,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2558297020087,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2052338999441,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2044102438055,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 852,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 25256616229052,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 21068589647908,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4183418377563,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 409126391431,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 108817637558,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 616316725264,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 700814399681,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3178493069262,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 25467518045,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 11897062771,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3203960587307,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2578108986088,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2521794493538,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1053,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23314997603580,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19623882865000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3691114738580,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 462936897559,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 181218276653,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 585203252226,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 217952939421,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3169455903308,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1150726799,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -221264531,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3170606630107,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2543605417303,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2511656345896,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1093,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 22603622817744,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 18512336516353,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4058279257184,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 544174987204,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 137770087314,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 699752578635,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 405845159047,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3367777722561,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2957245565,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 8691303169,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3364820476996,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2775972796065,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2723017281390,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1165,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 22153384035171,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 18444528562828,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3681632127333,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 594196246031,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 278491969211,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 661570491796,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 336197063220,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3008198310968,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 824267484,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 8629461831,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3009022578452,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2404260758011,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2377167759593,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1218,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 24042648640474,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19699873068605,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4342775571869,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 598486949160,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 95220051108,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 546445908309,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 306082777124,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4003491676439,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4427287408,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 9977891951,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3999064389031,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3196032804201,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3155589859554,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1602,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21214481409153,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 16372246909841,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4842234499312,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 536057465928,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 75230970256,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 636102884351,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 426731884204,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4239655270266,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 26979494465,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -570956163,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4266634764731,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3416829121266,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3350255746422,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1749,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 22051958440531,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17183140316181,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4868818124350,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 489577196080,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 182916189988,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 682240838458,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 350258369362,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4149041425033,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 19998455261,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 6061502411,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4169039880294,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3336692652894,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3250037615669,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1678,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 24329090223763,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 19932077727603,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4397012496160,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 437067541966,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 183358646428,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 615528718089,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 198174171545,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3848741891953,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2457371710,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 11723389889,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3851199263663,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3089019810161,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3029234899053,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1562,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 27653355464071,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20741127121257,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6912228342814,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 379925971606,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 202982457054,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 541242311839,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 175120925717,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 6383514315282,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 17007824137,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10705695472,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 6400522139419,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5141204753112,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5086494419831,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2618,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 26689145099068,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 21552667404503,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5136477694565,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 261502620898,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 102138183609,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 601377719260,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 351200072952,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4342469898222,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 38921191802,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -794441420,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4381391090024,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3495352586273,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3428678815555,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1789,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18542925212171,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15135594633210,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3407330578961,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 415852106606,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 119787821220,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 468128134854,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 159808010562,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3081900187055,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2470389259,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 6441468124,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3084370576314,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2463535760990,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2417435626380,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1242,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 22701649357883,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 18919436564738,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3782208748995,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 204424680589,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 113295357252,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 491102076276,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 437742023739,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2948240398722,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -15413031093,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3746426405,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2932827367629,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2301384256887,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2261954210790,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1058,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2021,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17570501884541,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14301032879540,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3269465145321,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 263141362020,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 55772781462,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 534099757168,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 353141885879,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2588593324706,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 48648328415,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -998758126,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2637241653121,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2057439167710,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2029677573680,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1058,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15524700200042,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12904918186602,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2619782013440,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 288192136505,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 25865452365,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 546429628222,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 255023771785,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2079168815267,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6911249465,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1486482306,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2086080064732,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1681263426325,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1682291629457,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 837,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15937439704720,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13031056098632,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2906383606088,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 383943986688,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 17969007950,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 512610886039,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 155124068745,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2604873824865,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 449000273,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 250194823,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2605322825138,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2068095098471,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2023381028254,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1038,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15627037192030,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13224775865675,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2402261326355,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 402111961661,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 34283686996,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 442906355006,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 166879204462,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2159495316762,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1931730557,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -808724790,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2161427047319,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1712760299796,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1714319600607,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 752,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17093939256044,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13782167020648,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3311772235396,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 376880014253,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 82831154875,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 438687478604,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 194516445449,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2963310788411,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4334413888,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -9306382310,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2967645202299,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2350603244090,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2333041038427,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1217,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17317638155803,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13476376190422,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3841261965381,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 537214955226,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 60028871886,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 452908475215,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 39944797410,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3828198153238,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3927381362,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 2603377142,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3824270771876,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3098123529109,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3007448945637,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1555,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19145033299439,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14708135193587,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4330296572673,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 447416007475,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 48459077931,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 741409051090,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 302592787136,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3684199349507,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4283989930,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1052314484,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3688483339437,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2929351549446,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2883910782693,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1474,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20453081998106,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15914004232581,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4439414253374,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 287681238861,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 73893148439,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 558875490016,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 287261104161,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3806046633610,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5110947758,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1019116009,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3800935685852,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3056627503280,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3007844469889,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1531,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18737677262608,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14293133166039,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4345999711037,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 394004054840,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 60323707783,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 617874883519,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 247727062810,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3813041528834,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3684008086,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1036582931,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3816725536920,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3063647131407,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3029441481891,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1489,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19117672263638,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14279790809947,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4733785318783,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 457633987428,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 79363917402,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 693059742674,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 298224109042,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4119550856197,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -45255183573,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1220680896,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4074295672624,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3272805828394,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3222582937288,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1684,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18514356280473,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13631318877106,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4794857395032,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 450335231536,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 225692712533,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 663520617094,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 290060423243,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4065051355858,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2493658298,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -867517840,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4062557697560,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3265742907517,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3201029856853,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1654,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20113592083970,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15254460754582,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4774005104935,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 266144630167,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 147288991669,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 640384520404,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 291706860134,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3960722281698,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7196794056,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -47081197,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3967919075754,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3206818910262,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3122168555121,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1600,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18247707167605,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14168872218448,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3993444352149,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 301668513878,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 172437899611,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 616910312067,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 195447512170,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3308879219570,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 580129976,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1437922609,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3309459349546,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2665326618836,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2608039500284,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1274,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17151959722839,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11668864522171,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5411699509607,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 457880362451,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 103709331861,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 599961722169,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 387419709932,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4778115235716,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 68788780368,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -373872380,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4846904016084,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3770019212066,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3668687544455,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1899,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15160957658487,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12026284295040,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3058449978294,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 299736725801,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 64661800884,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 599851015434,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 270271285644,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2423287815683,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 30252375706,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -114786450,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2453540191389,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1963286567085,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1901526005122,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 944,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2017,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16390053014511,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13190303122389,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3125792962758,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 275337464918,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 178636072022,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 551753588829,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 296306273313,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2372668660144,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -26932171485,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1765833368,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2345736488659,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1871792929721,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1809250518765,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 901,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2017,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16316923810255,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12859577093461,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3397818884685,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 238731133876,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 81937428148,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 569813643819,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 246562738145,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2737623296720,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 46966379500,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -612911729,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2784589676220,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2215767825238,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2176074932278,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1116,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2016,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15662687181741,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 10858704195406,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4803982986335,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 265807707747,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 219707976563,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 582668137175,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 294957510679,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3972824768287,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11380359964,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 367698622,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3984205128251,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3075643502024,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3066694072863,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1587,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2016,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13787161284295,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11980895686903,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1806265597392,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 325465761844,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 88948591737,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 578765766907,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 195186868730,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1268727047580,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3314900285,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -103084282,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1272041947865,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 986462779380,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 963994231140,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 482,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2016,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15762310731415,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13177278033988,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2531928579533,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 243583354360,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89126783314,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 496618889255,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 232894657971,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1957178998481,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 26680290507,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 307395127,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1983859288988,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1657816025594,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1690833190152,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 843,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2016,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14040983839348,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11576703416890,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2407384873260,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 328758005937,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 99718611146,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 488674810376,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 206117060123,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1941431648226,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9179074066,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -200749326,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1950610722292,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1478887418884,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1314606779422,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 671,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2015,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15777741937998,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11923530167772,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3854211770226,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 272255639770,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89705795920,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 397648062759,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 268677142695,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3371251252243,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5848755997,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 814843621,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3366217339867,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2677076016475,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2586996018300,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1325,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2014,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19027341276606,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12384697374290,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6629045188854,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 283617871587,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 387566978812,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 318694608764,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 6074394414735,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1013577070,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 6075239821304,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4797775055011,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4783565219834,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2212,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2014,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19626276128315,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15360612065476,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4244929014827,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 274942865764,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 101962837521,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 353427614208,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 236680478279,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3818620467475,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -200724609,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3819517729741,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3044339309269,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2950520148157,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3351,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2014,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18791291609133,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13995198523053,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4708191363511,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 314658154957,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 96954322987,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 364263633164,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 397734459375,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4106005577505,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -12495685739,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4094356763295,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3328508333614,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3230382148024,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1706,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2014,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16087505499678,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11507660335284,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4556330186764,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 296932740529,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 107778385469,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 311807895346,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 430622466120,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3990138086782,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4888773866,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3996782536425,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3195320032455,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3156456433520,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1668,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2013,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16586442209997,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12751703675829,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3824091545462,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 317042743490,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 105542411152,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 306364185254,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 803440092626,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2861706072425,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4367559602,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2858221807692,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2244601674868,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2194684872525,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1156,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2013,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17076285067209,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12739833350928,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4327102532436,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 338100795367,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 105405478144,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 325870127872,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 439329880363,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3752123172245,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -11484308355,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3742014453140,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3072679430452,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2989029984140,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1575,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2013,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15793338662635,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11397816635704,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4352427085543,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 304159815211,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 119982247049,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 298951172385,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 468885941838,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3681729123657,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16617157150,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3700238848840,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3004151729776,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2908607274723,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1533,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2013,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16062660101317,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11199496470277,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 4852555362941,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 263043075001,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89773106264,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 331784426510,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 394233913683,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4256810276328,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1125687665196,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5382859400308,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4374888115129,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4292335787263,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2263,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2012,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 15156782220223,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11165260835280,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3976748220383,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 274894674772,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 96540142207,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 388417126972,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 629617370727,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3077186478076,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12031603523,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3090208503927,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2591534008857,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2499226984557,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1319,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2012,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16373916870135,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 12587615966700,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3774768438613,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 252815072938,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 124600784735,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 313686853912,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 398117993536,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3170013916878,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5463572653,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3177527894171,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2578840037588,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2483253976623,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1310,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2012,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18256260901441,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14582677870378,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3642022535264,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 358821792878,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 65015401966,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 313020416036,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 503945638193,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3099816031852,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 30144235848,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3129167843983,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2534347451179,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2362787136098,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "GAS",
+            "year": 2012,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18456502775471,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14884420226326,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3562940897257,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 258621710879,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 148532555039,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 311592789883,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 395549545356,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2941394079297,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6425438343,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2946403563670,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2393749343941,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2306819653546,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

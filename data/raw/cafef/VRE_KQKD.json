@@ -1,0 +1,2935 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 35,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "VRE",
+            "year": 2026,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2026",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2293618000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1039842000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1253776000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 835542000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 205085000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 63339000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 86063000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1919582000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 79896000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1999478000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1606257000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1606257000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 707,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2025,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2312326000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1101841000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1210485000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2647070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 202920000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 115245000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 248052000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3291338000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 49374000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3340712000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2658835000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2658835000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2025,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2251000000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1113974000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1137026000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 802498000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 350332000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 47042000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 93927000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1448223000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 273225000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1721448000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1376430000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1376430000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2025,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2142630000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 960319000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1182311000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 676725000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 268678000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 41314000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 120715000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1428329000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 116689000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1545018000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1233261000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1233261000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2025,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2131424000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 929204000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1202220000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 625043000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 242622000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 67388000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 105291000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1411962000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 64037000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1475999000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1177398000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1177398000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2024,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2128158917956,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 926701921817,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1201456996139,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 547262447156,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 275020760509,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 143861594632,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 168549043010,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1161288045144,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 209036829504,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1370324874648,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1085330281261,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1085330374257,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2024,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2077717260850,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 988432638411,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1089284622439,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 383178807700,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 243840311016,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 77171125081,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 170378948017,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 981073046025,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 137674379590,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1118747425615,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 906401852250,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 906401880695,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2024,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2478597955219,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1269172001033,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1209425954186,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 420173605819,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 178771339152,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 55956954858,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 159606023501,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1235265242494,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 41559149473,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1276824391967,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1021470131503,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1021470131503,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2024,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2254643100237,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 999418928940,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1255224171297,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 435155713184,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 140457986871,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 64029580796,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 143240559371,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1342651757443,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 24779660290,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1367431417733,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1082577097233,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1082577127064,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2023,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2342673000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1074591000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1268082000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 342962000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 74129000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 83782000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 179163000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1273970000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 79170000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1353140000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1067509000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1067495000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2023,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3332559248245,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1632490907261,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1700068340984,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 301408265386,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 75888705874,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 184769141493,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 106644953611,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1634173805392,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21598269064,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1655772074456,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1316684568452,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1316670845193,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2023,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2172826785993,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 983444500572,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1189382285421,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 278152691542,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 79999899194,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 44039302424,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 73794917109,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1269700858236,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1307963684,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1268392894552,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1000603061431,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1000589095603,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2023,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1943276298031,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 754924239904,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1188352058127,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 223816058122,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 100408393349,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 28677673215,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 79046888589,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1204035161096,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 44746659968,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1248781821064,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1024011182297,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1023845925283,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2022,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2084405577411,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1032199472561,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1052206104850,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 200940094297,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 92124403394,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 56854951831,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 110128060178,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 994038783744,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28447085420,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1022485869164,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 791469386602,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 790983327107,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2022,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2005195755641,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 966218452963,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1038977302678,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 130391045833,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89433015335,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 26930331260,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 68644017898,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 984360984018,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5628809738,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 989989793756,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 793625228559,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 793401800369,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2022,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1849532000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 788394000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1061138000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 104388000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 88086000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 33603000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 104695000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 939142000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 20323000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 959465000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 773136000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 772972000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2022,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1369460000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 758105000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 611355000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 102854000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89512000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 54586000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 87799000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 482312000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18368000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 500680000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 377597000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 377435000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2021,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1367010000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 903051000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 463959000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 87389000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 90968000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 80311000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 182380000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 197689000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -16974000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 180715000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 121875000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 121813000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2021,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 787355000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 657006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 130349000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 78360000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 89236000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -22077000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 106050000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 35500000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12855000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 48355000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 24376000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 24253000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2021,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1510391000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 880962000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 629429000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 119680000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 151938000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 51915000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 80259000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 464997000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18401000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 483398000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 387627000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 387511000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2021,
+            "quater": 1,
+            "type": "N",
+            "content": "",
+            "time": "Q1-2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2226386000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1058016000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1168370000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 101589000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 154138000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 91615000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 64478000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 959728000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 20083000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 979811000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 781137000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 780935000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2020,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3252725000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1680924000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1571801000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 94442000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 162420000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 184772000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 133144000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1185907000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 25145000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1211052000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 974551000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 974399000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2020,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1760351000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 915567000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 844784000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 76850000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 125539000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 39904000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 83514000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 672677000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 43748000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 716425000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 572391000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 572264000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2020,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1630177000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 984384000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 645793000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 57553000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 99664000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 44581000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 91634000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 467467000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -21702000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 445765000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 343168000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 343106000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2020,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1685666000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 926756000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 758910000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 47014000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 79470000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 60784000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 90276000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 575394000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 44082000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 619476000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 492198000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 492085000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2019,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2784403000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1388356000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1396047000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 47314000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 80077000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 162431000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 102731000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1098122000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13070000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1111192000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 880231000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 880005000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2019,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2208068689860,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1130138546834,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1077930143026,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 60443203423,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 76415668219,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 68464368691,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 103387973161,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 890105336378,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11019567374,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 901124903752,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 716802201951,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 716573172347,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2019,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1982714013892,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1023636079451,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 959077934441,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 77757975613,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 73292968201,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 48279810957,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 126848544963,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 788414585933,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -617075676,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 787797510257,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 640297032343,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 639376103652,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2019,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2284071541827,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1312024783307,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 972046758520,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 79567782207,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 72714600022,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 92256790463,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 115690293164,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 770952857078,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6885930623,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 777838787701,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 611181591320,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 612103817167,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2018,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2968779642790,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1835558173275,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1133221469515,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 90124816165,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 73881279236,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 123963168089,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 132972351853,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 892529486502,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10697425178,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 903226911680,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 697465232079,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 690093042921,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2018,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2949144450302,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1995018649457,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 954125800845,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 95642533439,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 111511926015,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 190746027091,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 78912245702,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 668598135476,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6884129630,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 675482265106,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 555720395262,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 554493695803,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2018,
+            "quater": 2,
+            "type": "H",
+            "content": "",
+            "time": "Q2-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1515912177676,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 762869394150,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 753042783526,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 146649921784,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 100486576285,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 33564616686,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 34718933068,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 730922579271,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 41101715346,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 772024294617,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 620140454478,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 620018715773,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2018,
+            "quater": 1,
+            "type": "H",
+            "content": "",
+            "time": "Q1-2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1617892522192,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 816985834237,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 800906687955,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 186806258320,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 131520227820,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 60401057823,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 95511209024,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 700280451608,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1771418616,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 702051870224,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 541499321366,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 541366298792,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2017,
+            "quater": 4,
+            "type": "H",
+            "content": "",
+            "time": "Q4-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1522813316697,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 737164081382,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 785649235315,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 136863023050,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 128442842206,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 92114702942,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 45816468866,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 656138244351,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3601327701,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 659739572052,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 528285260964,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 528143983666,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VRE",
+            "year": 2017,
+            "quater": 3,
+            "type": "H",
+            "content": "",
+            "time": "Q3-2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1234730873358,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 642406152726,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 592324720632,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 143087410258,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 138767486441,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 39123322853,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 119933917673,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 437587403923,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2542371282,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 435045032641,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 373682064857,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 373682064857,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}
