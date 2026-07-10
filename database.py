@@ -447,6 +447,15 @@ def list_symbols() -> list[str]:
     return [r[0] for r in rows]
 
 
+def load_latest_price_date(symbol: str) -> str | None:
+    """Return the most recent stored price date for a symbol, or None if no data."""
+    with _conn() as con:
+        row = con.execute(
+            "SELECT MAX(date) FROM prices WHERE symbol = ?", (symbol,)
+        ).fetchone()
+    return row[0] if row else None
+
+
 def summary() -> pd.DataFrame:
     """Show a summary of stored data per symbol."""
     with _conn() as con:

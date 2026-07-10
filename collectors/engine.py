@@ -56,6 +56,77 @@ def _missing(all_members):
     )
 
 
+def sync(index: str):
+    """
+    Incrementally update data for all members of an index.
+
+    - Prices : fetch from each symbol's latest stored date to today (tail only)
+    - Shares : re-fetch latest quarters and upsert (shares change each quarter)
+    - Profit : re-fetch all quarters and upsert (CafeF may restate figures)
+
+    Never deletes existing data. Safe to run repeatedly.
+    """
+    from datetime import date
+    today = date.today().isoformat()
+
+    db.init_db()
+
+    if index not in _MEMBER_LOADERS:
+        raise ValueError(f"Unknown index '{index}'. Choose from: {list(_MEMBER_LOADERS)}")
+
+    index_label = _LABELS[index]
+    all_members = sorted(_MEMBER_LOADERS[index]()["symbol"].unique())
+
+    print(f"\n{'='*55}")
+    print(f"Syncing {index_label} ({len(all_members)} symbols) …")
+    print(f"{'='*55}")
+
+    errors = []
+
+    for i, symbol in enumerate(all_members, 1):
+        print(f"\n[{i:02d}/{len(all_members)}] {symbol}")
+
+        # ── Prices: fetch tail from latest stored date ────────────────────────
+        try:
+            latest = db.load_latest_price_date(symbol)
+            if latest is None:
+                print(f"  prices: no existing data — use collect() for initial load")
+            elif latest >= today:
+                print(f"  prices: up to date ({latest})")
+            else:
+                prices = _call_with_retry(vnstock.get_prices, symbol, latest, today, label=symbol)
+                db.save_prices(symbol, prices, override=True)
+            time.sleep(3)
+        except Exception as e:
+            print(f"  ERROR prices: {e}")
+            errors.append((symbol, "prices", str(e)))
+
+        # ── Shares: re-fetch and upsert ───────────────────────────────────────
+        try:
+            shares = _call_with_retry(vnstock.get_shares, symbol, label=symbol)
+            db.save_shares(symbol, shares, override=True)
+        except Exception as e:
+            print(f"  ERROR shares: {e}")
+            errors.append((symbol, "shares", str(e)))
+
+        # ── Profit: re-fetch and upsert ───────────────────────────────────────
+        try:
+            profit = cafef.get_net_profit(symbol, raw_dir=RAW_DIR)
+            db.save_net_profit(symbol, profit, override=True)
+            time.sleep(0.3)
+        except Exception as e:
+            print(f"  ERROR profit: {e}")
+            errors.append((symbol, "net_profit", str(e)))
+
+    print(f"\n{'='*55}")
+    if errors:
+        print(f"Sync complete with {len(errors)} error(s):")
+        for sym, kind, msg in errors:
+            print(f"  {sym} [{kind}]: {msg}")
+    else:
+        print(f"Sync complete — all {len(all_members)} symbols updated.")
+
+
 def collect(index: str, start: str):
     """
     Collect prices + shares (vnstock) and net profit (CafeF) for all
