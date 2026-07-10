@@ -1,21 +1,8 @@
-"""
-Seed vn30_members table from historical snapshot data.
-
-Source: C:\projects\Stock_Analyzer\PriceToEarn\src\index_definitions.py
-        VN30_SNAPSHOTS — researched from HOSE announcements and ETF reports.
-
-Each snapshot represents the VN30 composition effective from that date.
-We derive (symbol, date_added, date_removed) by comparing consecutive snapshots:
-  - stocks that appear in snapshot N but not N-1 → date_added = snapshot N date
-  - stocks that disappear in snapshot N → date_removed = snapshot N date
-  - stocks still active in the latest snapshot → date_removed = None
-"""
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from database import init_db, save_vn30_members, load_vn30_members
-
-# ── Historical VN30 snapshots ─────────────────────────────────────────────────
-# Copied from C:\projects\Stock_Analyzer\PriceToEarn\src\index_definitions.py
-# Source: HOSE semi-annual review announcements, SSI/VNDIRECT ETF monitor reports
 
 VN30_SNAPSHOTS: dict[str, list[str]] = {
     "2012-02-06": [
@@ -60,20 +47,16 @@ def snapshots_to_membership(snapshots: dict[str, list[str]]) -> list[tuple[str, 
     """
     Convert snapshot dict to (symbol, date_added, date_removed) rows.
 
-    Logic:
-    - For each consecutive pair of snapshots (prev, curr):
-        - symbols in curr but not prev → added on curr date
-        - symbols in prev but not curr → removed on curr date
-    - First snapshot: all symbols added on that date
-    - Last snapshot: active symbols have date_removed = None
+    - symbols appearing in snapshot N but not N-1 → added on N
+    - symbols disappearing in snapshot N → removed on N
+    - active in latest snapshot → date_removed = None
     """
     sorted_dates = sorted(snapshots.keys())
-    membership: dict[str, dict] = {}  # symbol -> {date_added, date_removed}
-
+    membership: dict[str, dict] = {}
     rows = []
 
     for i, date_str in enumerate(sorted_dates):
-        current = set(snapshots[date_str])
+        current  = set(snapshots[date_str])
         previous = set(snapshots[sorted_dates[i - 1]]) if i > 0 else set()
 
         added   = current - previous if i > 0 else current
@@ -81,7 +64,6 @@ def snapshots_to_membership(snapshots: dict[str, list[str]]) -> list[tuple[str, 
 
         for sym in added:
             if sym in membership:
-                # Re-added after a removal — flush the completed period first
                 rows.append((sym, membership[sym]["date_added"], membership[sym]["date_removed"]))
             membership[sym] = {"date_added": date_str, "date_removed": None}
 
@@ -89,10 +71,8 @@ def snapshots_to_membership(snapshots: dict[str, list[str]]) -> list[tuple[str, 
             if sym in membership:
                 membership[sym]["date_removed"] = date_str
             else:
-                # Stock was in previous snapshot but no earlier entry — use prev date
                 rows.append((sym, sorted_dates[i - 1], date_str))
 
-    # Flush remaining active and closed memberships
     for sym, info in membership.items():
         rows.append((sym, info["date_added"], info["date_removed"]))
 
@@ -103,11 +83,10 @@ if __name__ == "__main__":
     init_db()
 
     rows = snapshots_to_membership(VN30_SNAPSHOTS)
-
     print(f"Derived {len(rows)} membership records from {len(VN30_SNAPSHOTS)} snapshots\n")
     print(f"{'Symbol':<8} {'Date Added':<14} {'Date Removed'}")
     print("-" * 40)
-    for sym, added, removed in sorted(rows, key=lambda r: (r[1], r[0])):
+    for sym, added, removed in rows:
         print(f"  {sym:<8} {added:<14} {removed or 'active'}")
 
     print()
