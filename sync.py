@@ -1,8 +1,10 @@
 """
-Sync all index data to today.
+Sync all index data to today, then recalculate derived outputs.
 
-Fetches price tails, latest shares, and latest profit for every symbol
-across all three indices. Never overwrites with older data — safe to run anytime.
+Steps:
+    1. Data sync   — fetch price tails, latest shares, latest profit
+    2. Calculate   — recalculate aggregate P/E for all indices
+    3. (future)    — regenerate charts, Excel exports, etc.
 
 Usage:
     python sync.py              # sync all three indices
@@ -14,10 +16,26 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 from collectors.engine import sync
+import calculate
+import database as db
 
 INDICES = ["vn30", "vndiamond", "vnfinlead"]
 
 targets = sys.argv[1:] if len(sys.argv) > 1 else INDICES
 
+# ── Step 1: Sync raw data ─────────────────────────────────────────────────────
 for index in targets:
     sync(index)
+
+# ── Step 2: Recalculate P/E ───────────────────────────────────────────────────
+print(f"\n{'='*55}")
+print("Recalculating P/E …")
+db.init_db()
+for index in targets:
+    pe_df = calculate.calc_pe_history(index=index)
+    valid = pe_df.dropna(subset=["pe_ratio"])
+    if not valid.empty:
+        print(f"  {index.upper()}: {len(valid)} dates, current {valid.iloc[-1]['pe_ratio']:.2f}x")
+        calculate._PE_SAVERS[index](pe_df, override=True)
+
+# ── Step 3: Future outputs (charts, Excel, …) go here ────────────────────────

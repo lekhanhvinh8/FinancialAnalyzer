@@ -65,12 +65,10 @@ After initial setup, just run:
 python sync.py
 ```
 
-This fetches:
-- **Prices**: tail from each symbol's latest stored date to today
-- **Shares**: latest quarterly shares (upsert)
-- **Profit**: latest quarters from CafeF (upsert)
-
-Never deletes existing data. Safe to run anytime.
+This runs in sequence:
+1. **Data sync** — price tail per symbol, latest shares + profit (upsert, never deletes)
+2. **P/E recalculation** — saves updated `pe_vn30`, `pe_vndiamond`, `pe_vnfinlead` to DB
+3. *(future)* — charts, Excel exports, …
 
 To sync a single index only:
 
