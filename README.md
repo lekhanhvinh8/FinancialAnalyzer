@@ -80,17 +80,18 @@ python sync.py vn30
 
 ## Reproduce Outputs
 
-After syncing, regenerate all outputs:
-
 ```bash
-# Recalculate P/E for all indices
-python calculate.py
+# Sync data + recalculate P/E (run this first)
+python sync.py
 
-# Generate HTML charts
+# Generate HTML charts from updated P/E
 python export/chart.py vn30
 python export/chart.py vndiamond
 python export/chart.py vnfinlead
 ```
+
+`calculate.py` can still be run standalone if you only want to recalculate P/E
+without re-fetching any data (e.g. after a formula change).
 
 Charts are saved to `charts/pe_<index>.html`.
 
