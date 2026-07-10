@@ -93,7 +93,8 @@ python export/chart.py vnfinlead
 `calculate.py` can still be run standalone if you only want to recalculate P/E
 without re-fetching any data (e.g. after a formula change).
 
-Charts are saved to `charts/pe_<index>.html`.
+Charts are saved to `charts/` — ignored by git (generated output).
+Excel exports will go to `exports/` — also ignored by git.
 
 ---
 

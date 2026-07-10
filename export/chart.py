@@ -590,7 +590,8 @@ document.getElementById('peMedianVis').addEventListener('change', function() {{
 if __name__ == "__main__":
     import sys, os
     idx = sys.argv[1] if len(sys.argv) > 1 else "vn30"
+    os.makedirs("charts", exist_ok=True)
     fig, pe_dates, pe_values, price_data = pe_chart(index=idx, bands=True)
-    path = f"pe_{idx}.html"
+    path = f"charts/pe_{idx}.html"
     save_chart(fig, pe_dates, pe_values, price_data, path)
     os.startfile(path)
