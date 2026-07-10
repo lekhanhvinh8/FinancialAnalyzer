@@ -81,17 +81,23 @@ python sync.py vn30
 ## Reproduce Outputs
 
 ```bash
-# Sync data + recalculate P/E (run this first)
 python sync.py
-
-# Generate HTML charts from updated P/E
-python export/chart.py vn30
-python export/chart.py vndiamond
-python export/chart.py vnfinlead
 ```
 
-`calculate.py` can still be run standalone if you only want to recalculate P/E
-without re-fetching any data (e.g. after a formula change).
+This produces everything in one shot:
+1. Data sync (prices tail, shares, profit)
+2. P/E recalculation → saved to DB
+3. HTML charts → `charts/pe_<index>.html`
+4. Excel snapshots → `exports/<index>_pe_<date>.xlsx`
+
+To generate outputs individually:
+```bash
+python export/chart.py vn30
+python export/excel.py vn30
+python export/excel.py vn30 2026-07-01   # specific as-of date
+```
+
+`calculate.py` can still be run standalone to recalculate P/E without re-fetching data.
 
 Charts are saved to `charts/` — ignored by git (generated output).
 Excel exports will go to `exports/` — also ignored by git.

@@ -38,4 +38,18 @@ for index in targets:
         print(f"  {index.upper()}: {len(valid)} dates, current {valid.iloc[-1]['pe_ratio']:.2f}x")
         calculate._PE_SAVERS[index](pe_df, override=True)
 
-# ── Step 3: Future outputs (charts, Excel, …) go here ────────────────────────
+# ── Step 3: Regenerate outputs ───────────────────────────────────────────────
+import os
+from export.chart import pe_chart, save_chart
+from export.excel import build_excel
+
+os.makedirs("charts",  exist_ok=True)
+os.makedirs("exports", exist_ok=True)
+
+for index in targets:
+    # HTML chart
+    fig, pe_dates, pe_values, price_data = pe_chart(index=index)
+    save_chart(fig, pe_dates, pe_values, price_data, f"charts/pe_{index}.html")
+
+    # Excel snapshot
+    build_excel(index)
