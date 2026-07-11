@@ -59,6 +59,44 @@ def _missing(all_members):
     )
 
 
+INDEX_SYMBOLS = ["VN30", "VNINDEX", "VNDIAMOND", "VNFINLEAD"]
+INDEX_START   = "2012-01-01"
+
+
+def sync_indices(symbols: list[str] | None = None):
+    """
+    Incrementally sync index price series (VN30, VNINDEX, etc.) into index_prices table.
+    Fetches only the tail from the latest stored date to today.
+    """
+    from datetime import date
+    today   = date.today().isoformat()
+    targets = symbols or INDEX_SYMBOLS
+
+    print(f"\n{'='*55}")
+    print(f"Syncing index prices: {targets}")
+    print(f"{'='*55}")
+
+    db.init_db()
+    for symbol in targets:
+        latest = db.load_latest_index_price_date(symbol)
+        if latest is None:
+            start = INDEX_START
+            print(f"\n[{symbol}] no data — full fetch from {start}")
+        elif latest >= today:
+            print(f"\n[{symbol}] up to date ({latest})")
+            continue
+        else:
+            start = latest
+            print(f"\n[{symbol}] tail from {start}")
+
+        try:
+            prices = _call_with_retry(vnstock.get_index_prices, symbol, start, today, label=symbol)
+            db.save_index_prices(symbol, prices, override=True)
+        except Exception as e:
+            print(f"  ERROR {symbol}: {e}")
+        time.sleep(5)
+
+
 def sync(index: str):
     """
     Incrementally update data for all members of an index.

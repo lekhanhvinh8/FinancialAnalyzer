@@ -59,6 +59,13 @@ def init_db():
                 PRIMARY KEY (symbol, year, quarter)
             );
 
+            CREATE TABLE IF NOT EXISTS index_prices (
+                symbol  TEXT  NOT NULL,
+                date    TEXT  NOT NULL,   -- ISO date: YYYY-MM-DD
+                close   REAL  NOT NULL,   -- index points (not VND)
+                PRIMARY KEY (symbol, date)
+            );
+
             CREATE TABLE IF NOT EXISTS pe_vn30 (
                 date             TEXT  PRIMARY KEY,  -- ISO date: YYYY-MM-DD
                 pe_ratio         REAL,               -- aggregate P/E, NULL if incalculable
@@ -445,6 +452,59 @@ def list_symbols() -> list[str]:
     with _conn() as con:
         rows = con.execute("SELECT DISTINCT symbol FROM prices ORDER BY symbol").fetchall()
     return [r[0] for r in rows]
+
+
+def save_index_prices(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
+    """
+    Save daily index prices (index points, not VND).
+    df must have a DatetimeIndex and a 'close' column.
+    """
+    rows = {
+        str(date.date()): float(row["close"])
+        for date, row in df.iterrows()
+    }
+
+    with _conn() as con:
+        existing = {
+            r[0] for r in con.execute(
+                f"SELECT date FROM index_prices WHERE symbol = ? AND date IN ({','.join('?'*len(rows))})",
+                (symbol, *rows.keys())
+            ).fetchall()
+        } if rows else set()
+
+        to_save = rows if override else {d: v for d, v in rows.items() if d not in existing}
+        skipped = len(rows) - len(to_save)
+
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO index_prices (symbol, date, close) VALUES (?, ?, ?)",
+                [(symbol, d, v) for d, v in to_save.items()],
+            )
+
+    print(f"  [index_prices] {symbol}: saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def load_index_prices(symbol: str) -> pd.DataFrame:
+    """Load all daily prices for an index. Returns DataFrame indexed by date with 'close' column."""
+    with _conn() as con:
+        df = pd.read_sql(
+            "SELECT date, close FROM index_prices WHERE symbol = ? ORDER BY date",
+            con, params=(symbol,)
+        )
+    if df.empty:
+        return df
+    df["date"] = pd.to_datetime(df["date"])
+    return df.set_index("date")
+
+
+def load_latest_index_price_date(symbol: str) -> str | None:
+    """Return the most recent stored date for an index symbol, or None if no data."""
+    with _conn() as con:
+        row = con.execute(
+            "SELECT MAX(date) FROM index_prices WHERE symbol = ?", (symbol,)
+        ).fetchone()
+    return row[0] if row else None
 
 
 def load_latest_price_date(symbol: str) -> str | None:

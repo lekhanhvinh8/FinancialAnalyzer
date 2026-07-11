@@ -29,8 +29,9 @@ warnings.filterwarnings("ignore")
 import pandas as pd
 from vnstock import Vnstock
 
-_PAR_VALUE = 10_000  # Standard Vietnam stock par value (VND)
-_SOURCE    = "VCI"
+_PAR_VALUE    = 10_000  # Standard Vietnam stock par value (VND)
+_SOURCE       = "VCI"
+_INDEX_SOURCE = "VCI"   # VCI supports both stock and index symbols
 
 
 def _parse_quarter_col(q: str) -> tuple[int, int, pd.Timestamp]:
@@ -56,6 +57,22 @@ def _stock(symbol: str):
 # ---------------------------------------------------------------------------
 # Public interface
 # ---------------------------------------------------------------------------
+
+def get_index_prices(symbol: str, start: str, end: str) -> pd.DataFrame:
+    """
+    Fetch daily closing prices for an index (VN30, VNINDEX, VNDIAMOND, VNFINLEAD).
+    Returns DataFrame with DatetimeIndex and 'close' column in index points (not VND).
+    """
+    stock = Vnstock().stock(symbol=symbol, source=_INDEX_SOURCE)
+    df = stock.quote.history(start=start, end=end, interval="1D")
+    if df is None or df.empty:
+        raise ValueError(f"[vnstock] No index price data for {symbol} ({start} → {end})")
+
+    df["time"] = pd.to_datetime(df["time"])
+    df = df.set_index("time")[["close"]].sort_index()
+    # Index values are already in points — no scaling needed
+    return df
+
 
 def get_prices(symbol: str, start: str, end: str) -> pd.DataFrame:
     """

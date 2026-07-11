@@ -2,9 +2,10 @@
 Sync all index data to today, then recalculate derived outputs.
 
 Steps:
-    1. Data sync   — fetch price tails, latest shares, latest profit
-    2. Calculate   — recalculate aggregate P/E for all indices
-    3. (future)    — regenerate charts, Excel exports, etc.
+    0. Index prices — fetch VN30/VNINDEX/VNDIAMOND/VNFINLEAD price series
+    1. Data sync    — fetch price tails, latest shares, latest profit for members
+    2. Calculate    — recalculate aggregate P/E for all indices
+    3. Outputs      — regenerate charts and Excel exports
 
 Usage:
     python sync.py              # sync all three indices
@@ -15,7 +16,7 @@ import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-from collectors.engine import sync
+from collectors.engine import sync, sync_indices
 import calculate
 import database as db
 
@@ -23,7 +24,10 @@ INDICES = ["vn30", "vndiamond", "vnfinlead"]
 
 targets = sys.argv[1:] if len(sys.argv) > 1 else INDICES
 
-# ── Step 1: Sync raw data ─────────────────────────────────────────────────────
+# ── Step 0: Sync index price series ──────────────────────────────────────────
+sync_indices()
+
+# ── Step 1: Sync member stock data ───────────────────────────────────────────
 for index in targets:
     sync(index)
 
