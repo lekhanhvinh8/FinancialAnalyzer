@@ -34,10 +34,13 @@ def _call_with_retry(fn, *args, label="", **kwargs):
     for attempt in range(1, _RETRIES + 1):
         try:
             return fn(*args, **kwargs)
-        except Exception as e:
+        except (Exception, SystemExit) as e:
             msg = str(e)
-            if any(k in msg.lower() for k in ("rate", "limit", "20/", "exceeded")):
+            if any(k in msg.lower() for k in ("rate", "limit", "20/", "exceeded", "process terminated")):
                 print(f"  Rate limited -- waiting {_RETRY_WAIT}s (attempt {attempt}/{_RETRIES})")
+                time.sleep(_RETRY_WAIT)
+            elif isinstance(e, SystemExit):
+                print(f"  vnstock exited unexpectedly -- waiting {_RETRY_WAIT}s (attempt {attempt}/{_RETRIES})")
                 time.sleep(_RETRY_WAIT)
             else:
                 raise
@@ -96,10 +99,10 @@ def sync(index: str):
             else:
                 prices = _call_with_retry(vnstock.get_prices, symbol, latest, today, label=symbol)
                 db.save_prices(symbol, prices, override=True)
-            time.sleep(3)
         except Exception as e:
             print(f"  ERROR prices: {e}")
             errors.append((symbol, "prices", str(e)))
+        time.sleep(5)
 
         # ── Shares: re-fetch and upsert ───────────────────────────────────────
         try:
@@ -108,12 +111,12 @@ def sync(index: str):
         except Exception as e:
             print(f"  ERROR shares: {e}")
             errors.append((symbol, "shares", str(e)))
+        time.sleep(5)
 
         # ── Profit: re-fetch and upsert ───────────────────────────────────────
         try:
             profit = cafef.get_net_profit(symbol, raw_dir=RAW_DIR)
             db.save_net_profit(symbol, profit, override=True)
-            time.sleep(0.3)
         except Exception as e:
             print(f"  ERROR profit: {e}")
             errors.append((symbol, "net_profit", str(e)))

@@ -70,11 +70,15 @@ def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFra
     profit_df["quarter_end"] = profit_df.apply(
         lambda r: _quarter_end(int(r.year), int(r.quarter)), axis=1
     )
-    # Coalesce: kqkd_14 (parent shareholders) -> kqkd_13 (consolidated) -> kqkd_10 (brokers)
-    profit_df["net_profit"] = profit_df["kqkd_14"].where(
-        profit_df["kqkd_14"].notna(),
-        profit_df["kqkd_13"].where(profit_df["kqkd_13"].notna(), profit_df["kqkd_10"])
-    )
+    # Coalesce: kqkd_14 -> kqkd_13 -> kqkd_10
+    # CafeF stores 0.0 (not NaN) in kqkd_14 for banks — treat zero as missing too
+    def _coalesce(row):
+        for col in ("kqkd_14", "kqkd_13", "kqkd_10"):
+            v = row[col]
+            if v is not None and not (isinstance(v, float) and (v != v)) and v != 0.0:
+                return v
+        return None
+    profit_df["net_profit"] = profit_df.apply(_coalesce, axis=1)
     profit_df["ttm"] = profit_df["net_profit"].rolling(4).sum()
     profit_ts = (
         profit_df.dropna(subset=["ttm"])
