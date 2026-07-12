@@ -42,22 +42,35 @@ def main():
 
     db.init_db()
 
-    # Pre-compute members for all target indices
-    all_members = {idx: db.load_index_members(idx)["symbol"].unique().tolist() for idx in targets}
+    # Split args into indices and stock symbols
+    known_indices = set(INDICES)
+    indices = [t for t in targets if t.lower() in known_indices]
+    stocks  = [t.upper() for t in targets if t.lower() not in known_indices]
+
+    # Pre-compute members for index targets
+    all_members = {idx: db.load_index_members(idx)["symbol"].unique().tolist() for idx in indices}
+
+    # Steps that don't apply to stock-only runs
+    index_only_steps = {"pe", "outputs"}
+    if not indices:
+        steps -= index_only_steps
 
     # Set up progress tracker
     p = SyncProgress(steps, targets, force)
 
-    if "prices"      in steps: p.set_totals("prices",      sum(len(m) + 1 for m in all_members.values()))
-    if "shares"      in steps: p.set_totals("shares",      sum(len(m)     for m in all_members.values()))
-    if "profit"      in steps: p.set_totals("profit",      sum(len(m)     for m in all_members.values()))
-    if "pe"          in steps: p.set_totals("pe",          len(targets))
-    if "range-stats" in steps: p.set_totals("range-stats", len(targets))
-    if "outputs"     in steps: p.set_totals("outputs",     len(targets))
+    index_sym_count = sum(len(m) + 1 for m in all_members.values())
+    stock_count     = len(stocks)
+    if "prices"      in steps: p.set_totals("prices",      index_sym_count + stock_count)
+    if "shares"      in steps: p.set_totals("shares",      sum(len(m) for m in all_members.values()) + stock_count)
+    if "profit"      in steps: p.set_totals("profit",      sum(len(m) for m in all_members.values()) + stock_count)
+    if "pe"          in steps: p.set_totals("pe",          len(indices))
+    if "range-stats" in steps: p.set_totals("range-stats", len(indices) + stock_count)
+    if "outputs"     in steps: p.set_totals("outputs",     len(indices))
 
     print("Progress: sync_progress.html")
 
-    for index in targets:
+    # ── Index runs ────────────────────────────────────────────────────────────
+    for index in indices:
         members   = all_members[index]
         index_sym = index.upper()
         n         = len(members)
@@ -142,6 +155,56 @@ def main():
             except Exception as e:
                 p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
+    # ── Stock-only runs (symbols not belonging to any index) ─────────────────
+    if stocks:
+        print(f"\n{'='*55}")
+        print(f"Stock symbols: {', '.join(stocks)}")
+        print(f"{'='*55}")
+
+    for sym in stocks:
+        if "prices" in steps:
+            t0 = time.time()
+            p.begin("prices", sym, sym)
+            try:
+                last_date = None if force else db.load_latest_price_date(sym)
+                sync_prices(symbols=[sym], start=last_date, override=force)
+                p.end("prices", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("prices", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        if "shares" in steps:
+            t0 = time.time()
+            p.begin("shares", sym, sym)
+            try:
+                last_y, last_q = (None, None) if force else (
+                    db.load_latest_shares_quarter(sym) or (None, None)
+                )
+                sync_shares(symbols=[sym], from_year=last_y, from_quarter=last_q, override=force)
+                p.end("shares", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("shares", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        if "profit" in steps:
+            t0 = time.time()
+            p.begin("profit", sym, sym)
+            try:
+                last_y, last_q = (None, None) if force else (
+                    db.load_latest_profit_quarter(sym) or (None, None)
+                )
+                sync_profit(symbols=[sym], from_year=last_y, from_quarter=last_q, override=force)
+                p.end("profit", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("profit", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        if "range-stats" in steps:
+            t0 = time.time()
+            p.begin("range-stats", sym, sym)
+            try:
+                sync_range_stats(symbols=[sym])
+                p.end("range-stats", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("range-stats", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
     # ── Outputs ───────────────────────────────────────────────────────────────
     if "outputs" in steps:
         import os
@@ -154,7 +217,7 @@ def main():
         os.makedirs("charts",  exist_ok=True)
         os.makedirs("exports", exist_ok=True)
 
-        for index in targets:
+        for index in indices:
             t0 = time.time()
             p.begin("outputs", index, index.upper())
             try:
