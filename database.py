@@ -134,8 +134,6 @@ def load_daily_prices(symbol: str) -> pd.DataFrame:
             "SELECT date, close FROM daily_prices WHERE symbol = ? ORDER BY date",
             con, params=(symbol,),
         )
-    if df.empty:
-        return df
     df["date"] = pd.to_datetime(df["date"])
     return df.set_index("date")
 
