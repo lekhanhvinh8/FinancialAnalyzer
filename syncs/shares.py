@@ -66,14 +66,8 @@ def _sync_one(sym: str, from_year, from_quarter, override: bool) -> None:
     db.save_shares(sym, df)
 
 
-def _query_existing_non_null_shares(sym: str):
-    import sqlite3
-    from pathlib import Path
-    db_path = Path(__file__).parent.parent / "stock_data.db"
-    con = sqlite3.connect(db_path)
-    rows = con.execute(
-        "SELECT year, quarter FROM quarterly_fundamentals WHERE symbol = ? AND shares IS NOT NULL",
-        (sym,),
-    ).fetchall()
-    con.close()
-    return rows
+def _query_existing_non_null_shares(sym: str) -> set[tuple[int, int]]:
+    existing = db.load_shares(sym)
+    if existing.empty:
+        return set()
+    return set(zip(existing["year"].astype(int), existing["quarter"].astype(int)))

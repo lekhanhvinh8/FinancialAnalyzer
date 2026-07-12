@@ -82,10 +82,7 @@ def call_with_retry(fn, *args, label: str = "", **kwargs):
 
 
 def _registered_types() -> list[tuple[str, str]]:
-    import sqlite3
-    from pathlib import Path
-    db_path = Path(__file__).parent.parent / "stock_data.db"
-    con = sqlite3.connect(db_path)
-    rows = con.execute("SELECT symbol, symbol_type FROM symbols ORDER BY symbol").fetchall()
-    con.close()
-    return [(r[0], r[1]) for r in rows]
+    return (
+        [(s, "stock") for s in db.list_symbols("stock")] +
+        [(s, "index") for s in db.list_symbols("index")]
+    )

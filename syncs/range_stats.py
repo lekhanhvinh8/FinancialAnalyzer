@@ -35,7 +35,7 @@ def _resolve_index_symbols(symbols, index) -> list[str]:
         return symbols
     if index is not None:
         return [_INDEX_SYMBOL_MAP.get(index.lower(), index.upper())]
-    return list(_INDEX_SYMBOL_MAP.values())[:3]  # VN30, VNDIAMOND, VNFINLEAD
+    return db.list_symbols(symbol_type="index")
 
 
 def _rebuild_one(sym: str) -> None:

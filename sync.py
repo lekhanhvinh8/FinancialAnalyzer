@@ -74,7 +74,7 @@ for index in targets:
     # ── 4. P/E ────────────────────────────────────────────────────────────────
     print(f"\n── P/E: {index_sym}")
     from_date = None if force else db.load_latest_pe_date(index)
-    sync_pe(indices=[index], from_date=from_date, override=True)
+    sync_pe(indices=[index], from_date=from_date)
 
     # ── 5. Range stats ────────────────────────────────────────────────────────
     print(f"\n── Range stats: {index_sym}")
