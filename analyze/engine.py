@@ -107,6 +107,7 @@ def estimate(
 
     for index, row in df.iterrows():
         close   = row['close'] * 1000
+        pe      = row.get('pe_ratio', None)
         timeCol = row['time']
         year, month = timeCol.year, timeCol.month
 
@@ -120,13 +121,13 @@ def estimate(
             tracker.totalMonths += 1
 
         if sellStrategy is not None:
-            sellStrategy.considerSell(tracker, index, close, cal_range_close, isPrint)
+            sellStrategy.considerSell(tracker, index, close, pe, cal_range_close, isPrint)
 
         if reinvestStrategy is not None:
-            reinvestStrategy.considerReinvest(tracker, index, close, cal_range_close, isPrint)
+            reinvestStrategy.considerReinvest(tracker, index, close, pe, cal_range_close, isPrint)
 
         if buyStrategy is not None:
-            buyStrategy.considerBuy(tracker, index, close, cal_range_close, isPrint)
+            buyStrategy.considerBuy(tracker, index, close, pe, cal_range_close, isPrint)
         else:
             if tracker.intervalAmount > 0:
                 tracker.totalReserveCapital += tracker.intervalAmount

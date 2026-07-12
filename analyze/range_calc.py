@@ -3,7 +3,7 @@ Pre-compute rolling statistics (backward + forward windows) for every row in df.
 
 Result: dict[int, IndexCloses] keyed by row index.
 Each IndexCloses holds rangeDayCloses (backward) and rangeDayClosesPos (forward),
-each storing top/avg/bottom and p25/median/p75 for both price and pe_ratio.
+each storing top/avg/bottom/p25/median/p75 for both price and pe_ratio.
 
 Uses ProcessPoolExecutor for true parallelism (bypasses GIL).
 """
@@ -30,8 +30,10 @@ def _compute_stats(closes: pd.Series, pe_vals: pd.Series, fallback: float) -> di
         return dict(
             localTop=fallback, localAvg=fallback, localBottom=fallback,
             p25=fallback, median=fallback, p75=fallback,
+            pe_top=0.0, pe_avg=0.0, pe_bottom=0.0,
             pe_p25=0.0, pe_median=0.0, pe_p75=0.0,
         )
+    has_pe = not pe_vals.empty
     return dict(
         localTop    = closes.max(),
         localAvg    = closes.mean(),
@@ -39,9 +41,12 @@ def _compute_stats(closes: pd.Series, pe_vals: pd.Series, fallback: float) -> di
         p25         = closes.quantile(0.25),
         median      = closes.quantile(0.50),
         p75         = closes.quantile(0.75),
-        pe_p25      = pe_vals.quantile(0.25) if not pe_vals.empty else 0.0,
-        pe_median   = pe_vals.quantile(0.50) if not pe_vals.empty else 0.0,
-        pe_p75      = pe_vals.quantile(0.75) if not pe_vals.empty else 0.0,
+        pe_top      = pe_vals.max()           if has_pe else 0.0,
+        pe_avg      = pe_vals.mean()          if has_pe else 0.0,
+        pe_bottom   = pe_vals.min()           if has_pe else 0.0,
+        pe_p25      = pe_vals.quantile(0.25)  if has_pe else 0.0,
+        pe_median   = pe_vals.quantile(0.50)  if has_pe else 0.0,
+        pe_p75      = pe_vals.quantile(0.75)  if has_pe else 0.0,
     )
 
 
