@@ -2,7 +2,7 @@
 
 import database as db
 from analyze.range_calc import build_cal_range_close
-from ._helpers import _INDEX_SYMBOL_MAP
+from ._helpers import resolve_symbols
 
 
 _DEFAULT_RANGE_DAYS = [1000]
@@ -26,19 +26,11 @@ def sync_range_stats(
     override : True  → delete existing rows then reinsert (full rebuild)
                False → insert only rows not already in DB (INSERT OR IGNORE)
     """
-    targets = _resolve_symbols(symbols, index)
+    targets = resolve_symbols(symbols, index)
 
-    for sym in targets:
+    for sym, _ in targets:
         print(f"\n  Rebuilding range_stats for {sym} …")
         _rebuild_one(sym, start, override)
-
-
-def _resolve_symbols(symbols, index) -> list[str]:
-    if symbols is not None:
-        return symbols
-    if index is not None:
-        return [_INDEX_SYMBOL_MAP.get(index.lower(), index.upper())]
-    return db.list_symbols(symbol_type="index")
 
 
 def _rebuild_one(sym: str, start: str | None, override: bool) -> None:

@@ -31,12 +31,8 @@ def resolve_symbols(
         return [(sym, "index")]
 
     if symbols is not None:
-        result = []
-        registered = {s: t for s, t in _registered_types()}
-        for s in symbols:
-            stype = registered.get(s, "index" if s in _INDEX_SYMBOLS else "stock")
-            result.append((s, stype))
-        return result
+        registered = dict(_registered_types())
+        return [(s, registered.get(s, "index" if s in _INDEX_SYMBOLS else "stock")) for s in symbols]
 
     return _registered_types()
 
