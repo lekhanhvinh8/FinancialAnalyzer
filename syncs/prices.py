@@ -47,8 +47,10 @@ def _sync_one(sym: str, sym_type: str, fetch_from: str, today: str, override: bo
         return
 
     if not override:
-        df = df.reset_index().rename(columns={"date": "date_key"})
-        existing = db.load_daily_prices(sym).reset_index().rename(columns={"date": "date_key"})
+        df = df.reset_index()
+        df = df.rename(columns={df.columns[0]: "date_key"})
+        existing = db.load_daily_prices(sym).reset_index()
+        existing = existing.rename(columns={existing.columns[0]: "date_key"})
         existing["date_key"] = existing["date_key"].dt.strftime("%Y-%m-%d")
         df["date_key"] = df["date_key"].dt.strftime("%Y-%m-%d")
         df = fill_merge(df, existing, cols=_PRICE_COLS, key_cols=["date_key"])
