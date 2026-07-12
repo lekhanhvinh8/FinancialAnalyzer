@@ -148,7 +148,7 @@ def main():
             p.begin("pe", index, index_sym)
             try:
                 from_date = None if force else db.load_latest_pe_date(index)
-                sync_pe(indices=[index], from_date=from_date, override=force)
+                sync_pe(index=index, from_date=from_date, override=force)
                 p.end("pe", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("pe", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
