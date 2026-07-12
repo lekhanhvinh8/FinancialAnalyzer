@@ -17,14 +17,17 @@ Steps (flags):
     --range-stats rebuild rolling-range stats cache
     --outputs     regenerate charts + Excel exports
     --force       overwrite existing data (applies to prices/shares/profit)
+
+Progress is written to sync_progress.html (auto-refreshes every 3s).
 """
 
-import sys, io
+import sys, io, time
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 import database as db
 from syncs import sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats
+from progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
 ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "outputs"}
@@ -37,8 +40,23 @@ steps   = flags - {"force"} or ALL_STEPS
 
 db.init_db()
 
+# Pre-compute members for all target indices
+all_members = {idx: db.load_index_members(idx)["symbol"].unique().tolist() for idx in targets}
+
+# Set up progress tracker
+p = SyncProgress(steps, targets, force)
+
+if "prices"      in steps: p.set_totals("prices",      sum(len(m) + 1 for m in all_members.values()))
+if "shares"      in steps: p.set_totals("shares",      sum(len(m)     for m in all_members.values()))
+if "profit"      in steps: p.set_totals("profit",      sum(len(m)     for m in all_members.values()))
+if "pe"          in steps: p.set_totals("pe",          len(targets))
+if "range-stats" in steps: p.set_totals("range-stats", len(targets))
+if "outputs"     in steps: p.set_totals("outputs",     len(targets))
+
+print("Progress: sync_progress.html")
+
 for index in targets:
-    members   = db.load_index_members(index)["symbol"].unique().tolist()
+    members   = all_members[index]
     index_sym = index.upper()
     n         = len(members)
 
@@ -49,42 +67,78 @@ for index in targets:
     # ── Prices ────────────────────────────────────────────────────────────────
     if "prices" in steps:
         print(f"\n── Index prices: {index_sym}")
-        last_date = None if force else db.load_latest_price_date(index_sym)
-        sync_prices(index=index, start=last_date, override=force)
+        t0 = time.time()
+        p.begin("prices", index, index_sym)
+        try:
+            last_date = None if force else db.load_latest_price_date(index_sym)
+            sync_prices(index=index, start=last_date, override=force)
+            p.end("prices", index, index_sym, time.time() - t0)
+        except Exception as e:
+            p.end("prices", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
         print(f"\n── Stock prices ({n} symbols)")
         for sym in members:
-            last_date = None if force else db.load_latest_price_date(sym)
-            sync_prices(symbols=[sym], start=last_date, override=force)
+            t0 = time.time()
+            p.begin("prices", index, sym)
+            try:
+                last_date = None if force else db.load_latest_price_date(sym)
+                sync_prices(symbols=[sym], start=last_date, override=force)
+                p.end("prices", index, sym, time.time() - t0)
+            except Exception as e:
+                p.end("prices", index, sym, time.time() - t0, status="error", note=str(e)[:100])
 
     # ── Shares ────────────────────────────────────────────────────────────────
     if "shares" in steps:
         print(f"\n── Shares ({n} symbols)")
         for sym in members:
-            last_y, last_q = (None, None) if force else (
-                db.load_latest_shares_quarter(sym) or (None, None)
-            )
-            sync_shares(symbols=[sym], from_year=last_y, from_quarter=last_q, override=force)
+            t0 = time.time()
+            p.begin("shares", index, sym)
+            try:
+                last_y, last_q = (None, None) if force else (
+                    db.load_latest_shares_quarter(sym) or (None, None)
+                )
+                sync_shares(symbols=[sym], from_year=last_y, from_quarter=last_q, override=force)
+                p.end("shares", index, sym, time.time() - t0)
+            except Exception as e:
+                p.end("shares", index, sym, time.time() - t0, status="error", note=str(e)[:100])
 
     # ── Profit ────────────────────────────────────────────────────────────────
     if "profit" in steps:
         print(f"\n── Profit ({n} symbols)")
         for sym in members:
-            last_y, last_q = (None, None) if force else (
-                db.load_latest_profit_quarter(sym) or (None, None)
-            )
-            sync_profit(symbols=[sym], from_year=last_y, from_quarter=last_q, override=force)
+            t0 = time.time()
+            p.begin("profit", index, sym)
+            try:
+                last_y, last_q = (None, None) if force else (
+                    db.load_latest_profit_quarter(sym) or (None, None)
+                )
+                sync_profit(symbols=[sym], from_year=last_y, from_quarter=last_q, override=force)
+                p.end("profit", index, sym, time.time() - t0)
+            except Exception as e:
+                p.end("profit", index, sym, time.time() - t0, status="error", note=str(e)[:100])
 
     # ── P/E ───────────────────────────────────────────────────────────────────
     if "pe" in steps:
         print(f"\n── P/E: {index_sym}")
-        from_date = None if force else db.load_latest_pe_date(index)
-        sync_pe(indices=[index], from_date=from_date)
+        t0 = time.time()
+        p.begin("pe", index, index_sym)
+        try:
+            from_date = None if force else db.load_latest_pe_date(index)
+            sync_pe(indices=[index], from_date=from_date)
+            p.end("pe", index, index_sym, time.time() - t0)
+        except Exception as e:
+            p.end("pe", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
     # ── Range stats ───────────────────────────────────────────────────────────
     if "range-stats" in steps:
         print(f"\n── Range stats: {index_sym}")
-        sync_range_stats(index=index)
+        t0 = time.time()
+        p.begin("range-stats", index, index_sym)
+        try:
+            sync_range_stats(index=index)
+            p.end("range-stats", index, index_sym, time.time() - t0)
+        except Exception as e:
+            p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
 # ── Outputs ───────────────────────────────────────────────────────────────────
 if "outputs" in steps:
@@ -99,9 +153,17 @@ if "outputs" in steps:
     os.makedirs("exports", exist_ok=True)
 
     for index in targets:
-        fig, pe_dates, pe_values, price_data = pe_chart(index=index)
-        save_chart(fig, pe_dates, pe_values, price_data, f"charts/pe_{index}.html")
-        build_excel(index)
+        t0 = time.time()
+        p.begin("outputs", index, index.upper())
+        try:
+            fig, pe_dates, pe_values, price_data = pe_chart(index=index)
+            save_chart(fig, pe_dates, pe_values, price_data, f"charts/pe_{index}.html")
+            build_excel(index)
+            p.end("outputs", index, index.upper(), time.time() - t0)
+        except Exception as e:
+            p.end("outputs", index, index.upper(), time.time() - t0, status="error", note=str(e)[:100])
+
+p.finish()
 
 print(f"\n{'='*55}")
 print("Done.")
