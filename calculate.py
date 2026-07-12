@@ -175,9 +175,11 @@ def calc_pe_history(
 
             if emit_members:
                 member_records.append({
-                    "symbol":   sym,
-                    "date":     date_str,
-                    "pe_ratio": mcap / ttm,
+                    "symbol":            sym,
+                    "date":              date_str,
+                    "pe_ratio":          mcap / ttm,
+                    "total_market_cap":  mcap,
+                    "total_ttm_profit":  ttm,
                 })
 
         if count == 0 or total_profit == 0:

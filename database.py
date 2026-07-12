@@ -367,19 +367,30 @@ def save_pe_ratios(symbol: str, df: pd.DataFrame, override: bool = False) -> dic
 
 def save_pe_ratios_bulk(records: list[dict], override: bool = False) -> dict:
     """
-    Bulk save per-symbol P/E ratios (stock-level, no aggregate columns).
-    records: list of dicts with keys: symbol, date, pe_ratio
+    Bulk save per-symbol P/E ratios.
+    records: list of dicts with keys: symbol, date, pe_ratio,
+             optionally total_market_cap, total_ttm_profit
     """
-    rows = [(r["symbol"], r["date"], r["pe_ratio"]) for r in records]
+    rows = [
+        (
+            r["symbol"], r["date"], r.get("pe_ratio"),
+            r.get("total_market_cap"), r.get("total_ttm_profit"),
+        )
+        for r in records
+    ]
     with _conn() as con:
         if override:
             con.executemany(
-                """INSERT OR REPLACE INTO pe_ratios (symbol, date, pe_ratio) VALUES (?, ?, ?)""",
+                """INSERT OR REPLACE INTO pe_ratios
+                   (symbol, date, pe_ratio, total_market_cap, total_ttm_profit)
+                   VALUES (?, ?, ?, ?, ?)""",
                 rows,
             )
         else:
             con.executemany(
-                """INSERT OR IGNORE INTO pe_ratios (symbol, date, pe_ratio) VALUES (?, ?, ?)""",
+                """INSERT OR IGNORE INTO pe_ratios
+                   (symbol, date, pe_ratio, total_market_cap, total_ttm_profit)
+                   VALUES (?, ?, ?, ?, ?)""",
                 rows,
             )
     print(f"  [pe_members] saved {len(rows)}, skipped 0")
