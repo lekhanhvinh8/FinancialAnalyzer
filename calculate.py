@@ -21,22 +21,24 @@ balance-sheet data. Shares are bfill-approximated for earlier dates.
 import pandas as pd
 import database as db
 
+import functools
+
 _MEMBER_LOADERS = {
-    "vn30":       db.load_vn30_members,
-    "vndiamond":  db.load_vndiamond_members,
-    "vnfinlead":  db.load_vnfinlead_members,
+    "vn30":      functools.partial(db.load_index_members, "vn30"),
+    "vndiamond": functools.partial(db.load_index_members, "vndiamond"),
+    "vnfinlead": functools.partial(db.load_index_members, "vnfinlead"),
 }
 
 _PE_SAVERS = {
-    "vn30":       db.save_pe_vn30,
-    "vndiamond":  db.save_pe_vndiamond,
-    "vnfinlead":  db.save_pe_vnfinlead,
+    "vn30":      functools.partial(db.save_pe_ratios, "vn30"),
+    "vndiamond": functools.partial(db.save_pe_ratios, "vndiamond"),
+    "vnfinlead": functools.partial(db.save_pe_ratios, "vnfinlead"),
 }
 
 _PE_LOADERS = {
-    "vn30":       db.load_pe_vn30,
-    "vndiamond":  db.load_pe_vndiamond,
-    "vnfinlead":  db.load_pe_vnfinlead,
+    "vn30":      functools.partial(db.load_pe_ratios, "vn30"),
+    "vndiamond": functools.partial(db.load_pe_ratios, "vndiamond"),
+    "vnfinlead": functools.partial(db.load_pe_ratios, "vnfinlead"),
 }
 
 
@@ -116,10 +118,10 @@ def calc_pe_history(
     load_members = _MEMBER_LOADERS[index]
 
     # ── Gather all price data ────────────────────────────────────────────────
-    symbols = db.list_symbols()
+    symbols = db.list_symbols(symbol_type='stock')
     prices: dict[str, pd.Series] = {}
     for sym in symbols:
-        p = db.load_prices(sym)["close"]
+        p = db.load_daily_prices(sym)["close"]
         if start:
             p = p[p.index >= start]
         if end:
@@ -192,7 +194,7 @@ def calc_pe_history(
         })
 
     if emit_members and member_records:
-        db.save_pe_members(pd.DataFrame(member_records), override=True)
+        db.save_pe_ratios_bulk(member_records, override=True)
 
     return pd.DataFrame(records)
 

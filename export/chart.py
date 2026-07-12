@@ -24,10 +24,11 @@ import plotly.graph_objects as go
 
 import database as db
 
+import functools
 _PE_LOADERS = {
-    "vn30":       db.load_pe_vn30,
-    "vndiamond":  db.load_pe_vndiamond,
-    "vnfinlead":  db.load_pe_vnfinlead,
+    "vn30":      functools.partial(db.load_pe_ratios, "vn30"),
+    "vndiamond": functools.partial(db.load_pe_ratios, "vndiamond"),
+    "vnfinlead": functools.partial(db.load_pe_ratios, "vnfinlead"),
 }
 
 _INDEX_LABELS = {

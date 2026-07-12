@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from database import init_db, save_vn30_members, load_vn30_members
+from database import init_db, save_index_members, load_index_members
 
 VN30_SNAPSHOTS: dict[str, list[str]] = {
     "2012-02-06": [
@@ -90,13 +90,13 @@ if __name__ == "__main__":
         print(f"  {sym:<8} {added:<14} {removed or 'active'}")
 
     print()
-    save_vn30_members(rows, override=True)
+    save_index_members('vn30', rows, override=True)
 
     print("\n--- Active members today ---")
     from datetime import date
-    active = load_vn30_members(as_of=date.today().isoformat())
+    active = load_index_members('vn30', as_of=date.today().isoformat())
     print(f"  {len(active)} stocks: {', '.join(active['symbol'].tolist())}")
 
     print("\n--- Full history sample (first 10 rows) ---")
-    history = load_vn30_members()
+    history = load_index_members('vn30')
     print(history.head(10).to_string(index=False))

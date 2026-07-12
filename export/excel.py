@@ -29,10 +29,11 @@ _INDEX_LABELS = {
     "vnfinlead": "VN Fin Lead",
 }
 
+import functools
 _MEMBER_LOADERS = {
-    "vn30":      db.load_vn30_members,
-    "vndiamond": db.load_vndiamond_members,
-    "vnfinlead": db.load_vnfinlead_members,
+    "vn30":      functools.partial(db.load_index_members, "vn30"),
+    "vndiamond": functools.partial(db.load_index_members, "vndiamond"),
+    "vnfinlead": functools.partial(db.load_index_members, "vnfinlead"),
 }
 
 # ── Styles ────────────────────────────────────────────────────────────────────
@@ -77,7 +78,7 @@ def _cell(ws, row, col, value=None, font=None, fill=None, align=None, fmt=None, 
 def _get_symbol_data(symbol: str, as_of: pd.Timestamp):
     """Return dict with price, shares, 4 TTM quarters, or None if insufficient data."""
     profit_df = db.load_net_profit(symbol)
-    price_df  = db.load_prices(symbol)
+    price_df  = db.load_daily_prices(symbol)
     shares_df = db.load_shares(symbol)
 
     if profit_df.empty or price_df.empty or shares_df.empty:

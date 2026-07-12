@@ -17,7 +17,6 @@ import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-import sqlite3
 import pandas as pd
 from collectors.engine import sync, sync_indices
 import calculate
@@ -51,21 +50,15 @@ print(f"\n{'='*55}")
 print("Rebuilding cal_range_close cache …")
 for index in targets:
     symbol = index.upper()
-    prices = db.load_index_prices(symbol).reset_index().rename(columns={'date': 'time'})
-    con = sqlite3.connect(db.DB_PATH)
-    pe_tbl = f"pe_{index}"
-    pe = pd.read_sql(
-        f"SELECT date, pe_ratio FROM {pe_tbl} WHERE pe_ratio IS NOT NULL ORDER BY date",
-        con, parse_dates=['date']
-    )
-    con.close()
-    pe = pe.rename(columns={'date': 'time'})
+    prices = db.load_daily_prices(symbol).reset_index().rename(columns={'date': 'time'})
+    pe = db.load_pe_ratios(symbol).reset_index().rename(columns={'date': 'time'})
+    pe = pe.dropna(subset=['pe_ratio'])[['time', 'pe_ratio']]
     df_idx = prices.merge(pe, on='time', how='left')
     df_idx['pe_ratio'] = df_idx['pe_ratio'].ffill()
     df_idx = df_idx.reset_index(drop=True)
 
     cal = build_cal_range_close(df_idx, range_days=[1000], max_workers=5)
-    db.save_cal_range_close(symbol, df_idx, cal)
+    db.save_range_stats(symbol, df_idx, cal)
 
 # ── Step 4: Regenerate outputs ───────────────────────────────────────────────
 import os

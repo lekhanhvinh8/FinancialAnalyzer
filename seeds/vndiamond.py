@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from database import init_db, save_vndiamond_members, load_vndiamond_members
+from database import init_db, save_index_members, load_index_members
 from seeds.vn30 import snapshots_to_membership
 
 # Source: HOSE announcements, cafef.vn review articles, VNDirect ETF monitor,
@@ -56,9 +56,9 @@ if __name__ == "__main__":
         print(f"  {sym:<8} {added:<14} {removed or 'active'}")
 
     print()
-    save_vndiamond_members(rows, override=True)
+    save_index_members('vndiamond', rows, override=True)
 
     print("\n--- Active members today ---")
     from datetime import date
-    active = load_vndiamond_members(as_of=date.today().isoformat())
+    active = load_index_members('vndiamond', as_of=date.today().isoformat())
     print(f"  {len(active)} stocks: {', '.join(active['symbol'].tolist())}")

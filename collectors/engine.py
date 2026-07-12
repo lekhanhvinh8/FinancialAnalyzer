@@ -18,9 +18,9 @@ _RETRY_WAIT = 40
 _RETRIES    = 3
 
 _MEMBER_LOADERS = {
-    "vn30":      db.load_vn30_members,
-    "vndiamond": db.load_vndiamond_members,
-    "vnfinlead": db.load_vnfinlead_members,
+    "vn30":      lambda **kw: db.load_index_members("vn30",      **kw),
+    "vndiamond": lambda **kw: db.load_index_members("vndiamond", **kw),
+    "vnfinlead": lambda **kw: db.load_index_members("vnfinlead", **kw),
 }
 
 _LABELS = {
@@ -49,9 +49,14 @@ def _call_with_retry(fn, *args, label="", **kwargs):
 
 def _missing(all_members):
     """Return (need_prices, need_profit) for symbols not yet in DB."""
-    have_prices = set(db.list_symbols())
+    have_prices = set(db.list_symbols(symbol_type='stock'))
     con = sqlite3.connect(db.DB_PATH)
-    have_profit = {r[0] for r in con.execute("SELECT DISTINCT symbol FROM net_profit").fetchall()}
+    have_profit = {
+        r[0] for r in con.execute(
+            """SELECT DISTINCT symbol FROM quarterly_fundamentals
+               WHERE kqkd_14 IS NOT NULL OR kqkd_13 IS NOT NULL OR kqkd_10 IS NOT NULL"""
+        ).fetchall()
+    }
     con.close()
     return (
         [s for s in all_members if s not in have_prices],
@@ -78,7 +83,7 @@ def sync_indices(symbols: list[str] | None = None):
 
     db.init_db()
     for symbol in targets:
-        latest = db.load_latest_index_price_date(symbol)
+        latest = db.load_latest_price_date(symbol)
         if latest is None:
             start = INDEX_START
             print(f"\n[{symbol}] no data — full fetch from {start}")
@@ -91,7 +96,7 @@ def sync_indices(symbols: list[str] | None = None):
 
         try:
             prices = _call_with_retry(vnstock.get_index_prices, symbol, start, today, label=symbol)
-            db.save_index_prices(symbol, prices, override=True)
+            db.save_daily_prices(symbol, prices, symbol_type='index', override=True)
         except Exception as e:
             print(f"  ERROR {symbol}: {e}")
         time.sleep(5)
@@ -136,7 +141,7 @@ def sync(index: str):
                 print(f"  prices: up to date ({latest})")
             else:
                 prices = _call_with_retry(vnstock.get_prices, symbol, latest, today, label=symbol)
-                db.save_prices(symbol, prices, override=True)
+                db.save_daily_prices(symbol, prices, symbol_type='stock', override=True)
         except Exception as e:
             print(f"  ERROR prices: {e}")
             errors.append((symbol, "prices", str(e)))
@@ -200,7 +205,7 @@ def collect(index: str, start: str):
         print(f"[{i:02d}/{len(need_prices)}] {symbol} -- prices + shares")
         try:
             prices = _call_with_retry(vnstock.get_prices, symbol, start, end, label=symbol)
-            db.save_prices(symbol, prices)
+            db.save_daily_prices(symbol, prices, symbol_type='stock')
         except Exception as e:
             print(f"  ERROR prices: {e}")
             errors.append((symbol, "prices", str(e)))

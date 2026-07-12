@@ -9,7 +9,6 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import sqlite3
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -43,14 +42,9 @@ def load_df(source: str) -> pd.DataFrame:
         return df
 
     if source == 'db':
-        prices = db.load_index_prices(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
-        con = sqlite3.connect(db.DB_PATH)
-        pe = pd.read_sql_query(
-            'SELECT date, pe_ratio FROM pe_vn30 WHERE pe_ratio IS NOT NULL ORDER BY date',
-            con, parse_dates=['date']
-        )
-        con.close()
-        pe = pe.rename(columns={'date': 'time'})
+        prices = db.load_daily_prices(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
+        pe = db.load_pe_ratios(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
+        pe = pe.dropna(subset=['pe_ratio'])[['time', 'pe_ratio']]
         df = prices.merge(pe, on='time', how='left')
         df['pe_ratio'] = df['pe_ratio'].ffill()
         return df.reset_index(drop=True)
@@ -85,11 +79,11 @@ if __name__ == '__main__':
     print(f'  {len(df)} rows | {df["time"].iloc[0].date()} -> {df["time"].iloc[-1].date()}')
 
     print(f'\nLoading cal_range_close from DB ...')
-    cal_range_close = db.load_cal_range_close(INDEX_SYMBOL, df)
+    cal_range_close = db.load_range_stats(INDEX_SYMBOL, df)
     if cal_range_close is None:
         print(f'  Not cached — building ({MAX_WORKERS} workers) ...')
         cal_range_close = build_cal_range_close(df, range_days=[1000], max_workers=MAX_WORKERS)
-        db.save_cal_range_close(INDEX_SYMBOL, df, cal_range_close)
+        db.save_range_stats(INDEX_SYMBOL, df, cal_range_close)
     else:
         print(f'  Loaded {len(cal_range_close)} entries from DB')
 

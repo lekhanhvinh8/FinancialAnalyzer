@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from database import init_db, save_vnfinlead_members, load_vnfinlead_members
+from database import init_db, save_index_members, load_index_members
 from seeds.vn30 import snapshots_to_membership
 
 # Source: SSIAM VNFIN LEAD ETF factsheets, BSC rebalancing reports, HOSE announcements.
@@ -53,9 +53,9 @@ if __name__ == "__main__":
         print(f"  {sym:<8} {added:<14} {removed or 'active'}")
 
     print()
-    save_vnfinlead_members(rows, override=True)
+    save_index_members('vnfinlead', rows, override=True)
 
     print("\n--- Active members today ---")
     from datetime import date
-    active = load_vnfinlead_members(as_of=date.today().isoformat())
+    active = load_index_members('vnfinlead', as_of=date.today().isoformat())
     print(f"  {len(active)} stocks: {', '.join(active['symbol'].tolist())}")
