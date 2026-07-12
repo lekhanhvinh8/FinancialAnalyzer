@@ -410,9 +410,8 @@ def save_range_stats(
             ))
 
     with _conn() as con:
-        con.execute("DELETE FROM range_stats WHERE symbol = ?", (symbol,))
         con.executemany(
-            """INSERT OR REPLACE INTO range_stats
+            """INSERT OR IGNORE INTO range_stats
                (symbol, date, range_days, direction,
                 local_top, local_avg, local_bottom, p25, median, p75,
                 pe_top, pe_avg, pe_bottom, pe_p25, pe_median, pe_p75)
@@ -421,6 +420,12 @@ def save_range_stats(
         )
     print(f"  [range_stats] {symbol}: saved {len(rows)} rows")
     return {"saved": len(rows)}
+
+
+def delete_range_stats(symbol: str) -> None:
+    """Delete all range_stats rows for a symbol. Called by sync layer when override=True."""
+    with _conn() as con:
+        con.execute("DELETE FROM range_stats WHERE symbol = ?", (symbol,))
 
 
 def load_range_stats(symbol: str, df: pd.DataFrame) -> "dict | None":

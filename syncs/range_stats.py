@@ -10,27 +10,30 @@ _MAX_WORKERS        = 5
 
 
 def sync_range_stats(
-    symbols: list[str] | None = None,
-    index:   str | None = None,
+    symbols:  list[str] | None = None,
+    index:    str | None = None,
+    override: bool = True,
 ) -> None:
     """
     Rebuild the rolling-range stats cache for one or more index symbols.
 
-    symbols : specific index symbols (e.g. ["VN30"])
-    index   : index name ("vn30") — resolved to its index symbol ("VN30")
-    None/None → all three main indices
+    symbols  : specific symbols
+    index    : index name ("vn30") — resolved to its index symbol ("VN30")
+    None/None → all index symbols in DB
+    override : True  → delete existing rows then reinsert (full rebuild)
+               False → insert only rows not already in DB (INSERT OR IGNORE)
 
-    Always fully rebuilds (DELETE + INSERT). Range stats are always derived
-    from DB data, so there is no network fetch.
+    No network fetch — purely derived from DB prices + PE data.
+    No start parameter — range stats require full history to compute.
     """
-    targets = _resolve_index_symbols(symbols, index)
+    targets = _resolve_symbols(symbols, index)
 
     for sym in targets:
         print(f"\n  Rebuilding range_stats for {sym} …")
-        _rebuild_one(sym)
+        _rebuild_one(sym, override)
 
 
-def _resolve_index_symbols(symbols, index) -> list[str]:
+def _resolve_symbols(symbols, index) -> list[str]:
     if symbols is not None:
         return symbols
     if index is not None:
@@ -38,7 +41,7 @@ def _resolve_index_symbols(symbols, index) -> list[str]:
     return db.list_symbols(symbol_type="index")
 
 
-def _rebuild_one(sym: str) -> None:
+def _rebuild_one(sym: str, override: bool) -> None:
     prices = db.load_daily_prices(sym).reset_index().rename(columns={"date": "time"})
     pe     = db.load_pe_ratios(sym).reset_index().rename(columns={"date": "time"})
 
@@ -50,6 +53,9 @@ def _rebuild_one(sym: str) -> None:
     df = prices.merge(pe, on="time", how="left")
     df["pe_ratio"] = df["pe_ratio"].ffill()
     df = df.reset_index(drop=True)
+
+    if override:
+        db.delete_range_stats(sym)
 
     cal = build_cal_range_close(df, range_days=_DEFAULT_RANGE_DAYS, max_workers=_MAX_WORKERS)
     db.save_range_stats(sym, df, cal)
