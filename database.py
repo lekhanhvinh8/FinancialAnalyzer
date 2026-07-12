@@ -302,10 +302,9 @@ def save_pe_ratios(symbol: str, df: pd.DataFrame) -> dict:
         ))
 
     with _conn() as con:
-        con.execute("DELETE FROM pe_ratios WHERE symbol = ?", (symbol,))
         if rows:
             con.executemany(
-                """INSERT INTO pe_ratios
+                """INSERT OR REPLACE INTO pe_ratios
                    (symbol, date, pe_ratio, total_market_cap, total_ttm_profit, member_count)
                    VALUES (?, ?, ?, ?, ?, ?)""",
                 rows,
