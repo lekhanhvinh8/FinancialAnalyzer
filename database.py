@@ -110,6 +110,13 @@ def init_db():
                 total_ttm_profit REAL,
                 member_count     INTEGER
             );
+
+            CREATE TABLE IF NOT EXISTS pe_members (
+                symbol    TEXT  NOT NULL,
+                date      TEXT  NOT NULL,   -- ISO date: YYYY-MM-DD
+                pe_ratio  REAL,             -- individual stock P/E, NULL if incalculable
+                PRIMARY KEY (symbol, date)
+            );
         """)
 
 
@@ -445,6 +452,56 @@ def save_pe_vnfinlead(df: pd.DataFrame, override: bool = False) -> dict:
 
 def load_pe_vnfinlead(start: str | None = None, end: str | None = None) -> pd.DataFrame:
     return _load_pe_table("pe_vnfinlead", start, end)
+
+
+def save_pe_members(df: pd.DataFrame, override: bool = False) -> dict:
+    """
+    Save per-member daily P/E ratios.
+    df must have columns: symbol, date (str), pe_ratio (float or None).
+    """
+    rows = [(r["symbol"], r["date"], r["pe_ratio"]) for _, r in df.iterrows()]
+    with _conn() as con:
+        existing = {
+            f"{r[0]}|{r[1]}"
+            for r in con.execute("SELECT symbol, date FROM pe_members").fetchall()
+        }
+        to_save = rows if override else [r for r in rows if f"{r[0]}|{r[1]}" not in existing]
+        skipped = len(rows) - len(to_save)
+        if to_save:
+            con.executemany(
+                "INSERT OR REPLACE INTO pe_members (symbol, date, pe_ratio) VALUES (?, ?, ?)",
+                to_save,
+            )
+    print(f"  [pe_members] saved {len(to_save)}, skipped {skipped}")
+    return {"saved": len(to_save), "skipped": skipped}
+
+
+def load_pe_members(
+    symbol: str | None = None,
+    start: str | None = None,
+    end: str | None = None,
+) -> pd.DataFrame:
+    """
+    Load per-member P/E ratios. Optionally filter by symbol and/or date range.
+    Returns DataFrame with columns: symbol, date, pe_ratio.
+    """
+    clauses, params = [], []
+    if symbol:
+        clauses.append("symbol = ?")
+        params.append(symbol)
+    if start:
+        clauses.append("date >= ?")
+        params.append(start)
+    if end:
+        clauses.append("date <= ?")
+        params.append(end)
+    where = ("WHERE " + " AND ".join(clauses)) if clauses else ""
+    with _conn() as con:
+        df = pd.read_sql(
+            f"SELECT symbol, date, pe_ratio FROM pe_members {where} ORDER BY symbol, date",
+            con, params=params, parse_dates=["date"],
+        )
+    return df
 
 
 def list_symbols() -> list[str]:

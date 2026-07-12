@@ -98,11 +98,13 @@ def calc_pe_history(
     index: str = "vn30",
     start: str | None = None,
     end: str | None = None,
+    emit_members: bool = False,
 ) -> pd.DataFrame:
     """
     Calculate daily aggregate P/E for `index` over [start, end].
 
-    index: "vn30" or "vndiamond"
+    index        : "vn30", "vndiamond", or "vnfinlead"
+    emit_members : if True, also save per-member daily P/E to pe_members table
 
     Returns a DataFrame with columns:
         date (str), pe_ratio, total_market_cap, total_ttm_profit, member_count
@@ -140,6 +142,8 @@ def calc_pe_history(
 
     # ── Calculate aggregate P/E per date ─────────────────────────────────────
     records = []
+    member_records = []  # for emit_members
+
     for date in all_dates:
         date_str = date.date().isoformat()
 
@@ -162,9 +166,17 @@ def calc_pe_history(
             if ttm <= 0:
                 continue
 
-            total_mcap   += price * shares
+            mcap = price * shares
+            total_mcap   += mcap
             total_profit += ttm
             count        += 1
+
+            if emit_members:
+                member_records.append({
+                    "symbol":   sym,
+                    "date":     date_str,
+                    "pe_ratio": mcap / ttm,
+                })
 
         if count == 0 or total_profit == 0:
             pe = None
@@ -178,6 +190,9 @@ def calc_pe_history(
             "total_ttm_profit": total_profit if count > 0 else None,
             "member_count":     count,
         })
+
+    if emit_members and member_records:
+        db.save_pe_members(pd.DataFrame(member_records), override=True)
 
     return pd.DataFrame(records)
 

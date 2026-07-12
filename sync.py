@@ -36,7 +36,7 @@ print(f"\n{'='*55}")
 print("Recalculating P/E …")
 db.init_db()
 for index in targets:
-    pe_df = calculate.calc_pe_history(index=index)
+    pe_df = calculate.calc_pe_history(index=index, emit_members=True)
     valid = pe_df.dropna(subset=["pe_ratio"])
     if not valid.empty:
         print(f"  {index.upper()}: {len(valid)} dates, current {valid.iloc[-1]['pe_ratio']:.2f}x")
