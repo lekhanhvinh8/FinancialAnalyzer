@@ -12,6 +12,7 @@ _MAX_WORKERS        = 5
 def sync_range_stats(
     symbols:  list[str] | None = None,
     index:    str | None = None,
+    start:    str | None = None,
     override: bool = True,
 ) -> None:
     """
@@ -20,17 +21,16 @@ def sync_range_stats(
     symbols  : specific symbols
     index    : index name ("vn30") — resolved to its index symbol ("VN30")
     None/None → all index symbols in DB
+    start    : only write rows for dates >= start; None = all dates
+               Note: full history is always used to compute stats regardless
     override : True  → delete existing rows then reinsert (full rebuild)
                False → insert only rows not already in DB (INSERT OR IGNORE)
-
-    No network fetch — purely derived from DB prices + PE data.
-    No start parameter — range stats require full history to compute.
     """
     targets = _resolve_symbols(symbols, index)
 
     for sym in targets:
         print(f"\n  Rebuilding range_stats for {sym} …")
-        _rebuild_one(sym, override)
+        _rebuild_one(sym, start, override)
 
 
 def _resolve_symbols(symbols, index) -> list[str]:
@@ -41,7 +41,7 @@ def _resolve_symbols(symbols, index) -> list[str]:
     return db.list_symbols(symbol_type="index")
 
 
-def _rebuild_one(sym: str, override: bool) -> None:
+def _rebuild_one(sym: str, start: str | None, override: bool) -> None:
     prices = db.load_daily_prices(sym).reset_index().rename(columns={"date": "time"})
     pe     = db.load_pe_ratios(sym).reset_index().rename(columns={"date": "time"})
 
@@ -58,4 +58,9 @@ def _rebuild_one(sym: str, override: bool) -> None:
         db.delete_range_stats(sym)
 
     cal = build_cal_range_close(df, range_days=_DEFAULT_RANGE_DAYS, max_workers=_MAX_WORKERS)
+
+    if start is not None:
+        df = df[df["time"].astype(str) >= start]
+        cal = {k: v for k, v in cal.items() if k < len(df)}
+
     db.save_range_stats(sym, df, cal)
