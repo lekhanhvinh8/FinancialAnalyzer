@@ -17,7 +17,12 @@ _INDEX_SYMBOL_MAP = {
     "vnfinlead": "VNFINLEAD",
     "vnindex":   "VNINDEX",
 }
-_INDEX_SYMBOLS = set(_INDEX_SYMBOL_MAP.values())
+_INDEX_SYMBOLS    = set(_INDEX_SYMBOL_MAP.values())
+_SYMBOL_INDEX_MAP = {v: k for k, v in _INDEX_SYMBOL_MAP.items()}  # "VN30" → "vn30"
+
+
+def _members(index_name: str) -> list[str]:
+    return db.load_index_members(index_name)["symbol"].unique().tolist()
 
 
 def resolve_symbols(
@@ -26,9 +31,11 @@ def resolve_symbols(
 ) -> list[tuple[str, str]]:
     """
     Resolve to [(symbol, symbol_type), ...].
-    - index="vn30"   → the index series itself ("VN30", "index") — NOT member stocks
-    - symbols=[...]  → each symbol with its type from DB (fallback: "stock")
-    - both None      → all symbols registered in the DB
+
+    index="vn30"    → the index series itself: [("VN30", "index")]
+    symbols=["VN30"] → all member stocks of VN30: [("ACB", "stock"), ...]
+    symbols=["FPT"]  → [("FPT", "stock")]
+    both None        → all symbols registered in the DB
     """
     if index is not None:
         sym = _INDEX_SYMBOL_MAP.get(index.lower(), index.upper())
@@ -36,7 +43,13 @@ def resolve_symbols(
 
     if symbols is not None:
         registered = dict(_registered_types())
-        return [(s, registered.get(s, "index" if s in _INDEX_SYMBOLS else "stock")) for s in symbols]
+        result = []
+        for s in symbols:
+            if s in _INDEX_SYMBOLS:
+                result.extend([(m, "stock") for m in _members(_SYMBOL_INDEX_MAP[s])])
+            else:
+                result.append((s, registered.get(s, "stock")))
+        return result
 
     return _registered_types()
 
@@ -46,21 +59,27 @@ def resolve_stocks(
     index: str | None,
 ) -> list[str]:
     """
-    Resolve to stock symbols only.
-    - index="vn30"   → all current member stocks of vn30
-    - symbols=[...]  → as-is, but raises ValueError for any index symbol
-    - both None      → all stock symbols in DB
+    Resolve to stock symbols only (shares/profit — no index series).
+
+    index="vn30"     → raises ValueError (index has no shares/profit)
+    symbols=["VN30"] → all member stocks of VN30
+    symbols=["FPT"]  → ["FPT"]
+    both None        → all stock symbols in DB
     """
     if index is not None:
-        return db.load_index_members(index.lower())["symbol"].unique().tolist()
+        raise ValueError(
+            f"index= is not valid here — the index series has no shares/profit. "
+            f"Use symbols=['{index.upper()}'] to sync its member stocks."
+        )
 
     if symbols is not None:
+        result = []
         for s in symbols:
             if s in _INDEX_SYMBOLS:
-                raise ValueError(
-                    f"'{s}' is an index symbol. Use index= to resolve its member stocks."
-                )
-        return symbols
+                result.extend(_members(_SYMBOL_INDEX_MAP[s]))
+            else:
+                result.append(s)
+        return result
 
     return db.list_symbols(symbol_type="stock")
 
