@@ -96,7 +96,7 @@ def sync_indices(symbols: list[str] | None = None):
 
         try:
             prices = _call_with_retry(vnstock.get_index_prices, symbol, start, today, label=symbol)
-            db.save_daily_prices(symbol, prices, symbol_type='index', override=True)
+            db.save_daily_prices(symbol, prices, symbol_type='index')
         except Exception as e:
             print(f"  ERROR {symbol}: {e}")
         time.sleep(5)
@@ -141,7 +141,7 @@ def sync(index: str):
                 print(f"  prices: up to date ({latest})")
             else:
                 prices = _call_with_retry(vnstock.get_prices, symbol, latest, today, label=symbol)
-                db.save_daily_prices(symbol, prices, symbol_type='stock', override=True)
+                db.save_daily_prices(symbol, prices, symbol_type='stock')
         except Exception as e:
             print(f"  ERROR prices: {e}")
             errors.append((symbol, "prices", str(e)))
@@ -150,7 +150,7 @@ def sync(index: str):
         # ── Shares: re-fetch and upsert ───────────────────────────────────────
         try:
             shares = _call_with_retry(vnstock.get_shares, symbol, label=symbol)
-            db.save_shares(symbol, shares, override=True)
+            db.save_shares(symbol, shares)
         except Exception as e:
             print(f"  ERROR shares: {e}")
             errors.append((symbol, "shares", str(e)))
@@ -159,7 +159,7 @@ def sync(index: str):
         # ── Profit: re-fetch and upsert ───────────────────────────────────────
         try:
             profit = cafef.get_net_profit(symbol, raw_dir=RAW_DIR)
-            db.save_net_profit(symbol, profit, override=True)
+            db.save_net_profit(symbol, profit)
         except Exception as e:
             print(f"  ERROR profit: {e}")
             errors.append((symbol, "net_profit", str(e)))
@@ -225,7 +225,7 @@ def collect(index: str, start: str):
         print(f"[{i:02d}/{len(need_profit)}] {symbol} -- net profit (CafeF)")
         try:
             profit = cafef.get_net_profit(symbol, raw_dir=RAW_DIR)
-            db.save_net_profit(symbol, profit, override=True)
+            db.save_net_profit(symbol, profit)
             n14 = profit["kqkd_14"].notna().sum()
             n10 = profit["kqkd_10"].notna().sum()
             tag = "broker(kqkd_10)" if n10 > 0 and n14 == 0 else "kqkd_14"

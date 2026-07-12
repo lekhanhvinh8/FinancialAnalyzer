@@ -196,7 +196,7 @@ def calc_pe_history(
         })
 
     if emit_members and member_records:
-        db.save_pe_ratios_bulk(member_records, override=True)
+        db.save_pe_ratios_bulk(member_records)
 
     return pd.DataFrame(records)
 
@@ -214,4 +214,4 @@ if __name__ == "__main__":
             print(f"  Range: {valid.iloc[0]['date']} → {valid.iloc[-1]['date']}")
             print(f"  P/E range: {valid['pe_ratio'].min():.2f}x – {valid['pe_ratio'].max():.2f}x")
             print(f"  Current:   {valid.iloc[-1]['pe_ratio']:.2f}x")
-            _PE_SAVERS[idx](pe_df, override=True)
+            _PE_SAVERS[idx](pe_df)

@@ -104,36 +104,27 @@ def save_daily_prices(
     symbol: str,
     df: pd.DataFrame,
     symbol_type: str = 'stock',
-    override: bool = False,
 ) -> dict:
     """
     Save daily close prices for a stock or index symbol.
     df must have a DatetimeIndex and a 'close' column.
-    symbol_type: 'stock' or 'index'
+    Always INSERT OR REPLACE — caller decides what rows to pass.
     """
     rows = {str(d.date()): float(r["close"]) for d, r in df.iterrows()}
+    if not rows:
+        return {"saved": 0}
     with _conn() as con:
         con.execute(
             "INSERT OR IGNORE INTO symbols (symbol, symbol_type) VALUES (?, ?)",
             (symbol, symbol_type),
         )
-        existing = {
-            r[0] for r in con.execute(
-                f"SELECT date FROM daily_prices WHERE symbol = ? AND date IN ({','.join('?'*len(rows))})",
-                (symbol, *rows.keys()),
-            ).fetchall()
-        } if rows else set()
-
-        to_save = rows if override else {d: v for d, v in rows.items() if d not in existing}
-        skipped = len(rows) - len(to_save)
-        if to_save:
-            con.executemany(
-                "INSERT OR REPLACE INTO daily_prices (symbol, date, close) VALUES (?, ?, ?)",
-                [(symbol, d, v) for d, v in to_save.items()],
-            )
+        con.executemany(
+            "INSERT OR REPLACE INTO daily_prices (symbol, date, close) VALUES (?, ?, ?)",
+            [(symbol, d, v) for d, v in rows.items()],
+        )
     label = "[index_prices]" if symbol_type == "index" else "[prices]    "
-    print(f"  {label} {symbol}: saved {len(to_save)}, skipped {skipped}")
-    return {"saved": len(to_save), "skipped": skipped}
+    print(f"  {label} {symbol}: saved {len(rows)}")
+    return {"saved": len(rows)}
 
 
 def load_daily_prices(symbol: str) -> pd.DataFrame:
@@ -160,40 +151,27 @@ def load_latest_price_date(symbol: str) -> str | None:
 
 # ── Quarterly fundamentals ────────────────────────────────────────────────────
 
-def save_shares(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
+def save_shares(symbol: str, df: pd.DataFrame) -> dict:
     """
     Save quarterly outstanding shares.
     df must have columns: year (int), quarter (int), shares (float).
+    Always writes — caller decides what rows to pass.
     Only the 'shares' column is written; profit columns in the same row are preserved.
     """
     rows = [(int(r.year), int(r.quarter), float(r.shares)) for _, r in df.iterrows()]
+    if not rows:
+        return {"saved": 0}
     with _conn() as con:
-        existing = {
-            (r[0], r[1])
-            for r in con.execute(
-                "SELECT year, quarter FROM quarterly_fundamentals WHERE symbol = ? AND shares IS NOT NULL",
-                (symbol,),
-            ).fetchall()
-        }
-        to_save = rows if override else [r for r in rows if (r[0], r[1]) not in existing]
-        skipped = len(rows) - len(to_save)
-        if to_save:
-            con.executemany(
-                "INSERT OR IGNORE INTO quarterly_fundamentals (symbol, year, quarter) VALUES (?, ?, ?)",
-                [(symbol, y, q) for y, q, _ in to_save],
-            )
-            if override:
-                con.executemany(
-                    "UPDATE quarterly_fundamentals SET shares = ? WHERE symbol = ? AND year = ? AND quarter = ?",
-                    [(s, symbol, y, q) for y, q, s in to_save],
-                )
-            else:
-                con.executemany(
-                    "UPDATE quarterly_fundamentals SET shares = ? WHERE symbol = ? AND year = ? AND quarter = ? AND shares IS NULL",
-                    [(s, symbol, y, q) for y, q, s in to_save],
-                )
-    print(f"  [shares]     {symbol}: saved {len(to_save)}, skipped {skipped}")
-    return {"saved": len(to_save), "skipped": skipped}
+        con.executemany(
+            "INSERT OR IGNORE INTO quarterly_fundamentals (symbol, year, quarter) VALUES (?, ?, ?)",
+            [(symbol, y, q) for y, q, _ in rows],
+        )
+        con.executemany(
+            "UPDATE quarterly_fundamentals SET shares = ? WHERE symbol = ? AND year = ? AND quarter = ?",
+            [(s, symbol, y, q) for y, q, s in rows],
+        )
+    print(f"  [shares]     {symbol}: saved {len(rows)}")
+    return {"saved": len(rows)}
 
 
 def load_shares(symbol: str) -> pd.DataFrame:
@@ -205,10 +183,11 @@ def load_shares(symbol: str) -> pd.DataFrame:
         )
 
 
-def save_net_profit(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
+def save_net_profit(symbol: str, df: pd.DataFrame) -> dict:
     """
     Save quarterly net profit figures.
     df must have columns: year, quarter, kqkd_14, kqkd_13, kqkd_10.
+    Always writes — caller decides what rows/values to pass.
     Only the kqkd columns are written; shares in the same row are preserved.
     """
     rows = [
@@ -218,39 +197,20 @@ def save_net_profit(symbol: str, df: pd.DataFrame, override: bool = False) -> di
          r.get("kqkd_10") if pd.notna(r.get("kqkd_10")) else None)
         for _, r in df.iterrows()
     ]
+    if not rows:
+        return {"saved": 0}
     with _conn() as con:
-        existing = {
-            (r[0], r[1])
-            for r in con.execute(
-                """SELECT year, quarter FROM quarterly_fundamentals
-                   WHERE symbol = ? AND (kqkd_14 IS NOT NULL OR kqkd_13 IS NOT NULL OR kqkd_10 IS NOT NULL)""",
-                (symbol,),
-            ).fetchall()
-        }
-        to_save = rows if override else [r for r in rows if (r[0], r[1]) not in existing]
-        skipped = len(rows) - len(to_save)
-        if to_save:
-            con.executemany(
-                "INSERT OR IGNORE INTO quarterly_fundamentals (symbol, year, quarter) VALUES (?, ?, ?)",
-                [(symbol, y, q) for y, q, *_ in to_save],
-            )
-            if override:
-                con.executemany(
-                    """UPDATE quarterly_fundamentals SET kqkd_14 = ?, kqkd_13 = ?, kqkd_10 = ?
-                       WHERE symbol = ? AND year = ? AND quarter = ?""",
-                    [(k14, k13, k10, symbol, y, q) for y, q, k14, k13, k10 in to_save],
-                )
-            else:
-                con.executemany(
-                    """UPDATE quarterly_fundamentals SET
-                           kqkd_14 = COALESCE(kqkd_14, ?),
-                           kqkd_13 = COALESCE(kqkd_13, ?),
-                           kqkd_10 = COALESCE(kqkd_10, ?)
-                       WHERE symbol = ? AND year = ? AND quarter = ?""",
-                    [(k14, k13, k10, symbol, y, q) for y, q, k14, k13, k10 in to_save],
-                )
-    print(f"  [net_profit] {symbol}: saved {len(to_save)}, skipped {skipped}")
-    return {"saved": len(to_save), "skipped": skipped}
+        con.executemany(
+            "INSERT OR IGNORE INTO quarterly_fundamentals (symbol, year, quarter) VALUES (?, ?, ?)",
+            [(symbol, y, q) for y, q, *_ in rows],
+        )
+        con.executemany(
+            """UPDATE quarterly_fundamentals SET kqkd_14 = ?, kqkd_13 = ?, kqkd_10 = ?
+               WHERE symbol = ? AND year = ? AND quarter = ?""",
+            [(k14, k13, k10, symbol, y, q) for y, q, k14, k13, k10 in rows],
+        )
+    print(f"  [net_profit] {symbol}: saved {len(rows)}")
+    return {"saved": len(rows)}
 
 
 def load_net_profit(symbol: str) -> pd.DataFrame:
@@ -323,11 +283,12 @@ def load_index_members(index_symbol: str, as_of: str | None = None) -> pd.DataFr
 
 # ── P/E ratios ────────────────────────────────────────────────────────────────
 
-def save_pe_ratios(symbol: str, df: pd.DataFrame, override: bool = False) -> dict:
+def save_pe_ratios(symbol: str, df: pd.DataFrame) -> dict:
     """
     Save P/E ratios for a symbol (stock or index).
     df must have 'date' column. Optional: pe_ratio, total_market_cap, total_ttm_profit, member_count.
     For index aggregate P/E, include the optional columns.
+    Always replaces all rows for the symbol — caller passes the full dataset.
     """
     has_agg = "total_market_cap" in df.columns
 
@@ -343,31 +304,21 @@ def save_pe_ratios(symbol: str, df: pd.DataFrame, override: bool = False) -> dic
         ))
 
     with _conn() as con:
-        existing = {
-            r[0]
-            for r in con.execute(
-                "SELECT date FROM pe_ratios WHERE symbol = ?", (symbol,)
-            ).fetchall()
-        }
-        to_save = rows if override else [r for r in rows if r[1] not in existing]
-        skipped = len(rows) - len(to_save)
-        if override and to_save:
-            con.execute("DELETE FROM pe_ratios WHERE symbol = ?", (symbol,))
-        if to_save:
+        con.execute("DELETE FROM pe_ratios WHERE symbol = ?", (symbol,))
+        if rows:
             con.executemany(
-                """INSERT OR REPLACE INTO pe_ratios
+                """INSERT INTO pe_ratios
                    (symbol, date, pe_ratio, total_market_cap, total_ttm_profit, member_count)
                    VALUES (?, ?, ?, ?, ?, ?)""",
-                to_save,
+                rows,
             )
-    tag = symbol
-    print(f"  [pe_{tag}] saved {len(to_save)}, skipped {skipped}")
-    return {"saved": len(to_save), "skipped": skipped}
+    print(f"  [pe_{symbol}] saved {len(rows)}")
+    return {"saved": len(rows)}
 
 
-def save_pe_ratios_bulk(records: list[dict], override: bool = False) -> dict:
+def save_pe_ratios_bulk(records: list[dict]) -> dict:
     """
-    Bulk save per-symbol P/E ratios.
+    Bulk save per-symbol P/E ratios. Always INSERT OR REPLACE.
     records: list of dicts with keys: symbol, date, pe_ratio,
              optionally total_market_cap, total_ttm_profit
     """
@@ -379,21 +330,13 @@ def save_pe_ratios_bulk(records: list[dict], override: bool = False) -> dict:
         for r in records
     ]
     with _conn() as con:
-        if override:
-            con.executemany(
-                """INSERT OR REPLACE INTO pe_ratios
-                   (symbol, date, pe_ratio, total_market_cap, total_ttm_profit)
-                   VALUES (?, ?, ?, ?, ?)""",
-                rows,
-            )
-        else:
-            con.executemany(
-                """INSERT OR IGNORE INTO pe_ratios
-                   (symbol, date, pe_ratio, total_market_cap, total_ttm_profit)
-                   VALUES (?, ?, ?, ?, ?)""",
-                rows,
-            )
-    print(f"  [pe_members] saved {len(rows)}, skipped 0")
+        con.executemany(
+            """INSERT OR REPLACE INTO pe_ratios
+               (symbol, date, pe_ratio, total_market_cap, total_ttm_profit)
+               VALUES (?, ?, ?, ?, ?)""",
+            rows,
+        )
+    print(f"  [pe_members] saved {len(rows)}")
     return {"saved": len(rows)}
 
 
@@ -434,7 +377,6 @@ def save_range_stats(
     symbol: str,
     df: pd.DataFrame,
     cal_range_close: dict,
-    override: bool = True,
 ) -> dict:
     """
     Persist cal_range_close to range_stats table.
@@ -468,8 +410,7 @@ def save_range_stats(
             ))
 
     with _conn() as con:
-        if override:
-            con.execute("DELETE FROM range_stats WHERE symbol = ?", (symbol,))
+        con.execute("DELETE FROM range_stats WHERE symbol = ?", (symbol,))
         con.executemany(
             """INSERT OR REPLACE INTO range_stats
                (symbol, date, range_days, direction,
@@ -526,6 +467,41 @@ def load_range_stats(symbol: str, df: pd.DataFrame) -> "dict | None":
             cal[row_idx].rangeDayClosesPos[rd] = rdc
 
     return dict(cal)
+
+
+# ── Orchestrator helpers ──────────────────────────────────────────────────────
+
+def load_latest_shares_quarter(symbol: str) -> tuple[int, int] | None:
+    """Return (year, quarter) of the most recent non-null shares entry, or None."""
+    with _conn() as con:
+        row = con.execute(
+            """SELECT year, quarter FROM quarterly_fundamentals
+               WHERE symbol = ? AND shares IS NOT NULL
+               ORDER BY year DESC, quarter DESC LIMIT 1""",
+            (symbol,),
+        ).fetchone()
+    return (row[0], row[1]) if row else None
+
+
+def load_latest_profit_quarter(symbol: str) -> tuple[int, int] | None:
+    """Return (year, quarter) of the most recent profit entry, or None."""
+    with _conn() as con:
+        row = con.execute(
+            """SELECT year, quarter FROM quarterly_fundamentals
+               WHERE symbol = ? AND (kqkd_14 IS NOT NULL OR kqkd_13 IS NOT NULL OR kqkd_10 IS NOT NULL)
+               ORDER BY year DESC, quarter DESC LIMIT 1""",
+            (symbol,),
+        ).fetchone()
+    return (row[0], row[1]) if row else None
+
+
+def load_latest_pe_date(symbol: str) -> str | None:
+    """Return the most recent date in pe_ratios for a symbol, or None."""
+    with _conn() as con:
+        row = con.execute(
+            "SELECT MAX(date) FROM pe_ratios WHERE symbol = ?", (symbol,)
+        ).fetchone()
+    return row[0] if row and row[0] else None
 
 
 # ── Utility ───────────────────────────────────────────────────────────────────
