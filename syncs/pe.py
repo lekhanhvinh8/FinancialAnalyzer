@@ -8,6 +8,7 @@ def sync_pe(
     indices:   list[str] | None = None,
     symbols:   list[str] | None = None,
     from_date: str | None = None,
+    override:  bool = False,
 ) -> None:
     """
     Recalculate and save P/E ratios.
@@ -15,14 +16,17 @@ def sync_pe(
     indices   : index names → aggregate index P/E (+ per-member P/E)
     symbols   : individual stock symbols → per-stock P/E only
     from_date : recalculate only from this date onward; None = full history
+    override  : True → ignore from_date and rebuild full history
 
-    If both are None, recalculates all three indices.
+    If both indices and symbols are None, recalculates all three indices.
     """
+    start = None if override else from_date
+
     for index in (indices or ([] if symbols else ["vn30", "vndiamond", "vnfinlead"])):
         print(f"\n  Recalculating {index.upper()} P/E …")
         pe_df = calculate.calc_pe_history(
             index=index,
-            start=from_date,
+            start=start,
             emit_members=True,
         )
 
@@ -39,7 +43,7 @@ def sync_pe(
 
     for sym in (symbols or []):
         print(f"\n  Recalculating {sym} P/E …")
-        pe_df = calculate.calc_stock_pe(sym, start=from_date)
+        pe_df = calculate.calc_stock_pe(sym, start=start)
 
         if pe_df.empty:
             print(f"  [{sym}] no valid P/E rows")
