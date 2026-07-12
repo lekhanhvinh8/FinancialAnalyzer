@@ -1,22 +1,26 @@
 """
-Sync index data to today, then recalculate derived outputs.
+Sync data to today, then recalculate derived outputs.
 
 Usage:
-    python sync.py                        # all steps, all indices
-    python sync.py vn30                   # all steps, one index
-    python sync.py vn30 --force           # all steps, overwrite all data
-    python sync.py --prices               # prices only, all indices
-    python sync.py vn30 --shares --profit # shares + profit only, one index
-    python sync.py --pe --outputs         # PE + outputs only
+    python sync.py                   # full sync: all indices + all member stocks
+    python sync.py vn30              # index only: VN30 price series, P/E, range-stats
+    python sync.py FPT               # stock only: prices, shares, profit, P/E, range-stats
+    python sync.py vn30 FPT          # mix: VN30 index + FPT stock
+    python sync.py vn30 --force      # force-rebuild VN30 index data
+    python sync.py --prices          # prices only, full sync
+    python sync.py --pe --outputs    # P/E + outputs only, full sync
 
 Steps (flags):
-    --prices      index series + member stock prices
-    --shares      quarterly outstanding shares
-    --profit      quarterly net profit (CafeF)
-    --pe          recalculate aggregate P/E
+    --prices      price series
+    --shares      quarterly outstanding shares (stocks only)
+    --profit      quarterly net profit (stocks only)
+    --pe          recalculate P/E
     --range-stats rebuild rolling-range stats cache
-    --outputs     regenerate charts + Excel exports
-    --force       overwrite existing data (applies to prices/shares/profit)
+    --outputs     regenerate charts + Excel exports (indices only)
+    --force       overwrite existing data
+
+Full sync (no args) includes member stock prices/shares/profit for each index.
+Specifying an index (e.g. vn30) syncs only that index's own data, not its members.
 
 Progress is written to sync_progress.html (auto-refreshes every 3s).
 """
@@ -34,51 +38,56 @@ ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "outputs"}
 
 
 def main():
-    args    = [a for a in sys.argv[1:] if not a.startswith("--")]
-    flags   = {a.lstrip("-") for a in sys.argv[1:] if a.startswith("--")}
-    targets = args or INDICES
-    force   = "force" in flags
-    steps   = flags - {"force"} or ALL_STEPS
+    args  = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags = {a.lstrip("-") for a in sys.argv[1:] if a.startswith("--")}
+    force = "force" in flags
+    steps = flags - {"force"} or ALL_STEPS
 
     db.init_db()
 
-    # Split args into indices and stock symbols
     known_indices = set(INDICES)
-    indices = [t for t in targets if t.lower() in known_indices]
-    stocks  = [t.upper() for t in targets if t.lower() not in known_indices]
+    full_sync     = not args                          # no args = full sync including members
+    indices       = [t.lower() for t in (args or INDICES) if t.lower() in known_indices]
+    stocks        = [t.upper() for t in args if t.lower() not in known_indices]
 
-    # Pre-compute members for index targets
-    all_members = {idx: db.load_index_members(idx)["symbol"].unique().tolist() for idx in indices}
+    # member stocks only sync on a full run
+    members_by_index = {}
+    if full_sync:
+        members_by_index = {idx: db.load_index_members(idx)["symbol"].unique().tolist() for idx in indices}
 
     # outputs only makes sense for indices
     if not indices:
         steps -= {"outputs"}
 
-    # Set up progress tracker
-    p = SyncProgress(steps, targets, force)
+    # shares/profit are member-only steps; skip for index-explicit runs with no stocks
+    member_count = sum(len(m) for m in members_by_index.values()) + len(stocks)
+    if member_count == 0:
+        steps -= {"shares", "profit"}
 
-    index_sym_count = sum(len(m) + 1 for m in all_members.values())
-    stock_count     = len(stocks)
-    if "prices"      in steps: p.set_totals("prices",      index_sym_count + stock_count)
-    if "shares"      in steps: p.set_totals("shares",      sum(len(m) for m in all_members.values()) + stock_count)
-    if "profit"      in steps: p.set_totals("profit",      sum(len(m) for m in all_members.values()) + stock_count)
-    if "pe"          in steps: p.set_totals("pe",          len(indices) + stock_count)
-    if "range-stats" in steps: p.set_totals("range-stats", len(indices) + stock_count)
+    p = SyncProgress(steps, args or INDICES, force)
+
+    prices_total = len(indices) + sum(len(m) for m in members_by_index.values()) + len(stocks)
+    if "prices"      in steps: p.set_totals("prices",      prices_total)
+    if "shares"      in steps: p.set_totals("shares",      member_count)
+    if "profit"      in steps: p.set_totals("profit",      member_count)
+    if "pe"          in steps: p.set_totals("pe",          len(indices) + len(stocks))
+    if "range-stats" in steps: p.set_totals("range-stats", len(indices) + len(stocks))
     if "outputs"     in steps: p.set_totals("outputs",     len(indices))
 
     print("Progress: sync_progress.html")
 
     # ── Index runs ────────────────────────────────────────────────────────────
     for index in indices:
-        members   = all_members[index]
+        members   = members_by_index.get(index, [])
         index_sym = index.upper()
         n         = len(members)
 
         print(f"\n{'='*55}")
-        print(f"{'[FORCE] ' if force else ''}Syncing {index_sym} ({n} members) — {', '.join(sorted(steps))}")
+        label = f"{index_sym} + {n} members" if n else index_sym
+        print(f"{'[FORCE] ' if force else ''}Syncing {label} — {', '.join(sorted(steps))}")
         print(f"{'='*55}")
 
-        # ── Prices ────────────────────────────────────────────────────────────
+        # ── Index prices ──────────────────────────────────────────────────────
         if "prices" in steps:
             print(f"\n── Index prices: {index_sym}")
             t0 = time.time()
@@ -90,19 +99,20 @@ def main():
             except Exception as e:
                 p.end("prices", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
-            print(f"\n── Stock prices ({n} symbols)")
-            for sym in members:
-                t0 = time.time()
-                p.begin("prices", index, sym)
-                try:
-                    last_date = None if force else db.load_latest_price_date(sym)
-                    sync_prices(symbols=[sym], start=last_date, override=force)
-                    p.end("prices", index, sym, time.time() - t0)
-                except Exception as e:
-                    p.end("prices", index, sym, time.time() - t0, status="error", note=str(e)[:100])
+            if members:
+                print(f"\n── Member prices ({n} symbols)")
+                for sym in members:
+                    t0 = time.time()
+                    p.begin("prices", index, sym)
+                    try:
+                        last_date = None if force else db.load_latest_price_date(sym)
+                        sync_prices(symbols=[sym], start=last_date, override=force)
+                        p.end("prices", index, sym, time.time() - t0)
+                    except Exception as e:
+                        p.end("prices", index, sym, time.time() - t0, status="error", note=str(e)[:100])
 
-        # ── Shares ────────────────────────────────────────────────────────────
-        if "shares" in steps:
+        # ── Shares (members only) ─────────────────────────────────────────────
+        if "shares" in steps and members:
             print(f"\n── Shares ({n} symbols)")
             for sym in members:
                 t0 = time.time()
@@ -116,8 +126,8 @@ def main():
                 except Exception as e:
                     p.end("shares", index, sym, time.time() - t0, status="error", note=str(e)[:100])
 
-        # ── Profit ────────────────────────────────────────────────────────────
-        if "profit" in steps:
+        # ── Profit (members only) ─────────────────────────────────────────────
+        if "profit" in steps and members:
             print(f"\n── Profit ({n} symbols)")
             for sym in members:
                 t0 = time.time()
@@ -154,7 +164,7 @@ def main():
             except Exception as e:
                 p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
-    # ── Stock-only runs (symbols not belonging to any index) ─────────────────
+    # ── Stock runs ────────────────────────────────────────────────────────────
     if stocks:
         print(f"\n{'='*55}")
         print(f"Stock symbols: {', '.join(stocks)}")
