@@ -81,6 +81,56 @@ def call_with_retry(fn, *args, label: str = "", **kwargs):
     raise RuntimeError(f"Still rate-limited after {_RETRIES} retries for {label}")
 
 
+def fill_merge(
+    new_df,
+    existing,
+    cols: list[str],
+    key_cols: list[str],
+):
+    """
+    Merge new_df with existing for override=False semantics.
+
+    For each row keyed by key_cols:
+    - Row not in existing          → keep new row as-is
+    - Row in existing, col IS NULL → use new value (fill the null)
+    - Row in existing, col NOT NULL → keep existing value (protect non-null)
+
+    Returns only rows that have something to write (new rows or rows with nulls filled).
+    """
+    import pandas as pd
+
+    if existing is None or existing.empty:
+        return new_df
+
+    existing_map = {
+        tuple(int(r[k]) if str(r[k]).isdigit() else r[k] for k in key_cols): r
+        for _, r in existing.iterrows()
+    }
+
+    result = []
+    for _, new_row in new_df.iterrows():
+        key = tuple(int(new_row[k]) if str(new_row[k]).isdigit() else new_row[k] for k in key_cols)
+        ex = existing_map.get(key)
+
+        if ex is None:
+            result.append(new_row)
+            continue
+
+        merged = new_row.copy()
+        needs_write = False
+        for col in cols:
+            ex_val = ex.get(col)
+            if ex_val is not None and not (isinstance(ex_val, float) and ex_val != ex_val):
+                merged[col] = ex_val  # protect existing non-null
+            else:
+                needs_write = True    # DB has null — this column needs filling
+
+        if needs_write:
+            result.append(merged)
+
+    return pd.DataFrame(result, columns=new_df.columns) if result else pd.DataFrame()
+
+
 def _registered_types() -> list[tuple[str, str]]:
     return (
         [(s, "stock") for s in db.list_symbols("stock")] +

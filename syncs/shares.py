@@ -4,7 +4,9 @@ import time
 
 import database as db
 from sources import vnstock
-from ._helpers import call_with_retry, resolve_stocks
+from ._helpers import call_with_retry, resolve_stocks, fill_merge
+
+_SHARES_COLS = ["shares"]
 
 
 def sync_shares(
@@ -19,8 +21,8 @@ def sync_shares(
 
     symbols/index: which stocks to sync (index= resolves to its current members)
     from_year/from_quarter: only process quarters >= this point; None = all
-    override: False → skip quarters already stored with non-null shares
-              True  → overwrite all quarters received from vnstock
+    override: False → insert new rows; fill NULL shares in existing rows
+              True  → overwrite all shares values
     """
     stocks = resolve_stocks(symbols, index)
 
@@ -39,7 +41,6 @@ def _sync_one(sym: str, from_year, from_quarter, override: bool) -> None:
         print(f"  [shares] {sym}: no data returned")
         return
 
-    # Apply quarter filter
     if from_year is not None:
         fq = from_quarter or 1
         df = df[
@@ -52,22 +53,10 @@ def _sync_one(sym: str, from_year, from_quarter, override: bool) -> None:
         return
 
     if not override:
-        # Only write quarters where DB does not yet have a non-null shares value
-        existing_non_null = set(
-            (int(r[0]), int(r[1]))
-            for r in _query_existing_non_null_shares(sym)
-        )
-        df = df[~df.apply(lambda r: (int(r.year), int(r.quarter)) in existing_non_null, axis=1)]
+        df = fill_merge(df, db.load_shares(sym), cols=_SHARES_COLS, key_cols=["year", "quarter"])
 
     if df.empty:
         print(f"  [shares] {sym}: up to date")
         return
 
     db.save_shares(sym, df)
-
-
-def _query_existing_non_null_shares(sym: str) -> set[tuple[int, int]]:
-    existing = db.load_shares(sym)
-    if existing.empty:
-        return set()
-    return set(zip(existing["year"].astype(int), existing["quarter"].astype(int)))

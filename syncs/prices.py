@@ -3,10 +3,9 @@
 import time
 from datetime import date as _date
 
-import pandas as pd
 import database as db
 from sources import vnstock
-from ._helpers import PRICE_START, call_with_retry, resolve_symbols
+from ._helpers import PRICE_START, call_with_retry, resolve_symbols, fill_merge
 
 _PRICE_COLS = ["close"]
 
@@ -48,7 +47,16 @@ def _sync_one(sym: str, sym_type: str, fetch_from: str, today: str, override: bo
         return
 
     if not override:
-        df = _fill_merge(df, db.load_daily_prices(sym))
+        df = df.reset_index().rename(columns={"date": "date_key"})
+        existing = db.load_daily_prices(sym).reset_index().rename(columns={"date": "date_key"})
+        existing["date_key"] = existing["date_key"].dt.strftime("%Y-%m-%d")
+        df["date_key"] = df["date_key"].dt.strftime("%Y-%m-%d")
+        df = fill_merge(df, existing, cols=_PRICE_COLS, key_cols=["date_key"])
+        if df.empty:
+            print(f"  [prices] {sym}: up to date")
+            return
+        df = df.set_index("date_key")
+        df.index = _date_index(df.index)
 
     if df.empty:
         print(f"  [prices] {sym}: up to date")
@@ -57,33 +65,6 @@ def _sync_one(sym: str, sym_type: str, fetch_from: str, today: str, override: bo
     db.save_daily_prices(sym, df, symbol_type=sym_type)
 
 
-def _fill_merge(new_df: pd.DataFrame, existing: pd.DataFrame) -> pd.DataFrame:
-    """
-    For override=False: return only rows/columns that need writing.
-    - New dates (not in existing)      → keep as-is
-    - Existing dates with NULL columns → keep only the null-filling values
-    - Existing dates with no NULLs     → drop (nothing to update)
-    """
-    if existing.empty:
-        return new_df
-
-    result = []
-    for date, new_row in new_df.iterrows():
-        date_str = date.strftime("%Y-%m-%d")
-        if date_str not in existing.index.strftime("%Y-%m-%d"):
-            result.append(new_row)
-            continue
-
-        ex_row = existing.loc[existing.index.strftime("%Y-%m-%d") == date_str].iloc[0]
-        merged = new_row.copy()
-        has_null = False
-        for col in _PRICE_COLS:
-            if col in ex_row and pd.notna(ex_row[col]):
-                merged[col] = ex_row[col]  # preserve existing non-null
-            else:
-                has_null = True            # DB has null — this row needs writing
-
-        if has_null:
-            result.append(merged)
-
-    return pd.DataFrame(result, columns=new_df.columns) if result else pd.DataFrame()
+def _date_index(str_index):
+    import pandas as pd
+    return pd.to_datetime(str_index)
