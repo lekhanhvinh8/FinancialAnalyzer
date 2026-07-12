@@ -79,12 +79,19 @@ def plot_results(df, buyedInfos, sellInfos, reinvestInfos):
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 if __name__ == '__main__':
+    db.init_db()
     print(f'Loading data ({DATA_SOURCE}) ...')
     df = load_df(DATA_SOURCE)
     print(f'  {len(df)} rows | {df["time"].iloc[0].date()} -> {df["time"].iloc[-1].date()}')
 
-    print(f'\nBuilding cal_range_close ({MAX_WORKERS} workers) ...')
-    cal_range_close = build_cal_range_close(df, range_days=[1000], max_workers=MAX_WORKERS)
+    print(f'\nLoading cal_range_close from DB ...')
+    cal_range_close = db.load_cal_range_close(INDEX_SYMBOL, df)
+    if cal_range_close is None:
+        print(f'  Not cached — building ({MAX_WORKERS} workers) ...')
+        cal_range_close = build_cal_range_close(df, range_days=[1000], max_workers=MAX_WORKERS)
+        db.save_cal_range_close(INDEX_SYMBOL, df, cal_range_close)
+    else:
+        print(f'  Loaded {len(cal_range_close)} entries from DB')
 
     firstClose = df['close'].iloc[0] * 1000
 

@@ -117,6 +117,26 @@ def init_db():
                 pe_ratio  REAL,             -- individual stock P/E, NULL if incalculable
                 PRIMARY KEY (symbol, date)
             );
+
+            CREATE TABLE IF NOT EXISTS cal_range_stats (
+                index_symbol  TEXT     NOT NULL,
+                date          TEXT     NOT NULL,   -- ISO date: YYYY-MM-DD
+                range_days    INTEGER  NOT NULL,
+                direction     TEXT     NOT NULL,   -- 'back' or 'fwd'
+                local_top     REAL     NOT NULL,
+                local_avg     REAL     NOT NULL,
+                local_bottom  REAL     NOT NULL,
+                p25           REAL     NOT NULL,
+                median        REAL     NOT NULL,
+                p75           REAL     NOT NULL,
+                pe_top        REAL     NOT NULL,
+                pe_avg        REAL     NOT NULL,
+                pe_bottom     REAL     NOT NULL,
+                pe_p25        REAL     NOT NULL,
+                pe_median     REAL     NOT NULL,
+                pe_p75        REAL     NOT NULL,
+                PRIMARY KEY (index_symbol, date, range_days, direction)
+            );
         """)
 
 
@@ -502,6 +522,116 @@ def load_pe_members(
             con, params=params, parse_dates=["date"],
         )
     return df
+
+
+def save_cal_range_close(
+    index_symbol: str,
+    df: pd.DataFrame,
+    cal_range_close: dict,
+    override: bool = True,
+) -> dict:
+    """
+    Persist cal_range_close to DB.
+    df must have a 'time' column (DatetimeIndex or column) so row positions map to dates.
+    cal_range_close: dict[int, IndexCloses] as returned by build_cal_range_close.
+    """
+    from analyze.models import IndexCloses
+
+    # Build date lookup: row_index -> ISO date string
+    if hasattr(df.index, 'dtype') and pd.api.types.is_datetime64_any_dtype(df.index):
+        dates = {i: str(df.index[i].date()) for i in range(len(df))}
+    else:
+        dates = {i: str(pd.Timestamp(df['time'].iloc[i]).date()) for i in range(len(df))}
+
+    rows = []
+    for row_idx, ic in cal_range_close.items():
+        date_str = dates.get(row_idx)
+        if date_str is None:
+            continue
+        for rd, rdc in ic.rangeDayCloses.items():
+            rows.append((
+                index_symbol, date_str, rd, 'back',
+                rdc.localTop, rdc.localAvg, rdc.localBottom,
+                rdc.p25, rdc.median, rdc.p75,
+                rdc.pe_top, rdc.pe_avg, rdc.pe_bottom,
+                rdc.pe_p25, rdc.pe_median, rdc.pe_p75,
+            ))
+        for rd, rdc in ic.rangeDayClosesPos.items():
+            rows.append((
+                index_symbol, date_str, rd, 'fwd',
+                rdc.localTop, rdc.localAvg, rdc.localBottom,
+                rdc.p25, rdc.median, rdc.p75,
+                rdc.pe_top, rdc.pe_avg, rdc.pe_bottom,
+                rdc.pe_p25, rdc.pe_median, rdc.pe_p75,
+            ))
+
+    with _conn() as con:
+        if override:
+            con.execute(
+                "DELETE FROM cal_range_stats WHERE index_symbol = ?", (index_symbol,)
+            )
+        con.executemany(
+            """INSERT OR REPLACE INTO cal_range_stats
+               (index_symbol, date, range_days, direction,
+                local_top, local_avg, local_bottom, p25, median, p75,
+                pe_top, pe_avg, pe_bottom, pe_p25, pe_median, pe_p75)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            rows,
+        )
+    print(f"  [cal_range_stats] {index_symbol}: saved {len(rows)} rows")
+    return {"saved": len(rows)}
+
+
+def load_cal_range_close(
+    index_symbol: str,
+    df: pd.DataFrame,
+) -> "dict | None":
+    """
+    Load cal_range_close from DB for the given index and df row layout.
+    Returns dict[int, IndexCloses] or None if no cached data exists.
+    df must have a 'time' column so dates map back to row positions.
+    """
+    from analyze.models import RangeDaysClose, IndexCloses
+
+    with _conn() as con:
+        rows = con.execute(
+            """SELECT date, range_days, direction,
+                      local_top, local_avg, local_bottom, p25, median, p75,
+                      pe_top, pe_avg, pe_bottom, pe_p25, pe_median, pe_p75
+               FROM cal_range_stats WHERE index_symbol = ?""",
+            (index_symbol,),
+        ).fetchall()
+
+    if not rows:
+        return None
+
+    # Map ISO date -> row index using df
+    if hasattr(df.index, 'dtype') and pd.api.types.is_datetime64_any_dtype(df.index):
+        date_to_idx = {str(df.index[i].date()): i for i in range(len(df))}
+    else:
+        date_to_idx = {str(pd.Timestamp(df['time'].iloc[i]).date()): i for i in range(len(df))}
+
+    from collections import defaultdict
+    cal: dict[int, IndexCloses] = defaultdict(IndexCloses)
+
+    for (date, rd, direction,
+         lt, la, lb, p25, med, p75,
+         pe_top, pe_avg, pe_bot, pe_p25, pe_med, pe_p75) in rows:
+        row_idx = date_to_idx.get(date)
+        if row_idx is None:
+            continue
+        rdc = RangeDaysClose(
+            localTop=lt, localAvg=la, localBottom=lb,
+            p25=p25, median=med, p75=p75,
+            pe_top=pe_top, pe_avg=pe_avg, pe_bottom=pe_bot,
+            pe_p25=pe_p25, pe_median=pe_med, pe_p75=pe_p75,
+        )
+        if direction == 'back':
+            cal[row_idx].rangeDayCloses[rd] = rdc
+        else:
+            cal[row_idx].rangeDayClosesPos[rd] = rdc
+
+    return dict(cal)
 
 
 def list_symbols() -> list[str]:
