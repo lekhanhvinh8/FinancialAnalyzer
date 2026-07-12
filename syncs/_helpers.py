@@ -1,7 +1,11 @@
 """Shared helpers for sync functions."""
 
-import time
+import sys, io, time
 import database as db
+
+# Ensure stdout handles Vietnamese/Unicode output from vnstock on Windows
+if hasattr(sys.stdout, "buffer") and getattr(sys.stdout, "encoding", "").lower() not in ("utf-8", "utf8"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 PRICE_START   = "2012-01-01"
 _RETRY_WAIT   = 40
