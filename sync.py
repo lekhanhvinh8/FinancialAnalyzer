@@ -50,10 +50,9 @@ def main():
     # Pre-compute members for index targets
     all_members = {idx: db.load_index_members(idx)["symbol"].unique().tolist() for idx in indices}
 
-    # Steps that don't apply to stock-only runs
-    index_only_steps = {"pe", "outputs"}
+    # outputs only makes sense for indices
     if not indices:
-        steps -= index_only_steps
+        steps -= {"outputs"}
 
     # Set up progress tracker
     p = SyncProgress(steps, targets, force)
@@ -63,7 +62,7 @@ def main():
     if "prices"      in steps: p.set_totals("prices",      index_sym_count + stock_count)
     if "shares"      in steps: p.set_totals("shares",      sum(len(m) for m in all_members.values()) + stock_count)
     if "profit"      in steps: p.set_totals("profit",      sum(len(m) for m in all_members.values()) + stock_count)
-    if "pe"          in steps: p.set_totals("pe",          len(indices))
+    if "pe"          in steps: p.set_totals("pe",          len(indices) + stock_count)
     if "range-stats" in steps: p.set_totals("range-stats", len(indices) + stock_count)
     if "outputs"     in steps: p.set_totals("outputs",     len(indices))
 
@@ -195,6 +194,16 @@ def main():
                 p.end("profit", sym, sym, time.time() - t0)
             except Exception as e:
                 p.end("profit", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        if "pe" in steps:
+            t0 = time.time()
+            p.begin("pe", sym, sym)
+            try:
+                from_date = None if force else db.load_latest_pe_date(sym)
+                sync_pe(symbols=[sym], from_date=from_date)
+                p.end("pe", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("pe", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
 
         if "range-stats" in steps:
             t0 = time.time()

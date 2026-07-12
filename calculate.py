@@ -96,6 +96,47 @@ def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFra
     return result.dropna()
 
 
+def calc_stock_pe(
+    symbol: str,
+    start: str | None = None,
+) -> pd.DataFrame:
+    """
+    Calculate daily P/E for a single stock.
+
+    Returns a DataFrame with columns:
+        date (str), pe_ratio, total_market_cap, total_ttm_profit
+    """
+    prices = db.load_daily_prices(symbol)["close"]
+    if start:
+        prices = prices[prices.index >= start]
+    if prices.empty:
+        return pd.DataFrame()
+
+    fd = _build_fundamental_daily(symbol, prices.index)
+    if fd is None or fd.empty:
+        return pd.DataFrame()
+
+    records = []
+    for date in fd.index:
+        if date not in prices.index:
+            continue
+        price  = prices[date]
+        shares = fd.loc[date, "shares"]
+        ttm    = fd.loc[date, "ttm_profit"]
+        if ttm <= 0:
+            continue
+        mcap = price * shares
+        records.append({
+            "symbol":           symbol,
+            "date":             date.date().isoformat(),
+            "pe_ratio":         mcap / ttm,
+            "total_market_cap": mcap,
+            "total_ttm_profit": ttm,
+        })
+
+    return pd.DataFrame(records)
+
+
 def calc_pe_history(
     index: str = "vn30",
     start: str | None = None,
