@@ -22,19 +22,17 @@ def sync_pe(
     both None        → aggregate P/E for all three indices
 
     from_date : recalculate only from this date onward; None = full history
-    override  : True → ignore from_date, rebuild full history
+    override  : reserved for future use (save verb control)
     """
-    start = None if override else from_date
-
     if index is not None:
-        _sync_index_pe(index, start)
+        _sync_index_pe(index, from_date)
     elif symbols is not None:
         # resolve_symbols expands index symbols (e.g. "VN30") to member stocks
         for sym, _ in resolve_symbols(symbols, None):
-            _sync_stock_pe(sym, start)
+            _sync_stock_pe(sym, from_date)
     else:
         for idx in _KNOWN_INDICES:
-            _sync_index_pe(idx, start)
+            _sync_index_pe(idx, from_date)
 
 
 def _sync_index_pe(index: str, start: str | None) -> None:
