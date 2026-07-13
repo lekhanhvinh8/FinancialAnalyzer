@@ -51,17 +51,13 @@ def _rebuild_one(sym: str, start: str | None, override: bool, max_workers: int) 
     df["pe_ratio"] = df["pe_ratio"].ffill()
     df = df.reset_index(drop=True)
 
-    # determine start_idx: only compute rows we need to save
-    if override:
-        start_idx = 0
+    # start controls which rows to compute; override only affects INSERT verb
+    cutoff = start or db.load_latest_range_stats_date(sym)
+    if cutoff is not None:
+        mask = df["time"].astype(str) > cutoff
+        start_idx = int(df[mask].index[0]) if mask.any() else len(df)
     else:
-        # use explicit start param, or fall back to last saved date in DB
-        cutoff = start or db.load_latest_range_stats_date(sym)
-        if cutoff is not None:
-            mask = df["time"].astype(str) > cutoff
-            start_idx = int(df[mask].index[0]) if mask.any() else len(df)
-        else:
-            start_idx = 0
+        start_idx = 0
 
     if start_idx >= len(df):
         print(f"  [range_stats] {sym}: up to date")
