@@ -3,6 +3,7 @@ Sync data to today, then recalculate derived outputs.
 
 Usage:
     python sync.py                   # full sync: all indices + all member stocks
+    python sync.py --stocks          # all member stocks only (no index series)
     python sync.py vn30              # index only: VN30 price series, P/E, range-stats
     python sync.py VN30              # symbol mode: sync all VN30 member stocks
     python sync.py FPT               # stock only: prices, shares, profit, P/E, range-stats
@@ -19,6 +20,7 @@ Steps (flags):
     --range-stats rebuild rolling-range stats cache
     --outputs     regenerate charts + Excel exports (indices only)
     --force       overwrite existing data
+    --stocks      all member stocks across all indices, skip index series
 
 Full sync (no args) includes member stock prices/shares/profit for each index.
 Specifying an index (e.g. vn30) syncs only that index's own data, not its members.
@@ -41,17 +43,18 @@ ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "outputs"}
 def main():
     args  = [a for a in sys.argv[1:] if not a.startswith("--")]
     flags = {a.lstrip("-") for a in sys.argv[1:] if a.startswith("--")}
-    force = "force" in flags
-    steps = flags - {"force"} or ALL_STEPS
+    force       = "force" in flags
+    stocks_only = "stocks" in flags                       # --stocks: all members, no index series
+    steps = flags - {"force", "stocks"} or ALL_STEPS
 
     db.init_db()
 
     known_indices  = set(INDICES)
     index_symbols  = {"VN30", "VNDIAMOND", "VNFINLEAD"}  # uppercase = symbol (member) mode
-    full_sync      = not args                             # no args = full sync including members
+    full_sync      = not args and not stocks_only         # no args = full sync including members
 
     # lowercase vn30 = index mode; uppercase VN30 = symbol mode (resolve to members)
-    indices        = [t.lower() for t in (args or INDICES) if t.lower() in known_indices and t not in index_symbols]
+    indices        = [] if stocks_only else [t.lower() for t in (args or INDICES) if t.lower() in known_indices and t not in index_symbols]
     member_targets = [t for t in args if t in index_symbols]   # VN30 → expand to members
     stocks         = [t.upper() for t in args if t.lower() not in known_indices]
 
@@ -64,6 +67,12 @@ def main():
     for t in member_targets:
         members = db.load_index_members(t.lower())["symbol"].unique().tolist()
         stocks = stocks + [m for m in members if m not in stocks]
+
+    # --stocks: collect all members from all indices (deduplicated)
+    if stocks_only:
+        for idx in INDICES:
+            members = db.load_index_members(idx)["symbol"].unique().tolist()
+            stocks = stocks + [m for m in members if m not in stocks]
 
     # outputs only makes sense for indices
     if not indices:
