@@ -169,7 +169,7 @@ def main():
             t0 = time.time()
             p.begin("range-stats", index, index_sym)
             try:
-                sync_range_stats(index=index)
+                sync_range_stats(index=index, override=force)
                 p.end("range-stats", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
@@ -229,7 +229,7 @@ def main():
             t0 = time.time()
             p.begin("range-stats", sym, sym)
             try:
-                sync_range_stats(symbols=[sym])
+                sync_range_stats(symbols=[sym], override=force)
                 p.end("range-stats", sym, sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", sym, sym, time.time() - t0, status="error", note=str(e)[:100])

@@ -374,6 +374,7 @@ def save_range_stats(
     symbol: str,
     df: pd.DataFrame,
     cal_range_close: dict,
+    override: bool = False,
 ) -> dict:
     """
     Persist cal_range_close to range_stats table.
@@ -406,17 +407,22 @@ def save_range_stats(
                 rdc.pe_p25, rdc.pe_median, rdc.pe_p75,
             ))
 
+    verb = "INSERT OR REPLACE" if override else "INSERT OR IGNORE"
     with _conn() as con:
         con.executemany(
-            """INSERT OR IGNORE INTO range_stats
+            f"""{verb} INTO range_stats
                (symbol, date, range_days, direction,
                 local_top, local_avg, local_bottom, p25, median, p75,
                 pe_top, pe_avg, pe_bottom, pe_p25, pe_median, pe_p75)
                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             rows,
         )
-    print(f"  [range_stats] {symbol}: saved {len(rows)} rows")
-    return {"saved": len(rows)}
+        saved = con.total_changes
+    if saved == 0:
+        print(f"  [range_stats] {symbol}: up to date")
+    else:
+        print(f"  [range_stats] {symbol}: saved {saved} rows")
+    return {"saved": saved}
 
 
 def delete_range_stats(symbol: str) -> None:

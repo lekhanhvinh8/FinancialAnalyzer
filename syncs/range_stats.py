@@ -13,18 +13,18 @@ def sync_range_stats(
     symbols:  list[str] | None = None,
     index:    str | None = None,
     start:    str | None = None,
-    override: bool = True,
+    override: bool = False,
 ) -> None:
     """
-    Rebuild the rolling-range stats cache for one or more index symbols.
+    Rebuild the rolling-range stats cache for one or more symbols.
 
     symbols  : specific symbols
     index    : index name ("vn30") — resolved to its index symbol ("VN30")
-    None/None → all index symbols in DB
+    None/None → all symbols in DB
     start    : only write rows for dates >= start; None = all dates
                Note: full history is always used to compute stats regardless
-    override : True  → delete existing rows then reinsert (full rebuild)
-               False → insert only rows not already in DB (INSERT OR IGNORE)
+    override : True  → replace existing rows (INSERT OR REPLACE)
+               False → only insert new rows (INSERT OR IGNORE)
     """
     targets = resolve_symbols(symbols, index)
 
@@ -46,13 +46,14 @@ def _rebuild_one(sym: str, start: str | None, override: bool) -> None:
     df["pe_ratio"] = df["pe_ratio"].ffill()
     df = df.reset_index(drop=True)
 
-    if override:
-        db.delete_range_stats(sym)
-
+    # compute using full history (needed for accurate stats)
     cal = build_cal_range_close(df, range_days=_DEFAULT_RANGE_DAYS, max_workers=_MAX_WORKERS)
 
+    # filter to start date — use original indices to match cal keys correctly
     if start is not None:
-        df = df[df["time"].astype(str) >= start]
-        cal = {k: v for k, v in cal.items() if k < len(df)}
+        mask        = df["time"].astype(str) >= start
+        valid_idxs  = set(df[mask].index)
+        cal         = {k: v for k, v in cal.items() if k in valid_idxs}
+        df          = df[mask]
 
-    db.save_range_stats(sym, df, cal)
+    db.save_range_stats(sym, df, cal, override=override)
