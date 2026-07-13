@@ -1,0 +1,184 @@
+{
+  "started_at": "2026-07-12 23:02:50",
+  "updated_at": "2026-07-12 23:04:52",
+  "finished_at": null,
+  "elapsed_s": 122.4,
+  "force": false,
+  "steps": [
+    "pe",
+    "prices",
+    "profit",
+    "range-stats",
+    "shares"
+  ],
+  "indices": [
+    "VN30"
+  ],
+  "status": "running",
+  "current": {
+    "step": "range-stats",
+    "index": "BVH",
+    "symbol": "BVH",
+    "started_at": "2026-07-12 23:04:52"
+  },
+  "events": [
+    {
+      "time": "2026-07-12 23:04:52",
+      "step": "pe",
+      "index": "BVH",
+      "symbol": "BVH",
+      "status": "done",
+      "duration_s": 0.1,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:04:52",
+      "step": "profit",
+      "index": "BVH",
+      "symbol": "BVH",
+      "status": "done",
+      "duration_s": 1.1,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:04:51",
+      "step": "shares",
+      "index": "BVH",
+      "symbol": "BVH",
+      "status": "done",
+      "duration_s": 5.8,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:04:45",
+      "step": "prices",
+      "index": "BVH",
+      "symbol": "BVH",
+      "status": "done",
+      "duration_s": 6.5,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:04:39",
+      "step": "range-stats",
+      "index": "BID",
+      "symbol": "BID",
+      "status": "done",
+      "duration_s": 39.2,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:04:00",
+      "step": "pe",
+      "index": "BID",
+      "symbol": "BID",
+      "status": "done",
+      "duration_s": 0.1,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:04:00",
+      "step": "profit",
+      "index": "BID",
+      "symbol": "BID",
+      "status": "done",
+      "duration_s": 1.0,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:03:59",
+      "step": "shares",
+      "index": "BID",
+      "symbol": "BID",
+      "status": "done",
+      "duration_s": 5.8,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:03:53",
+      "step": "prices",
+      "index": "BID",
+      "symbol": "BID",
+      "status": "done",
+      "duration_s": 6.4,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:03:46",
+      "step": "range-stats",
+      "index": "ACB",
+      "symbol": "ACB",
+      "status": "done",
+      "duration_s": 42.2,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:03:04",
+      "step": "pe",
+      "index": "ACB",
+      "symbol": "ACB",
+      "status": "done",
+      "duration_s": 0.1,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:03:04",
+      "step": "profit",
+      "index": "ACB",
+      "symbol": "ACB",
+      "status": "done",
+      "duration_s": 1.0,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:03:03",
+      "step": "shares",
+      "index": "ACB",
+      "symbol": "ACB",
+      "status": "done",
+      "duration_s": 5.5,
+      "note": ""
+    },
+    {
+      "time": "2026-07-12 23:02:58",
+      "step": "prices",
+      "index": "ACB",
+      "symbol": "ACB",
+      "status": "done",
+      "duration_s": 7.6,
+      "note": ""
+    }
+  ],
+  "step_totals": {
+    "prices": {
+      "total": 44,
+      "done": 3,
+      "error": 0,
+      "skip": 0
+    },
+    "shares": {
+      "total": 44,
+      "done": 3,
+      "error": 0,
+      "skip": 0
+    },
+    "profit": {
+      "total": 44,
+      "done": 3,
+      "error": 0,
+      "skip": 0
+    },
+    "pe": {
+      "total": 44,
+      "done": 3,
+      "error": 0,
+      "skip": 0
+    },
+    "range-stats": {
+      "total": 44,
+      "done": 2,
+      "error": 0,
+      "skip": 0
+    }
+  }
+}
