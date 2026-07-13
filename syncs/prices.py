@@ -35,19 +35,22 @@ def sync_prices(
             print(f"  [prices] {sym}: up to date")
             continue
         try:
-            _sync_one(sym, sym_type, fetch_from, today, override)
+            saved = _sync_one(sym, sym_type, fetch_from, today, override)
         except Exception as e:
             print(f"  ERROR [prices] {sym}: {e}")
-        time.sleep(5)
+            saved = True  # unknown state — keep the sleep
+        if saved:
+            time.sleep(5)
 
 
-def _sync_one(sym: str, sym_type: str, fetch_from: str, today: str, override: bool) -> None:
+def _sync_one(sym: str, sym_type: str, fetch_from: str, today: str, override: bool) -> bool:
+    """Returns True if an API call was made (sleep needed), False if skipped early."""
     getter = vnstock.get_index_prices if sym_type == "index" else vnstock.get_prices
     df = call_with_retry(getter, sym, fetch_from, today, label=sym)
 
     if df is None or df.empty:
         print(f"  [prices] {sym}: no data returned")
-        return
+        return True
 
     if not override:
         df = df.reset_index()
@@ -59,15 +62,16 @@ def _sync_one(sym: str, sym_type: str, fetch_from: str, today: str, override: bo
         df = fill_merge(df, existing, cols=_PRICE_COLS, key_cols=["date_key"])
         if df.empty:
             print(f"  [prices] {sym}: up to date")
-            return
+            return False
         df = df.set_index("date_key")
         df.index = _date_index(df.index)
 
     if df.empty:
         print(f"  [prices] {sym}: up to date")
-        return
+        return False
 
     db.save_daily_prices(sym, df, symbol_type=sym_type)
+    return True
 
 
 def _date_index(str_index):
