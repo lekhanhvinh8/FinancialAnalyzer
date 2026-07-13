@@ -53,7 +53,7 @@ def _rebuild_one(sym: str, start: str | None, override: bool, max_workers: int) 
 
     # start controls which rows to compute; None = from the very beginning
     if start is not None:
-        mask = df["time"].astype(str) > start
+        mask = df["time"].astype(str) >= start
         start_idx = int(df[mask].index[0]) if mask.any() else len(df)
     else:
         start_idx = 0
@@ -66,8 +66,18 @@ def _rebuild_one(sym: str, start: str | None, override: bool, max_workers: int) 
 
     def _save_batch(batch: dict) -> None:
         nonlocal total_saved
-        result = db.save_range_stats(sym, df, batch, override=override, quiet=True)
-        total_saved += result["saved"]
+        if start is not None:
+            last_date_batch = {i: c for i, c in batch.items() if str(df.iloc[i]["time"]) == start}
+            rest_batch      = {i: c for i, c in batch.items() if str(df.iloc[i]["time"]) != start}
+            if last_date_batch:
+                r = db.save_range_stats(sym, df, last_date_batch, override=True, quiet=True)
+                total_saved += r["saved"]
+            if rest_batch:
+                r = db.save_range_stats(sym, df, rest_batch, override=override, quiet=True)
+                total_saved += r["saved"]
+        else:
+            result = db.save_range_stats(sym, df, batch, override=override, quiet=True)
+            total_saved += result["saved"]
 
     build_cal_range_close(
         df,
