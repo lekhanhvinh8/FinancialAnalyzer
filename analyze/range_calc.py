@@ -1,9 +1,9 @@
 """
-Pre-compute rolling statistics (backward + forward windows) for every row in df.
+Pre-compute rolling backward-window statistics for every row in df.
 
 Result: dict[int, IndexCloses] keyed by row index.
-Each IndexCloses holds rangeDayCloses (backward) and rangeDayClosesPos (forward),
-each storing top/avg/bottom/p25/median/p75 for both price and pe_ratio.
+Each IndexCloses holds rangeDayCloses (backward window),
+storing top/avg/bottom/p25/median/p75 for both price and pe_ratio.
 
 Uses ProcessPoolExecutor for true parallelism (bypasses GIL).
 """
@@ -66,13 +66,6 @@ def _process_index(index: int) -> tuple[int, IndexCloses]:
             **_compute_stats(closes, pe_vals, first_close)
         )
 
-        # ── Forward ───────────────────────────────────────────────────────────
-        fwd = df.iloc[index + 1: min(n, index + 1 + rangeDays)]
-        closes  = fwd['close'] * 1000
-        pe_vals = fwd['pe_ratio'].dropna() if has_pe else pd.Series(dtype=float)
-        indexCloses.rangeDayClosesPos[rangeDays] = RangeDaysClose(
-            **_compute_stats(closes, pe_vals, first_close)
-        )
 
     return index, indexCloses
 

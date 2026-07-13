@@ -1,14 +1,14 @@
 from .sell import (
     SellStrategy, SellTopStrategy, SellTopOfBottomStrategy,
-    SellProphetStrategy, SellPartialStrategy, SellTopOfMA1000Strategy,
+    SellPartialStrategy, SellTopOfMA1000Strategy,
 )
 from .reinvest import (
     ReinvestStrategy, ReInvestBottomStrategy, ReInvestBottomOfTopStrategy,
-    ReInvestProphetStrategy, ReInvestPartialStrategy,
+    ReInvestPartialStrategy,
     ReInvestUnderMA1000Strategy, ReInvestUnderMA1000OrMaxHoldTimeStrategy,
 )
 from .buy import (
     BuyStrategy, BuyIntervalStrategy, BuyBottomStrategy, BuyMAStrategy,
-    BuyUptrendStrategy, BuyProphetStrategy, BuyPartialStrategy,
+    BuyUptrendStrategy, BuyPartialStrategy,
     BuyPartialMA, BuyMA1000Strategy,
 )

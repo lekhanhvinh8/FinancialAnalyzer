@@ -46,21 +46,6 @@ class ReInvestBottomOfTopStrategy(ReinvestStrategy):
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
 
 
-@dataclass
-class ReInvestProphetStrategy(ReinvestStrategy):
-    df: pd.DataFrame
-    localRangeDays: int = 1
-    use_pe: bool = False
-
-    def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        current = pe if self.use_pe else close
-        if current is None:
-            return
-        if index in cal_range_close and self.localRangeDays in cal_range_close[index].rangeDayClosesPos:
-            localBottom = cal_range_close[index].rangeDayClosesPos[self.localRangeDays].bottom(self.use_pe)
-            if current <= localBottom:
-                Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
-
 
 @dataclass
 class ReInvestPartialStrategy(ReinvestStrategy):

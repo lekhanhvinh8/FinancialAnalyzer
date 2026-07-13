@@ -40,7 +40,6 @@ class RangeDaysClose:
 @dataclass
 class IndexCloses:
     rangeDayCloses: dict[int, RangeDaysClose] = field(default_factory=dict)
-    rangeDayClosesPos: dict[int, RangeDaysClose] = field(default_factory=dict)
 
 
 @dataclass

@@ -398,14 +398,6 @@ def save_range_stats(
                 rdc.pe_top, rdc.pe_avg, rdc.pe_bottom,
                 rdc.pe_p25, rdc.pe_median, rdc.pe_p75,
             ))
-        for rd, rdc in ic.rangeDayClosesPos.items():
-            rows.append((
-                symbol, date_str, rd, 'fwd',
-                rdc.localTop, rdc.localAvg, rdc.localBottom,
-                rdc.p25, rdc.median, rdc.p75,
-                rdc.pe_top, rdc.pe_avg, rdc.pe_bottom,
-                rdc.pe_p25, rdc.pe_median, rdc.pe_p75,
-            ))
 
     verb = "INSERT OR REPLACE" if override else "INSERT OR IGNORE"
     with _conn() as con:
@@ -471,8 +463,7 @@ def load_range_stats(symbol: str, df: pd.DataFrame) -> "dict | None":
         )
         if direction == 'back':
             cal[row_idx].rangeDayCloses[rd] = rdc
-        else:
-            cal[row_idx].rangeDayClosesPos[rd] = rdc
+
 
     return dict(cal)
 

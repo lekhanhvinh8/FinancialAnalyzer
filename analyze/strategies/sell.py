@@ -41,22 +41,6 @@ class SellTopOfBottomStrategy(SellStrategy):
             Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
 
 
-@dataclass
-class SellProphetStrategy(SellStrategy):
-    df: pd.DataFrame
-    localRangeDays: int = 1
-    percentSell: float = 0
-    use_pe: bool = False
-
-    def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        current = pe if self.use_pe else close
-        if current is None:
-            return
-        if index in cal_range_close and self.localRangeDays in cal_range_close[index].rangeDayClosesPos:
-            localTop = cal_range_close[index].rangeDayClosesPos[self.localRangeDays].top(self.use_pe)
-            if current >= localTop:
-                Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
-
 
 @dataclass
 class SellPartialStrategy(SellStrategy):
