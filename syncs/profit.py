@@ -4,7 +4,7 @@ import time
 
 import database as db
 from sources import cafef
-from ._helpers import call_with_retry, resolve_stocks, fill_merge
+from ._helpers import call_with_retry, resolve_stocks, fill_merge, is_profit_current
 
 RAW_DIR   = "data/raw/cafef"
 _KQKD_COLS = ["kqkd_14", "kqkd_13", "kqkd_10"]
@@ -28,6 +28,9 @@ def sync_profit(
     stocks = resolve_stocks(symbols, index)
 
     for sym in stocks:
+        if not override and is_profit_current(sym):
+            print(f"  [profit] {sym}: up to date")
+            continue
         try:
             _sync_one(sym, from_year, from_quarter, override)
         except Exception as e:

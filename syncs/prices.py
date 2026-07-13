@@ -5,7 +5,7 @@ from datetime import date as _date
 
 import database as db
 from sources import vnstock
-from ._helpers import PRICE_START, call_with_retry, resolve_symbols, fill_merge
+from ._helpers import PRICE_START, call_with_retry, resolve_symbols, fill_merge, is_price_current
 
 _PRICE_COLS = ["close"]
 
@@ -31,6 +31,9 @@ def sync_prices(
     resolved   = resolve_symbols(symbols, index)
 
     for sym, sym_type in resolved:
+        if not override and is_price_current(sym):
+            print(f"  [prices] {sym}: up to date")
+            continue
         try:
             _sync_one(sym, sym_type, fetch_from, today, override)
         except Exception as e:

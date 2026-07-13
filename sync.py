@@ -4,6 +4,7 @@ Sync data to today, then recalculate derived outputs.
 Usage:
     python sync.py                   # full sync: all indices + all member stocks
     python sync.py vn30              # index only: VN30 price series, P/E, range-stats
+    python sync.py VN30              # symbol mode: sync all VN30 member stocks
     python sync.py FPT               # stock only: prices, shares, profit, P/E, range-stats
     python sync.py vn30 FPT          # mix: VN30 index + FPT stock
     python sync.py vn30 --force      # force-rebuild VN30 index data
@@ -45,15 +46,24 @@ def main():
 
     db.init_db()
 
-    known_indices = set(INDICES)
-    full_sync     = not args                          # no args = full sync including members
-    indices       = [t.lower() for t in (args or INDICES) if t.lower() in known_indices]
-    stocks        = [t.upper() for t in args if t.lower() not in known_indices]
+    known_indices  = set(INDICES)
+    index_symbols  = {"VN30", "VNDIAMOND", "VNFINLEAD"}  # uppercase = symbol (member) mode
+    full_sync      = not args                             # no args = full sync including members
 
-    # member stocks only sync on a full run
+    # lowercase vn30 = index mode; uppercase VN30 = symbol mode (resolve to members)
+    indices        = [t.lower() for t in (args or INDICES) if t.lower() in known_indices and t not in index_symbols]
+    member_targets = [t for t in args if t in index_symbols]   # VN30 → expand to members
+    stocks         = [t.upper() for t in args if t.lower() not in known_indices]
+
+    # member stocks: from full sync or from uppercase index args
     members_by_index = {}
     if full_sync:
         members_by_index = {idx: db.load_index_members(idx)["symbol"].unique().tolist() for idx in indices}
+
+    # uppercase VN30 → expand members into stocks list
+    for t in member_targets:
+        members = db.load_index_members(t.lower())["symbol"].unique().tolist()
+        stocks = stocks + [m for m in members if m not in stocks]
 
     # outputs only makes sense for indices
     if not indices:

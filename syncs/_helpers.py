@@ -1,6 +1,7 @@
 """Shared helpers for sync functions."""
 
 import sys, io, time
+from datetime import date, timedelta
 import database as db
 
 # Ensure stdout handles Vietnamese/Unicode output from vnstock on Windows
@@ -10,6 +11,44 @@ if hasattr(sys.stdout, "buffer") and getattr(sys.stdout, "encoding", "").lower()
 PRICE_START   = "2012-01-01"
 _RETRY_WAIT   = 40
 _RETRIES      = 3
+
+
+def last_trading_day() -> str:
+    """Return the most recent trading day (Mon–Fri) as YYYY-MM-DD string."""
+    today = date.today()
+    offset = max(0, today.weekday() - 4)  # Sat→1, Sun→2, weekdays→0
+    return (today - timedelta(days=offset)).isoformat()
+
+
+def is_price_current(symbol: str) -> bool:
+    """Return True if symbol has a non-null close price for the last trading day."""
+    latest = db.load_latest_price_date(symbol)
+    return latest is not None and latest >= last_trading_day()
+
+
+def is_shares_current(symbol: str) -> bool:
+    """Return True if symbol has a non-null shares value for the current quarter."""
+    result = db.load_latest_shares_quarter(symbol)
+    if result is None:
+        return False
+    year, quarter = result
+    today = date.today()
+    cur_q = (today.month - 1) // 3 + 1
+    # current quarter data won't be released yet — consider previous quarter as "current"
+    exp_y, exp_q = (today.year, cur_q - 1) if cur_q > 1 else (today.year - 1, 4)
+    return (year, quarter) >= (exp_y, exp_q)
+
+
+def is_profit_current(symbol: str) -> bool:
+    """Return True if symbol has non-null profit for the current quarter."""
+    result = db.load_latest_profit_quarter(symbol)
+    if result is None:
+        return False
+    year, quarter = result
+    today = date.today()
+    cur_q = (today.month - 1) // 3 + 1
+    exp_y, exp_q = (today.year, cur_q - 1) if cur_q > 1 else (today.year - 1, 4)
+    return (year, quarter) >= (exp_y, exp_q)
 
 _INDEX_SYMBOL_MAP = {
     "vn30":      "VN30",
