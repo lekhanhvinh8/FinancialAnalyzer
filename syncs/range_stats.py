@@ -5,7 +5,7 @@ from analyze.range_calc import build_cal_range_close
 from ._helpers import resolve_symbols
 
 
-_DEFAULT_RANGE_DAYS = [1000]
+_DEFAULT_RANGE_DAYS = list(range(50, 1001, 50))  # [50, 100, ..., 1000]
 _MAX_WORKERS        = 5
 
 
@@ -46,14 +46,30 @@ def _rebuild_one(sym: str, start: str | None, override: bool) -> None:
     df["pe_ratio"] = df["pe_ratio"].ffill()
     df = df.reset_index(drop=True)
 
-    # compute using full history (needed for accurate stats)
-    cal = build_cal_range_close(df, range_days=_DEFAULT_RANGE_DAYS, max_workers=_MAX_WORKERS)
-
-    # filter to start date — use original indices to match cal keys correctly
+    # precompute valid indices for start filter (full df needed for accurate stats)
+    valid_idxs = None
     if start is not None:
-        mask        = df["time"].astype(str) >= start
-        valid_idxs  = set(df[mask].index)
-        cal         = {k: v for k, v in cal.items() if k in valid_idxs}
-        df          = df[mask]
+        mask       = df["time"].astype(str) >= start
+        valid_idxs = set(df[mask].index)
 
-    db.save_range_stats(sym, df, cal, override=override)
+    total_saved = 0
+
+    def _save_batch(batch: dict) -> None:
+        nonlocal total_saved
+        if valid_idxs is not None:
+            batch = {k: v for k, v in batch.items() if k in valid_idxs}
+        if batch:
+            result = db.save_range_stats(sym, df, batch, override=override, quiet=True)
+            total_saved += result["saved"]
+
+    build_cal_range_close(
+        df,
+        range_days=_DEFAULT_RANGE_DAYS,
+        max_workers=_MAX_WORKERS,
+        batch_callback=_save_batch,
+    )
+
+    if total_saved == 0:
+        print(f"  [range_stats] {sym}: up to date")
+    else:
+        print(f"  [range_stats] {sym}: saved {total_saved} rows")

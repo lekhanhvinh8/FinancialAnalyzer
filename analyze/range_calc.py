@@ -74,14 +74,19 @@ def build_cal_range_close(
     df: pd.DataFrame,
     range_days: list[int] | None = None,
     max_workers: int = 5,
+    batch_size: int = 200,
+    batch_callback=None,
 ) -> dict[int, IndexCloses]:
     """
     Build cal_range_close for all rows in df using up to max_workers processes.
 
     Args:
-        df         : DataFrame with 'close' column (index points) and optional 'pe_ratio'
-        range_days : list of window sizes, default [1000]
-        max_workers: number of parallel processes
+        df             : DataFrame with 'close' column and optional 'pe_ratio'
+        range_days     : list of window sizes, default [1000]
+        max_workers    : number of parallel processes
+        batch_size     : call batch_callback every N completed rows
+        batch_callback : callable(batch: dict[int, IndexCloses]) — called with
+                         each completed batch so callers can save incrementally
 
     Returns:
         dict mapping row index -> IndexCloses
@@ -95,6 +100,7 @@ def build_cal_range_close(
     n = len(df)
 
     cal_range_close: dict[int, IndexCloses] = {}
+    batch: dict[int, IndexCloses] = {}
 
     with ProcessPoolExecutor(
         max_workers=max_workers,
@@ -106,8 +112,16 @@ def build_cal_range_close(
         for future in as_completed(futures):
             idx, closes = future.result()
             cal_range_close[idx] = closes
+            if batch_callback is not None:
+                batch[idx] = closes
+                if len(batch) >= batch_size:
+                    batch_callback(batch)
+                    batch = {}
             done += 1
             if done % 500 == 0 or done == n:
                 print(f'  range_calc: {done}/{n}')
+
+    if batch_callback is not None and batch:
+        batch_callback(batch)
 
     return cal_range_close

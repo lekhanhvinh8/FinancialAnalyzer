@@ -375,6 +375,7 @@ def save_range_stats(
     df: pd.DataFrame,
     cal_range_close: dict,
     override: bool = False,
+    quiet: bool = False,
 ) -> dict:
     """
     Persist cal_range_close to range_stats table.
@@ -410,10 +411,11 @@ def save_range_stats(
             rows,
         )
         saved = con.total_changes
-    if saved == 0:
-        print(f"  [range_stats] {symbol}: up to date")
-    else:
-        print(f"  [range_stats] {symbol}: saved {saved} rows")
+    if not quiet:
+        if saved == 0:
+            print(f"  [range_stats] {symbol}: up to date")
+        else:
+            print(f"  [range_stats] {symbol}: saved {saved} rows")
     return {"saved": saved}
 
 
