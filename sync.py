@@ -51,6 +51,13 @@ def main():
     args  = [a for a in sys.argv[1:] if not a.startswith("--")]
     flags = {a.lstrip("-") for a in sys.argv[1:] if a.startswith("--")}
     force = "force" in flags
+
+    # --workers N (e.g. --workers 2)
+    workers = None
+    for f in flags:
+        if f.startswith("workers="):
+            try: workers = int(f.split("=", 1)[1])
+            except ValueError: pass
     steps = flags - {"force"} or ALL_STEPS
 
     db.init_db()
@@ -153,7 +160,7 @@ def main():
             t0 = time.time()
             p.begin("range-stats", sym, sym)
             try:
-                sync_range_stats(symbols=[sym], override=force)
+                sync_range_stats(symbols=[sym], override=force, max_workers=workers)
                 p.end("range-stats", sym, sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
@@ -190,7 +197,7 @@ def main():
             t0 = time.time()
             p.begin("range-stats", index, index_sym)
             try:
-                sync_range_stats(index=index, override=force)
+                sync_range_stats(index=index, override=force, max_workers=workers)
                 p.end("range-stats", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])

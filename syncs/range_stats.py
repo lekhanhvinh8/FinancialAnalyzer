@@ -6,26 +6,28 @@ from ._helpers import resolve_symbols, is_range_stats_current
 
 
 _DEFAULT_RANGE_DAYS = list(range(50, 1001, 50))  # [50, 100, ..., 1000]
-_MAX_WORKERS        = 5
+_DEFAULT_MAX_WORKERS = 5
 
 
 def sync_range_stats(
-    symbols:  list[str] | None = None,
-    index:    str | None = None,
-    start:    str | None = None,
-    override: bool = False,
+    symbols:     list[str] | None = None,
+    index:       str | None = None,
+    start:       str | None = None,
+    override:    bool = False,
+    max_workers: int | None = None,
 ) -> None:
     """
     Rebuild the rolling-range stats cache for one or more symbols.
 
-    symbols  : specific symbols
-    index    : index name ("vn30") — resolved to its index symbol ("VN30")
-    None/None → all symbols in DB
-    start    : only write rows for dates >= start; None = all dates
-               Note: full history is always used to compute stats regardless
-    override : True  → replace existing rows (INSERT OR REPLACE)
-               False → only insert new rows (INSERT OR IGNORE)
+    symbols     : specific symbols
+    index       : index name ("vn30") — resolved to its index symbol ("VN30")
+    None/None   → all symbols in DB
+    start       : only write rows for dates >= start; None = all dates
+    override    : True  → replace existing rows (INSERT OR REPLACE)
+                  False → only insert new rows (INSERT OR IGNORE)
+    max_workers : parallel worker processes (default: 5)
     """
+    workers = max_workers if max_workers is not None else _DEFAULT_MAX_WORKERS
     targets = resolve_symbols(symbols, index)
 
     for sym, _ in targets:
@@ -33,10 +35,10 @@ def sync_range_stats(
             print(f"  [range_stats] {sym}: up to date")
             continue
         print(f"\n  Rebuilding range_stats for {sym} …")
-        _rebuild_one(sym, start, override)
+        _rebuild_one(sym, start, override, workers)
 
 
-def _rebuild_one(sym: str, start: str | None, override: bool) -> None:
+def _rebuild_one(sym: str, start: str | None, override: bool, max_workers: int) -> None:
     prices = db.load_daily_prices(sym).reset_index().rename(columns={"date": "time"})
     pe     = db.load_pe_ratios(sym).reset_index().rename(columns={"date": "time"})
 
@@ -75,7 +77,7 @@ def _rebuild_one(sym: str, start: str | None, override: bool) -> None:
     build_cal_range_close(
         df,
         range_days=_DEFAULT_RANGE_DAYS,
-        max_workers=_MAX_WORKERS,
+        max_workers=max_workers,
         batch_callback=_save_batch,
         start_idx=start_idx,
     )
