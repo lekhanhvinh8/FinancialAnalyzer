@@ -30,7 +30,6 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="repla
 
 import database as db
 from syncs import sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats
-from syncs._helpers import PRICE_START
 from progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
@@ -161,7 +160,8 @@ def main():
             t0 = time.time()
             p.begin("range-stats", sym, sym)
             try:
-                sync_range_stats(symbols=[sym], start=PRICE_START if force else None, override=force, max_workers=workers)
+                range_start = None if force else db.load_latest_range_stats_date(sym)
+                sync_range_stats(symbols=[sym], start=range_start, override=force, max_workers=workers)
                 p.end("range-stats", sym, sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
@@ -198,7 +198,8 @@ def main():
             t0 = time.time()
             p.begin("range-stats", index, index_sym)
             try:
-                sync_range_stats(index=index, start=PRICE_START if force else None, override=force, max_workers=workers)
+                range_start = None if force else db.load_latest_range_stats_date(index.upper())
+                sync_range_stats(index=index, start=range_start, override=force, max_workers=workers)
                 p.end("range-stats", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])

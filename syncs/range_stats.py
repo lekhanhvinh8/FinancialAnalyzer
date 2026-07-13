@@ -51,10 +51,9 @@ def _rebuild_one(sym: str, start: str | None, override: bool, max_workers: int) 
     df["pe_ratio"] = df["pe_ratio"].ffill()
     df = df.reset_index(drop=True)
 
-    # start controls which rows to compute; override only affects INSERT verb
-    cutoff = start or db.load_latest_range_stats_date(sym)
-    if cutoff is not None:
-        mask = df["time"].astype(str) > cutoff
+    # start controls which rows to compute; None = from the very beginning
+    if start is not None:
+        mask = df["time"].astype(str) > start
         start_idx = int(df[mask].index[0]) if mask.any() else len(df)
     else:
         start_idx = 0
