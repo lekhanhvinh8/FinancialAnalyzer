@@ -76,9 +76,11 @@ def build_cal_range_close(
     max_workers: int = 5,
     batch_size: int = 200,
     batch_callback=None,
+    start_idx: int = 0,
 ) -> dict[int, IndexCloses]:
     """
-    Build cal_range_close for all rows in df using up to max_workers processes.
+    Build cal_range_close for rows [start_idx, n) in df using up to max_workers processes.
+    Full df is always loaded into workers so backward windows are accurate.
 
     Args:
         df             : DataFrame with 'close' column and optional 'pe_ratio'
@@ -87,6 +89,7 @@ def build_cal_range_close(
         batch_size     : call batch_callback every N completed rows
         batch_callback : callable(batch: dict[int, IndexCloses]) — called with
                          each completed batch so callers can save incrementally
+        start_idx      : only compute rows from this index onward (0 = all rows)
 
     Returns:
         dict mapping row index -> IndexCloses
@@ -98,6 +101,7 @@ def build_cal_range_close(
     records = df.to_dict('records')
     columns = list(df.columns)
     n = len(df)
+    indices_to_compute = range(start_idx, n)
 
     cal_range_close: dict[int, IndexCloses] = {}
     batch: dict[int, IndexCloses] = {}
@@ -107,8 +111,9 @@ def build_cal_range_close(
         initializer=_init_worker,
         initargs=(records, columns, first_close, range_days),
     ) as executor:
-        futures = {executor.submit(_process_index, i): i for i in range(n)}
+        futures = {executor.submit(_process_index, i): i for i in indices_to_compute}
         done = 0
+        total = len(futures)
         for future in as_completed(futures):
             idx, closes = future.result()
             cal_range_close[idx] = closes
@@ -118,8 +123,8 @@ def build_cal_range_close(
                     batch_callback(batch)
                     batch = {}
             done += 1
-            if done % 500 == 0 or done == n:
-                print(f'  range_calc: {done}/{n}')
+            if done % 500 == 0 or done == total:
+                print(f'  range_calc: {done}/{total}')
 
     if batch_callback is not None and batch:
         batch_callback(batch)

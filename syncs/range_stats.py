@@ -2,7 +2,7 @@
 
 import database as db
 from analyze.range_calc import build_cal_range_close
-from ._helpers import resolve_symbols
+from ._helpers import resolve_symbols, is_range_stats_current
 
 
 _DEFAULT_RANGE_DAYS = list(range(50, 1001, 50))  # [50, 100, ..., 1000]
@@ -29,6 +29,9 @@ def sync_range_stats(
     targets = resolve_symbols(symbols, index)
 
     for sym, _ in targets:
+        if not override and is_range_stats_current(sym):
+            print(f"  [range_stats] {sym}: up to date")
+            continue
         print(f"\n  Rebuilding range_stats for {sym} …")
         _rebuild_one(sym, start, override)
 
@@ -46,27 +49,35 @@ def _rebuild_one(sym: str, start: str | None, override: bool) -> None:
     df["pe_ratio"] = df["pe_ratio"].ffill()
     df = df.reset_index(drop=True)
 
-    # precompute valid indices for start filter (full df needed for accurate stats)
-    valid_idxs = None
-    if start is not None:
-        mask       = df["time"].astype(str) >= start
-        valid_idxs = set(df[mask].index)
+    # determine start_idx: only compute rows we need to save
+    if override:
+        start_idx = 0
+    else:
+        # use explicit start param, or fall back to last saved date in DB
+        cutoff = start or db.load_latest_range_stats_date(sym)
+        if cutoff is not None:
+            mask = df["time"].astype(str) > cutoff
+            start_idx = int(df[mask].index[0]) if mask.any() else len(df)
+        else:
+            start_idx = 0
+
+    if start_idx >= len(df):
+        print(f"  [range_stats] {sym}: up to date")
+        return
 
     total_saved = 0
 
     def _save_batch(batch: dict) -> None:
         nonlocal total_saved
-        if valid_idxs is not None:
-            batch = {k: v for k, v in batch.items() if k in valid_idxs}
-        if batch:
-            result = db.save_range_stats(sym, df, batch, override=override, quiet=True)
-            total_saved += result["saved"]
+        result = db.save_range_stats(sym, df, batch, override=override, quiet=True)
+        total_saved += result["saved"]
 
     build_cal_range_close(
         df,
         range_days=_DEFAULT_RANGE_DAYS,
         max_workers=_MAX_WORKERS,
         batch_callback=_save_batch,
+        start_idx=start_idx,
     )
 
     if total_saved == 0:

@@ -39,6 +39,12 @@ def is_shares_current(symbol: str) -> bool:
     return (year, quarter) >= (exp_y, exp_q)
 
 
+def is_range_stats_current(symbol: str) -> bool:
+    """Return True if symbol has range_stats up to the last trading day."""
+    latest = db.load_latest_range_stats_date(symbol)
+    return latest is not None and latest >= last_trading_day()
+
+
 def is_profit_current(symbol: str) -> bool:
     """Return True if symbol has non-null profit for the current quarter."""
     result = db.load_latest_profit_quarter(symbol)

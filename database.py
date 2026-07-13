@@ -419,6 +419,15 @@ def save_range_stats(
     return {"saved": saved}
 
 
+def load_latest_range_stats_date(symbol: str) -> str | None:
+    """Return the latest date in range_stats for symbol, or None."""
+    with _conn() as con:
+        row = con.execute(
+            "SELECT MAX(date) FROM range_stats WHERE symbol = ?", (symbol,)
+        ).fetchone()
+    return row[0] if row and row[0] else None
+
+
 def delete_range_stats(symbol: str) -> None:
     """Delete all range_stats rows for a symbol. Called by sync layer when override=True."""
     with _conn() as con:
