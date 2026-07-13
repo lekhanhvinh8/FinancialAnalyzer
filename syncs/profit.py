@@ -32,18 +32,20 @@ def sync_profit(
             print(f"  [profit] {sym}: up to date")
             continue
         try:
-            _sync_one(sym, from_year, from_quarter, override)
+            saved = _sync_one(sym, from_year, from_quarter, override)
         except Exception as e:
             print(f"  ERROR [profit] {sym}: {e}")
-        time.sleep(0.3)
+            saved = True  # assume API was called
+        if saved:
+            time.sleep(0.3)
 
 
-def _sync_one(sym: str, from_year, from_quarter, override: bool) -> None:
+def _sync_one(sym: str, from_year, from_quarter, override: bool) -> bool:
     df = call_with_retry(cafef.get_net_profit, sym, raw_dir=RAW_DIR, label=sym)
 
     if df is None or df.empty:
         print(f"  [profit] {sym}: no data returned")
-        return
+        return True
 
     if from_year is not None:
         fq = from_quarter or 1
@@ -54,13 +56,14 @@ def _sync_one(sym: str, from_year, from_quarter, override: bool) -> None:
 
     if df.empty:
         print(f"  [profit] {sym}: nothing to update for given range")
-        return
+        return False
 
     if not override:
         df = fill_merge(df, db.load_net_profit(sym), cols=_KQKD_COLS, key_cols=["year", "quarter"])
 
     if df.empty:
         print(f"  [profit] {sym}: up to date")
-        return
+        return False
 
     db.save_net_profit(sym, df)
+    return True

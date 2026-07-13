@@ -31,18 +31,20 @@ def sync_shares(
             print(f"  [shares] {sym}: up to date")
             continue
         try:
-            _sync_one(sym, from_year, from_quarter, override)
+            saved = _sync_one(sym, from_year, from_quarter, override)
         except Exception as e:
             print(f"  ERROR [shares] {sym}: {e}")
-        time.sleep(5)
+            saved = True  # assume API was called
+        if saved:
+            time.sleep(5)
 
 
-def _sync_one(sym: str, from_year, from_quarter, override: bool) -> None:
+def _sync_one(sym: str, from_year, from_quarter, override: bool) -> bool:
     df = call_with_retry(vnstock.get_shares, sym, label=sym)
 
     if df is None or df.empty:
         print(f"  [shares] {sym}: no data returned")
-        return
+        return True
 
     if from_year is not None:
         fq = from_quarter or 1
@@ -53,13 +55,14 @@ def _sync_one(sym: str, from_year, from_quarter, override: bool) -> None:
 
     if df.empty:
         print(f"  [shares] {sym}: nothing to update for given range")
-        return
+        return False
 
     if not override:
         df = fill_merge(df, db.load_shares(sym), cols=_SHARES_COLS, key_cols=["year", "quarter"])
 
     if df.empty:
         print(f"  [shares] {sym}: up to date")
-        return
+        return False
 
     db.save_shares(sym, df)
+    return True
