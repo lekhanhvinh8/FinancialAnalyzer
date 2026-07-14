@@ -45,6 +45,7 @@ _BOLD   = Font(name=_FONT, bold=True, size=10)
 _TITLE  = Font(name=_FONT, bold=True, size=12)
 _RED    = Font(name=_FONT, color="CC0000", bold=True, size=10)
 _GREEN  = Font(name=_FONT, color="006400", bold=True, size=10)
+_PURPLE = Font(name=_FONT, color="7030A0", bold=True, size=10)
 
 _FILL_HEADER   = PatternFill("solid", fgColor="D9E1F2")
 _FILL_14       = PatternFill("solid", fgColor="DDEEFF")
@@ -122,7 +123,15 @@ def _range_label(quarters) -> str:
     return f"Q{int(o.quarter)}-{int(o.year)} to Q{int(l.quarter)}-{int(l.year)}"
 
 
-def build_excel(index: str, as_of: str | None = None) -> str:
+def _ttm10(row) -> float | str:
+    """Sum kqkd_10 quarters; return "" if any quarter is missing."""
+    vals = [row[f"q{k}_10"] for k in [1, 2, 3, 4]]
+    if any(v is None for v in vals):
+        return ""
+    return sum(vals)
+
+
+def build_excel(index: str, as_of: str | None = None, suffix: str = "") -> str:
     db.init_db()
 
     if index not in _INDEX_LABELS:
@@ -179,6 +188,7 @@ def build_excel(index: str, as_of: str | None = None) -> str:
     R_TOT  = R_LAST + 1        # TOTAL row
     R_PE14 = R_TOT  + 2        # Aggregate P/E (kqkd_14) row
     R_PE13 = R_PE14 + 1        # Aggregate P/E (kqkd_13) row
+    R_PE10 = R_PE13 + 1        # Aggregate P/E (kqkd_10) row
 
     # Column indices
     cA,cB,cC,cD,cE,cF = 1,2,3,4,5,6          # Shared Inputs
@@ -188,14 +198,15 @@ def build_excel(index: str, as_of: str | None = None) -> str:
 
     # ── Row 1: Title ──────────────────────────────────────────────────────────
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=cU)
-    _cell(ws, 1, 1, f"{label} — Aggregate P/E Calculation (KQKD_14 vs KQKD_13 comparison)",
+    _cell(ws, 1, 1, f"{label} — Aggregate P/E Calculation (KQKD_14 / KQKD_13 / KQKD_10)",
           font=_TITLE, align=_CENTER)
 
     # ── Row 2: Subtitle ───────────────────────────────────────────────────────
     ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=cU)
     _cell(ws, 2, 1,
-          f"As of: {as_of_str}    |    Blue = KQKD_14 priority (parent shareholders)"
-          f"    |    Green = KQKD_13 priority (consolidated incl. minority)",
+          f"As of: {as_of_str}    |    P/E col M = best available (14→13→10)"
+          f"    |    Blue = KQKD_14 section    |    Green = KQKD_13 section"
+          f"    |    Securities/insurance companies use KQKD_10 only",
           font=_BLACK, align=_CENTER)
 
     # ── Row 4: Section headers ────────────────────────────────────────────────
@@ -223,13 +234,13 @@ def build_excel(index: str, as_of: str | None = None) -> str:
         (cJ, "Q4 (oldest)\n(VND)"),
         (cK, "Net Profit\n=SUM(Q1:Q4)"),
         (cL, "Market Cap\n(VND)"),
-        (cM, "P/E\n[14 priority]"),
+        (cM, "P/E\n[best: 14→13→10]"),
         (cN, "Q1 (latest)\n(VND)"),
         (cO, "Q2\n(VND)"),
         (cP, "Q3\n(VND)"),
         (cQ, "Q4 (oldest)\n(VND)"),
         (cR, "Net Profit\n=SUM(Q1:Q4)"),
-        (cS, "P/E\n[13 priority]"),
+        (cS, "P/E\n[13 only]"),
         (cT, "TTM Range"),
         (cU, "Weight"),
     ]
@@ -246,6 +257,8 @@ def build_excel(index: str, as_of: str | None = None) -> str:
     def safe(v):
         return v if v is not None else ""
 
+    f_ = get_column_letter(cF)
+
     for i, row in enumerate(rows):
         r = R_DATA + i
         g, h_, i_, j = get_column_letter(cG), get_column_letter(cH), get_column_letter(cI), get_column_letter(cJ)
@@ -258,11 +271,7 @@ def build_excel(index: str, as_of: str | None = None) -> str:
         _cell(ws, r, cC, row["shares"],  font=_BLUE,  align=_RIGHT, fmt=_FMT_VND)
         _cell(ws, r, cD, f"=SUM({g}{r}:{j}{r})", font=_BLACK, align=_RIGHT, fmt=_FMT_VND)
         _cell(ws, r, cE, f"=SUM({n_}{r}:{q_}{r})", font=_BLACK, align=_RIGHT, fmt=_FMT_VND)
-        _cell(ws, r, cF, safe(row["q1_10"]) if row["q1_10"] is None else
-              (safe(row["q1_10"]) + safe(row["q2_10"] or 0) +
-               safe(row["q3_10"] or 0) + safe(row["q4_10"] or 0))
-              if all(row[f"q{k}_10"] is not None for k in [1,2,3,4]) else "",
-              font=_BLUE, align=_RIGHT, fmt=_FMT_VND)
+        _cell(ws, r, cF, _ttm10(row), font=_BLUE, align=_RIGHT, fmt=_FMT_VND)
 
         # KQKD_14 quarterly values (blue)
         for col, key in [(cG,"q1_14"),(cH,"q2_14"),(cI,"q3_14"),(cJ,"q4_14")]:
@@ -270,9 +279,15 @@ def build_excel(index: str, as_of: str | None = None) -> str:
 
         # KQKD_14 formulas (black)
         k_ = get_column_letter(cK)
-        _cell(ws, r, cK, f"=SUM({g}{r}:{j}{r})",           font=_BLACK, align=_RIGHT, fmt=_FMT_VND)
-        _cell(ws, r, cL, f"=B{r}*C{r}",                    font=_BLACK, align=_RIGHT, fmt=_FMT_VND)
-        _cell(ws, r, cM, f"=IF({k_}{r}>0,{l_}{r}/{k_}{r},\"N/A\")", font=_BLACK, align=_RIGHT, fmt=_FMT_PE)
+        _cell(ws, r, cK, f"=SUM({g}{r}:{j}{r})",  font=_BLACK, align=_RIGHT, fmt=_FMT_VND)
+        _cell(ws, r, cL, f"=B{r}*C{r}",            font=_BLACK, align=_RIGHT, fmt=_FMT_VND)
+        # Coalesced P/E: kqkd_14 → kqkd_13 → kqkd_10
+        r_col_letter = get_column_letter(cR)
+        _cell(ws, r, cM,
+              f"=IF({k_}{r}>0,{l_}{r}/{k_}{r},"
+              f"IF({r_col_letter}{r}>0,{l_}{r}/{r_col_letter}{r},"
+              f"IF({f_}{r}>0,{l_}{r}/{f_}{r},\"N/A\")))",
+              font=_BLACK, align=_RIGHT, fmt=_FMT_PE)
 
         # KQKD_13 quarterly values (blue)
         for col, key in [(cN,"q1_13"),(cO,"q2_13"),(cP,"q3_13"),(cQ,"q4_13")]:
@@ -292,14 +307,16 @@ def build_excel(index: str, as_of: str | None = None) -> str:
     k_col = get_column_letter(cK)
     l_col = get_column_letter(cL)
     r_col = get_column_letter(cR)
+    f_col = get_column_letter(cF)
     _cell(ws, R_TOT, cK, f"=SUM({k_col}{R_DATA}:{k_col}{R_LAST})", font=_BOLD, fill=_FILL_TOTAL, fmt=_FMT_VND)
     _cell(ws, R_TOT, cL, f"=SUM({l_col}{R_DATA}:{l_col}{R_LAST})", font=_BOLD, fill=_FILL_TOTAL, fmt=_FMT_VND)
     _cell(ws, R_TOT, cR, f"=SUM({r_col}{R_DATA}:{r_col}{R_LAST})", font=_BOLD, fill=_FILL_TOTAL, fmt=_FMT_VND)
+    _cell(ws, R_TOT, cF, f"=SUM({f_col}{R_DATA}:{f_col}{R_LAST})", font=_BOLD, fill=_FILL_TOTAL, fmt=_FMT_VND)
 
     # ── Aggregate P/E rows ─────────────────────────────────────────────────────
     ws.merge_cells(start_row=R_PE14, start_column=cA, end_row=R_PE14, end_column=cJ)
     _cell(ws, R_PE14, cA,
-          f"Aggregate P/E (KQKD_14 priority)  =  Total Market Cap / Total Net Profit [14]",
+          f"Aggregate P/E (KQKD_14)  =  Total Market Cap / Total Net Profit [14]",
           font=_RED, align=_LEFT)
     _cell(ws, R_PE14, cK,
           f"=IF({k_col}{R_TOT}>0,{l_col}{R_TOT}/{k_col}{R_TOT},\"N/A\")",
@@ -307,16 +324,25 @@ def build_excel(index: str, as_of: str | None = None) -> str:
 
     ws.merge_cells(start_row=R_PE13, start_column=cA, end_row=R_PE13, end_column=cJ)
     _cell(ws, R_PE13, cA,
-          f"Aggregate P/E (KQKD_13 priority)  =  Total Market Cap / Total Net Profit [13]",
+          f"Aggregate P/E (KQKD_13)  =  Total Market Cap / Total Net Profit [13]",
           font=_GREEN, align=_LEFT)
     _cell(ws, R_PE13, cK,
           f"=IF({r_col}{R_TOT}>0,{l_col}{R_TOT}/{r_col}{R_TOT},\"N/A\")",
           font=_GREEN, fmt=_FMT_PE)
 
+    ws.merge_cells(start_row=R_PE10, start_column=cA, end_row=R_PE10, end_column=cJ)
+    _cell(ws, R_PE10, cA,
+          f"Aggregate P/E (KQKD_10)  =  Total Market Cap / Total Net Profit [10]  "
+          f"[securities/insurance companies only]",
+          font=_PURPLE, align=_LEFT)
+    _cell(ws, R_PE10, cK,
+          f"=IF({f_col}{R_TOT}>0,{l_col}{R_TOT}/{f_col}{R_TOT},\"N/A\")",
+          font=_PURPLE, fmt=_FMT_PE)
+
     # ── Column widths ──────────────────────────────────────────────────────────
     widths = {
         cA: 8, cB: 12, cC: 14, cD: 18, cE: 18, cF: 18,
-        cG: 18, cH: 15, cI: 15, cJ: 15, cK: 18, cL: 18, cM: 12,
+        cG: 18, cH: 15, cI: 15, cJ: 15, cK: 18, cL: 18, cM: 14,
         cN: 18, cO: 15, cP: 15, cQ: 15, cR: 18, cS: 12,
         cT: 20, cU: 10,
     }
@@ -327,13 +353,16 @@ def build_excel(index: str, as_of: str | None = None) -> str:
 
     # ── Save ──────────────────────────────────────────────────────────────────
     os.makedirs("exports", exist_ok=True)
-    out = f"exports/{index}_pe_{as_of_str}.xlsx"
+    out = f"exports/{index}_pe_{as_of_str}{('_' + suffix) if suffix else ''}.xlsx"
     wb.save(out)
     print(f"Saved: {out}  ({n} symbols)")
     return out
 
 
 if __name__ == "__main__":
-    idx    = sys.argv[1] if len(sys.argv) > 1 else "vndiamond"
-    as_of  = sys.argv[2] if len(sys.argv) > 2 else None
-    build_excel(idx, as_of)
+    plain = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags = {a.lstrip("-").split("=")[0]: (a.split("=", 1)[1] if "=" in a else "") for a in sys.argv[1:] if a.startswith("--")}
+    idx    = plain[0] if plain else "vndiamond"
+    as_of  = plain[1] if len(plain) > 1 else None
+    suffix = flags.get("suffix", "")
+    build_excel(idx, as_of, suffix=suffix)
