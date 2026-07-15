@@ -1,4 +1,3 @@
-import pandas as pd
 from dataclasses import dataclass, field
 from ..models import InvestmentTracker, DeltaToActionMatrix
 from ..engine import Sellor

@@ -1,4 +1,3 @@
-import pandas as pd
 from dataclasses import dataclass, field
 from datetime import datetime
 from ..models import InvestmentTracker, DeltaToActionMatrix
@@ -18,7 +17,6 @@ class BuyIntervalStrategy(BuyStrategy):
 
 @dataclass
 class BuyBottomStrategy(BuyStrategy):
-    df: pd.DataFrame
     firstLocalTop: float
     firstLocalTopDate: datetime
     localRangeDays: int = 1
@@ -38,7 +36,6 @@ class BuyBottomStrategy(BuyStrategy):
 
 @dataclass
 class BuyMAStrategy(BuyStrategy):
-    df: pd.DataFrame
     firstLocalAvg: float
     localRangeDays: int = 1
     decreasePercent: float = 1
@@ -57,7 +54,6 @@ class BuyMAStrategy(BuyStrategy):
 
 @dataclass
 class BuyUptrendStrategy(BuyStrategy):
-    df: pd.DataFrame
     localRangeDays1: int = 1
     localRangeDays2: int = 1
     use_pe: bool = False
