@@ -1,5 +1,6 @@
 __pycache__/
 *.py[cod]
+*.db
 *.db-shm
 *.db-wal
 .claude/
@@ -7,3 +8,5 @@ __pycache__/
 *_pe_*.xlsx
 charts/
 exports/
+sync_progress.html
+sync_progress.json
