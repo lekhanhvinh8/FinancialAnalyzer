@@ -30,7 +30,7 @@ def sync_range_stats(
     workers = max_workers if max_workers is not None else _DEFAULT_MAX_WORKERS
     targets = resolve_symbols(symbols, index)
 
-    for sym, _ in targets:
+    for sym, sym_type in targets:
         if not override and is_range_stats_current(sym):
             print(f"  [range_stats] {sym}: up to date")
             continue

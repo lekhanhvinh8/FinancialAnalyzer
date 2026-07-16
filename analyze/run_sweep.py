@@ -32,7 +32,7 @@ DECREASE_VALS   = [1, 3, 5, 10, 15, 20, 30]        # 7 values
 
 def load_df():
     prices = db.load_daily_prices(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
-    pe     = db.load_pe_ratios(INDEX_SYMBOL.lower()).reset_index().rename(columns={'date': 'time'})
+    pe     = db.load_pe_ratios(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
     pe     = pe.dropna(subset=['pe_ratio'])[['time', 'pe_ratio']]
     df     = prices.merge(pe, on='time', how='left')
     df['pe_ratio'] = df['pe_ratio'].ffill()
@@ -49,7 +49,7 @@ def run_sweep(df, cal_range_close):
     results = {}
 
     for i, (rd, dp) in enumerate(combos, 1):
-        buy_s = BuyMAStrategy(df=df, firstLocalAvg=first_close,
+        buy_s = BuyMAStrategy(firstLocalAvg=first_close,
                               localRangeDays=rd, decreasePercent=dp, use_pe=False)
         _, _, ratio, *_ = estimate(df, INTERVAL_MONEY, buy_s, sell_s, reinvest_s,
                                    cal_range_close, isPrint=False)
@@ -136,7 +136,7 @@ def run_one(range_days: int, decrease_percent: float, use_pe: bool = False):
     first_close  = df['close'].iloc[0] * 1000
     sell_s       = SellTopOfMA1000Strategy(firstLocalBottom=first_close, percentSell=45)
     reinvest_s   = ReInvestUnderMA1000Strategy()
-    buy_s        = BuyMAStrategy(df=df, firstLocalAvg=first_val,
+    buy_s        = BuyMAStrategy(firstLocalAvg=first_val,
                                  localRangeDays=range_days,
                                  decreasePercent=decrease_percent,
                                  use_pe=use_pe)

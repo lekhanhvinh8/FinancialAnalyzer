@@ -346,9 +346,18 @@ def load_pe_ratios(
     Load P/E ratios for a symbol.
     Returns DataFrame indexed by date with columns:
         pe_ratio, total_market_cap, total_ttm_profit, member_count
+
+    Index symbols are stored in pe_ratios as lowercase; this function
+    resolves the correct key automatically from the symbols table.
     """
+    with _conn() as con:
+        row = con.execute(
+            "SELECT symbol_type FROM symbols WHERE symbol = ?", (symbol,)
+        ).fetchone()
+    pe_key = symbol.lower() if (row and row[0] == "index") else symbol
+
     clauses = ["symbol = ?"]
-    params: list = [symbol]
+    params: list = [pe_key]
     if start:
         clauses.append("date >= ?")
         params.append(start)

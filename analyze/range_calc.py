@@ -3,130 +3,96 @@ Pre-compute rolling backward-window statistics for every row in df.
 
 Result: dict[int, IndexCloses] keyed by row index.
 Each IndexCloses holds rangeDayCloses (backward window),
-storing top/avg/bottom/p25/median/p75 for both price and pe_ratio.
+storing top/avg/bottom for both price and pe_ratio.
 
-Uses ProcessPoolExecutor for true parallelism (bypasses GIL).
+Optimised: iterates over range_days (not rows), using pandas vectorised
+rolling (C-level) instead of per-row Python slices.
+Quantiles (p25/median/p75) are not used by any strategy and are omitted.
 """
 
+import numpy as np
 import pandas as pd
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from .models import RangeDaysClose, IndexCloses
-
-# Module-level references used by worker processes (must be picklable)
-_df: pd.DataFrame = None
-_first_close: float = 0.0
-_range_days_list: list[int] = []
-
-
-def _init_worker(df_records, columns, first_close, range_days_list):
-    global _df, _first_close, _range_days_list
-    _df = pd.DataFrame(df_records, columns=columns)
-    _first_close = first_close
-    _range_days_list = range_days_list
-
-
-def _compute_stats(closes: pd.Series, pe_vals: pd.Series, fallback: float) -> dict:
-    if closes.empty:
-        return dict(
-            localTop=fallback, localAvg=fallback, localBottom=fallback,
-            p25=fallback, median=fallback, p75=fallback,
-            pe_top=0.0, pe_avg=0.0, pe_bottom=0.0,
-            pe_p25=0.0, pe_median=0.0, pe_p75=0.0,
-        )
-    has_pe = not pe_vals.empty
-    return dict(
-        localTop    = closes.max(),
-        localAvg    = closes.mean(),
-        localBottom = closes.min(),
-        p25         = closes.quantile(0.25),
-        median      = closes.quantile(0.50),
-        p75         = closes.quantile(0.75),
-        pe_top      = pe_vals.max()           if has_pe else 0.0,
-        pe_avg      = pe_vals.mean()          if has_pe else 0.0,
-        pe_bottom   = pe_vals.min()           if has_pe else 0.0,
-        pe_p25      = pe_vals.quantile(0.25)  if has_pe else 0.0,
-        pe_median   = pe_vals.quantile(0.50)  if has_pe else 0.0,
-        pe_p75      = pe_vals.quantile(0.75)  if has_pe else 0.0,
-    )
-
-
-def _process_index(index: int) -> tuple[int, IndexCloses]:
-    df = _df
-    first_close = _first_close
-    n = len(df)
-    has_pe = 'pe_ratio' in df.columns
-    indexCloses = IndexCloses()
-
-    for rangeDays in _range_days_list:
-        # ── Backward ─────────────────────────────────────────────────────────
-        back = df.iloc[max(0, index - rangeDays):index]
-        closes  = back['close'] * 1000
-        pe_vals = back['pe_ratio'].dropna() if has_pe else pd.Series(dtype=float)
-        indexCloses.rangeDayCloses[rangeDays] = RangeDaysClose(
-            **_compute_stats(closes, pe_vals, first_close)
-        )
-
-
-    return index, indexCloses
 
 
 def build_cal_range_close(
     df: pd.DataFrame,
     range_days: list[int] | None = None,
-    max_workers: int = 5,
-    batch_size: int = 200,
+    max_workers: int = 5,       # kept for API compatibility, unused
+    batch_size: int = 200,      # kept for API compatibility, unused
     batch_callback=None,
     start_idx: int = 0,
 ) -> dict[int, IndexCloses]:
     """
-    Build cal_range_close for rows [start_idx, n) in df using up to max_workers processes.
-    Full df is always loaded into workers so backward windows are accurate.
+    Build cal_range_close using vectorised pandas rolling.
+
+    For each range_days value d, computes rolling(d).max/mean/min across
+    all n rows in a single C-level pass, then reads out per-row values.
 
     Args:
-        df             : DataFrame with 'close' column and optional 'pe_ratio'
-        range_days     : list of window sizes, default [1000]
-        max_workers    : number of parallel processes
-        batch_size     : call batch_callback every N completed rows
-        batch_callback : callable(batch: dict[int, IndexCloses]) — called with
-                         each completed batch so callers can save incrementally
-        start_idx      : only compute rows from this index onward (0 = all rows)
-
-    Returns:
-        dict mapping row index -> IndexCloses
+        df          : DataFrame with 'close' column and optional 'pe_ratio'
+        range_days  : list of window sizes; default [1000]
+        start_idx   : only populate rows from this index onward
+        batch_callback / batch_size: called with completed rows when provided
     """
     if range_days is None:
         range_days = [1000]
 
-    first_close = df['close'].iloc[0] * 1000
-    records = df.to_dict('records')
-    columns = list(df.columns)
-    n = len(df)
-    indices_to_compute = range(start_idx, n)
+    n          = len(df)
+    first_close = float(df['close'].iloc[0]) * 1000
+    has_pe     = 'pe_ratio' in df.columns
 
-    cal_range_close: dict[int, IndexCloses] = {}
-    batch: dict[int, IndexCloses] = {}
+    close_s = pd.Series((df['close'].to_numpy() * 1000), dtype=np.float64)
+    pe_s    = pd.Series(df['pe_ratio'].to_numpy(), dtype=np.float64) if has_pe else None
 
-    with ProcessPoolExecutor(
-        max_workers=max_workers,
-        initializer=_init_worker,
-        initargs=(records, columns, first_close, range_days),
-    ) as executor:
-        futures = {executor.submit(_process_index, i): i for i in indices_to_compute}
-        done = 0
-        total = len(futures)
-        for future in as_completed(futures):
-            idx, closes = future.result()
-            cal_range_close[idx] = closes
-            if batch_callback is not None:
-                batch[idx] = closes
-                if len(batch) >= batch_size:
-                    batch_callback(batch)
-                    batch = {}
-            done += 1
-            if done % 500 == 0 or done == total:
-                print(f'  range_calc: {done}/{total}')
+    # Pre-initialise result dict
+    cal: dict[int, IndexCloses] = {i: IndexCloses() for i in range(start_idx, n)}
 
-    if batch_callback is not None and batch:
-        batch_callback(batch)
+    total = len(range_days)
+    for rd_idx, rd in enumerate(range_days):
+        roll       = close_s.rolling(window=rd, min_periods=1)
+        top_arr    = roll.max().to_numpy()
+        avg_arr    = roll.mean().to_numpy()
+        bot_arr    = roll.min().to_numpy()
+        p25_arr    = roll.quantile(0.25).to_numpy()
+        med_arr    = roll.quantile(0.50).to_numpy()
+        p75_arr    = roll.quantile(0.75).to_numpy()
 
-    return cal_range_close
+        if has_pe:
+            pe_roll    = pe_s.rolling(window=rd, min_periods=1)
+            pe_top_arr = pe_roll.max().to_numpy()
+            pe_avg_arr = pe_roll.mean().to_numpy()
+            pe_bot_arr = pe_roll.min().to_numpy()
+            pe_p25_arr = pe_roll.quantile(0.25).to_numpy()
+            pe_med_arr = pe_roll.quantile(0.50).to_numpy()
+            pe_p75_arr = pe_roll.quantile(0.75).to_numpy()
+        else:
+            pe_top_arr = pe_avg_arr = pe_bot_arr = None
+            pe_p25_arr = pe_med_arr = pe_p75_arr = None
+
+        for i in range(start_idx, n):
+            cal[i].rangeDayCloses[rd] = RangeDaysClose(
+                localTop    = float(top_arr[i]),
+                localAvg    = float(avg_arr[i]),
+                localBottom = float(bot_arr[i]),
+                p25         = float(p25_arr[i]),
+                median      = float(med_arr[i]),
+                p75         = float(p75_arr[i]),
+                pe_top    = float(pe_top_arr[i]) if has_pe else 0.0,
+                pe_avg    = float(pe_avg_arr[i]) if has_pe else 0.0,
+                pe_bottom = float(pe_bot_arr[i]) if has_pe else 0.0,
+                pe_p25    = float(pe_p25_arr[i]) if has_pe else 0.0,
+                pe_median = float(pe_med_arr[i]) if has_pe else 0.0,
+                pe_p75    = float(pe_p75_arr[i]) if has_pe else 0.0,
+            )
+
+        if (rd_idx + 1) % 100 == 0 or rd_idx + 1 == total:
+            print(f'  range_calc: {rd_idx + 1}/{total} range_days')
+
+    if batch_callback is not None:
+        # Deliver all rows in one shot (batch_callback interface preserved)
+        for start in range(start_idx, n, batch_size):
+            chunk = {i: cal[i] for i in range(start, min(start + batch_size, n))}
+            batch_callback(chunk)
+
+    return cal

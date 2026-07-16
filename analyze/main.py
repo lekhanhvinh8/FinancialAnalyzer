@@ -44,7 +44,7 @@ def load_df(source: str) -> pd.DataFrame:
 
     if source == 'db':
         prices = db.load_daily_prices(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
-        pe = db.load_pe_ratios(INDEX_SYMBOL.lower()).reset_index().rename(columns={'date': 'time'})
+        pe = db.load_pe_ratios(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
         pe = pe.dropna(subset=['pe_ratio'])[['time', 'pe_ratio']]
         df = prices.merge(pe, on='time', how='left')
         df['pe_ratio'] = df['pe_ratio'].ffill()
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     def make_strategies(local_range_days, decrease_percent):
         return (
-            BuyMAStrategy(df=df, firstLocalAvg=first_pe,
+            BuyMAStrategy(firstLocalAvg=first_pe,
                           localRangeDays=local_range_days,
                           decreasePercent=decrease_percent,
                           use_pe=True),

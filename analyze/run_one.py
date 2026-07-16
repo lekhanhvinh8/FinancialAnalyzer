@@ -36,7 +36,7 @@ INDEX_SYMBOL   = 'VN30'
 
 def load_df():
     prices = db.load_daily_prices(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
-    pe     = db.load_pe_ratios(INDEX_SYMBOL.lower()).reset_index().rename(columns={'date': 'time'})
+    pe     = db.load_pe_ratios(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
     pe     = pe.dropna(subset=['pe_ratio'])[['time', 'pe_ratio']]
     df     = prices.merge(pe, on='time', how='left')
     df['pe_ratio'] = df['pe_ratio'].ffill()
