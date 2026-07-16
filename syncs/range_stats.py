@@ -5,7 +5,7 @@ from analyze.range_calc import build_cal_range_close
 from ._helpers import resolve_symbols, is_range_stats_current
 
 
-_DEFAULT_RANGE_DAYS = list(range(50, 1001, 50))  # [50, 100, ..., 1000]
+_DEFAULT_RANGE_DAYS = list(range(1, 1501))  # [1, 2, ..., 1500]
 _DEFAULT_MAX_WORKERS = 5
 
 

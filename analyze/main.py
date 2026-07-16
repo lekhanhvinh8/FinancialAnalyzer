@@ -116,7 +116,7 @@ if __name__ == '__main__':
     results = sweep_2d(
         df, INTERVAL_MONEY, cal_range_close,
         make_strategies=make_strategies,
-        param1_name="localRangeDays",  param1_vals=list(range(50, 1001, 50)),
+        param1_name="localRangeDays",  param1_vals=list(range(1, 1501)),
         param2_name="decreasePercent", param2_vals=[1, 3, 5, 10, 15, 20, 30],
         max_workers=MAX_WORKERS,
     )

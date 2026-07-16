@@ -26,7 +26,7 @@ from analyze.strategies.reinvest import ReInvestUnderMA1000Strategy
 
 INTERVAL_MONEY  = 8_000_000
 INDEX_SYMBOL    = 'VN30'
-RANGE_DAYS_VALS = list(range(50, 1001, 50))        # 20 values
+RANGE_DAYS_VALS = list(range(1, 1501))              # [1..1500]
 DECREASE_VALS   = [1, 3, 5, 10, 15, 20, 30]        # 7 values
 
 
