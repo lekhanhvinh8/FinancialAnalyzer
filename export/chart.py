@@ -309,6 +309,7 @@ def save_chart(
 
     price_pct_control = ""
     price_checkbox_js = ""
+    color_mode_bar = ""
 
     if has_price:
         price_pct_control = f"""
@@ -318,9 +319,6 @@ def save_chart(
   <div class="divider"></div>
   <span class="section-label">Price Line</span>
   <label class="chk"><input type="checkbox" id="priceColorVis" checked> Show</label>
-  <span class="unit" style="margin-left:2px">Color by:</span>
-  <label class="chk"><input type="radio" name="colorMode" value="pe" checked> P/E</label>
-  <label class="chk"><input type="radio" name="colorMode" value="price"> Price</label>
   <div class="divider"></div>
   <span class="section-label">Price Percentiles</span>
   <div class="ma-group">
@@ -393,6 +391,14 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
     }}
   }});
 }});"""
+    color_mode_bar = """
+<div id="color-mode-bar">
+  <strong>Price line color by:</strong>
+  <div class="color-toggle">
+    <label><input type="radio" name="colorMode" value="pe" checked><span>P/E percentiles</span></label>
+    <label><input type="radio" name="colorMode" value="price"><span>Price percentiles</span></label>
+  </div>
+</div>"""
 
     controls_html = f"""
 <style>
@@ -414,6 +420,18 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   .divider {{ width: 1px; height: 28px; background: #ced4da; flex-shrink: 0; }}
   .unit {{ color: #777; font-size: 12px; }}
   button {{ padding: 4px 14px; cursor: pointer; border-radius: 4px; border: 1px solid #aaa; }}
+  .color-toggle {{ display: flex; border: 1px solid #aaa; border-radius: 4px; overflow: hidden; font-size: 13px; }}
+  .color-toggle label {{ display: flex; align-items: center; cursor: pointer; }}
+  .color-toggle input[type=radio] {{ display: none; }}
+  .color-toggle span {{ padding: 4px 14px; background: #fff; color: #555; transition: background .15s, color .15s; }}
+  .color-toggle input[type=radio]:checked + span {{ background: #495057; color: #fff; }}
+  #color-mode-bar {{
+    font-family: sans-serif; font-size: 13px;
+    display: flex; align-items: center; gap: 12px;
+    padding: 7px 16px; background: #e9ecef;
+    border: 1px solid #dee2e6; border-radius: 6px;
+    margin-bottom: 8px;
+  }}
 </style>
 <div id="ctrl">
   <span class="section-label">P/E Percentiles</span>
@@ -437,6 +455,7 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   <label class="chk"><input type="checkbox" id="peLineVis" checked> Show</label>'''}
   <button onclick="updateAll()">Apply</button>
 </div>
+{color_mode_bar}
 """
 
     script = f"""
