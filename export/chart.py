@@ -391,8 +391,6 @@ const _priceBandY   = _hasBands ? [
   [globalPriceP25, globalPriceP25, globalPriceP75, globalPriceP75],
   [globalPriceP75, globalPriceP75, _priceMax, _priceMax],
 ] : null;
-const _priceBandNames = ['Cheap (Price < 25th)', 'Fair (Price 25-75th)', 'Expensive (Price > 75th)'];
-
 document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   r.addEventListener('change', function() {{
     colorMode = this.value;
@@ -404,16 +402,16 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
           [0, 1, 2].forEach((ti, i) => {{
             gd.data[ti].y     = _priceBandY[i];
             gd.data[ti].yaxis = 'y2';
-            gd.data[ti].name  = _priceBandNames[i];
           }});
         }} else {{
           [0, 1, 2].forEach((ti, i) => {{
             gd.data[ti].y     = _origBandY[i];
             gd.data[ti].yaxis = _origBandYax[i];
-            gd.data[ti].name  = _origBandName[i];
           }});
         }}
       }}
+      gd.layout.yaxis2.range     = priceY2Range;
+      gd.layout.yaxis2.autorange = false;
       Plotly.redraw(gd);
     }}
   }});
