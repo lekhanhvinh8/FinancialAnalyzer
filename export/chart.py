@@ -165,20 +165,55 @@ def pe_chart(
     ]:
         fig.add_trace(_pct_trace(df["date"], pe_values, pct_window, q, tmpl, color, "y1"))
 
-    # ── Index price line (y2) — trace 6 if has_price ─────────────────────────
+    # ── Index price line (y2) — 4 colored traces if has_price ────────────────
     price_data = None
     if idx_price is not None and not idx_price.empty:
         price_dates  = idx_price.index.strftime("%Y-%m-%d").tolist()
         price_values = idx_price.tolist()
-        price_data   = (price_dates, price_values)
 
-        fig.add_trace(go.Scatter(
-            x=idx_price.index, y=price_values,
-            mode="lines", name=f"{label} Index",
-            line=dict(color="rgba(150,150,150,0.5)", width=1.2),
-            yaxis="y2",
-            hovertemplate=f"<b>%{{x|%Y-%m-%d}}</b><br>{label}: %{{y:,.0f}} pts<extra></extra>",
-        ))
+        # Align PE to price dates for zone coloring
+        pe_aligned = (
+            df.set_index("date")["pe_ratio"]
+              .reindex(idx_price.index, method="ffill")
+              .tolist()
+        )
+        price_data   = (price_dates, price_values, pe_aligned)
+        p25_s    = float(pe.quantile(0.25))
+        median_s = float(pe.quantile(0.50))
+        p75_s    = float(pe.quantile(0.75))
+
+        def _zone(v):
+            if v is None or (isinstance(v, float) and v != v): return -1
+            if v < p25_s:    return 0
+            if v < median_s: return 1
+            if v < p75_s:    return 2
+            return 3
+
+        zones = [_zone(v) for v in pe_aligned]
+        n_p   = len(price_values)
+
+        PRICE_ZONES = [
+            (0, f"#2ca02c", f"Cheap  P/E<{p25_s:.1f}"),
+            (1, f"#f0c040", f"Fair   P/E {p25_s:.1f}–{median_s:.1f}"),
+            (2, f"#ff7f0e", f"High   P/E {median_s:.1f}–{p75_s:.1f}"),
+            (3, f"#d62728", f"Exp.   P/E>{p75_s:.1f}"),
+        ]
+        for z, color, name in PRICE_ZONES:
+            y_zone = []
+            for i in range(n_p):
+                if zones[i] == z:
+                    y_zone.append(price_values[i])
+                else:
+                    adj = (i > 0 and zones[i-1] == z) or (i < n_p-1 and zones[i+1] == z)
+                    y_zone.append(price_values[i] if adj else None)
+            fig.add_trace(go.Scatter(
+                x=idx_price.index, y=y_zone,
+                mode="lines", name=name,
+                line=dict(color=color, width=1.5),
+                legendgroup="price_color", legendgrouptitle_text=f"{label} Price",
+                yaxis="y2",
+                hovertemplate=f"<b>%{{x|%Y-%m-%d}}</b><br>{label}: %{{y:,.0f}} pts<extra></extra>",
+            ))
 
         # Price rolling percentile lines (traces 7, 8, 9)
         for q, color, tmpl in [
@@ -200,34 +235,6 @@ def pe_chart(
         customdata=df["member_count"],
     ))
 
-    # ── P/E MA lines ──────────────────────────────────────────────────────────
-    fig.add_trace(go.Scatter(
-        x=pe_dates, y=_rolling_stat(pe_values, mean_window, "mean"),
-        mode="lines", name=f"P/E Mean MA({mean_window})",
-        line=dict(color="#e377c2", width=1.5), yaxis="y1",
-        hovertemplate="P/E Mean MA: %{y:.2f}x<extra></extra>",
-    ))
-    fig.add_trace(go.Scatter(
-        x=pe_dates, y=_rolling_stat(pe_values, median_window, "median"),
-        mode="lines", name=f"P/E Median MA({median_window})",
-        line=dict(color="#17becf", width=1.5, dash="dash"), yaxis="y1",
-        hovertemplate="P/E Median MA: %{y:.2f}x<extra></extra>",
-    ))
-
-    # ── Price MA lines ────────────────────────────────────────────────────────
-    if price_data:
-        fig.add_trace(go.Scatter(
-            x=price_dates, y=_rolling_stat(price_values, mean_window, "mean"),
-            mode="lines", name=f"Price Mean MA({mean_window})",
-            line=dict(color="#9467bd", width=1.5), yaxis="y2",
-            hovertemplate="Price Mean MA: %{y:,.0f}<extra></extra>",
-        ))
-        fig.add_trace(go.Scatter(
-            x=price_dates, y=_rolling_stat(price_values, median_window, "median"),
-            mode="lines", name=f"Price Median MA({median_window})",
-            line=dict(color="#8c564b", width=1.5, dash="dash"), yaxis="y2",
-            hovertemplate="Price Median MA: %{y:,.0f}<extra></extra>",
-        ))
 
     # ── Current P/E marker ────────────────────────────────────────────────────
     fig.add_trace(go.Scatter(
@@ -277,37 +284,38 @@ def save_chart(
     # Trace layout (bands=True always):
     # 0,1,2=bands | 3,4,5=pe_pct_lines | [6=idx_price | 7,8,9=price_pct_lines] |
     # pe_line | pe_mean | pe_median | [price_mean | price_median] | marker
+    # Trace layout (bands=True, has_price=True):
+    # 0,1,2=bands | 3,4,5=pe_pct | 6,7,8,9=price_colored | 10,11,12=price_pct | pe_line | marker
     if has_price:
         pe_pct_idx    = [3, 4, 5]
-        price_pct_idx = [7, 8, 9]
-        marker_idx       = n - 1
-        price_median_idx = n - 2
-        price_mean_idx   = n - 3
-        pe_median_idx    = n - 4
-        pe_mean_idx      = n - 5
+        price_pct_idx = [10, 11, 12]
+        pe_line_idx   = n - 2
+        marker_idx    = n - 1
     else:
         pe_pct_idx    = [3, 4, 5]
         price_pct_idx = []
+        pe_line_idx   = n - 2
         marker_idx    = n - 1
-        pe_median_idx = n - 2
-        pe_mean_idx   = n - 3
 
     plot_html = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
 
-    pe_dates_json     = json.dumps(pe_dates)
-    pe_values_json    = json.dumps(pe_values)
-    price_dates_json  = json.dumps(price_data[0] if price_data else [])
-    price_values_json = json.dumps(price_data[1] if price_data else [])
+    pe_dates_json        = json.dumps(pe_dates)
+    pe_values_json       = json.dumps(pe_values)
+    price_dates_json     = json.dumps(price_data[0] if price_data else [])
+    price_values_json    = json.dumps(price_data[1] if price_data else [])
+    pe_aligned_json      = json.dumps(price_data[2] if price_data else [])
 
-    # ── Price-side controls (only rendered when price data exists) ────────────
     price_pct_control = ""
-    price_ma_control  = ""
-    price_js_pct      = ""
-    price_js_ma       = ""
     price_checkbox_js = ""
 
     if has_price:
         price_pct_control = f"""
+  <div class="divider"></div>
+  <span class="section-label">P/E Line</span>
+  <label class="chk"><input type="checkbox" id="peLineVis" checked> Show</label>
+  <div class="divider"></div>
+  <span class="section-label">Price Line</span>
+  <label class="chk"><input type="checkbox" id="priceColorVis" checked> Show</label>
   <div class="divider"></div>
   <span class="section-label">Price Percentiles</span>
   <div class="ma-group">
@@ -325,51 +333,14 @@ def save_chart(
     <input type="checkbox" class="pct-price-cb" data-sub="2" checked>
     <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>"""
 
-        price_ma_control = f"""
-  <div class="divider"></div>
-  <span class="section-label">Price MA</span>
-  <div class="ma-group">
-    <span class="dot" style="background:#9467bd"></span>
-    <label class="chk"><input type="checkbox" id="priceMeanVis" checked> Mean</label>
-    <input type="number" id="priceMeanW" value="200" min="2" max="2000" step="10">
-  </div>
-  <div class="ma-group">
-    <span class="dot" style="background:#8c564b"></span>
-    <label class="chk"><input type="checkbox" id="priceMedianVis" checked> Median</label>
-    <input type="number" id="priceMedianW" value="200" min="2" max="2000" step="10">
-  </div>"""
-
-        price_js_pct = f"""
-  const ppw = parseInt(document.getElementById('pricePctW').value) || {pct_window};
-  const pricePctVis = document.getElementById('pricePctVis').checked;
-  const pricePctSubs = [...document.querySelectorAll('.pct-price-cb')].map(c => c.checked);
-  Plotly.restyle(gd, {{
-    y: [
-      rollingQuantile(priceValues, ppw, 0.25),
-      rollingQuantile(priceValues, ppw, 0.50),
-      rollingQuantile(priceValues, ppw, 0.75),
-    ],
-    name: ['Price 25th (' + ppw + 'd)', 'Price Median (' + ppw + 'd)', 'Price 75th (' + ppw + 'd)'],
-    visible: [
-      (pricePctVis && pricePctSubs[0]) ? true : 'legendonly',
-      (pricePctVis && pricePctSubs[1]) ? true : 'legendonly',
-      (pricePctVis && pricePctSubs[2]) ? true : 'legendonly',
-    ]
-  }}, [{price_pct_idx[0]}, {price_pct_idx[1]}, {price_pct_idx[2]}]);"""
-
-        price_js_ma = f"""
-  const pmw = parseInt(document.getElementById('priceMeanW').value)   || 200;
-  const pdw = parseInt(document.getElementById('priceMedianW').value) || 200;
-  Plotly.restyle(gd, {{
-    y: [rollingMean(priceValues, pmw), rollingMedian(priceValues, pdw)],
-    name: ['Price Mean MA(' + pmw + ')', 'Price Median MA(' + pdw + ')'],
-    visible: [
-      document.getElementById('priceMeanVis').checked   ? true : 'legendonly',
-      document.getElementById('priceMedianVis').checked ? true : 'legendonly',
-    ]
-  }}, [{price_mean_idx}, {price_median_idx}]);"""
-
         price_checkbox_js = f"""
+document.getElementById('peLineVis').addEventListener('change', function() {{
+  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [{pe_line_idx}]);
+}});
+document.getElementById('priceColorVis').addEventListener('change', function() {{
+  const v = this.checked ? true : 'legendonly';
+  Plotly.restyle(gd, {{ visible: [v, v, v, v] }}, [6, 7, 8, 9]);
+}});
 function togglePricePct() {{
   const vis = document.getElementById('pricePctVis').checked;
   const subs = [...document.querySelectorAll('.pct-price-cb')].map(c => c.checked);
@@ -401,20 +372,11 @@ function recomputePricePct() {{
 }}
 document.getElementById('pricePctVis').addEventListener('change', togglePricePct);
 document.querySelectorAll('.pct-price-cb').forEach(cb => cb.addEventListener('change', togglePricePct));
-document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePricePct(); }});
-document.getElementById('priceMeanVis').addEventListener('change', function() {{
-  Plotly.restyle(gd, {{visible: [this.checked ? true : 'legendonly']}}, [{price_mean_idx}]);
-}});
-document.getElementById('priceMedianVis').addEventListener('change', function() {{
-  Plotly.restyle(gd, {{visible: [this.checked ? true : 'legendonly']}}, [{price_median_idx}]);
-}});
-['priceMeanW','priceMedianW'].forEach(id => {{
-  document.getElementById(id).addEventListener('keydown', e => {{ if (e.key==='Enter') updateMA(); }});
-}});"""
+document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePricePct(); }});"""
 
     controls_html = f"""
 <style>
-  #ma-controls {{
+  #ctrl {{
     font-family: sans-serif; font-size: 13px;
     display: flex; gap: 14px; align-items: center;
     padding: 10px 16px; background: #f8f9fa;
@@ -433,7 +395,7 @@ document.getElementById('priceMedianVis').addEventListener('change', function() 
   .unit {{ color: #777; font-size: 12px; }}
   button {{ padding: 4px 14px; cursor: pointer; border-radius: 4px; border: 1px solid #aaa; }}
 </style>
-<div id="ma-controls">
+<div id="ctrl">
   <span class="section-label">P/E Percentiles</span>
   <div class="ma-group">
     <label class="chk"><input type="checkbox" id="pePctVis" checked> Show</label>
@@ -449,51 +411,29 @@ document.getElementById('priceMedianVis').addEventListener('change', function() 
   <label class="chk">
     <input type="checkbox" class="pct-pe-cb" data-sub="2" checked>
     <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>
-  {price_pct_control}
+  {price_pct_control if has_price else '''
   <div class="divider"></div>
-  <span class="section-label">P/E MA</span>
-  <div class="ma-group">
-    <span class="dot" style="background:#e377c2"></span>
-    <label class="chk"><input type="checkbox" id="peMeanVis" checked> Mean</label>
-    <input type="number" id="peMeanW" value="200" min="2" max="2000" step="10">
-  </div>
-  <div class="ma-group">
-    <span class="dot" style="background:#17becf"></span>
-    <label class="chk"><input type="checkbox" id="peMedianVis" checked> Median</label>
-    <input type="number" id="peMedianW" value="200" min="2" max="2000" step="10">
-  </div>
-  {price_ma_control}
-  <span class="unit">days</span>
+  <span class="section-label">P/E Line</span>
+  <label class="chk"><input type="checkbox" id="peLineVis" checked> Show</label>'''}
   <button onclick="updateAll()">Apply</button>
 </div>
 """
 
     script = f"""
 <script>
-const peValues    = {pe_values_json};
-const priceValues = {price_values_json};
-const peMeanIdx   = {pe_mean_idx};
-const peMedianIdx = {pe_median_idx};
+const peValues        = {pe_values_json};
+const priceValues     = {price_values_json};
+const peAlignedValues = {pe_aligned_json};
+const peLineIdx       = {pe_line_idx};
 const gd = document.getElementById('peChart');
 
-function rollingMean(arr, w) {{
-  const out = new Array(arr.length).fill(null);
-  let s = 0;
-  for (let i = 0; i < arr.length; i++) {{
-    s += arr[i];
-    if (i >= w) s -= arr[i - w];
-    if (i >= w - 1) out[i] = s / w;
-  }}
-  return out;
-}}
-function rollingMedian(arr, w) {{
-  return arr.map((_, i) => {{
-    if (i < w - 1) return null;
-    const sl = arr.slice(i - w + 1, i + 1).slice().sort((a, b) => a - b);
-    const m = sl.length >> 1;
-    return sl.length % 2 === 0 ? (sl[m - 1] + sl[m]) / 2 : sl[m];
-  }});
-}}
+// Stable y2 range derived from price data — used to prevent autorange shifting on restyle
+const _priceNonNull = priceValues.filter(v => v != null);
+const _priceMin = _priceNonNull.length ? Math.min.apply(null, _priceNonNull) : 0;
+const _priceMax = _priceNonNull.length ? Math.max.apply(null, _priceNonNull) : 1;
+const _pricePad = (_priceMax - _priceMin) * 0.05;
+const priceY2Range = [_priceMin - _pricePad, _priceMax + _pricePad];
+
 function rollingQuantile(arr, w, p) {{
   return arr.map((_, i) => {{
     if (i < w - 1) return null;
@@ -504,7 +444,6 @@ function rollingQuantile(arr, w, p) {{
   }});
 }}
 
-// Visibility-only toggle — no recompute, single restyle call
 function togglePePct() {{
   const vis = document.getElementById('pePctVis').checked;
   const subs = [...document.querySelectorAll('.pct-pe-cb')].map(c => c.checked);
@@ -517,58 +456,61 @@ function togglePePct() {{
   }}, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
 }}
 
-// Recompute rolling quantiles + update — single restyle call for all 3 traces
+function splitByZone(priceVals, peAl, p25arr, medArr, p75arr) {{
+  const n = priceVals.length;
+  const zones = new Array(n).fill(-1);
+  for (let i = 0; i < n; i++) {{
+    const pv = peAl[i], p25 = p25arr[i], med = medArr[i], p75 = p75arr[i];
+    if (pv == null || p25 == null) continue;
+    if (pv < p25)       zones[i] = 0;
+    else if (pv < med)  zones[i] = 1;
+    else if (pv < p75)  zones[i] = 2;
+    else                zones[i] = 3;
+  }}
+  return [0,1,2,3].map(z => priceVals.map((v, i) => {{
+    if (zones[i] === z) return v;
+    const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
+    return adj ? v : null;
+  }}));
+}}
+
 function recomputePePct() {{
-  const pw = parseInt(document.getElementById('pePctW').value) || {pct_window};
+  const pw  = parseInt(document.getElementById('pePctW').value) || {pct_window};
   const vis = document.getElementById('pePctVis').checked;
   const subs = [...document.querySelectorAll('.pct-pe-cb')].map(c => c.checked);
-  Plotly.restyle(gd, {{
-    y: [
-      rollingQuantile(peValues, pw, 0.25),
-      rollingQuantile(peValues, pw, 0.50),
-      rollingQuantile(peValues, pw, 0.75),
-    ],
+  const p25 = rollingQuantile(peValues, pw, 0.25);
+  const med = rollingQuantile(peValues, pw, 0.50);
+  const p75 = rollingQuantile(peValues, pw, 0.75);
+  const dataUpd = {{
+    y: [p25, med, p75],
     name: ['P/E 25th (' + pw + 'd)', 'P/E Median (' + pw + 'd)', 'P/E 75th (' + pw + 'd)'],
     visible: [
       (vis && subs[0]) ? true : 'legendonly',
       (vis && subs[1]) ? true : 'legendonly',
       (vis && subs[2]) ? true : 'legendonly',
     ]
-  }}, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
+  }};
+  const layoutUpd = {{}};
+  if (priceValues.length > 0) {{
+    const p25al = rollingQuantile(peAlignedValues, pw, 0.25);
+    const medal = rollingQuantile(peAlignedValues, pw, 0.50);
+    const p75al = rollingQuantile(peAlignedValues, pw, 0.75);
+    const zoneY = splitByZone(priceValues, peAlignedValues, p25al, medal, p75al);
+    [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+    layoutUpd['yaxis2.range'] = priceY2Range;
+  }}
+  Plotly.update(gd, dataUpd, layoutUpd, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
 }}
 
-function updateMA() {{
-  const mw = parseInt(document.getElementById('peMeanW').value)   || 200;
-  const dw = parseInt(document.getElementById('peMedianW').value) || 200;
-  Plotly.restyle(gd, {{
-    y: [rollingMean(peValues, mw), rollingMedian(peValues, dw)],
-    name: ['P/E Mean MA(' + mw + ')', 'P/E Median MA(' + dw + ')'],
-    visible: [
-      document.getElementById('peMeanVis').checked   ? true : 'legendonly',
-      document.getElementById('peMedianVis').checked ? true : 'legendonly',
-    ]
-  }}, [peMeanIdx, peMedianIdx]);
-  {price_js_ma}
-}}
+function updateAll() {{ recomputePePct(); {('recomputePricePct();' if has_price else '')} }}
 
-function updateAll() {{ recomputePePct(); {('recomputePricePct();' if has_price else '')} updateMA(); }}
-
-// P/E percentile: checkbox = visibility only, window change = recompute
 document.getElementById('pePctVis').addEventListener('change', togglePePct);
 document.querySelectorAll('.pct-pe-cb').forEach(cb => cb.addEventListener('change', togglePePct));
 document.getElementById('pePctW').addEventListener('keydown', e => {{ if (e.key === 'Enter') recomputePePct(); }});
-
-// P/E MA
-document.getElementById('peMeanVis').addEventListener('change', function() {{
-  Plotly.restyle(gd, {{visible: [this.checked ? true : 'legendonly']}}, [peMeanIdx]);
+document.getElementById('peLineVis').addEventListener('change', function() {{
+  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peLineIdx]);
 }});
-document.getElementById('peMedianVis').addEventListener('change', function() {{
-  Plotly.restyle(gd, {{visible: [this.checked ? true : 'legendonly']}}, [peMedianIdx]);
-}});
-['peMeanW', 'peMedianW'].forEach(id => {{
-  document.getElementById(id).addEventListener('keydown', e => {{ if (e.key === 'Enter') updateMA(); }});
-}});
-{price_checkbox_js.replace('updatePercentiles', 'recomputePricePct').replace('togglePricePct', 'togglePricePct')}
+{price_checkbox_js}
 </script>
 """
 

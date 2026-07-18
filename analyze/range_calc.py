@@ -48,9 +48,16 @@ def build_cal_range_close(
     # Pre-initialise result dict
     cal: dict[int, IndexCloses] = {i: IndexCloses() for i in range(start_idx, n)}
 
+    # For incremental syncs (start_idx near end), rolling only needs
+    # [start_idx - rd + 1 .. n] rows to produce correct values at start_idx..n-1.
+    # Slicing avoids re-rolling the entire history for each rd.
     total = len(range_days)
     for rd_idx, rd in enumerate(range_days):
-        roll       = close_s.rolling(window=rd, min_periods=1)
+        slice_start = max(0, start_idx - rd + 1)
+        offset      = start_idx - slice_start  # position of start_idx inside the slice
+
+        c_sl = close_s.iloc[slice_start:] if slice_start > 0 else close_s
+        roll       = c_sl.rolling(window=rd, min_periods=1)
         top_arr    = roll.max().to_numpy()
         avg_arr    = roll.mean().to_numpy()
         bot_arr    = roll.min().to_numpy()
@@ -59,7 +66,8 @@ def build_cal_range_close(
         p75_arr    = roll.quantile(0.75).to_numpy()
 
         if has_pe:
-            pe_roll    = pe_s.rolling(window=rd, min_periods=1)
+            p_sl       = pe_s.iloc[slice_start:] if slice_start > 0 else pe_s
+            pe_roll    = p_sl.rolling(window=rd, min_periods=1)
             pe_top_arr = pe_roll.max().to_numpy()
             pe_avg_arr = pe_roll.mean().to_numpy()
             pe_bot_arr = pe_roll.min().to_numpy()
@@ -71,19 +79,20 @@ def build_cal_range_close(
             pe_p25_arr = pe_med_arr = pe_p75_arr = None
 
         for i in range(start_idx, n):
+            j = i - slice_start  # index into the sliced arrays
             cal[i].rangeDayCloses[rd] = RangeDaysClose(
-                localTop    = float(top_arr[i]),
-                localAvg    = float(avg_arr[i]),
-                localBottom = float(bot_arr[i]),
-                p25         = float(p25_arr[i]),
-                median      = float(med_arr[i]),
-                p75         = float(p75_arr[i]),
-                pe_top    = float(pe_top_arr[i]) if has_pe else 0.0,
-                pe_avg    = float(pe_avg_arr[i]) if has_pe else 0.0,
-                pe_bottom = float(pe_bot_arr[i]) if has_pe else 0.0,
-                pe_p25    = float(pe_p25_arr[i]) if has_pe else 0.0,
-                pe_median = float(pe_med_arr[i]) if has_pe else 0.0,
-                pe_p75    = float(pe_p75_arr[i]) if has_pe else 0.0,
+                localTop    = float(top_arr[j]),
+                localAvg    = float(avg_arr[j]),
+                localBottom = float(bot_arr[j]),
+                p25         = float(p25_arr[j]),
+                median      = float(med_arr[j]),
+                p75         = float(p75_arr[j]),
+                pe_top    = float(pe_top_arr[j]) if has_pe else 0.0,
+                pe_avg    = float(pe_avg_arr[j]) if has_pe else 0.0,
+                pe_bottom = float(pe_bot_arr[j]) if has_pe else 0.0,
+                pe_p25    = float(pe_p25_arr[j]) if has_pe else 0.0,
+                pe_median = float(pe_med_arr[j]) if has_pe else 0.0,
+                pe_p75    = float(pe_p75_arr[j]) if has_pe else 0.0,
             )
 
         if (rd_idx + 1) % 100 == 0 or rd_idx + 1 == total:

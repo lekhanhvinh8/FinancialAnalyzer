@@ -61,10 +61,11 @@ if __name__ == '__main__':
     # ── EDIT HERE ────────────────────────────────────────────────────────────
 
     buyIntervalStrategy = BuyIntervalStrategy()
-    buyStrategy = BuyMAStrategy(
+    buyMAStrategy = BuyMAStrategy(
         firstLocalAvg   = firstClose,
-        localRangeDays  = 20,
-        decreasePercent = 3,
+        localRangeDays  = 999,
+        decreasePercent = 20,
+        use_pe = True,
     )
 
     sellStrategy = SellTopOfMA1000Strategy(
@@ -78,5 +79,5 @@ if __name__ == '__main__':
 
     print("Running estimate ...")
     allTotalCapital, allTotalFinal, allRatioGrowth, buyedInfos, sellInfos, reinvestInfos = estimate(
-        df, INTERVAL_MONEY, buyIntervalStrategy, None, None, cal_range_close, isPrint=True
+        df, INTERVAL_MONEY, buyMAStrategy, None, None, cal_range_close, isPrint=True
     )
