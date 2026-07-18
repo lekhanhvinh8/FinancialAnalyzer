@@ -177,10 +177,9 @@ def pe_chart(
               .reindex(idx_price.index, method="ffill")
               .tolist()
         )
-        price_data   = (price_dates, price_values, pe_aligned)
-        p25_s    = float(pe.quantile(0.25))
-        median_s = float(pe.quantile(0.50))
-        p75_s    = float(pe.quantile(0.75))
+        price_data   = (price_dates, price_values, pe_aligned,
+                        float(pe.quantile(0.25)), float(pe.quantile(0.50)), float(pe.quantile(0.75)))
+        _, _, _, p25_s, median_s, p75_s = price_data
 
         def _zone(v):
             if v is None or (isinstance(v, float) and v != v): return -1
@@ -304,6 +303,9 @@ def save_chart(
     price_dates_json     = json.dumps(price_data[0] if price_data else [])
     price_values_json    = json.dumps(price_data[1] if price_data else [])
     pe_aligned_json      = json.dumps(price_data[2] if price_data else [])
+    global_p25_json      = json.dumps(price_data[3] if price_data else None)
+    global_med_json      = json.dumps(price_data[4] if price_data else None)
+    global_p75_json      = json.dumps(price_data[5] if price_data else None)
 
     price_pct_control = ""
     price_checkbox_js = ""
@@ -424,6 +426,9 @@ document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.k
 const peValues        = {pe_values_json};
 const priceValues     = {price_values_json};
 const peAlignedValues = {pe_aligned_json};
+const globalP25       = {global_p25_json};
+const globalMed       = {global_med_json};
+const globalP75       = {global_p75_json};
 const peLineIdx       = {pe_line_idx};
 const gd = document.getElementById('peChart');
 
@@ -460,8 +465,13 @@ function splitByZone(priceVals, peAl, p25arr, medArr, p75arr) {{
   const n = priceVals.length;
   const zones = new Array(n).fill(-1);
   for (let i = 0; i < n; i++) {{
-    const pv = peAl[i], p25 = p25arr[i], med = medArr[i], p75 = p75arr[i];
-    if (pv == null || p25 == null) continue;
+    const pv = peAl[i];
+    if (pv == null) continue;
+    // Before rolling window fills, fall back to global static thresholds
+    const p25 = p25arr[i] != null ? p25arr[i] : globalP25;
+    const med = medArr[i] != null ? medArr[i] : globalMed;
+    const p75 = p75arr[i] != null ? p75arr[i] : globalP75;
+    if (p25 == null) continue;
     if (pv < p25)       zones[i] = 0;
     else if (pv < med)  zones[i] = 1;
     else if (pv < p75)  zones[i] = 2;
