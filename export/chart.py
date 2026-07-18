@@ -318,6 +318,9 @@ def save_chart(
   <div class="divider"></div>
   <span class="section-label">Price Line</span>
   <label class="chk"><input type="checkbox" id="priceColorVis" checked> Show</label>
+  <span class="unit" style="margin-left:2px">Color by:</span>
+  <label class="chk"><input type="radio" name="colorMode" value="pe" checked> P/E</label>
+  <label class="chk"><input type="radio" name="colorMode" value="price"> Price</label>
   <div class="divider"></div>
   <span class="section-label">Price Percentiles</span>
   <div class="ma-group">
@@ -358,7 +361,12 @@ function recomputePricePct() {{
   const ppw = parseInt(document.getElementById('pricePctW').value) || {pct_window};
   const vis = document.getElementById('pricePctVis').checked;
   const subs = [...document.querySelectorAll('.pct-price-cb')].map(c => c.checked);
-  Plotly.restyle(gd, {{
+  const layoutUpd = {{'yaxis2.range': priceY2Range}};
+  if (priceValues.length > 0 && colorMode === 'price') {{
+    const zoneY = _computeZoneY();
+    [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+  }}
+  Plotly.update(gd, {{
     y: [
       rollingQuantile(priceValues, ppw, 0.25),
       rollingQuantile(priceValues, ppw, 0.50),
@@ -370,11 +378,21 @@ function recomputePricePct() {{
       (vis && subs[1]) ? true : 'legendonly',
       (vis && subs[2]) ? true : 'legendonly',
     ]
-  }}, [{price_pct_idx[0]}, {price_pct_idx[1]}, {price_pct_idx[2]}]);
+  }}, layoutUpd, [{price_pct_idx[0]}, {price_pct_idx[1]}, {price_pct_idx[2]}]);
 }}
 document.getElementById('pricePctVis').addEventListener('change', togglePricePct);
 document.querySelectorAll('.pct-price-cb').forEach(cb => cb.addEventListener('change', togglePricePct));
-document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePricePct(); }});"""
+document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePricePct(); }});
+document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
+  r.addEventListener('change', function() {{
+    colorMode = this.value;
+    if (priceValues.length > 0) {{
+      const zoneY = _computeZoneY();
+      [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+      Plotly.relayout(gd, {{'yaxis2.range': priceY2Range}});
+    }}
+  }});
+}});"""
 
     controls_html = f"""
 <style>
@@ -439,6 +457,18 @@ const _priceMax = _priceNonNull.length ? Math.max.apply(null, _priceNonNull) : 1
 const _pricePad = (_priceMax - _priceMin) * 0.05;
 const priceY2Range = [_priceMin - _pricePad, _priceMax + _pricePad];
 
+// Global static quantiles for price (fallback before rolling window fills in price mode)
+const _sortedPrices = _priceNonNull.slice().sort((a, b) => a - b);
+function _staticQ(sorted, p) {{
+  const pos = p * (sorted.length - 1), lo = Math.floor(pos), hi = Math.ceil(pos);
+  return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+}}
+const globalPriceP25 = _sortedPrices.length ? _staticQ(_sortedPrices, 0.25) : null;
+const globalPriceMed = _sortedPrices.length ? _staticQ(_sortedPrices, 0.50) : null;
+const globalPriceP75 = _sortedPrices.length ? _staticQ(_sortedPrices, 0.75) : null;
+
+let colorMode = 'pe';
+
 function rollingQuantile(arr, w, p) {{
   return arr.map((_, i) => {{
     if (i < w - 1) return null;
@@ -461,16 +491,15 @@ function togglePePct() {{
   }}, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
 }}
 
-function splitByZone(priceVals, peAl, p25arr, medArr, p75arr) {{
+function splitByZone(priceVals, compareVals, p25arr, medArr, p75arr, fbP25, fbMed, fbP75) {{
   const n = priceVals.length;
   const zones = new Array(n).fill(-1);
   for (let i = 0; i < n; i++) {{
-    const pv = peAl[i];
+    const pv = compareVals[i];
     if (pv == null) continue;
-    // Before rolling window fills, fall back to global static thresholds
-    const p25 = p25arr[i] != null ? p25arr[i] : globalP25;
-    const med = medArr[i] != null ? medArr[i] : globalMed;
-    const p75 = p75arr[i] != null ? p75arr[i] : globalP75;
+    const p25 = p25arr[i] != null ? p25arr[i] : fbP25;
+    const med = medArr[i] != null ? medArr[i] : fbMed;
+    const p75 = p75arr[i] != null ? p75arr[i] : fbP75;
     if (p25 == null) continue;
     if (pv < p25)       zones[i] = 0;
     else if (pv < med)  zones[i] = 1;
@@ -482,6 +511,22 @@ function splitByZone(priceVals, peAl, p25arr, medArr, p75arr) {{
     const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
     return adj ? v : null;
   }}));
+}}
+
+function _computeZoneY() {{
+  if (colorMode === 'pe') {{
+    const pw = parseInt(document.getElementById('pePctW').value) || {pct_window};
+    const p25al = rollingQuantile(peAlignedValues, pw, 0.25);
+    const medal  = rollingQuantile(peAlignedValues, pw, 0.50);
+    const p75al  = rollingQuantile(peAlignedValues, pw, 0.75);
+    return splitByZone(priceValues, peAlignedValues, p25al, medal, p75al, globalP25, globalMed, globalP75);
+  }} else {{
+    const pw = parseInt(document.getElementById('pricePctW').value) || {pct_window};
+    const p25al = rollingQuantile(priceValues, pw, 0.25);
+    const medal  = rollingQuantile(priceValues, pw, 0.50);
+    const p75al  = rollingQuantile(priceValues, pw, 0.75);
+    return splitByZone(priceValues, priceValues, p25al, medal, p75al, globalPriceP25, globalPriceMed, globalPriceP75);
+  }}
 }}
 
 function recomputePePct() {{
@@ -502,10 +547,7 @@ function recomputePePct() {{
   }};
   const layoutUpd = {{}};
   if (priceValues.length > 0) {{
-    const p25al = rollingQuantile(peAlignedValues, pw, 0.25);
-    const medal = rollingQuantile(peAlignedValues, pw, 0.50);
-    const p75al = rollingQuantile(peAlignedValues, pw, 0.75);
-    const zoneY = splitByZone(priceValues, peAlignedValues, p25al, medal, p75al);
+    const zoneY = _computeZoneY();
     [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
     layoutUpd['yaxis2.range'] = priceY2Range;
   }}
