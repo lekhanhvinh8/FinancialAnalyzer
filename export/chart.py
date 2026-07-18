@@ -387,7 +387,7 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
     if (priceValues.length > 0) {{
       const zoneY = _computeZoneY();
       [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
-      Plotly.relayout(gd, {{'yaxis2.range': priceY2Range}});
+      Plotly.redraw(gd);
     }}
   }});
 }});"""
