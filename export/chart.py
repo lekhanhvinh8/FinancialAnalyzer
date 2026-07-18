@@ -381,12 +381,39 @@ function recomputePricePct() {{
 document.getElementById('pricePctVis').addEventListener('change', togglePricePct);
 document.querySelectorAll('.pct-price-cb').forEach(cb => cb.addEventListener('change', togglePricePct));
 document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePricePct(); }});
+// Save original band state (PE-based, y1) and pre-compute price bands (y2)
+const _hasBands     = gd.data[0] && gd.data[0].fill === 'toself';
+const _origBandY    = _hasBands ? [0,1,2].map(i => gd.data[i].y.slice()) : null;
+const _origBandYax  = _hasBands ? [0,1,2].map(i => gd.data[i].yaxis)    : null;
+const _origBandName = _hasBands ? [0,1,2].map(i => gd.data[i].name)      : null;
+const _priceBandY   = _hasBands ? [
+  [_priceMin, _priceMin, globalPriceP25, globalPriceP25],
+  [globalPriceP25, globalPriceP25, globalPriceP75, globalPriceP75],
+  [globalPriceP75, globalPriceP75, _priceMax, _priceMax],
+] : null;
+const _priceBandNames = ['Cheap (Price < 25th)', 'Fair (Price 25-75th)', 'Expensive (Price > 75th)'];
+
 document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   r.addEventListener('change', function() {{
     colorMode = this.value;
     if (priceValues.length > 0) {{
       const zoneY = _computeZoneY();
       [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+      if (_hasBands) {{
+        if (colorMode === 'price') {{
+          [0, 1, 2].forEach((ti, i) => {{
+            gd.data[ti].y     = _priceBandY[i];
+            gd.data[ti].yaxis = 'y2';
+            gd.data[ti].name  = _priceBandNames[i];
+          }});
+        }} else {{
+          [0, 1, 2].forEach((ti, i) => {{
+            gd.data[ti].y     = _origBandY[i];
+            gd.data[ti].yaxis = _origBandYax[i];
+            gd.data[ti].name  = _origBandName[i];
+          }});
+        }}
+      }}
       Plotly.redraw(gd);
     }}
   }});
