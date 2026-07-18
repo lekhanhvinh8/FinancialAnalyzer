@@ -222,6 +222,25 @@ def pe_chart(
         ]:
             fig.add_trace(_pct_trace(idx_price.index, price_values, pct_window, q, tmpl, color, "y2"))
 
+    # ── P/E rolling mean ─────────────────────────────────────────────────────
+    pe_mean_vals = pd.Series(pe_values).rolling(mean_window, min_periods=1).mean().tolist()
+    fig.add_trace(go.Scatter(
+        x=df["date"], y=pe_mean_vals,
+        mode="lines", name=f"P/E Mean ({mean_window}d)",
+        line=dict(color="rgba(150,0,200,0.8)", width=1.5, dash="dot"),
+        yaxis="y1",
+    ))
+
+    # ── Price rolling mean ────────────────────────────────────────────────────
+    if idx_price is not None and not idx_price.empty:
+        price_mean_vals = pd.Series(price_values).rolling(mean_window, min_periods=1).mean().tolist()
+        fig.add_trace(go.Scatter(
+            x=idx_price.index, y=price_mean_vals,
+            mode="lines", name=f"Price Mean ({mean_window}d)",
+            line=dict(color="rgba(150,0,200,0.8)", width=1.5, dash="dot"),
+            yaxis="y2",
+        ))
+
     # ── P/E line ──────────────────────────────────────────────────────────────
     fig.add_trace(go.Scatter(
         x=df["date"], y=pe_values,
@@ -269,6 +288,7 @@ def save_chart(
     price_data: tuple | None = None,
     path: str = "pe_chart.html",
     pct_window: int = _DEFAULT_PCT_WINDOW,
+    mean_window: int = 200,
 ) -> str:
     """
     Save the chart as a self-contained HTML with interactive controls:
@@ -280,21 +300,25 @@ def save_chart(
     n = len(fig.data)
     has_price = price_data is not None
 
-    # Trace layout (bands=True always):
-    # 0,1,2=bands | 3,4,5=pe_pct_lines | [6=idx_price | 7,8,9=price_pct_lines] |
-    # pe_line | pe_mean | pe_median | [price_mean | price_median] | marker
     # Trace layout (bands=True, has_price=True):
-    # 0,1,2=bands | 3,4,5=pe_pct | 6,7,8,9=price_colored | 10,11,12=price_pct | pe_line | marker
+    # 0,1,2=bands | 3,4,5=pe_pct | 6,7,8,9=price_colored | 10,11,12=price_pct |
+    # 13=pe_mean | 14=price_mean | 15=pe_line | 16=marker
+    # Trace layout (bands=True, has_price=False):
+    # 0,1,2=bands | 3,4,5=pe_pct | 6=pe_mean | 7=pe_line | 8=marker
     if has_price:
-        pe_pct_idx    = [3, 4, 5]
-        price_pct_idx = [10, 11, 12]
-        pe_line_idx   = n - 2
-        marker_idx    = n - 1
+        pe_pct_idx     = [3, 4, 5]
+        price_pct_idx  = [10, 11, 12]
+        pe_mean_idx    = 13
+        price_mean_idx = 14
+        pe_line_idx    = n - 2
+        marker_idx     = n - 1
     else:
-        pe_pct_idx    = [3, 4, 5]
-        price_pct_idx = []
-        pe_line_idx   = n - 2
-        marker_idx    = n - 1
+        pe_pct_idx     = [3, 4, 5]
+        price_pct_idx  = []
+        pe_mean_idx    = 6
+        price_mean_idx = None
+        pe_line_idx    = n - 2
+        marker_idx     = n - 1
 
     plot_html = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
 
@@ -307,6 +331,18 @@ def save_chart(
     global_med_json      = json.dumps(price_data[4] if price_data else None)
     global_p75_json      = json.dumps(price_data[5] if price_data else None)
 
+    pe_mean_idx_json    = json.dumps(pe_mean_idx)
+    price_mean_idx_json = json.dumps(price_mean_idx)
+
+    pe_mean_control = f"""
+  <div class="divider"></div>
+  <span class="section-label">P/E Mean</span>
+  <div class="ma-group">
+    <label class="chk"><input type="checkbox" id="peMeanVis" checked> Show</label>
+    <input type="number" id="peMeanW" value="{mean_window}" min="5" max="5000" step="10" title="Rolling window (days)">
+    <span class="unit">d</span>
+  </div>"""
+
     price_pct_control = ""
     price_checkbox_js = ""
     color_mode_bar = ""
@@ -316,6 +352,13 @@ def save_chart(
   <div class="divider"></div>
   <span class="section-label">P/E Line</span>
   <label class="chk"><input type="checkbox" id="peLineVis" checked> Show</label>
+  <div class="divider"></div>
+  <span class="section-label">Price Mean</span>
+  <div class="ma-group">
+    <label class="chk"><input type="checkbox" id="priceMeanVis" checked> Show</label>
+    <input type="number" id="priceMeanW" value="{mean_window}" min="5" max="5000" step="10" title="Rolling window (days)">
+    <span class="unit">d</span>
+  </div>
   <div class="divider"></div>
   <span class="section-label">Price Line</span>
   <label class="chk"><input type="checkbox" id="priceColorVis" checked> Show</label>
@@ -381,6 +424,19 @@ function recomputePricePct() {{
 document.getElementById('pricePctVis').addEventListener('change', togglePricePct);
 document.querySelectorAll('.pct-price-cb').forEach(cb => cb.addEventListener('change', togglePricePct));
 document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePricePct(); }});
+function recomputePriceMean() {{
+  const w = parseInt(document.getElementById('priceMeanW').value) || {mean_window};
+  const vis = document.getElementById('priceMeanVis').checked;
+  Plotly.update(gd, {{
+    y: [rollingMean(priceValues, w)],
+    name: ['Price Mean (' + w + 'd)'],
+    visible: [vis ? true : 'legendonly'],
+  }}, {{'yaxis2.range': priceY2Range}}, [priceMeanIdx]);
+}}
+document.getElementById('priceMeanVis').addEventListener('change', function() {{
+  Plotly.update(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, {{'yaxis2.range': priceY2Range}}, [priceMeanIdx]);
+}});
+document.getElementById('priceMeanW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePriceMean(); }});
 // Save original band state (PE-based, y1) and pre-compute price bands (y2)
 const _hasBands     = gd.data[0] && gd.data[0].fill === 'toself';
 const _origBandY    = _hasBands ? [0,1,2].map(i => gd.data[i].y.slice()) : null;
@@ -474,6 +530,7 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   <label class="chk">
     <input type="checkbox" class="pct-pe-cb" data-sub="2" checked>
     <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>
+  {pe_mean_control}
   {price_pct_control if has_price else '''
   <div class="divider"></div>
   <span class="section-label">P/E Line</span>
@@ -492,6 +549,8 @@ const globalP25       = {global_p25_json};
 const globalMed       = {global_med_json};
 const globalP75       = {global_p75_json};
 const peLineIdx       = {pe_line_idx};
+const peMeanIdx       = {pe_mean_idx_json};
+const priceMeanIdx    = {price_mean_idx_json};
 const gd = document.getElementById('peChart');
 
 // Stable y2 range derived from price data — used to prevent autorange shifting on restyle
@@ -598,11 +657,32 @@ function recomputePePct() {{
   Plotly.update(gd, dataUpd, layoutUpd, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
 }}
 
-function updateAll() {{ recomputePePct(); {('recomputePricePct();' if has_price else '')} }}
+function rollingMean(arr, w) {{
+  return arr.map((_, i) => {{
+    const sl = arr.slice(Math.max(0, i - w + 1), i + 1).filter(v => v != null);
+    return sl.length ? sl.reduce((a, b) => a + b, 0) / sl.length : null;
+  }});
+}}
+
+function recomputePeMean() {{
+  const w = parseInt(document.getElementById('peMeanW').value) || {mean_window};
+  const vis = document.getElementById('peMeanVis').checked;
+  Plotly.update(gd, {{
+    y: [rollingMean(peValues, w)],
+    name: ['P/E Mean (' + w + 'd)'],
+    visible: [vis ? true : 'legendonly'],
+  }}, {{}}, [peMeanIdx]);
+}}
+
+function updateAll() {{ recomputePePct(); recomputePeMean(); {('recomputePricePct(); recomputePriceMean();' if has_price else '')} }}
 
 document.getElementById('pePctVis').addEventListener('change', togglePePct);
 document.querySelectorAll('.pct-pe-cb').forEach(cb => cb.addEventListener('change', togglePePct));
 document.getElementById('pePctW').addEventListener('keydown', e => {{ if (e.key === 'Enter') recomputePePct(); }});
+document.getElementById('peMeanVis').addEventListener('change', function() {{
+  Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peMeanIdx]);
+}});
+document.getElementById('peMeanW').addEventListener('keydown', e => {{ if (e.key === 'Enter') recomputePeMean(); }});
 document.getElementById('peLineVis').addEventListener('change', function() {{
   Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peLineIdx]);
 }});
