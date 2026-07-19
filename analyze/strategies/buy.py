@@ -114,6 +114,25 @@ class BuyPartialMA(BuyStrategy):
 
 
 @dataclass
+class BuyMedian1000Strategy(BuyStrategy):
+    percentBuy: float = 0
+    use_pe: bool = False
+
+    def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
+        if tracker.intervalAmount <= 0 or index <= 1000:
+            return
+        current = pe if self.use_pe else close
+        if current is None:
+            return
+        if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
+            return
+        median          = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+        decreasePercent = (current - median) / median * 100
+        if decreasePercent < self.percentBuy:
+            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+
+
+@dataclass
 class BuyMA1000Strategy(BuyStrategy):
     increasedPercentNotBuy: float = 1_000_000
     use_pe: bool = False

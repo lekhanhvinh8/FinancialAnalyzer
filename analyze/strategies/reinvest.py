@@ -71,6 +71,25 @@ class ReInvestPartialStrategy(ReinvestStrategy):
 
 
 @dataclass
+class ReInvestMedian1000Strategy(ReinvestStrategy):
+    percentReinvest: float = 0
+    use_pe: bool = False
+
+    def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
+        if tracker.totalReserveFinal <= 0 or index <= 1000:
+            return
+        current = pe if self.use_pe else close
+        if current is None:
+            return
+        if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
+            return
+        median          = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+        decreasePercent = (current - median) / median * 100
+        if decreasePercent < self.percentReinvest:
+            Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+
+
+@dataclass
 class ReInvestUnderMA1000Strategy(ReinvestStrategy):
     use_pe: bool = False
 

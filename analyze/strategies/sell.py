@@ -82,3 +82,22 @@ class SellTopOfMA1000Strategy(SellStrategy):
             increasePercent = (current - localAvg) / localAvg
             if increasePercent > self.percentSell / 100:
                 Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
+
+
+@dataclass
+class SellMedian1000Strategy(SellStrategy):
+    percentSell: float = 0
+    use_pe: bool = False
+
+    def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
+        if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0 or index <= 1000:
+            return
+        current = pe if self.use_pe else close
+        if current is None:
+            return
+        if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
+            return
+        median          = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+        increasePercent = (current - median) / median * 100
+        if increasePercent > self.percentSell:
+            Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
