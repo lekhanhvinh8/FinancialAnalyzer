@@ -447,37 +447,53 @@ const _priceBandY   = _hasBands ? [
   [globalPriceP25, globalPriceP25, globalPriceP75, globalPriceP75],
   [globalPriceP75, globalPriceP75, _priceMax, _priceMax],
 ] : null;
+function _applyColorSwitch() {{
+  if (priceValues.length > 0) {{
+    const zoneY = _computeZoneY();
+    [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+    if (_hasBands) {{
+      if (colorMode === 'price') {{
+        [0, 1, 2].forEach((ti, i) => {{
+          gd.data[ti].y     = _priceBandY[i];
+          gd.data[ti].yaxis = 'y2';
+        }});
+      }} else {{
+        [0, 1, 2].forEach((ti, i) => {{
+          gd.data[ti].y     = _origBandY[i];
+          gd.data[ti].yaxis = _origBandYax[i];
+        }});
+      }}
+    }}
+    gd.layout.yaxis2.range     = priceY2Range;
+    gd.layout.yaxis2.autorange = false;
+    Plotly.redraw(gd);
+  }}
+}}
+
+document.querySelectorAll('input[name="colorBasis"]').forEach(r => {{
+  r.addEventListener('change', function() {{
+    colorBasis = this.value;
+    _applyColorSwitch();
+  }});
+}});
+
 document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   r.addEventListener('change', function() {{
     colorMode = this.value;
-    if (priceValues.length > 0) {{
-      const zoneY = _computeZoneY();
-      [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
-      if (_hasBands) {{
-        if (colorMode === 'price') {{
-          [0, 1, 2].forEach((ti, i) => {{
-            gd.data[ti].y     = _priceBandY[i];
-            gd.data[ti].yaxis = 'y2';
-          }});
-        }} else {{
-          [0, 1, 2].forEach((ti, i) => {{
-            gd.data[ti].y     = _origBandY[i];
-            gd.data[ti].yaxis = _origBandYax[i];
-          }});
-        }}
-      }}
-      gd.layout.yaxis2.range     = priceY2Range;
-      gd.layout.yaxis2.autorange = false;
-      Plotly.redraw(gd);
-    }}
+    _applyColorSwitch();
   }});
 }});"""
     color_mode_bar = """
 <div id="color-mode-bar">
-  <strong>Price line color by:</strong>
+  <strong>Color source:</strong>
   <div class="color-toggle">
-    <label><input type="radio" name="colorMode" value="pe" checked><span>P/E percentiles</span></label>
-    <label><input type="radio" name="colorMode" value="price"><span>Price percentiles</span></label>
+    <label><input type="radio" name="colorMode" value="pe" checked><span>P/E</span></label>
+    <label><input type="radio" name="colorMode" value="price"><span>Price</span></label>
+  </div>
+  <strong style="margin-left:16px">Color method:</strong>
+  <div class="color-toggle">
+    <label><input type="radio" name="colorBasis" value="percentiles" checked><span>Percentiles</span></label>
+    <label><input type="radio" name="colorBasis" value="mean"><span>Mean</span></label>
   </div>
 </div>"""
 
@@ -570,7 +586,8 @@ const globalPriceP25 = _sortedPrices.length ? _staticQ(_sortedPrices, 0.25) : nu
 const globalPriceMed = _sortedPrices.length ? _staticQ(_sortedPrices, 0.50) : null;
 const globalPriceP75 = _sortedPrices.length ? _staticQ(_sortedPrices, 0.75) : null;
 
-let colorMode = 'pe';
+let colorMode  = 'pe';
+let colorBasis = 'percentiles';
 
 function rollingQuantile(arr, w, p) {{
   return arr.map((_, i) => {{
@@ -616,7 +633,30 @@ function splitByZone(priceVals, compareVals, p25arr, medArr, p75arr, fbP25, fbMe
   }}));
 }}
 
+function splitByMean(priceVals, compareVals, meanArr) {{
+  const n = priceVals.length;
+  const zones = new Array(n).fill(-1);
+  for (let i = 0; i < n; i++) {{
+    const cv = compareVals[i];
+    const m  = meanArr[i];
+    if (cv == null || m == null) continue;
+    zones[i] = cv < m ? 0 : 3;
+  }}
+  return [0,1,2,3].map(z => priceVals.map((v, i) => {{
+    if (zones[i] === z) return v;
+    const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
+    return adj ? v : null;
+  }}));
+}}
+
 function _computeZoneY() {{
+  if (colorBasis === 'mean') {{
+    const compareVals = colorMode === 'pe' ? peAlignedValues : priceValues;
+    const wId  = colorMode === 'pe' ? 'peMeanW' : 'priceMeanW';
+    const pw   = parseInt(document.getElementById(wId).value) || {mean_window};
+    const meanArr = rollingMean(compareVals, pw);
+    return splitByMean(priceValues, compareVals, meanArr);
+  }}
   if (colorMode === 'pe') {{
     const pw = parseInt(document.getElementById('pePctW').value) || {pct_window};
     const p25al = rollingQuantile(peAlignedValues, pw, 0.25);
