@@ -97,7 +97,7 @@ class SellMedian1000Strategy(SellStrategy):
             return
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
             return
-        median          = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        increasePercent = (current - median) / median * 100
-        if increasePercent > self.percentSell:
+        median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+        delta  = (current - median) / median * 100
+        if delta > self.percentSell:
             Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)

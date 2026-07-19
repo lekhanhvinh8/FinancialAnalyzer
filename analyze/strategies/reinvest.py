@@ -83,9 +83,9 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
             return
-        median          = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        decreasePercent = (median - current) / median * 100
-        if decreasePercent > self.percentReinvest:
+        median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+        delta  = (current - median) / median * 100
+        if delta < self.percentReinvest:
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
 
 
