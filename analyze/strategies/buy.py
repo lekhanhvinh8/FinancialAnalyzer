@@ -7,11 +7,17 @@ class BuyStrategy:
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         pass
 
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        return False
+
 
 @dataclass
 class BuyIntervalStrategy(BuyStrategy):
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        return True
 
 
 @dataclass
@@ -21,14 +27,17 @@ class BuyBottomStrategy(BuyStrategy):
     use_pe: bool = False
 
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
+        if self.check(index, close, pe, cal_range_close):
+            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
         current = pe if self.use_pe else close
         if current is None:
-            return
+            return False
         if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
-            return
+            return False
         localTop = cal_range_close[index].rangeDayCloses[self.localRangeDays].top(self.use_pe)
-        if current < localTop and (localTop - current) / localTop > self.decreasePercent / 100:
-            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+        return current < localTop and (localTop - current) / localTop > self.decreasePercent / 100
 
 
 @dataclass
@@ -38,14 +47,17 @@ class BuyMAStrategy(BuyStrategy):
     use_pe: bool = False
 
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
+        if self.check(index, close, pe, cal_range_close):
+            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
         current = pe if self.use_pe else close
         if current is None:
-            return
+            return False
         if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
-            return
+            return False
         localAvg = cal_range_close[index].rangeDayCloses[self.localRangeDays].avg(self.use_pe)
-        if current < localAvg and (localAvg - current) / localAvg > self.decreasePercent / 100:
-            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+        return current < localAvg and (localAvg - current) / localAvg > self.decreasePercent / 100
 
 
 @dataclass
@@ -119,17 +131,21 @@ class BuyMedian1000Strategy(BuyStrategy):
     use_pe: bool = False
 
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        if tracker.intervalAmount <= 0 or index <= 1000:
+        if tracker.intervalAmount <= 0:
             return
+        if self.check(index, close, pe, cal_range_close):
+            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        if index <= 1000:
+            return False
         current = pe if self.use_pe else close
         if current is None:
-            return
+            return False
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
-            return
+            return False
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        delta  = (current - median) / median * 100
-        if delta < self.percentBuy:
-            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+        return (current - median) / median * 100 < self.percentBuy
 
 
 @dataclass
@@ -140,13 +156,17 @@ class BuyMA1000Strategy(BuyStrategy):
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.intervalAmount <= 0:
             return
+        if not self.check(index, close, pe, cal_range_close):
+            tracker.totalReserveCapital += tracker.intervalAmount
+            tracker.totalReserveFinal   += tracker.intervalAmount
+            tracker.intervalAmount = 0
+            return
+        Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
         current = pe if self.use_pe else close
         if current is not None and index > 1000 and 1000 in cal_range_close[index].rangeDayCloses:
-            localAvg         = cal_range_close[index].rangeDayCloses[1000].avg(self.use_pe)
-            increasedPercent = (current - localAvg) / localAvg
-            if increasedPercent > self.increasedPercentNotBuy / 100:
-                tracker.totalReserveCapital += tracker.intervalAmount
-                tracker.totalReserveFinal   += tracker.intervalAmount
-                tracker.intervalAmount = 0
-                return
-        Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+            localAvg = cal_range_close[index].rangeDayCloses[1000].avg(self.use_pe)
+            if (current - localAvg) / localAvg > self.increasedPercentNotBuy / 100:
+                return False
+        return True

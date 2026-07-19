@@ -821,6 +821,76 @@ _applyColorSwitch();
     return path
 
 
+def _save_stock_chart(df: pd.DataFrame, symbol: str, path: str):
+    """
+    Build a styled price + P/E chart from a stock's df, saved with div_id='peChart'
+    so the backtest inject script works the same as for index charts.
+    """
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+
+    times  = df["time"] if "time" in df.columns else df.index
+    dates  = [str(t)[:10] for t in times]
+    prices = (df["close"] * 1000).tolist()
+    has_pe = "pe_ratio" in df.columns and df["pe_ratio"].notna().any()
+
+    if has_pe:
+        fig = make_subplots(
+            specs=[[{"secondary_y": True}]],
+        )
+        fig.add_trace(go.Scatter(
+            x=dates, y=prices, mode="lines", name=f"{symbol} Price",
+            line=dict(color="#60a5fa", width=1.5), yaxis="y2",
+        ))
+        pe_vals = df["pe_ratio"].tolist()
+        fig.add_trace(go.Scatter(
+            x=dates, y=pe_vals, mode="lines", name="P/E",
+            line=dict(color="#f59e0b", width=1.2), yaxis="y",
+        ))
+        fig.update_layout(
+            yaxis=dict(title="P/E ratio", side="left"),
+            yaxis2=dict(title="Price", side="right", overlaying="y"),
+        )
+    else:
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=dates, y=prices, mode="lines", name=f"{symbol} Price",
+            line=dict(color="#60a5fa", width=1.5),
+        ))
+        fig.update_layout(yaxis=dict(title="Price"))
+
+    fig.update_layout(
+        title=f"{symbol} — Backtest",
+        xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.15)"),
+        paper_bgcolor="#0f1117",
+        plot_bgcolor="#0f1117",
+        font=dict(color="#e2e8f0"),
+        legend=dict(bgcolor="rgba(0,0,0,0)", bordercolor="rgba(255,255,255,0.1)", borderwidth=1),
+        height=620,
+        margin=dict(l=60, r=60, t=50, b=50),
+        hovermode="x unified",
+    )
+
+    plot_div = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
+    full_html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{symbol} Backtest</title>
+<style>
+* {{ box-sizing: border-box; margin: 0; padding: 0; }}
+body {{ background: #0f1117; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; }}
+</style>
+</head>
+<body>
+{plot_div}
+</body>
+</html>"""
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(full_html)
+
+
 def save_backtest_chart(
     df: pd.DataFrame,
     buyedInfos: list,
@@ -830,23 +900,32 @@ def save_backtest_chart(
     path: str = "charts/backtest.html",
     title: str | None = None,
     index: str = "vn30",
+    buy_strategy=None,
+    sell_strategy=None,
+    reinvest_strategy=None,
+    cal_range_close: dict | None = None,
 ) -> str:
     """
     Export a backtest chart built on top of the full PE chart (all percentile
-    lines, mean lines, color toggles), with event markers added on top.
+    lines, mean lines, color toggles), with event markers and condition-zone
+    overlays added on top.
     """
     import os
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
 
-    fig, pe_dates, pe_values, price_data = pe_chart(index=index, bands=True)
-
-    # Write the base PE chart first — do NOT add marker traces to the fig.
-    # If added in Python they race with Plotly's async offset-trace addTraces
-    # and get wiped on the subsequent redraw.
-    save_chart(fig, pe_dates, pe_values, price_data, path)
+    _known_indices = {"vn30", "vndiamond", "vnfinlead", "vnindex"}
+    if index.lower() in _known_indices:
+        fig, pe_dates, pe_values, price_data = pe_chart(index=index, bands=True)
+        save_chart(fig, pe_dates, pe_values, price_data, path)
+        _yaxis = "y2"
+    else:
+        # Individual stock: build a styled price+PE chart from df
+        _save_stock_chart(df, index.upper(), path)
+        _yaxis = "y2" if ("pe_ratio" in df.columns and df["pe_ratio"].notna().any()) else "y"
 
     times = df["time"] if "time" in df.columns else df.index
 
+    # ── Event marker traces ───────────────────────────────────────────────────
     _EVENTS = [
         (buyedInfos,         "Buy",      "rgba(34,197,94,0.75)",  "#15803d", "triangle-up",   9,
          lambda i: f"Invested: {i.finalBuy:,.0f}"),
@@ -866,7 +945,7 @@ def save_backtest_chart(
             "type": "scatter",
             "mode": "markers",
             "name": name,
-            "yaxis": "y2",
+            "yaxis": _yaxis,
             "x": [str(times.iloc[i.index])[:10] for i in infos],
             "y": [i.close / 1000 for i in infos],
             "text": [hover_fn(i) for i in infos],
@@ -875,30 +954,103 @@ def save_backtest_chart(
             "hovertemplate": (
                 f"<b>%{{x}}</b><br>"
                 f"<span style='color:{fill}'>●</span> <b>{name}</b><br>"
-                "Price: %{y:,.0f}<br>%{text}<extra></extra>"
+                "Price: %{{y:,.0f}}<br>%{{text}}<extra></extra>"
             ),
         })
 
-    # The main chart script calls Plotly.addTraces for 8 offset lines asynchronously.
-    # We must wait until those are in gd.data before adding our event traces,
-    # otherwise the offset addTraces re-render will wipe ours.
-    n_after_offsets = len(fig.data) + 8
+    # ── Condition-zone overlay traces ─────────────────────────────────────────
+    # 8 combos of (buy, sell, reinvest) flags → distinct colors
+    _COMBO_COLORS = {
+        (False, False, False): ("#a0aec0", "No condition"),
+        (True,  False, False): ("#22c55e", "Buy zone"),
+        (False, True,  False): ("#ef4444", "Sell zone"),
+        (False, False, True):  ("#f97316", "Reinvest zone"),
+        (True,  False, True):  ("#14b8a6", "Buy + Reinvest"),
+        (True,  True,  False): ("#eab308", "Buy + Sell"),
+        (False, True,  True):  ("#ec4899", "Sell + Reinvest"),
+        (True,  True,  True):  ("#94a3b8", "All conditions"),
+    }
+
+    zone_traces = []
+    if buy_strategy and sell_strategy and reinvest_strategy and cal_range_close is not None:
+        # Build per-row flag arrays
+        n = len(df)
+        b_flags = [False] * n
+        s_flags = [False] * n
+        r_flags = [False] * n
+        for row_i, row in df.iterrows():
+            close = row["close"] * 1000
+            pe    = row.get("pe_ratio", None)
+            b_flags[row_i] = buy_strategy.check(row_i, close, pe, cal_range_close)
+            s_flags[row_i] = sell_strategy.check(row_i, close, pe, cal_range_close)
+            r_flags[row_i] = reinvest_strategy.check(row_i, close, pe, cal_range_close)
+
+        dates  = [str(times.iloc[i])[:10] for i in range(n)]
+        prices = [df["close"].iloc[i] for i in range(n)]  # chart scale (no ×1000)
+
+        for (b, s, r), (color, label) in _COMBO_COLORS.items():
+            y_vals = [prices[i] if (b_flags[i] == b and s_flags[i] == s and r_flags[i] == r) else None
+                      for i in range(n)]
+            if all(v is None for v in y_vals):
+                continue
+            zone_traces.append({
+                "type": "scatter",
+                "mode": "lines",
+                "name": label,
+                "yaxis": _yaxis,
+                "x": dates,
+                "y": y_vals,
+                "connectgaps": False,
+                "line": {"color": color, "width": 3},
+                "opacity": 0.7,
+                "legendgroup": "condzone",
+                "hovertemplate": f"<b>%{{x}}</b><br><span style='color:{color}'>●</span> {label}<br>Price: %{{y:,.2f}}<extra></extra>",
+            })
+
+    # PE chart uses div id="peChart"; plotly write_html uses the first div it creates
+    _div_id   = "peChart" if _yaxis == "y2" else None  # None = find first plotly div
+    _find_gd  = (
+        "document.getElementById('peChart')"
+        if _div_id else
+        "document.querySelector('.plotly-graph-div')"
+    )
 
     inject = f"""
 <script>
 setTimeout(function() {{
-  var gd = document.getElementById('peChart');
-  if (!gd) {{ console.error('peChart div not found'); return; }}
-  console.log('Adding event traces, gd.data.length =', gd.data.length);
-  Plotly.addTraces(gd, {json.dumps(trace_specs)}).then(function() {{
-    console.log('Event traces added, gd.data.length now =', gd.data.length);
+  var gd = {_find_gd};
+  if (!gd) {{ console.error('chart div not found'); return; }}
+  var eventTraces = {json.dumps(trace_specs)};
+  var zoneTraces  = {json.dumps(zone_traces)};
+  var allTraces   = zoneTraces.concat(eventTraces);
+  Plotly.addTraces(gd, allTraces).then(function() {{
+    console.log('Backtest traces added, total =', gd.data.length);
   }});
 }}, 1000);
 </script>
 """
+
+    _gd_ref = _find_gd
+    zone_toggle = f"""
+<div id="condZonePanel" style="position:fixed;bottom:12px;left:12px;z-index:999;
+  background:rgba(30,30,30,0.85);color:#ddd;padding:8px 12px;border-radius:8px;
+  font:13px/1.6 sans-serif;backdrop-filter:blur(4px);">
+  <label style="cursor:pointer;user-select:none;">
+    <input type="checkbox" id="condZoneVis" checked
+      onchange="(function(){{
+        var gd={_gd_ref};
+        var vis=document.getElementById('condZoneVis').checked;
+        var idx=[];
+        gd.data.forEach(function(t,i){{if(t.legendgroup==='condzone')idx.push(i);}});
+        if(idx.length)Plotly.restyle(gd,{{visible:[vis?true:'legendonly']}},idx);
+      }})()">
+    Show condition zones
+  </label>
+</div>
+"""
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
-    html = html.replace("</body>", inject + "</body>")
+    html = html.replace("</body>", zone_toggle + inject + "</body>")
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
 

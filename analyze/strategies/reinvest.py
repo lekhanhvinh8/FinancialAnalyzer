@@ -7,6 +7,9 @@ class ReinvestStrategy:
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         pass
 
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        return False
+
 
 @dataclass
 class ReInvestBottomStrategy(ReinvestStrategy):
@@ -34,14 +37,17 @@ class ReInvestBottomOfTopStrategy(ReinvestStrategy):
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalReserveFinal <= 0:
             return
+        if self.check(index, close, pe, cal_range_close):
+            Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
         current = pe if self.use_pe else close
         if current is None:
-            return
+            return False
         if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
-            return
+            return False
         localTop = cal_range_close[index].rangeDayCloses[self.localRangeDays].top(self.use_pe)
-        if current < localTop and (localTop - current) / localTop > self.decreasePercent / 100:
-            Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+        return current < localTop and (localTop - current) / localTop > self.decreasePercent / 100
 
 
 @dataclass
@@ -76,17 +82,21 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     use_pe: bool = False
 
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        if tracker.totalReserveFinal <= 0 or index <= 1000:
+        if tracker.totalReserveFinal <= 0:
             return
+        if self.check(index, close, pe, cal_range_close):
+            Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        if index <= 1000:
+            return False
         current = pe if self.use_pe else close
         if current is None:
-            return
+            return False
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
-            return
+            return False
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        delta  = (current - median) / median * 100
-        if delta < self.percentReinvest:
-            Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+        return (current - median) / median * 100 < self.percentReinvest
 
 
 @dataclass
@@ -96,12 +106,18 @@ class ReInvestUnderMA1000Strategy(ReinvestStrategy):
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalReserveFinal <= 0 or index <= 1000:
             return
+        if self.check(index, close, pe, cal_range_close):
+            Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        if index <= 1000:
+            return False
         current = pe if self.use_pe else close
         if current is None:
-            return
-        if 1000 in cal_range_close[index].rangeDayCloses:
-            if current < cal_range_close[index].rangeDayCloses[1000].avg(self.use_pe):
-                Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+            return False
+        if 1000 not in cal_range_close[index].rangeDayCloses:
+            return False
+        return current < cal_range_close[index].rangeDayCloses[1000].avg(self.use_pe)
 
 
 @dataclass

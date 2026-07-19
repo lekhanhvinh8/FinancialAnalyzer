@@ -16,6 +16,7 @@ import pandas as pd
 import database as db
 from analyze.range_calc import build_cal_range_close
 from analyze.engine import estimate
+from analyze.runner import load_symbol_df
 from export.chart import save_backtest_chart
 from analyze.strategies.buy import (
     BuyIntervalStrategy, BuyBottomStrategy, BuyMAStrategy,
@@ -37,18 +38,9 @@ INTERVAL_MONEY = 8_000_000
 INDEX_SYMBOL   = 'VN30'
 
 
-def load_df():
-    prices = db.load_daily_prices(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
-    pe     = db.load_pe_ratios(INDEX_SYMBOL).reset_index().rename(columns={'date': 'time'})
-    pe     = pe.dropna(subset=['pe_ratio'])[['time', 'pe_ratio']]
-    df     = prices.merge(pe, on='time', how='left')
-    df['pe_ratio'] = df['pe_ratio'].ffill()
-    return df.reset_index(drop=True)
-
-
 if __name__ == '__main__':
     db.init_db()
-    df = load_df()
+    df = load_symbol_df(INDEX_SYMBOL)
     firstClose = df['close'].iloc[0] * 1000
     firstPE    = df['pe_ratio'].dropna().iloc[0]
     firstDate  = pd.Timestamp(df['time'].iloc[0])
@@ -90,6 +82,9 @@ if __name__ == '__main__':
 
     out = Path(__file__).parent.parent / f"charts/backtest_{INDEX_SYMBOL.lower()}.html"
     save_backtest_chart(df, buyedInfos, sellInfos, reinvestInfos,
-                        path=str(out), index=INDEX_SYMBOL.lower())
+                        path=str(out), index=INDEX_SYMBOL.lower(),
+                        buy_strategy=buyStrategy, sell_strategy=sellStrategy,
+                        reinvest_strategy=reinvestStrategy,
+                        cal_range_close=cal_range_close)
     os.startfile(out)
  

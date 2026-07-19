@@ -1,4 +1,4 @@
-"""Live sync progress tracker — writes sync_progress.html (auto-refreshes every 3s)."""
+"""Live progress trackers — writes auto-refreshing HTML files."""
 
 import json
 import time
@@ -262,4 +262,215 @@ class SyncProgress:
         )
         Path("sync_progress.html").write_text(
             _HTML.replace("__DATA__", data_json), encoding="utf-8"
+        )
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RunAllProgress
+# ─────────────────────────────────────────────────────────────────────────────
+
+_RUN_ALL_HTML = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="3">
+<title>Run All Progress</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f1117; color: #e2e8f0;
+  font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px;
+  padding: 24px; min-height: 100vh;
+}
+h1 { font-size: 20px; font-weight: 700; }
+.header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; flex-wrap: wrap; }
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.badge-running { background: #1d4ed8; color: #bfdbfe; }
+.badge-done    { background: #14532d; color: #86efac; }
+.meta { color: #64748b; font-size: 13px; }
+.meta b { color: #94a3b8; font-weight: 500; }
+.bar-bg { background: #1e293b; border-radius: 6px; height: 8px; overflow: hidden; margin-bottom: 20px; }
+.bar-fill { height: 100%; border-radius: 6px; background: #3b82f6; transition: width 0.4s; }
+.section { margin-top: 24px; }
+.section-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: #475569; margin-bottom: 10px;
+}
+.cur-card {
+  background: #1a1d27; border: 1px solid #2563eb; border-radius: 8px;
+  padding: 12px 18px; display: flex; align-items: center; gap: 14px;
+}
+.spinner {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid #3b82f6; border-top-color: transparent;
+  flex-shrink: 0; animation: spin 0.75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.cur-sym  { font-size: 16px; font-weight: 700; color: #60a5fa; }
+.cur-sub  { font-size: 12px; color: #475569; margin-top: 3px; }
+.no-cur   { color: #475569; font-style: italic; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  text-align: left; padding: 8px 12px; color: #475569;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  border-bottom: 1px solid #1e2130; white-space: nowrap;
+  position: sticky; top: 0; background: #0f1117;
+}
+td { padding: 6px 12px; border-bottom: 1px solid #161924; color: #94a3b8; white-space: nowrap; }
+tr:hover td { background: #1a1d27; }
+td.sym { color: #e2e8f0; font-weight: 600; }
+td.err { color: #ef4444; font-style: italic; }
+a { color: #60a5fa; text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<script>
+const D = __DATA__;
+
+function elapsed(s) {
+  if (s < 60) return Math.round(s) + "s";
+  const m = Math.floor(s / 60);
+  if (m < 60) return m + "m " + Math.round(s % 60) + "s";
+  return Math.floor(m / 60) + "h " + (m % 60) + "m";
+}
+function pctColor(v) {
+  if (v === null) return "";
+  if (v >= 200) return "background:#166534;color:#bbf7d0";
+  if (v >= 100) return "background:#14532d;color:#d1fae5";
+  if (v >= 50)  return "background:#365314;color:#ecfccb";
+  if (v >= 0)   return "background:#422006;color:#fef3c7";
+  return "background:#7f1d1d;color:#fee2e2";
+}
+
+const done  = D.results.length + D.errors.length;
+const total = D.total;
+const pct   = total > 0 ? Math.round(done / total * 100) : 0;
+const running = D.status === "running";
+
+// Header
+let h = `<div class="header">
+  <h1>Run All — Backtest</h1>
+  <span class="badge badge-${running ? "running" : "done"}">${running ? "⟳ Running" : "✓ Done"}</span>
+  <span class="meta">Started <b>${D.started_at}</b></span>
+  <span class="meta">Elapsed <b>${elapsed(D.elapsed_s)}</b></span>
+  <span class="meta"><b>${done} / ${total}</b> symbols</span>
+</div>`;
+
+// Progress bar
+h += `<div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>`;
+
+// Current
+h += `<div class="section"><div class="section-title">Currently Processing</div>`;
+if (D.current) {
+  h += `<div class="cur-card">
+    <div class="spinner"></div>
+    <div>
+      <div class="cur-sym">${D.current.symbol}</div>
+      <div class="cur-sub">started ${D.current.started_at}</div>
+    </div>
+  </div>`;
+} else {
+  h += `<div class="no-cur">${running ? "Preparing…" : "Finished at " + (D.finished_at || "—")}</div>`;
+}
+h += `</div>`;
+
+// Results table
+h += `<div class="section"><div class="section-title">Results (${D.results.length} completed)</div>`;
+if (D.results.length === 0 && D.errors.length === 0) {
+  h += `<div class="no-cur">No results yet…</div>`;
+} else {
+  h += `<table><thead><tr>
+    <th>#</th><th>Symbol</th>
+    <th>Median growth</th><th>Buys</th><th>Sells</th><th>Reinvests</th>
+    <th>Interval growth</th><th>Chart</th><th>Duration</th>
+  </tr></thead><tbody>`;
+  D.results.forEach((r, i) => {
+    const ms = pctColor(r.median_growth);
+    const is = pctColor(r.interval_growth);
+    h += `<tr>
+      <td style="color:#475569">${i+1}</td>
+      <td class="sym">${r.symbol}</td>
+      <td style="${ms};text-align:right;padding:6px 12px">${r.median_growth !== null ? r.median_growth.toFixed(2) + "%" : "—"}</td>
+      <td style="text-align:right">${r.buys}</td>
+      <td style="text-align:right">${r.sells}</td>
+      <td style="text-align:right">${r.reinvests}</td>
+      <td style="${is};text-align:right;padding:6px 12px">${r.interval_growth !== null ? r.interval_growth.toFixed(2) + "%" : "—"}</td>
+      <td><a href="${r.chart}" target="_blank">open</a></td>
+      <td style="color:#475569">${r.duration_s.toFixed(1)}s</td>
+    </tr>`;
+  });
+  D.errors.forEach(e => {
+    h += `<tr><td style="color:#475569">—</td><td class="sym">${e.symbol}</td>
+      <td class="err" colspan="7">${e.note}</td></tr>`;
+  });
+  h += `</tbody></table>`;
+}
+h += `</div>`;
+
+document.body.innerHTML = h;
+</script>
+</body>
+</html>"""
+
+
+class RunAllProgress:
+    def __init__(self, symbols: list, out: str = "charts/run_all_progress.html"):
+        self._start   = time.time()
+        self._out     = Path(out)
+        self._out.parent.mkdir(exist_ok=True)
+        self.data = {
+            "started_at":  _now(),
+            "updated_at":  _now(),
+            "finished_at": None,
+            "elapsed_s":   0,
+            "status":      "running",
+            "total":       len(symbols),
+            "current":     None,
+            "results":     [],
+            "errors":      [],
+        }
+        self._flush()
+
+    def begin(self, symbol: str):
+        self.data["current"] = {"symbol": symbol, "started_at": _now()}
+        self._flush()
+
+    def end_ok(self, symbol: str, duration_s: float,
+               median_growth: float, buys: int, sells: int, reinvests: int,
+               interval_growth: float, chart: str):
+        self.data["current"] = None
+        self.data["results"].append({
+            "symbol":          symbol,
+            "median_growth":   median_growth,
+            "buys":            buys,
+            "sells":           sells,
+            "reinvests":       reinvests,
+            "interval_growth": interval_growth,
+            "chart":           chart,
+            "duration_s":      round(duration_s, 1),
+        })
+        self._flush()
+
+    def end_err(self, symbol: str, note: str):
+        self.data["current"] = None
+        self.data["errors"].append({"symbol": symbol, "note": note[:120]})
+        self._flush()
+
+    def finish(self):
+        self.data["status"]      = "done"
+        self.data["finished_at"] = _now()
+        self.data["current"]     = None
+        self._flush()
+
+    def _flush(self):
+        self.data["updated_at"] = _now()
+        self.data["elapsed_s"]  = round(time.time() - self._start, 1)
+        self._out.write_text(
+            _RUN_ALL_HTML.replace("__DATA__", json.dumps(self.data, ensure_ascii=False)),
+            encoding="utf-8",
         )

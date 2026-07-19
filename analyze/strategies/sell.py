@@ -7,6 +7,9 @@ class SellStrategy:
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         pass
 
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        return False
+
 
 @dataclass
 class SellTopStrategy(SellStrategy):
@@ -29,15 +32,17 @@ class SellTopOfBottomStrategy(SellStrategy):
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
             return
-        current = pe if self.use_pe else close
-        if current is None:
-            return
-        if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
-            return
-        localBottom = cal_range_close[index].rangeDayCloses[self.localRangeDays].bottom(self.use_pe)
-        if (current - localBottom) / localBottom > self.percentSell / 100:
+        if self.check(index, close, pe, cal_range_close):
             Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
 
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        current = pe if self.use_pe else close
+        if current is None:
+            return False
+        if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
+            return False
+        localBottom = cal_range_close[index].rangeDayCloses[self.localRangeDays].bottom(self.use_pe)
+        return (current - localBottom) / localBottom > self.percentSell / 100
 
 
 @dataclass
@@ -74,14 +79,19 @@ class SellTopOfMA1000Strategy(SellStrategy):
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0 or index <= 1000:
             return
+        if self.check(index, close, pe, cal_range_close):
+            Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        if index <= 1000:
+            return False
         current = pe if self.use_pe else close
         if current is None:
-            return
-        if 1000 in cal_range_close[index].rangeDayCloses:
-            localAvg        = cal_range_close[index].rangeDayCloses[1000].avg(self.use_pe)
-            increasePercent = (current - localAvg) / localAvg
-            if increasePercent > self.percentSell / 100:
-                Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
+            return False
+        if 1000 not in cal_range_close[index].rangeDayCloses:
+            return False
+        localAvg = cal_range_close[index].rangeDayCloses[1000].avg(self.use_pe)
+        return (current - localAvg) / localAvg > self.percentSell / 100
 
 
 @dataclass
@@ -90,14 +100,18 @@ class SellMedian1000Strategy(SellStrategy):
     use_pe: bool = False
 
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0 or index <= 1000:
+        if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
             return
+        if self.check(index, close, pe, cal_range_close):
+            Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        if index <= 1000:
+            return False
         current = pe if self.use_pe else close
         if current is None:
-            return
+            return False
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
-            return
+            return False
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        delta  = (current - median) / median * 100
-        if delta > self.percentSell:
-            Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
+        return (current - median) / median * 100 > self.percentSell
