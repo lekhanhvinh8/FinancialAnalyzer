@@ -18,15 +18,16 @@ from analyze.engine import estimate
 from analyze.strategies.buy import (
     BuyIntervalStrategy, BuyBottomStrategy, BuyMAStrategy,
     BuyUptrendStrategy, BuyPartialStrategy, BuyPartialMA, BuyMA1000Strategy,
+    BuyMedian1000Strategy,
 )
 from analyze.strategies.sell import (
     SellTopStrategy, SellTopOfBottomStrategy, SellTopOfMA1000Strategy,
-    SellPartialStrategy,
+    SellPartialStrategy, SellMedian1000Strategy,
 )
 from analyze.strategies.reinvest import (
     ReInvestBottomStrategy, ReInvestBottomOfTopStrategy,
     ReInvestPartialStrategy, ReInvestUnderMA1000Strategy,
-    ReInvestUnderMA1000OrMaxHoldTimeStrategy,
+    ReInvestUnderMA1000OrMaxHoldTimeStrategy, ReInvestMedian1000Strategy,
 )
 from analyze.models import DeltaToActionMatrix
 
@@ -60,22 +61,25 @@ if __name__ == '__main__':
     # ════════════════════════════════════════════════════════════════════════════
     # ── EDIT HERE ────────────────────────────────────────────────────────────
 
-    buyIntervalStrategy = BuyIntervalStrategy()
-    buyMAStrategy = BuyMAStrategy(
-        localRangeDays  = 999,
-        decreasePercent = 20,
-        use_pe = True,
+    buyStrategy = BuyMedian1000Strategy(
+        percentBuy = 40,
+        use_pe     = False,
     )
 
-    sellStrategy = SellTopOfMA1000Strategy(
-        percentSell = 45,
+    sellStrategy = SellMedian1000Strategy(
+        percentSell = 60,  # sell when price is > 20% above 1000d median
+        use_pe      = False,
     )
 
-    reinvestStrategy = ReInvestUnderMA1000Strategy()
+    reinvestStrategy = ReInvestMedian1000Strategy(
+        percentReinvest = -1,
+        use_pe          = False,
+    )
 
     # ════════════════════════════════════════════════════════════════════════════
 
     print("Running estimate ...")
     allTotalCapital, allTotalFinal, allRatioGrowth, buyedInfos, sellInfos, reinvestInfos = estimate(
-        df, INTERVAL_MONEY, buyMAStrategy, None, None, cal_range_close, isPrint=True
+        df, INTERVAL_MONEY, buyStrategy, sellStrategy, reinvestStrategy, cal_range_close, isPrint=True
     )
+ 
