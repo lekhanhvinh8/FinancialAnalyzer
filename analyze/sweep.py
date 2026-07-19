@@ -7,7 +7,7 @@ Usage:
     results = sweep_2d(
         df, INTERVAL_MONEY, cal_range_close,
         make_strategies=lambda p1, p2: (
-            BuyMAStrategy(df=df, localRangeDays=p1, decreasePercent=p2),
+            BuyMAStrategy(localRangeDays=p1, decreasePercent=p2),
             sell_strategy,
             reinvest_strategy,
         ),

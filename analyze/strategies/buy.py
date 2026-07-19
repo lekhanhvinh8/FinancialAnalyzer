@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from datetime import datetime
 from ..models import InvestmentTracker, DeltaToActionMatrix
 from ..engine import Buyer
 
@@ -17,8 +16,6 @@ class BuyIntervalStrategy(BuyStrategy):
 
 @dataclass
 class BuyBottomStrategy(BuyStrategy):
-    firstLocalTop: float
-    firstLocalTopDate: datetime
     localRangeDays: int = 1
     decreasePercent: float = 1
     use_pe: bool = False
@@ -27,16 +24,15 @@ class BuyBottomStrategy(BuyStrategy):
         current = pe if self.use_pe else close
         if current is None:
             return
-        localTop = self.firstLocalTop
-        if index in cal_range_close and self.localRangeDays in cal_range_close[index].rangeDayCloses:
-            localTop = cal_range_close[index].rangeDayCloses[self.localRangeDays].top(self.use_pe)
+        if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
+            return
+        localTop = cal_range_close[index].rangeDayCloses[self.localRangeDays].top(self.use_pe)
         if current < localTop and (localTop - current) / localTop > self.decreasePercent / 100:
             Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
 
 
 @dataclass
 class BuyMAStrategy(BuyStrategy):
-    firstLocalAvg: float
     localRangeDays: int = 1
     decreasePercent: float = 1
     use_pe: bool = False
@@ -45,9 +41,9 @@ class BuyMAStrategy(BuyStrategy):
         current = pe if self.use_pe else close
         if current is None:
             return
-        localAvg = self.firstLocalAvg
-        if index in cal_range_close and self.localRangeDays in cal_range_close[index].rangeDayCloses:
-            localAvg = cal_range_close[index].rangeDayCloses[self.localRangeDays].avg(self.use_pe)
+        if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
+            return
+        localAvg = cal_range_close[index].rangeDayCloses[self.localRangeDays].avg(self.use_pe)
         if current < localAvg and (localAvg - current) / localAvg > self.decreasePercent / 100:
             Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
 
@@ -71,7 +67,6 @@ class BuyUptrendStrategy(BuyStrategy):
             Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
 
 
-
 @dataclass
 class BuyPartialStrategy(BuyStrategy):
     deltaToActions: list[DeltaToActionMatrix] = field(default_factory=list)
@@ -81,6 +76,8 @@ class BuyPartialStrategy(BuyStrategy):
         current = pe if self.use_pe else close
         if current is None:
             current = close
+        if index not in cal_range_close:
+            return
         for action in self.deltaToActions:
             if action.rangeDays in cal_range_close[index].rangeDayCloses:
                 localBottom  = cal_range_close[index].rangeDayCloses[action.rangeDays].bottom(self.use_pe)
@@ -101,10 +98,14 @@ class BuyPartialMA(BuyStrategy):
     use_pe: bool = False
 
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        rc     = cal_range_close[index].rangeDayCloses
-        ma50   = rc[50].avg(self.use_pe)
+        if index not in cal_range_close:
+            return
+        rc = cal_range_close[index].rangeDayCloses
+        if 50 not in rc:
+            return
+        ma50    = rc[50].avg(self.use_pe)
         current = (pe if self.use_pe else close) or close
-        amount = tracker.intervalAmount * 0.5 if (current - ma50) > 0.3 else tracker.intervalAmount
+        amount  = tracker.intervalAmount * 0.5 if (current - ma50) > 0.3 else tracker.intervalAmount
         Buyer().buy(tracker, amount, 0, index, close, isPrint)
         if tracker.intervalAmount > 0:
             tracker.totalReserveCapital += tracker.intervalAmount

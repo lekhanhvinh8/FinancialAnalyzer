@@ -22,7 +22,6 @@ class SellTopStrategy(SellStrategy):
 
 @dataclass
 class SellTopOfBottomStrategy(SellStrategy):
-    firstLocalBottom: float
     percentSell: float = 0
     localRangeDays: int = 0
     use_pe: bool = False
@@ -33,9 +32,9 @@ class SellTopOfBottomStrategy(SellStrategy):
         current = pe if self.use_pe else close
         if current is None:
             return
-        localBottom = self.firstLocalBottom
-        if index in cal_range_close and self.localRangeDays in cal_range_close[index].rangeDayCloses:
-            localBottom = cal_range_close[index].rangeDayCloses[self.localRangeDays].bottom(self.use_pe)
+        if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
+            return
+        localBottom = cal_range_close[index].rangeDayCloses[self.localRangeDays].bottom(self.use_pe)
         if (current - localBottom) / localBottom > self.percentSell / 100:
             Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
 
@@ -43,7 +42,6 @@ class SellTopOfBottomStrategy(SellStrategy):
 
 @dataclass
 class SellPartialStrategy(SellStrategy):
-    firstLocalBottom: float
     growthToAllocations: list[DeltaToActionMatrix] = field(default_factory=list)
     lastIndexSell: int = 0
     use_pe: bool = False
@@ -53,6 +51,8 @@ class SellPartialStrategy(SellStrategy):
             return
         current = pe if self.use_pe else close
         if current is None:
+            return
+        if index not in cal_range_close:
             return
         for alloc in self.growthToAllocations:
             if alloc.rangeDays in cal_range_close[index].rangeDayCloses:
@@ -68,7 +68,6 @@ class SellPartialStrategy(SellStrategy):
 
 @dataclass
 class SellTopOfMA1000Strategy(SellStrategy):
-    firstLocalBottom: float
     percentSell: float = 0
     use_pe: bool = False
 

@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
     firstClose = df['close'].iloc[0] * 1000
 
-    sellStrategy     = SellTopOfMA1000Strategy(firstLocalBottom=firstClose, percentSell=45)
+    sellStrategy     = SellTopOfMA1000Strategy(percentSell=45)
     reinvestStrategy = ReInvestUnderMA1000Strategy()
 
     # ── Single run ────────────────────────────────────────────────────────────
@@ -105,8 +105,7 @@ if __name__ == '__main__':
 
     def make_strategies(local_range_days, decrease_percent):
         return (
-            BuyMAStrategy(firstLocalAvg=first_pe,
-                          localRangeDays=local_range_days,
+            BuyMAStrategy(localRangeDays=local_range_days,
                           decreasePercent=decrease_percent,
                           use_pe=True),
             sellStrategy,

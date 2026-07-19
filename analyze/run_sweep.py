@@ -41,7 +41,7 @@ def load_df():
 
 def run_sweep(df, cal_range_close):
     first_close  = df['close'].iloc[0] * 1000
-    sell_s       = SellTopOfMA1000Strategy(firstLocalBottom=first_close, percentSell=45)
+    sell_s       = SellTopOfMA1000Strategy(percentSell=45)
     reinvest_s   = ReInvestUnderMA1000Strategy()
 
     combos = list(itertools.product(RANGE_DAYS_VALS, DECREASE_VALS))
@@ -49,8 +49,7 @@ def run_sweep(df, cal_range_close):
     results = {}
 
     for i, (rd, dp) in enumerate(combos, 1):
-        buy_s = BuyMAStrategy(firstLocalAvg=first_close,
-                              localRangeDays=rd, decreasePercent=dp, use_pe=False)
+        buy_s = BuyMAStrategy(localRangeDays=rd, decreasePercent=dp, use_pe=False)
         _, _, ratio, *_ = estimate(df, INTERVAL_MONEY, buy_s, sell_s, reinvest_s,
                                    cal_range_close, isPrint=False)
         results[(rd, dp)] = ratio
@@ -134,10 +133,9 @@ def run_one(range_days: int, decrease_percent: float, use_pe: bool = False):
 
     first_val    = df['pe_ratio'].dropna().iloc[0] if use_pe else df['close'].iloc[0] * 1000
     first_close  = df['close'].iloc[0] * 1000
-    sell_s       = SellTopOfMA1000Strategy(firstLocalBottom=first_close, percentSell=45)
+    sell_s       = SellTopOfMA1000Strategy(percentSell=45)
     reinvest_s   = ReInvestUnderMA1000Strategy()
-    buy_s        = BuyMAStrategy(firstLocalAvg=first_val,
-                                 localRangeDays=range_days,
+    buy_s        = BuyMAStrategy(localRangeDays=range_days,
                                  decreasePercent=decrease_percent,
                                  use_pe=use_pe)
 

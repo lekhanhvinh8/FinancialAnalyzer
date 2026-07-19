@@ -27,7 +27,6 @@ class ReInvestBottomStrategy(ReinvestStrategy):
 
 @dataclass
 class ReInvestBottomOfTopStrategy(ReinvestStrategy):
-    firstLocalTop: float
     localRangeDays: int = 1
     decreasePercent: float = 1
     use_pe: bool = False
@@ -38,12 +37,11 @@ class ReInvestBottomOfTopStrategy(ReinvestStrategy):
         current = pe if self.use_pe else close
         if current is None:
             return
-        localTop = self.firstLocalTop
-        if index in cal_range_close and self.localRangeDays in cal_range_close[index].rangeDayCloses:
-            localTop = cal_range_close[index].rangeDayCloses[self.localRangeDays].top(self.use_pe)
+        if index not in cal_range_close or self.localRangeDays not in cal_range_close[index].rangeDayCloses:
+            return
+        localTop = cal_range_close[index].rangeDayCloses[self.localRangeDays].top(self.use_pe)
         if current < localTop and (localTop - current) / localTop > self.decreasePercent / 100:
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
-
 
 
 @dataclass
@@ -57,6 +55,8 @@ class ReInvestPartialStrategy(ReinvestStrategy):
             return
         current = pe if self.use_pe else close
         if current is None:
+            return
+        if index not in cal_range_close:
             return
         for action in self.deltaToActions:
             if action.rangeDays in cal_range_close[index].rangeDayCloses:

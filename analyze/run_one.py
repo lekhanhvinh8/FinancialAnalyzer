@@ -62,15 +62,13 @@ if __name__ == '__main__':
 
     buyIntervalStrategy = BuyIntervalStrategy()
     buyMAStrategy = BuyMAStrategy(
-        firstLocalAvg   = firstClose,
         localRangeDays  = 999,
         decreasePercent = 20,
         use_pe = True,
     )
 
     sellStrategy = SellTopOfMA1000Strategy(
-        firstLocalBottom = firstClose,
-        percentSell      = 45,
+        percentSell = 45,
     )
 
     reinvestStrategy = ReInvestUnderMA1000Strategy()
