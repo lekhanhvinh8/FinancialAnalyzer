@@ -821,6 +821,91 @@ _applyColorSwitch();
     return path
 
 
+def save_backtest_chart(
+    df: pd.DataFrame,
+    buyedInfos: list,
+    sellInfos: list,
+    reinvestInfos: list,
+    depositInfos: list | None = None,
+    path: str = "charts/backtest.html",
+    title: str | None = None,
+    index: str = "vn30",
+) -> str:
+    """
+    Export a backtest chart built on top of the full PE chart (all percentile
+    lines, mean lines, color toggles), with event markers added on top.
+    """
+    import os
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+
+    fig, pe_dates, pe_values, price_data = pe_chart(index=index, bands=True)
+
+    # Write the base PE chart first — do NOT add marker traces to the fig.
+    # If added in Python they race with Plotly's async offset-trace addTraces
+    # and get wiped on the subsequent redraw.
+    save_chart(fig, pe_dates, pe_values, price_data, path)
+
+    times = df["time"] if "time" in df.columns else df.index
+
+    _EVENTS = [
+        (buyedInfos,         "Buy",      "rgba(34,197,94,0.75)",  "#15803d", "triangle-up",   9,
+         lambda i: f"Invested: {i.finalBuy:,.0f}"),
+        (sellInfos,          "Sell",     "rgba(239,68,68,0.75)",  "#991b1b", "triangle-down", 9,
+         lambda i: f"Return: {i.sellFinal:,.0f}  (+{i.sellGrowthRatito:.1f}%)"),
+        (reinvestInfos,      "Reinvest", "rgba(249,115,22,0.75)", "#c2410c", "diamond",       8,
+         lambda i: f"Reinvested: {i.reInvestFinal:,.0f}"),
+        (depositInfos or [], "Deposit",  "rgba(168,85,247,0.75)", "#7e22ce", "star",          9,
+         lambda i: f"Interest: {i.totalReserveInterest:,.0f}"),
+    ]
+
+    trace_specs = []
+    for infos, name, fill, border, symbol, size, hover_fn in _EVENTS:
+        if not infos:
+            continue
+        trace_specs.append({
+            "type": "scatter",
+            "mode": "markers",
+            "name": name,
+            "yaxis": "y2",
+            "x": [str(times.iloc[i.index])[:10] for i in infos],
+            "y": [i.close / 1000 for i in infos],
+            "text": [hover_fn(i) for i in infos],
+            "marker": {"symbol": symbol, "size": size, "color": fill,
+                       "line": {"color": border, "width": 1}},
+            "hovertemplate": (
+                f"<b>%{{x}}</b><br>"
+                f"<span style='color:{fill}'>●</span> <b>{name}</b><br>"
+                "Price: %{y:,.0f}<br>%{text}<extra></extra>"
+            ),
+        })
+
+    # The main chart script calls Plotly.addTraces for 8 offset lines asynchronously.
+    # We must wait until those are in gd.data before adding our event traces,
+    # otherwise the offset addTraces re-render will wipe ours.
+    n_after_offsets = len(fig.data) + 8
+
+    inject = f"""
+<script>
+setTimeout(function() {{
+  var gd = document.getElementById('peChart');
+  if (!gd) {{ console.error('peChart div not found'); return; }}
+  console.log('Adding event traces, gd.data.length =', gd.data.length);
+  Plotly.addTraces(gd, {json.dumps(trace_specs)}).then(function() {{
+    console.log('Event traces added, gd.data.length now =', gd.data.length);
+  }});
+}}, 1000);
+</script>
+"""
+    with open(path, "r", encoding="utf-8") as f:
+        html = f.read()
+    html = html.replace("</body>", inject + "</body>")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    print(f"Backtest chart saved to {path}")
+    return path
+
+
 if __name__ == "__main__":
     import sys, os
     idx = sys.argv[1] if len(sys.argv) > 1 else "vn30"

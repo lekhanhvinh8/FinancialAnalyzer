@@ -11,10 +11,12 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+import os
 import pandas as pd
 import database as db
 from analyze.range_calc import build_cal_range_close
 from analyze.engine import estimate
+from export.chart import save_backtest_chart
 from analyze.strategies.buy import (
     BuyIntervalStrategy, BuyBottomStrategy, BuyMAStrategy,
     BuyUptrendStrategy, BuyPartialStrategy, BuyPartialMA, BuyMA1000Strategy,
@@ -60,21 +62,24 @@ if __name__ == '__main__':
 
     # ════════════════════════════════════════════════════════════════════════════
     # ── EDIT HERE ────────────────────────────────────────────────────────────
-
-    buyStrategy = BuyMedian1000Strategy(
+    buyIntervalStrategy = BuyIntervalStrategy()
+    buyMedian1000Strategy = BuyMedian1000Strategy(
         percentBuy = 40,
         use_pe     = False,
     )
-
-    sellStrategy = SellMedian1000Strategy(
+    sellMedian1000Strategy = SellMedian1000Strategy(
         percentSell = 60,  # sell when price is > 20% above 1000d median
         use_pe      = False,
     )
-
-    reinvestStrategy = ReInvestMedian1000Strategy(
+    reinvestMedian1000Strategy = ReInvestMedian1000Strategy(
         percentReinvest = -1,
         use_pe          = False,
     )
+
+
+    buyStrategy = buyMedian1000Strategy
+    sellStrategy = sellMedian1000Strategy
+    reinvestStrategy = reinvestMedian1000Strategy
 
     # ════════════════════════════════════════════════════════════════════════════
 
@@ -82,4 +87,9 @@ if __name__ == '__main__':
     allTotalCapital, allTotalFinal, allRatioGrowth, buyedInfos, sellInfos, reinvestInfos = estimate(
         df, INTERVAL_MONEY, buyStrategy, sellStrategy, reinvestStrategy, cal_range_close, isPrint=True
     )
+
+    out = Path(__file__).parent.parent / f"charts/backtest_{INDEX_SYMBOL.lower()}.html"
+    save_backtest_chart(df, buyedInfos, sellInfos, reinvestInfos,
+                        path=str(out), index=INDEX_SYMBOL.lower())
+    os.startfile(out)
  
