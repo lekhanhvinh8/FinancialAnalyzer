@@ -341,7 +341,8 @@ def save_chart(
     <label class="chk"><input type="checkbox" id="peMeanVis" checked> Show</label>
     <input type="number" id="peMeanW" value="{mean_window}" min="5" max="5000" step="10" title="Rolling window (days)">
     <span class="unit">d</span>
-  </div>"""
+  </div>
+  <span class="off-wrap"><input type="checkbox" id="off-en-peMean">±<input type="number" id="off-pct-peMean" class="off-pct" value="50">%</span>"""
 
     price_pct_control = ""
     price_checkbox_js = ""
@@ -359,6 +360,7 @@ def save_chart(
     <input type="number" id="priceMeanW" value="{mean_window}" min="5" max="5000" step="10" title="Rolling window (days)">
     <span class="unit">d</span>
   </div>
+  <span class="off-wrap"><input type="checkbox" id="off-en-prMean">±<input type="number" id="off-pct-prMean" class="off-pct" value="50">%</span>
   <div class="divider"></div>
   <span class="section-label">Price Line</span>
   <label class="chk"><input type="checkbox" id="priceColorVis" checked> Show</label>
@@ -372,12 +374,15 @@ def save_chart(
   <label class="chk" style="margin-left:4px">
     <input type="checkbox" class="pct-price-cb" data-sub="0" checked>
     <span class="dot" style="background:rgba(46,160,67,0.9)"></span>25th</label>
+  <span class="off-wrap"><input type="checkbox" id="off-en-prPct25">±<input type="number" id="off-pct-prPct25" class="off-pct" value="50">%</span>
   <label class="chk">
     <input type="checkbox" class="pct-price-cb" data-sub="1" checked>
     <span class="dot" style="background:rgba(100,100,200,0.9)"></span>Med</label>
+  <span class="off-wrap"><input type="checkbox" id="off-en-prPctMed">±<input type="number" id="off-pct-prPctMed" class="off-pct" value="50">%</span>
   <label class="chk">
     <input type="checkbox" class="pct-price-cb" data-sub="2" checked>
-    <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>"""
+    <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>
+  <span class="off-wrap"><input type="checkbox" id="off-en-prPct75">±<input type="number" id="off-pct-prPct75" class="off-pct" value="50">%</span>"""
 
         price_checkbox_js = f"""
 document.getElementById('peLineVis').addEventListener('change', function() {{
@@ -407,12 +412,11 @@ function recomputePricePct() {{
     const zoneY = _computeZoneY();
     [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
   }}
+  const prP25Y = rollingQuantile(priceValues, ppw, 0.25);
+  const prMedY = rollingQuantile(priceValues, ppw, 0.50);
+  const prP75Y = rollingQuantile(priceValues, ppw, 0.75);
   Plotly.update(gd, {{
-    y: [
-      rollingQuantile(priceValues, ppw, 0.25),
-      rollingQuantile(priceValues, ppw, 0.50),
-      rollingQuantile(priceValues, ppw, 0.75),
-    ],
+    y: [prP25Y, prMedY, prP75Y],
     name: ['Price 25th (' + ppw + 'd)', 'Price Median (' + ppw + 'd)', 'Price 75th (' + ppw + 'd)'],
     visible: [
       (vis && subs[0]) ? true : 'legendonly',
@@ -420,6 +424,9 @@ function recomputePricePct() {{
       (vis && subs[2]) ? true : 'legendonly',
     ]
   }}, layoutUpd, [{price_pct_idx[0]}, {price_pct_idx[1]}, {price_pct_idx[2]}]);
+  _applyOffset('prPct25', prP25Y);
+  _applyOffset('prPctMed', prMedY);
+  _applyOffset('prPct75', prP75Y);
 }}
 document.getElementById('pricePctVis').addEventListener('change', togglePricePct);
 document.querySelectorAll('.pct-price-cb').forEach(cb => cb.addEventListener('change', togglePricePct));
@@ -427,11 +434,13 @@ document.getElementById('pricePctW').addEventListener('keydown', e => {{ if (e.k
 function recomputePriceMean() {{
   const w = parseInt(document.getElementById('priceMeanW').value) || {mean_window};
   const vis = document.getElementById('priceMeanVis').checked;
+  const meanY = rollingMean(priceValues, w);
   Plotly.update(gd, {{
-    y: [rollingMean(priceValues, w)],
+    y: [meanY],
     name: ['Price Mean (' + w + 'd)'],
     visible: [vis ? true : 'legendonly'],
   }}, {{'yaxis2.range': priceY2Range}}, [priceMeanIdx]);
+  _applyOffset('prMean', meanY);
 }}
 document.getElementById('priceMeanVis').addEventListener('change', function() {{
   Plotly.update(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, {{'yaxis2.range': priceY2Range}}, [priceMeanIdx]);
@@ -517,6 +526,9 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   .divider {{ width: 1px; height: 28px; background: #ced4da; flex-shrink: 0; }}
   .unit {{ color: #777; font-size: 12px; }}
   button {{ padding: 4px 14px; cursor: pointer; border-radius: 4px; border: 1px solid #aaa; }}
+  .off-wrap {{ display: flex; align-items: center; gap: 2px; font-size: 11px; color: #888; }}
+  .off-wrap input[type=checkbox] {{ width: 12px; height: 12px; }}
+  .off-pct {{ width: 38px !important; padding: 1px 3px !important; font-size: 11px !important; }}
   .color-toggle {{ display: flex; border: 1px solid #aaa; border-radius: 4px; overflow: hidden; font-size: 13px; }}
   .color-toggle label {{ display: flex; align-items: center; cursor: pointer; }}
   .color-toggle input[type=radio] {{ display: none; }}
@@ -540,12 +552,15 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   <label class="chk" style="margin-left:4px">
     <input type="checkbox" class="pct-pe-cb" data-sub="0" checked>
     <span class="dot" style="background:rgba(46,160,67,0.9)"></span>25th</label>
+  <span class="off-wrap"><input type="checkbox" id="off-en-pePct25">±<input type="number" id="off-pct-pePct25" class="off-pct" value="50">%</span>
   <label class="chk">
     <input type="checkbox" class="pct-pe-cb" data-sub="1" checked>
     <span class="dot" style="background:rgba(100,100,200,0.9)"></span>Med</label>
+  <span class="off-wrap"><input type="checkbox" id="off-en-pePctMed">±<input type="number" id="off-pct-pePctMed" class="off-pct" value="50">%</span>
   <label class="chk">
     <input type="checkbox" class="pct-pe-cb" data-sub="2" checked>
     <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>
+  <span class="off-wrap"><input type="checkbox" id="off-en-pePct75">±<input type="number" id="off-pct-pePct75" class="off-pct" value="50">%</span>
   {pe_mean_control}
   {price_pct_control if has_price else '''
   <div class="divider"></div>
@@ -704,14 +719,60 @@ function rollingMean(arr, w) {{
   }});
 }}
 
+// ── Offset companion lines ────────────────────────────────────────────────────
+const _offCfg = [
+  {{id:'pePct25', ax:'y',  color:'rgba(46,160,67,0.55)',   name:'P/E 25th offset'}},
+  {{id:'pePctMed',ax:'y',  color:'rgba(100,100,200,0.55)', name:'P/E Med offset'}},
+  {{id:'pePct75', ax:'y',  color:'rgba(220,53,69,0.55)',   name:'P/E 75th offset'}},
+  {{id:'peMean',  ax:'y',  color:'rgba(150,0,200,0.55)',   name:'P/E Mean offset'}},
+  {{id:'prPct25', ax:'y2', color:'rgba(46,160,67,0.55)',   name:'Price 25th offset'}},
+  {{id:'prPctMed',ax:'y2', color:'rgba(100,100,200,0.55)', name:'Price Med offset'}},
+  {{id:'prPct75', ax:'y2', color:'rgba(220,53,69,0.55)',   name:'Price 75th offset'}},
+  {{id:'prMean',  ax:'y2', color:'rgba(150,0,200,0.55)',   name:'Price Mean offset'}},
+];
+const _offStart = gd.data.length;
+const _peX  = gd.data[{pe_pct_idx[0]}].x;
+const _prX  = priceValues.length ? gd.data[6].x : [];
+Plotly.addTraces(gd, _offCfg.map(c => ({{
+  x: c.ax === 'y' ? _peX : _prX,
+  y: new Array(c.ax === 'y' ? peValues.length : priceValues.length).fill(null),
+  mode: 'lines', name: c.name,
+  line: {{color: c.color, width: 1.2, dash: 'dash'}},
+  yaxis: c.ax, visible: 'legendonly',
+}})));
+const _oi = {{}};
+_offCfg.forEach((c, i) => {{ _oi[c.id] = _offStart + i; }});
+
+function _applyOffset(key, baseY) {{
+  const idx = _oi[key];
+  const en  = document.getElementById('off-en-' + key);
+  if (!en) return;
+  const vis = en.checked ? true : 'legendonly';
+  if (!en.checked) {{ Plotly.restyle(gd, {{visible: [vis]}}, [idx]); return; }}
+  const pct = parseFloat(document.getElementById('off-pct-' + key).value) || 50;
+  const f   = 1 + pct / 100;
+  Plotly.restyle(gd, {{y: [baseY.map(v => v != null ? v * f : null)], visible: [vis]}}, [idx]);
+}}
+
+function _wireOffset(key, getBaseY) {{
+  const en  = document.getElementById('off-en-' + key);
+  const inp = document.getElementById('off-pct-' + key);
+  if (!en) return;
+  en.addEventListener('change',  () => _applyOffset(key, getBaseY()));
+  inp.addEventListener('change', () => {{ if (en.checked) _applyOffset(key, getBaseY()); }});
+  inp.addEventListener('keydown', e => {{ if (e.key === 'Enter' && en.checked) _applyOffset(key, getBaseY()); }});
+}}
+
 function recomputePeMean() {{
   const w = parseInt(document.getElementById('peMeanW').value) || {mean_window};
   const vis = document.getElementById('peMeanVis').checked;
+  const meanY = rollingMean(peValues, w);
   Plotly.update(gd, {{
-    y: [rollingMean(peValues, w)],
+    y: [meanY],
     name: ['P/E Mean (' + w + 'd)'],
     visible: [vis ? true : 'legendonly'],
   }}, {{}}, [peMeanIdx]);
+  _applyOffset('peMean', meanY);
 }}
 
 function updateAll() {{ recomputePePct(); recomputePeMean(); {('recomputePricePct(); recomputePriceMean();' if has_price else '')} }}
@@ -723,6 +784,14 @@ document.getElementById('peMeanVis').addEventListener('change', function() {{
   Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peMeanIdx]);
 }});
 document.getElementById('peMeanW').addEventListener('keydown', e => {{ if (e.key === 'Enter') recomputePeMean(); }});
+_wireOffset('pePct25',  () => gd.data[{pe_pct_idx[0]}].y);
+_wireOffset('pePctMed', () => gd.data[{pe_pct_idx[1]}].y);
+_wireOffset('pePct75',  () => gd.data[{pe_pct_idx[2]}].y);
+_wireOffset('peMean',   () => gd.data[peMeanIdx].y);
+{'_wireOffset("prPct25",  () => gd.data[' + str(price_pct_idx[0]) + '].y);' if has_price else ''}
+{'_wireOffset("prPctMed", () => gd.data[' + str(price_pct_idx[1]) + '].y);' if has_price else ''}
+{'_wireOffset("prPct75",  () => gd.data[' + str(price_pct_idx[2]) + '].y);' if has_price else ''}
+{'_wireOffset("prMean",   () => gd.data[' + str(price_mean_idx_json) + '].y);' if has_price else ''}
 document.getElementById('peLineVis').addEventListener('change', function() {{
   Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peLineIdx]);
 }});
