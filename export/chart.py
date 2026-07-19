@@ -43,7 +43,7 @@ _INDEX_PRICE_SYMBOL = {
     "vnfinlead":  "VNFINLEAD",
 }
 
-_DEFAULT_PCT_WINDOW = 1260   # ~5 years of trading days
+_DEFAULT_PCT_WINDOW = 1000
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -108,8 +108,8 @@ def pe_chart(
     end: str | None = None,
     min_members: int = 5,
     bands: bool = True,
-    mean_window: int = 200,
-    median_window: int = 200,
+    mean_window: int = 1000,
+    median_window: int = 1000,
     pct_window: int = _DEFAULT_PCT_WINDOW,
     title: str | None = None,
 ) -> tuple:
@@ -288,7 +288,7 @@ def save_chart(
     price_data: tuple | None = None,
     path: str = "pe_chart.html",
     pct_window: int = _DEFAULT_PCT_WINDOW,
-    mean_window: int = 200,
+    mean_window: int = 1000,
 ) -> str:
     """
     Save the chart as a self-contained HTML with interactive controls:
@@ -338,7 +338,7 @@ def save_chart(
   <div class="divider"></div>
   <span class="section-label">P/E Mean</span>
   <div class="ma-group">
-    <label class="chk"><input type="checkbox" id="peMeanVis" checked> Show</label>
+    <label class="chk"><input type="checkbox" id="peMeanVis"> Show</label>
     <input type="number" id="peMeanW" value="{mean_window}" min="5" max="5000" step="10" title="Rolling window (days)">
     <span class="unit">d</span>
   </div>
@@ -352,7 +352,7 @@ def save_chart(
         price_pct_control = f"""
   <div class="divider"></div>
   <span class="section-label">P/E Line</span>
-  <label class="chk"><input type="checkbox" id="peLineVis" checked> Show</label>
+  <label class="chk"><input type="checkbox" id="peLineVis"> Show</label>
   <div class="divider"></div>
   <span class="section-label">Price Mean</span>
   <div class="ma-group">
@@ -496,8 +496,8 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
 <div id="color-mode-bar">
   <strong>Color source:</strong>
   <div class="color-toggle">
-    <label><input type="radio" name="colorMode" value="pe" checked><span>P/E</span></label>
-    <label><input type="radio" name="colorMode" value="price"><span>Price</span></label>
+    <label><input type="radio" name="colorMode" value="pe"><span>P/E</span></label>
+    <label><input type="radio" name="colorMode" value="price" checked><span>Price</span></label>
   </div>
   <strong style="margin-left:16px">Color method:</strong>
   <div class="color-toggle">
@@ -545,7 +545,7 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
 <div id="ctrl">
   <span class="section-label">P/E Percentiles</span>
   <div class="ma-group">
-    <label class="chk"><input type="checkbox" id="pePctVis" checked> Show</label>
+    <label class="chk"><input type="checkbox" id="pePctVis"> Show</label>
     <input type="number" id="pePctW" value="{pct_window}" min="20" max="5000" step="50" title="Rolling window (days)">
     <span class="unit">d</span>
   </div>
@@ -565,7 +565,7 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   {price_pct_control if has_price else '''
   <div class="divider"></div>
   <span class="section-label">P/E Line</span>
-  <label class="chk"><input type="checkbox" id="peLineVis" checked> Show</label>'''}
+  <label class="chk"><input type="checkbox" id="peLineVis"> Show</label>'''}
   <button onclick="updateAll()">Apply</button>
 </div>
 {color_mode_bar}
@@ -601,7 +601,7 @@ const globalPriceP25 = _sortedPrices.length ? _staticQ(_sortedPrices, 0.25) : nu
 const globalPriceMed = _sortedPrices.length ? _staticQ(_sortedPrices, 0.50) : null;
 const globalPriceP75 = _sortedPrices.length ? _staticQ(_sortedPrices, 0.75) : null;
 
-let colorMode  = 'pe';
+let colorMode  = 'price';
 let colorBasis = 'percentiles';
 
 function rollingQuantile(arr, w, p) {{
@@ -796,6 +796,12 @@ document.getElementById('peLineVis').addEventListener('change', function() {{
   Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [peLineIdx]);
 }});
 {price_checkbox_js}
+// Sync initial visibility with checkbox defaults
+togglePePct();
+Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [peMeanIdx]);
+Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [peLineIdx]);
+// Apply default color mode (price)
+_applyColorSwitch();
 </script>
 """
 
