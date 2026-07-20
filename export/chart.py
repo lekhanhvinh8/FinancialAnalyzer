@@ -1144,7 +1144,7 @@ setTimeout(function() {{
 
     _gd_ref = _find_gd
     zone_toggle = f"""
-<div id="condZonePanel" style="position:fixed;bottom:12px;left:12px;z-index:999;
+<div id="condZonePanel" style="position:fixed;top:12px;left:12px;z-index:999;
   background:rgba(30,30,30,0.85);color:#ddd;padding:8px 12px;border-radius:8px;
   font:13px/1.6 sans-serif;backdrop-filter:blur(4px);">
   <label style="cursor:pointer;user-select:none;">
