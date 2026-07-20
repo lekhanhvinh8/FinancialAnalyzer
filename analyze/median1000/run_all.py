@@ -248,8 +248,9 @@ if __name__ == "__main__":
     db.init_db()
     CHARTS_DIR.mkdir(exist_ok=True)
 
-    symbols = db.list_symbols()
-    print(f"Processing {len(symbols)} symbols — progress at {CHARTS_DIR}/run_all_progress.html\n")
+    symbols = [s.upper() for s in sys.argv[1:]] if len(sys.argv) > 1 else db.list_symbols()
+    print(f"Processing {len(symbols)} symbols: {', '.join(symbols)}")
+    print(f"Progress -> {CHARTS_DIR}/run_all_progress.html\n")
 
     prog = RunAllProgress(symbols, out=str(CHARTS_DIR / "run_all_progress.html"))
 
