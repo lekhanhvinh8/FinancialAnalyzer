@@ -101,11 +101,15 @@ def estimate(
     reinvestStrategy,
     cal_range_close: dict,
     isPrint: bool = False,
+    start_index: int = 0,
 ) -> tuple:
     tracker = InvestmentTracker()
     finalClose = df['close'].iloc[-1] * 1000
 
     for index, row in df.iterrows():
+        if index < start_index:
+            continue
+
         close   = row['close'] * 1000
         pe      = row.get('pe_ratio', None)
         timeCol = row['time']
