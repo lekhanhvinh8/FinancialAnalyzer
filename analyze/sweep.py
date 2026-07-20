@@ -151,7 +151,7 @@ def plot_best(
         p1, p2 = results.best()
 
     buy_s, sell_s, reinvest_s = make_strategies(p1, p2)
-    _, _, ratio, buyed, sold, reinvested = estimate(
+    _, _, ratio, buyed, sold, reinvested, _ = estimate(
         df, interval_money, buy_s, sell_s, reinvest_s, cal_range_close, isPrint=True
     )
 

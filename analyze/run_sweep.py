@@ -139,7 +139,7 @@ def run_one(range_days: int, decrease_percent: float, use_pe: bool = False):
                                  decreasePercent=decrease_percent,
                                  use_pe=use_pe)
 
-    _, _, ratio, buyed, sold, reinvested = estimate(
+    _, _, ratio, buyed, sold, reinvested, _ = estimate(
         df, INTERVAL_MONEY, buy_s, sell_s, reinvest_s, cal_range_close, isPrint=True
     )
     print(f"\nallRatioGrowth: {ratio:.2f}%")

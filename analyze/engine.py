@@ -165,4 +165,18 @@ def estimate(
         allRatioGrowth         {round(allRatioGrowth, 2)}%
         ''')
 
-    return allTotalCapital, allTotalFinal, allRatioGrowth, tracker.buyedInfos, tracker.sellInfos, tracker.reinvestInfos
+    extra = {
+        "totalMonths":          tracker.totalMonths,
+        "totalShare":           tracker.totalShare,
+        "totalCapital":         tracker.totalCapital,
+        "totalCurrentCapital":  tracker.totalCurrentCapital,
+        "finalMoney":           finalMoney,
+        "growthRatio":          growthRatio,
+        "growthCurrentRatio":   growthCurrentRatio,
+        "intervalAmount":       tracker.intervalAmount,
+        "totalReserveShare":    tracker.totalReserveShare,
+        "totalReserveCapital":  tracker.totalReserveCapital,
+        "totalReserveFinal":    tracker.totalReserveFinal,
+        "reserveGrowthRatio":   reserveGrowthRatio,
+    }
+    return allTotalCapital, allTotalFinal, allRatioGrowth, tracker.buyedInfos, tracker.sellInfos, tracker.reinvestInfos, extra

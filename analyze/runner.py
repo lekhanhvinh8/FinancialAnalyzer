@@ -24,19 +24,21 @@ def run_estimate(symbol: str, df: pd.DataFrame, interval_money: int,
     Run one estimate pass and return a flat result dict.
     """
     (allTotalCapital, allTotalFinal, allRatioGrowth,
-     buyedInfos, sellInfos, reinvestInfos) = estimate(
+     buyedInfos, sellInfos, reinvestInfos,
+     extra) = estimate(
         df, interval_money, buy_strategy, sell_strategy, reinvest_strategy,
         cal_range_close, isPrint=False,
     )
     return {
-        "symbol":          symbol,
-        "allTotalCapital": allTotalCapital,
-        "allTotalFinal":   allTotalFinal,
-        "allRatioGrowth":  allRatioGrowth,
-        "totalBuys":       len(buyedInfos),
-        "totalSells":      len(sellInfos),
-        "totalReinvest":   len(reinvestInfos),
-        "buyedInfos":      buyedInfos,
-        "sellInfos":       sellInfos,
-        "reinvestInfos":   reinvestInfos,
+        "symbol":               symbol,
+        "allTotalCapital":      allTotalCapital,
+        "allTotalFinal":        allTotalFinal,
+        "allRatioGrowth":       allRatioGrowth,
+        "totalBuys":            len(buyedInfos),
+        "totalSells":           len(sellInfos),
+        "totalReinvest":        len(reinvestInfos),
+        "buyedInfos":           buyedInfos,
+        "sellInfos":            sellInfos,
+        "reinvestInfos":        reinvestInfos,
+        **extra,
     }
