@@ -1033,20 +1033,22 @@ def save_backtest_chart(
     for infos, name, fill, border, symbol, size, hover_fn in _EVENTS:
         if not infos:
             continue
+        prices_at_event = [i.close / 1000 for i in infos]
         trace_specs.append({
             "type": "scatter",
             "mode": "markers",
             "name": name,
-            "yaxis": _yaxis,
+            "yaxis": "y3",
             "x": [str(times.iloc[i.index])[:10] for i in infos],
-            "y": [i.close / 1000 for i in infos],
+            "y": [0.5] * len(infos),
             "text": [hover_fn(i) for i in infos],
+            "customdata": prices_at_event,
             "marker": {"symbol": symbol, "size": size, "color": fill,
                        "line": {"color": border, "width": 1}},
             "hovertemplate": (
                 f"<b>%{{x}}</b><br>"
                 f"<span style='color:{fill}'>●</span> <b>{name}</b><br>"
-                f"Price: %{{y:,.0f}}<br>%{{text}}<extra></extra>"
+                f"Price: %{{customdata:,.0f}}<br>%{{text}}<extra></extra>"
             ),
         })
 
@@ -1112,10 +1114,27 @@ def save_backtest_chart(
 setTimeout(function() {{
   var gd = {_find_gd};
   if (!gd) {{ console.error('chart div not found'); return; }}
-  var eventTraces = {json.dumps(trace_specs)};
-  var zoneTraces  = {json.dumps(zone_traces)};
-  var allTraces   = zoneTraces.concat(eventTraces);
-  Plotly.addTraces(gd, allTraces).then(function() {{
+
+  // Shrink main axes to leave room for the event strip at the bottom
+  var layoutUpdate = {{
+    'yaxis.domain':  [0.13, 1],
+    'yaxis2.domain': [0.13, 1],
+    'yaxis3': {{
+      domain: [0, 0.10],
+      anchor: 'x',
+      fixedrange: true,
+      showticklabels: false,
+      showgrid: false,
+      zeroline: false,
+      range: [0, 1],
+    }}
+  }};
+  Plotly.relayout(gd, layoutUpdate).then(function() {{
+    var eventTraces = {json.dumps(trace_specs)};
+    var zoneTraces  = {json.dumps(zone_traces)};
+    var allTraces   = zoneTraces.concat(eventTraces);
+    return Plotly.addTraces(gd, allTraces);
+  }}).then(function() {{
     console.log('Backtest traces added, total =', gd.data.length);
   }});
 }}, 1000);
