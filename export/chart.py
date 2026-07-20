@@ -830,7 +830,7 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
     """
     times  = df["time"] if "time" in df.columns else df.index
     dates  = pd.to_datetime([str(t)[:10] for t in times])
-    prices = (df["close"] * 1000).tolist()
+    prices = df["close"].tolist()  # DB stores stocks in full VND; markers use i.close/1000 = df["close"]
 
     has_pe = "pe_ratio" in df.columns and df["pe_ratio"].notna().any()
     if has_pe:
@@ -968,7 +968,7 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
         title=dict(text=f"{symbol} — P/E & Price  <sup>{date_range_str}</sup>", font_size=18),
         xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)"),
         yaxis=dict(title="P/E (x)", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
-        yaxis2=dict(title=f"{symbol} Price", overlaying="y", side="right", showgrid=False, tickformat=","),
+        yaxis2=dict(title=f"{symbol} Price (VND)", overlaying="y", side="right", showgrid=False, tickformat=","),
         hovermode="x unified",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
         plot_bgcolor="white", paper_bgcolor="white",
