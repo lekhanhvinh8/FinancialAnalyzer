@@ -73,6 +73,7 @@ def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
             buy_strategy=buy1, sell_strategy=sell1, reinvest_strategy=ri1,
             cal_range_close=cal_range_close,
             result=r1,
+            compare_result=r2,
         )
 
         dur = time.time() - t0

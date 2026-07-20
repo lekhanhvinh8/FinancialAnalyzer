@@ -16,9 +16,9 @@ import os
 import pandas as pd
 import database as db
 from analyze.runner import load_symbol_df, run_estimate
-from analyze.strategies.buy import BuyMedian1000Strategy
-from analyze.strategies.sell import SellMedian1000Strategy
-from analyze.strategies.reinvest import ReInvestMedian1000Strategy
+from analyze.strategies.buy import BuyMedian1000Strategy, BuyIntervalStrategy
+from analyze.strategies.sell import SellMedian1000Strategy, SellStrategy
+from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStrategy
 from export.chart import save_backtest_chart
 from analyze.median1000 import config
 
@@ -50,6 +50,10 @@ if __name__ == "__main__":
     result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY, buy, sell, reinvest,
                           cal_range_close)
 
+    cmp_result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY,
+                              BuyIntervalStrategy(), SellStrategy(), ReinvestStrategy(),
+                              cal_range_close)
+
     out = CHARTS_DIR / f"backtest_{SYMBOL.lower()}.html"
     save_backtest_chart(
         df,
@@ -59,6 +63,7 @@ if __name__ == "__main__":
         buy_strategy=buy, sell_strategy=sell, reinvest_strategy=reinvest,
         cal_range_close=cal_range_close,
         result=result,
+        compare_result=cmp_result,
     )
     print(f"\nChart -> {out}")
     os.startfile(out)

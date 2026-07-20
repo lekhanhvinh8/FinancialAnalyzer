@@ -997,6 +997,7 @@ def save_backtest_chart(
     reinvest_strategy=None,
     cal_range_close: dict | None = None,
     result: dict | None = None,
+    compare_result: dict | None = None,
 ) -> str:
     """
     Export a backtest chart built on top of the full PE chart (all percentile
@@ -1102,6 +1103,28 @@ def save_backtest_chart(
                 "hovertemplate": f"<b>%{{x}}</b><br><span style='color:{color}'>●</span> {label}<br>Price: %{{y:,.2f}}<extra></extra>",
             })
 
+    # ── Compare trace (interval buy) ─────────────────────────────────────────
+    if compare_result and compare_result.get("buyedInfos"):
+        cmp_infos = compare_result["buyedInfos"]
+        trace_specs.append({
+            "type": "scatter",
+            "mode": "markers",
+            "name": "Buy (Interval)",
+            "yaxis": "y3",
+            "x": [str(times.iloc[i.index])[:10] for i in cmp_infos],
+            "y": [0.5] * len(cmp_infos),
+            "customdata": [i.close / 1000 for i in cmp_infos],
+            "text": [f"Invested: {i.finalBuy:,.0f}" for i in cmp_infos],
+            "marker": {"symbol": "triangle-up", "size": 9,
+                       "color": "rgba(99,179,237,0.75)",
+                       "line": {"color": "#2b6cb0", "width": 1}},
+            "hovertemplate": (
+                "<b>%{x}</b><br>"
+                "<span style='color:rgba(99,179,237,0.75)'>●</span> <b>Buy (Interval)</b><br>"
+                "Price: %{customdata:,.0f}<br>%{text}<extra></extra>"
+            ),
+        })
+
     # PE chart uses div id="peChart"; plotly write_html uses the first div it creates
     _div_id   = "peChart" if _yaxis == "y2" else None  # None = find first plotly div
     _find_gd  = (
@@ -1163,33 +1186,50 @@ setTimeout(function() {{
     result_block = ""
     if result:
         def _pct(v):
-            color = "green" if v >= 0 else "red"
-            return f'<span style="color:{color}">{v:.2f}%</span>'
+            color = "#22c55e" if v >= 0 else "#ef4444"
+            return f'<span style="color:{color};font-weight:600">{v:.2f}%</span>'
 
-        def _row(label, value):
-            return f"<tr><td>{label}</td><td style='padding-left:24px'>{value}</td></tr>"
+        FIELDS = [
+            ("totalMonths",         lambda r: str(r.get("totalMonths", 0))),
+            ("totalShare",          lambda r: f'{r.get("totalShare", 0):,.0f}'),
+            ("totalCapital",        lambda r: f'{r.get("totalCapital", 0):,.0f}'),
+            ("totalCurrentCapital", lambda r: f'{r.get("totalCurrentCapital", 0):,.0f}'),
+            ("finalMoney",          lambda r: f'{r.get("finalMoney", 0):,.0f}'),
+            ("growthRatio",         lambda r: _pct(r.get("growthRatio", 0))),
+            ("growthCurrentRatio",  lambda r: _pct(r.get("growthCurrentRatio", 0))),
+            ("intervalAmount",      lambda r: f'{r.get("intervalAmount", 0):,.0f}'),
+            ("totalReserveShare",   lambda r: f'{r.get("totalReserveShare", 0):,.0f}'),
+            ("totalReserveCapital", lambda r: f'{r.get("totalReserveCapital", 0):,.0f}'),
+            ("totalReserveFinal",   lambda r: f'{r.get("totalReserveFinal", 0):,.0f}'),
+            ("reserveGrowthRatio",  lambda r: _pct(r.get("reserveGrowthRatio", 0))),
+            ("totalBuys",           lambda r: str(r.get("totalBuys", 0))),
+            ("totalSells",          lambda r: str(r.get("totalSells", 0))),
+            ("totalReinvest",       lambda r: str(r.get("totalReinvest", 0))),
+            ("allTotalCapital",     lambda r: f'{r.get("allTotalCapital", 0):,.0f}'),
+            ("allTotalFinal",       lambda r: f'{r.get("allTotalFinal", 0):,.0f}'),
+            ("allRatioGrowth",      lambda r: _pct(r.get("allRatioGrowth", 0))),
+        ]
 
-        rows = "".join([
-            _row("totalMonths",          result.get("totalMonths", 0)),
-            _row("totalShare",           f'{result.get("totalShare", 0):,.0f}'),
-            _row("totalCapital",         f'{result.get("totalCapital", 0):,.0f}'),
-            _row("totalCurrentCapital",  f'{result.get("totalCurrentCapital", 0):,.0f}'),
-            _row("finalMoney",           f'{result.get("finalMoney", 0):,.0f}'),
-            _row("growthRatio",          _pct(result.get("growthRatio", 0))),
-            _row("growthCurrentRatio",   _pct(result.get("growthCurrentRatio", 0))),
-            _row("intervalAmount",       f'{result.get("intervalAmount", 0):,.0f}'),
-            _row("totalReserveShare",    f'{result.get("totalReserveShare", 0):,.0f}'),
-            _row("totalReserveCapital",  f'{result.get("totalReserveCapital", 0):,.0f}'),
-            _row("totalReserveFinal",    f'{result.get("totalReserveFinal", 0):,.0f}'),
-            _row("reserveGrowthRatio",   _pct(result.get("reserveGrowthRatio", 0))),
-            _row("totalBuys",            result.get("totalBuys", 0)),
-            _row("totalSells",           result.get("totalSells", 0)),
-            _row("totalReinvest",        result.get("totalReinvest", 0)),
-            _row("allTotalCapital",      f'{result.get("allTotalCapital", 0):,.0f}'),
-            _row("allTotalFinal",        f'{result.get("allTotalFinal", 0):,.0f}'),
-            _row("allRatioGrowth",       _pct(result.get("allRatioGrowth", 0))),
-        ])
-        result_block = f"<div style='padding:16px;font:13px/2 monospace'><table>{rows}</table></div>"
+        td = "style='padding:3px 16px 3px 0'"
+        tdv = "style='padding:3px 16px 3px 0;text-align:right'"
+
+        if compare_result:
+            header = f"<tr><th {td}>Field</th><th {tdv}>Median1000</th><th {tdv}>BuyInterval</th></tr>"
+            rows   = "".join(
+                f"<tr><td {td}>{label}</td><td {tdv}>{fmt(result)}</td><td {tdv}>{fmt(compare_result)}</td></tr>"
+                for label, fmt in FIELDS
+            )
+        else:
+            header = f"<tr><th {td}>Field</th><th {tdv}>Value</th></tr>"
+            rows   = "".join(
+                f"<tr><td {td}>{label}</td><td {tdv}>{fmt(result)}</td></tr>"
+                for label, fmt in FIELDS
+            )
+
+        result_block = (
+            f"<div style='padding:16px;font:13px/1.8 monospace'>"
+            f"<table style='border-collapse:collapse'>{header}{rows}</table></div>"
+        )
 
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
