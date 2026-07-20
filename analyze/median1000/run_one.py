@@ -58,6 +58,7 @@ if __name__ == "__main__":
         index=SYMBOL.lower(),
         buy_strategy=buy, sell_strategy=sell, reinvest_strategy=reinvest,
         cal_range_close=cal_range_close,
+        result=result,
     )
     print(f"\nChart -> {out}")
     os.startfile(out)

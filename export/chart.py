@@ -996,6 +996,7 @@ def save_backtest_chart(
     sell_strategy=None,
     reinvest_strategy=None,
     cal_range_close: dict | None = None,
+    result: dict | None = None,
 ) -> str:
     """
     Export a backtest chart built on top of the full PE chart (all percentile
@@ -1159,9 +1160,34 @@ setTimeout(function() {{
   </label>
 </div>
 """
+    result_panel = ""
+    if result:
+        growth      = result.get("allRatioGrowth", 0)
+        capital     = result.get("allTotalCapital", 0)
+        final       = result.get("allTotalFinal", 0)
+        n_buys      = result.get("totalBuys", 0)
+        n_sells     = result.get("totalSells", 0)
+        n_reinvests = result.get("totalReinvest", 0)
+        growth_color = "#4ade80" if growth >= 0 else "#f87171"
+        result_panel = f"""
+<div style="position:fixed;top:12px;right:12px;z-index:999;
+  background:rgba(15,17,23,0.90);color:#e2e8f0;
+  padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);
+  font:13px/1.8 'Segoe UI',sans-serif;backdrop-filter:blur(6px);min-width:200px;">
+  <div style="font-size:15px;font-weight:600;margin-bottom:6px;color:#f1f5f9;">Result</div>
+  <div>Capital&nbsp;&nbsp;<span style="float:right;color:#94a3b8">{capital:,.0f}</span></div>
+  <div>Final&nbsp;&nbsp;&nbsp;&nbsp;<span style="float:right;color:#94a3b8">{final:,.0f}</span></div>
+  <div style="border-top:1px solid rgba(255,255,255,0.08);margin:4px 0"></div>
+  <div>Growth&nbsp;&nbsp;&nbsp;<span style="float:right;font-weight:700;color:{growth_color}">{growth:.2f}%</span></div>
+  <div style="border-top:1px solid rgba(255,255,255,0.08);margin:4px 0"></div>
+  <div>Buys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="float:right;color:#22c55e">{n_buys}</span></div>
+  <div>Sells&nbsp;&nbsp;&nbsp;&nbsp;<span style="float:right;color:#ef4444">{n_sells}</span></div>
+  <div>Reinvests<span style="float:right;color:#f97316">{n_reinvests}</span></div>
+</div>"""
+
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
-    html = html.replace("</body>", zone_toggle + inject + "</body>")
+    html = html.replace("</body>", result_panel + zone_toggle + inject + "</body>")
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
 
