@@ -1116,8 +1116,8 @@ def save_backtest_chart(
             "customdata": [i.close / 1000 for i in cmp_infos],
             "text": [f"Invested: {i.finalBuy:,.0f}" for i in cmp_infos],
             "marker": {"symbol": "triangle-up", "size": 9,
-                       "color": "rgba(99,179,237,0.75)",
-                       "line": {"color": "#2b6cb0", "width": 1}},
+                       "color": "rgba(34,197,94,0.75)",
+                       "line": {"color": "#15803d", "width": 1}},
             "hovertemplate": (
                 "<b>%{x}</b><br>"
                 "<span style='color:rgba(99,179,237,0.75)'>●</span> <b>Buy (Interval)</b><br>"
