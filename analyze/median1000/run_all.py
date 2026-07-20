@@ -1,50 +1,48 @@
 """
-Run two fixed strategy combos across every symbol in the DB and produce:
-  - charts/backtest_<symbol>.html        for each symbol
-  - charts/run_all_progress.html         live progress (auto-refreshes every 3s)
-  - charts/report_all.html               final summary table
+Sweep all symbols in the DB with the Median1000 strategy.
+
+Outputs (in analyze/median1000/charts/):
+  - backtest_<symbol>.html       per-symbol backtest chart
+  - run_all_progress.html        live progress (auto-refreshes every 3s)
+  - report_all.html              final comparison table
 
 Usage:
-    python analyze/run_all.py
+    python analyze/median1000/run_all.py
 """
 
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 import time
 import traceback
 import pandas as pd
 import database as db
 from analyze.runner import load_symbol_df, run_estimate
-from analyze.strategies.buy import BuyIntervalStrategy, BuyMedian1000Strategy
+from analyze.strategies.buy import BuyMedian1000Strategy, BuyIntervalStrategy
 from analyze.strategies.sell import SellMedian1000Strategy, SellStrategy
 from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStrategy
 from export.chart import save_backtest_chart
 from progress import RunAllProgress
+from analyze.median1000 import config
 
-INTERVAL_MONEY = 8_000_000
-CHARTS_DIR     = Path(__file__).parent.parent / "charts"
+CHARTS_DIR = Path(__file__).parent / "charts"
 
-
-# ── Strategy factories (fresh instance per symbol to reset mutable state) ─────
 
 def make_median_strategies():
     return (
-        BuyMedian1000Strategy(percentBuy=40,       use_pe=False),
-        SellMedian1000Strategy(percentSell=60,      use_pe=False),
-        ReInvestMedian1000Strategy(percentReinvest=-1, use_pe=False),
+        BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,               use_pe=config.USE_PE),
+        SellMedian1000Strategy(percentSell=config.PERCENT_SELL,             use_pe=config.USE_PE),
+        ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE),
     )
 
 def make_interval_strategies():
     return (
         BuyIntervalStrategy(),
-        SellStrategy(),       # no-op base class = never sell
-        ReinvestStrategy(),   # no-op base class = never reinvest
+        SellStrategy(),
+        ReinvestStrategy(),
     )
 
-
-# ── Per-symbol processing ──────────────────────────────────────────────────────
 
 def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
     t0 = time.time()
@@ -61,10 +59,10 @@ def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
             return None
 
         buy1, sell1, ri1 = make_median_strategies()
-        r1 = run_estimate(symbol, df, INTERVAL_MONEY, buy1, sell1, ri1, cal_range_close)
+        r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1, cal_range_close)
 
         buy2, sell2, ri2 = make_interval_strategies()
-        r2 = run_estimate(symbol, df, INTERVAL_MONEY, buy2, sell2, ri2, cal_range_close)
+        r2 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy2, sell2, ri2, cal_range_close)
 
         chart_path = CHARTS_DIR / f"backtest_{symbol.lower()}.html"
         save_backtest_chart(
@@ -103,8 +101,6 @@ def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
         return None
 
 
-# ── Final HTML report ──────────────────────────────────────────────────────────
-
 def build_report(rows: list[dict], out_path: Path):
     df = pd.DataFrame(rows).sort_values("median_growth_%", ascending=False)
 
@@ -117,7 +113,7 @@ def build_report(rows: list[dict], out_path: Path):
 
     rows_html = ""
     for _, row in df.iterrows():
-        ms = pct_color(row["median_growth_%"])
+        ms  = pct_color(row["median_growth_%"])
         is_ = pct_color(row["interval_growth_%"])
         rows_html += (
             f"<tr>"
@@ -135,7 +131,7 @@ def build_report(rows: list[dict], out_path: Path):
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Backtest Report — All Symbols</title>
+<title>Median1000 Backtest — All Symbols</title>
 <style>
   body {{ font-family: sans-serif; background: #111; color: #ddd; padding: 20px; }}
   h1 {{ font-size: 1.4rem; margin-bottom: 12px; }}
@@ -148,17 +144,19 @@ def build_report(rows: list[dict], out_path: Path):
 </style>
 </head>
 <body>
-<h1>Backtest Report — All Symbols</h1>
+<h1>Median1000 Backtest — All Symbols</h1>
 <p style="color:#64748b;font-size:12px">
-  Interval money: {INTERVAL_MONEY:,} VND &nbsp;|&nbsp;
-  Combo 1: BuyMedian1000(40%) + SellMedian1000(60%) + ReInvestMedian1000(−1%) &nbsp;|&nbsp;
-  Combo 2: BuyInterval only &nbsp;|&nbsp;
-  Sorted by Combo 1 growth descending.
+  Interval money: {config.INTERVAL_MONEY:,} VND &nbsp;|&nbsp;
+  Buy when &lt; median − {config.PERCENT_BUY}% &nbsp;|&nbsp;
+  Sell when &gt; median + {config.PERCENT_SELL}% &nbsp;|&nbsp;
+  Reinvest when &lt; median − {config.PERCENT_REINVEST}% &nbsp;|&nbsp;
+  vs BuyInterval (no sell/reinvest) &nbsp;|&nbsp;
+  Sorted by Median1000 growth descending.
 </p>
 <table>
 <thead><tr>
   <th>Symbol</th>
-  <th>Median growth</th><th>Buys</th><th>Sells</th><th>Reinvests</th>
+  <th>Median1000 growth</th><th>Buys</th><th>Sells</th><th>Reinvests</th>
   <th>Interval growth</th><th>Chart</th>
 </tr></thead>
 <tbody>
@@ -169,10 +167,8 @@ def build_report(rows: list[dict], out_path: Path):
 </html>"""
 
     out_path.write_text(html, encoding="utf-8")
-    print(f"Report saved to {out_path}")
+    print(f"Report → {out_path}")
 
-
-# ── Main ───────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     db.init_db()
