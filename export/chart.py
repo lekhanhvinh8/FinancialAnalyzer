@@ -1046,7 +1046,7 @@ def save_backtest_chart(
             "hovertemplate": (
                 f"<b>%{{x}}</b><br>"
                 f"<span style='color:{fill}'>●</span> <b>{name}</b><br>"
-                "Price: %{{y:,.0f}}<br>%{{text}}<extra></extra>"
+                f"Price: %{{y:,.0f}}<br>%{{text}}<extra></extra>"
             ),
         })
 
