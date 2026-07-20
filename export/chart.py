@@ -821,74 +821,166 @@ _applyColorSwitch();
     return path
 
 
-def _save_stock_chart(df: pd.DataFrame, symbol: str, path: str):
+def _stock_pe_chart(df: pd.DataFrame, symbol: str,
+                    pct_window: int = _DEFAULT_PCT_WINDOW,
+                    mean_window: int = 1000) -> tuple:
     """
-    Build a styled price + P/E chart from a stock's df, saved with div_id='peChart'
-    so the backtest inject script works the same as for index charts.
+    Build a pe_chart()-compatible rich figure from an individual stock's df.
+    Returns (fig, pe_dates, pe_values, price_data) — same shape as pe_chart().
     """
-    import plotly.graph_objects as go
-    from plotly.subplots import make_subplots
-
     times  = df["time"] if "time" in df.columns else df.index
-    dates  = [str(t)[:10] for t in times]
+    dates  = pd.to_datetime([str(t)[:10] for t in times])
     prices = (df["close"] * 1000).tolist()
+
     has_pe = "pe_ratio" in df.columns and df["pe_ratio"].notna().any()
-
     if has_pe:
-        fig = make_subplots(
-            specs=[[{"secondary_y": True}]],
-        )
-        fig.add_trace(go.Scatter(
-            x=dates, y=prices, mode="lines", name=f"{symbol} Price",
-            line=dict(color="#60a5fa", width=1.5), yaxis="y2",
-        ))
-        pe_vals = df["pe_ratio"].tolist()
-        fig.add_trace(go.Scatter(
-            x=dates, y=pe_vals, mode="lines", name="P/E",
-            line=dict(color="#f59e0b", width=1.2), yaxis="y",
-        ))
-        fig.update_layout(
-            yaxis=dict(title="P/E ratio", side="left"),
-            yaxis2=dict(title="Price", side="right", overlaying="y"),
-        )
+        pe_vals  = df["pe_ratio"].tolist()
+        pe_dates = [str(t)[:10] for t in times]
+        pe_series = pd.Series(pe_vals)
+        p25 = float(pe_series.quantile(0.25))
+        med = float(pe_series.quantile(0.50))
+        p75 = float(pe_series.quantile(0.75))
     else:
-        fig = go.Figure()
+        pe_vals  = []
+        pe_dates = []
+        p25 = med = p75 = None
+
+    fig = go.Figure()
+
+    # ── P/E percentile bands ──────────────────────────────────────────────────
+    if has_pe:
+        x_fill = [dates[0], dates[-1]]
+        for lo, hi, color, name in [
+            (pe_series.min(), p25, "rgba(46,160,67,0.15)",  "Cheap (< 25th)"),
+            (p25,            p75, "rgba(255,200,0,0.12)",   "Fair (25–75th)"),
+            (p75,    pe_series.max(), "rgba(220,53,69,0.15)", "Expensive (> 75th)"),
+        ]:
+            fig.add_trace(go.Scatter(
+                x=x_fill + x_fill[::-1], y=[lo, lo, hi, hi],
+                fill="toself", fillcolor=color, line=dict(width=0),
+                mode="lines", name=name, hoverinfo="skip",
+                showlegend=True, yaxis="y1",
+            ))
+
+        # ── P/E rolling percentile lines (traces 3, 4, 5) ────────────────────
+        for q, color, tmpl in [
+            (0.25, "rgba(46,160,67,0.9)",   "P/E 25th ({w}d)"),
+            (0.50, "rgba(100,100,200,0.9)", "P/E Median ({w}d)"),
+            (0.75, "rgba(220,53,69,0.9)",   "P/E 75th ({w}d)"),
+        ]:
+            fig.add_trace(_pct_trace(dates, pe_vals, pct_window, q, tmpl, color, "y1"))
+    else:
+        # add 3 empty placeholder traces so save_chart's trace indices still work
+        for _ in range(6):
+            fig.add_trace(go.Scatter(x=[], y=[], visible=False, showlegend=False))
+
+    # ── Colored price segments by PE zone ────────────────────────────────────
+    price_data = None
+    if has_pe:
+        def _zone(v):
+            if v is None or (isinstance(v, float) and v != v): return -1
+            if v < p25: return 0
+            if v < med: return 1
+            if v < p75: return 2
+            return 3
+
+        zones = [_zone(v) for v in pe_vals]
+        n_p   = len(prices)
+        PRICE_ZONES = [
+            (0, "#2ca02c", f"Cheap  P/E<{p25:.1f}"),
+            (1, "#f0c040", f"Fair   P/E {p25:.1f}–{med:.1f}"),
+            (2, "#ff7f0e", f"High   P/E {med:.1f}–{p75:.1f}"),
+            (3, "#d62728", f"Exp.   P/E>{p75:.1f}"),
+        ]
+        for z, color, name in PRICE_ZONES:
+            y_zone = []
+            for i in range(n_p):
+                if zones[i] == z:
+                    y_zone.append(prices[i])
+                else:
+                    adj = (i > 0 and zones[i-1] == z) or (i < n_p-1 and zones[i+1] == z)
+                    y_zone.append(prices[i] if adj else None)
+            fig.add_trace(go.Scatter(
+                x=dates, y=y_zone,
+                mode="lines", name=name,
+                line=dict(color=color, width=1.5),
+                legendgroup="price_color", legendgrouptitle_text=f"{symbol} Price",
+                yaxis="y2",
+                hovertemplate=f"<b>%{{x|%Y-%m-%d}}</b><br>{symbol}: %{{y:,.0f}}<extra></extra>",
+            ))
+
+        # ── Price rolling percentile lines (traces 10, 11, 12) ───────────────
+        for q, color, tmpl in [
+            (0.25, "rgba(46,160,67,0.9)",   "Price 25th ({w}d)"),
+            (0.50, "rgba(100,100,200,0.9)", "Price Median ({w}d)"),
+            (0.75, "rgba(220,53,69,0.9)",   "Price 75th ({w}d)"),
+        ]:
+            fig.add_trace(_pct_trace(dates, prices, pct_window, q, tmpl, color, "y2"))
+
+        price_data = (
+            [str(d)[:10] for d in dates], prices, pe_vals,
+            p25, med, p75,
+        )
+
+    # ── P/E rolling mean ─────────────────────────────────────────────────────
+    if has_pe:
+        pe_mean = pd.Series(pe_vals).rolling(mean_window, min_periods=1).mean().tolist()
+        fig.add_trace(go.Scatter(
+            x=dates, y=pe_mean,
+            mode="lines", name=f"P/E Mean ({mean_window}d)",
+            line=dict(color="rgba(150,0,200,0.8)", width=1.5, dash="dot"),
+            yaxis="y1",
+        ))
+        price_mean = pd.Series(prices).rolling(mean_window, min_periods=1).mean().tolist()
+        fig.add_trace(go.Scatter(
+            x=dates, y=price_mean,
+            mode="lines", name=f"Price Mean ({mean_window}d)",
+            line=dict(color="rgba(150,0,200,0.8)", width=1.5, dash="dot"),
+            yaxis="y2",
+        ))
+
+    # ── P/E line ──────────────────────────────────────────────────────────────
+    if has_pe:
+        fig.add_trace(go.Scatter(
+            x=dates, y=pe_vals,
+            mode="lines", name=f"{symbol} P/E",
+            line=dict(color="#1f77b4", width=1.8), yaxis="y1",
+            hovertemplate="<b>%{x|%Y-%m-%d}</b><br>P/E: %{y:.2f}x<extra></extra>",
+        ))
+        current = pe_vals[-1]
+        fig.add_trace(go.Scatter(
+            x=[dates[-1]], y=[current],
+            mode="markers+text", marker=dict(size=8, color="#ff7f0e"),
+            text=[f"  {current:.2f}x"], textposition="middle right",
+            name=f"Current P/E", yaxis="y1",
+            hovertemplate=f"<b>%{{x|%Y-%m-%d}}</b><br>P/E: {current:.2f}x<extra></extra>",
+        ))
+    else:
+        # price-only fallback
         fig.add_trace(go.Scatter(
             x=dates, y=prices, mode="lines", name=f"{symbol} Price",
-            line=dict(color="#60a5fa", width=1.5),
+            line=dict(color="#60a5fa", width=1.8), yaxis="y1",
         ))
-        fig.update_layout(yaxis=dict(title="Price"))
+        fig.add_trace(go.Scatter(x=[], y=[], visible=False, showlegend=False))
 
+    date_range_str = f"{str(dates[0])[:4]} – {str(dates[-1])[:4]}"
     fig.update_layout(
-        title=f"{symbol} — Backtest",
-        xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.15)"),
-        paper_bgcolor="#0f1117",
-        plot_bgcolor="#0f1117",
-        font=dict(color="#e2e8f0"),
-        legend=dict(bgcolor="rgba(0,0,0,0)", bordercolor="rgba(255,255,255,0.1)", borderwidth=1),
-        height=620,
-        margin=dict(l=60, r=60, t=50, b=50),
+        title=dict(text=f"{symbol} — P/E & Price  <sup>{date_range_str}</sup>", font_size=18),
+        xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)"),
+        yaxis=dict(title="P/E (x)", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
+        yaxis2=dict(title=f"{symbol} Price", overlaying="y", side="right", showgrid=False, tickformat=","),
         hovermode="x unified",
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+        plot_bgcolor="white", paper_bgcolor="white",
+        margin=dict(l=60, r=80, t=80, b=60),
     )
 
-    plot_div = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
-    full_html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{symbol} Backtest</title>
-<style>
-* {{ box-sizing: border-box; margin: 0; padding: 0; }}
-body {{ background: #0f1117; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; }}
-</style>
-</head>
-<body>
-{plot_div}
-</body>
-</html>"""
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(full_html)
+    return fig, pe_dates, pe_vals, price_data
+
+
+def _save_stock_chart(df: pd.DataFrame, symbol: str, path: str):
+    fig, pe_dates, pe_values, price_data = _stock_pe_chart(df, symbol)
+    save_chart(fig, pe_dates, pe_values, price_data, path)
 
 
 def save_backtest_chart(
