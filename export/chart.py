@@ -1160,78 +1160,40 @@ setTimeout(function() {{
   </label>
 </div>
 """
-    result_sidebar = ""
+    result_block = ""
     if result:
-        def _pct(v, decimals=2):
-            color = "#4ade80" if v >= 0 else "#f87171"
-            return f'<span style="color:{color};font-weight:600">{v:.{decimals}f}%</span>'
+        def _pct(v):
+            color = "green" if v >= 0 else "red"
+            return f'<span style="color:{color}">{v:.2f}%</span>'
 
-        def _row(label, value, color="#94a3b8"):
-            return (f'<tr><td style="color:#64748b;padding:3px 0;padding-right:16px">{label}</td>'
-                    f'<td style="text-align:right;color:{color}">{value}</td></tr>')
+        def _row(label, value):
+            return f"<tr><td>{label}</td><td style='padding-left:24px'>{value}</td></tr>"
 
         rows = "".join([
-            _row("Months",               result.get("totalMonths", 0)),
-            _row("Shares",               f'{result.get("totalShare", 0):,.0f}'),
-            "<tr><td colspan='2' style='padding:4px 0'><hr style='border-color:rgba(255,255,255,0.08);margin:0'></td></tr>",
-            _row("Capital",              f'{result.get("totalCapital", 0):,.0f}'),
-            _row("Current capital",      f'{result.get("totalCurrentCapital", 0):,.0f}'),
-            _row("Final money",          f'{result.get("finalMoney", 0):,.0f}'),
-            _row("Growth",               _pct(result.get("growthRatio", 0))),
-            _row("Growth (current)",     _pct(result.get("growthCurrentRatio", 0))),
-            "<tr><td colspan='2' style='padding:4px 0'><hr style='border-color:rgba(255,255,255,0.08);margin:0'></td></tr>",
-            _row("Interval remaining",   f'{result.get("intervalAmount", 0):,.0f}'),
-            _row("Reserve shares",       f'{result.get("totalReserveShare", 0):,.0f}'),
-            _row("Reserve capital",      f'{result.get("totalReserveCapital", 0):,.0f}'),
-            _row("Reserve final",        f'{result.get("totalReserveFinal", 0):,.0f}'),
-            _row("Reserve growth",       _pct(result.get("reserveGrowthRatio", 0))),
-            "<tr><td colspan='2' style='padding:4px 0'><hr style='border-color:rgba(255,255,255,0.08);margin:0'></td></tr>",
-            _row("Buys",                 result.get("totalBuys", 0),    "#22c55e"),
-            _row("Sells",                result.get("totalSells", 0),   "#ef4444"),
-            _row("Reinvests",            result.get("totalReinvest", 0),"#f97316"),
-            "<tr><td colspan='2' style='padding:4px 0'><hr style='border-color:rgba(255,255,255,0.08);margin:0'></td></tr>",
-            _row("All capital",          f'{result.get("allTotalCapital", 0):,.0f}'),
-            _row("All final",            f'{result.get("allTotalFinal", 0):,.0f}'),
-            _row("All growth",           _pct(result.get("allRatioGrowth", 0))),
+            _row("totalMonths",          result.get("totalMonths", 0)),
+            _row("totalShare",           f'{result.get("totalShare", 0):,.0f}'),
+            _row("totalCapital",         f'{result.get("totalCapital", 0):,.0f}'),
+            _row("totalCurrentCapital",  f'{result.get("totalCurrentCapital", 0):,.0f}'),
+            _row("finalMoney",           f'{result.get("finalMoney", 0):,.0f}'),
+            _row("growthRatio",          _pct(result.get("growthRatio", 0))),
+            _row("growthCurrentRatio",   _pct(result.get("growthCurrentRatio", 0))),
+            _row("intervalAmount",       f'{result.get("intervalAmount", 0):,.0f}'),
+            _row("totalReserveShare",    f'{result.get("totalReserveShare", 0):,.0f}'),
+            _row("totalReserveCapital",  f'{result.get("totalReserveCapital", 0):,.0f}'),
+            _row("totalReserveFinal",    f'{result.get("totalReserveFinal", 0):,.0f}'),
+            _row("reserveGrowthRatio",   _pct(result.get("reserveGrowthRatio", 0))),
+            _row("totalBuys",            result.get("totalBuys", 0)),
+            _row("totalSells",           result.get("totalSells", 0)),
+            _row("totalReinvest",        result.get("totalReinvest", 0)),
+            _row("allTotalCapital",      f'{result.get("allTotalCapital", 0):,.0f}'),
+            _row("allTotalFinal",        f'{result.get("allTotalFinal", 0):,.0f}'),
+            _row("allRatioGrowth",       _pct(result.get("allRatioGrowth", 0))),
         ])
-
-        result_sidebar = f"""
-<style>
-  body {{ display:flex; flex-direction:row; margin:0; background:#0f1117; }}
-  #chartWrap {{ flex:1; min-width:0; }}
-  #resultSidebar {{
-    width:230px; min-width:230px; padding:20px 16px;
-    background:#0f1117; color:#e2e8f0;
-    font:13px/1.6 'Segoe UI',system-ui,sans-serif;
-    border-left:1px solid rgba(255,255,255,0.08);
-    overflow-y:auto;
-  }}
-  #resultSidebar h2 {{
-    font-size:14px; font-weight:700; color:#f1f5f9;
-    margin:0 0 12px; letter-spacing:.04em; text-transform:uppercase;
-  }}
-  #resultSidebar table {{ width:100%; border-collapse:collapse; }}
-</style>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {{
-    var body   = document.body;
-    var charts = Array.from(body.children).filter(function(el) {{
-      return el.id !== 'resultSidebar' && el.id !== 'condZonePanel';
-    }});
-    var wrap = document.createElement('div');
-    wrap.id  = 'chartWrap';
-    charts.forEach(function(el) {{ wrap.appendChild(el); }});
-    body.insertBefore(wrap, body.firstChild);
-  }});
-</script>
-<div id="resultSidebar">
-  <h2>Result</h2>
-  <table>{rows}</table>
-</div>"""
+        result_block = f"<div style='padding:16px;font:13px/2 monospace'><table>{rows}</table></div>"
 
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
-    html = html.replace("</body>", result_sidebar + zone_toggle + inject + "</body>")
+    html = html.replace("</body>", result_block + zone_toggle + inject + "</body>")
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
 
