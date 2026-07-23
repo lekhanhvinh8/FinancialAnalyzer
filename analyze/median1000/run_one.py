@@ -30,7 +30,9 @@ def make_strategies():
     return (
         BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,           use_pe=config.USE_PE),
         SellMedian1000Strategy(percentSell=config.PERCENT_SELL,         use_pe=config.USE_PE),
-        ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE),
+        ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
+                                   timeoutDays=config.REINVEST_TIMEOUT_DAYS,
+                                   timeoutPercent=config.REINVEST_TIMEOUT_PERCENT),
     )
 
 

@@ -80,12 +80,28 @@ class ReInvestPartialStrategy(ReinvestStrategy):
 class ReInvestMedian1000Strategy(ReinvestStrategy):
     percentReinvest: float = 0
     use_pe: bool = False
+    timeoutDays: int = 0        # 0 = disabled
+    timeoutPercent: float = 0   # threshold used after timeout (same scale as percentReinvest)
 
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalReserveFinal <= 0:
             return
         if self.check(index, close, pe, cal_range_close):
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
+            return
+        # Timeout: if no reinvest since last sell and enough days have passed, use looser threshold
+        if (self.timeoutDays > 0
+                and tracker.lastSellIndex > 0
+                and tracker.lastReinvestIndex < tracker.lastSellIndex
+                and (index - tracker.lastSellIndex) >= self.timeoutDays):
+            current = pe if self.use_pe else close
+            if current is None:
+                return
+            if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
+                return
+            median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+            if (current - median) / median * 100 < self.timeoutPercent:
+                Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
 
     def check(self, index, close, pe, cal_range_close) -> bool:
         if index <= 1000:
