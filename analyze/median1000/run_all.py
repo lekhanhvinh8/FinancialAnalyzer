@@ -106,7 +106,9 @@ def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
 
 
 def build_report(rows: list[dict], out_path: Path):
-    df = pd.DataFrame(rows).sort_values("median_growth_%", ascending=False)
+    df = pd.DataFrame(rows)
+    df["diff_%"] = df["median_growth_%"] - df["interval_growth_%"]
+    df = df.sort_values("diff_%", ascending=False)
 
     WIN_GREEN  = "background:#14532d;color:#bbf7d0"
     LOSE_RED   = "background:#7f1d1d;color:#fca5a5"
@@ -175,7 +177,7 @@ def build_report(rows: list[dict], out_path: Path):
   Sell when &gt; median + {config.PERCENT_SELL}% &nbsp;|&nbsp;
   Reinvest when &lt; median − {config.PERCENT_REINVEST}% &nbsp;|&nbsp;
   vs BuyInterval (no sell/reinvest) &nbsp;|&nbsp;
-  Sorted by Median1000 growth descending. &nbsp;|&nbsp;
+  Sorted by Diff (Median1000 − Interval) descending. &nbsp;|&nbsp;
   <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
 <table>
