@@ -89,11 +89,10 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
         if self.check(index, close, pe, cal_range_close):
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
             return
-        # Timeout: if no reinvest since last sell and enough days have passed, use looser threshold
+        # Timeout: fire if no sell AND no reinvest within timeoutDays, use looser threshold
         if (self.timeoutDays > 0
-                and tracker.lastSellIndex > 0
-                and tracker.lastReinvestIndex < tracker.lastSellIndex
-                and (index - tracker.lastSellIndex) >= self.timeoutDays):
+                and (tracker.lastSellIndex == 0 or (index - tracker.lastSellIndex) >= self.timeoutDays)
+                and (tracker.lastReinvestIndex == 0 or (index - tracker.lastReinvestIndex) >= self.timeoutDays)):
             current = pe if self.use_pe else close
             if current is None:
                 return

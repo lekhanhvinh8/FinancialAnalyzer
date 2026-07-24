@@ -135,6 +135,10 @@ class BuyMedian1000Strategy(BuyStrategy):
             return
         if self.check(index, close, pe, cal_range_close):
             Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+        else:
+            tracker.totalReserveCapital += tracker.intervalAmount
+            tracker.totalReserveFinal   += tracker.intervalAmount
+            tracker.intervalAmount = 0
 
     def check(self, index, close, pe, cal_range_close) -> bool:
         if index <= 1000:
