@@ -62,6 +62,17 @@ def main():
 
     db.init_db()
 
+    # Auto-seed index members on a fresh DB
+    import sqlite3 as _sq
+    with _sq.connect(db.DB_PATH) as _c:
+        if _c.execute("SELECT COUNT(*) FROM index_members").fetchone()[0] == 0:
+            print("Fresh DB — seeding index members...")
+            from seeds.vn30 import seed as _s1
+            from seeds.vndiamond import seed as _s2
+            from seeds.vnfinlead import seed as _s3
+            _s1(); _s2(); _s3()
+            print("Seeding done.\n")
+
     known_indices = set(INDICES)
     index_symbols = {"VN30", "VNDIAMOND", "VNFINLEAD"}  # uppercase = member-expand mode
 

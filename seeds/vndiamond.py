@@ -45,6 +45,11 @@ VNDIAMOND_SNAPSHOTS: dict[str, list[str]] = {
 }
 
 
+def seed():
+    rows = snapshots_to_membership(VNDIAMOND_SNAPSHOTS)
+    save_index_members('vndiamond', rows, override=True)
+
+
 if __name__ == "__main__":
     init_db()
 

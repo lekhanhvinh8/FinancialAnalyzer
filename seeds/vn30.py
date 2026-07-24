@@ -79,6 +79,11 @@ def snapshots_to_membership(snapshots: dict[str, list[str]]) -> list[tuple[str, 
     return sorted(rows, key=lambda r: (r[1], r[0]))
 
 
+def seed():
+    rows = snapshots_to_membership(VN30_SNAPSHOTS)
+    save_index_members('vn30', rows, override=True)
+
+
 if __name__ == "__main__":
     init_db()
 

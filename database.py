@@ -87,12 +87,12 @@ def init_db():
                 p25          REAL     NOT NULL,
                 median       REAL     NOT NULL,
                 p75          REAL     NOT NULL,
-                pe_top       REAL     NOT NULL,
-                pe_avg       REAL     NOT NULL,
-                pe_bottom    REAL     NOT NULL,
-                pe_p25       REAL     NOT NULL,
-                pe_median    REAL     NOT NULL,
-                pe_p75       REAL     NOT NULL,
+                pe_top       REAL,
+                pe_avg       REAL,
+                pe_bottom    REAL,
+                pe_p25       REAL,
+                pe_median    REAL,
+                pe_p75       REAL,
                 PRIMARY KEY (symbol, date, range_days, direction)
             );
         """)

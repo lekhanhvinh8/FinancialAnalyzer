@@ -42,6 +42,11 @@ VNFINLEAD_SNAPSHOTS: dict[str, list[str]] = {
 }
 
 
+def seed():
+    rows = snapshots_to_membership(VNFINLEAD_SNAPSHOTS)
+    save_index_members('vnfinlead', rows, override=True)
+
+
 if __name__ == "__main__":
     init_db()
 
