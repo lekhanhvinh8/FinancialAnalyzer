@@ -118,15 +118,19 @@ def build_report(rows: list[dict], out_path: Path):
         return DRAW_GRAY, DRAW_GRAY
 
     rows_html = ""
+    data_json  = []
     for _, row in df.iterrows():
         m, i = row["median_growth_%"], row["interval_growth_%"]
         ms, is_ = winner_styles(m, i)
         diff = m - i
         diff_color = "#4ade80" if diff >= 0 else "#f87171"
         diff_sign  = "+" if diff >= 0 else ""
+        sym = row["symbol"]
         rows_html += (
-            f"<tr>"
-            f"<td>{row['symbol']}</td>"
+            f'<tr data-sym="{sym}">'
+            f'<td><label style="display:flex;align-items:center;gap:6px;cursor:pointer">'
+            f'<input type="checkbox" class="sym-toggle" data-sym="{sym}" checked '
+            f'style="cursor:pointer;accent-color:#60a5fa">{sym}</label></td>'
             f"<td style='{ms};text-align:right'>{m:.2f}%</td>"
             f"<td style='{is_};text-align:right'>{i:.2f}%</td>"
             f"<td style='text-align:right;color:{diff_color};font-weight:600'>{diff_sign}{diff:.2f}%</td>"
@@ -136,70 +140,10 @@ def build_report(rows: list[dict], out_path: Path):
             f"<td style='text-align:center'><a href='{row['chart']}' target='_blank'>open</a></td>"
             f"</tr>\n"
         )
+        data_json.append({"sym": sym, "m": round(m, 4), "i": round(i, 4)})
 
-    # ── Summary ───────────────────────────────────────────────────────────────
-    n          = len(df)
-    m_wins     = int((df["median_growth_%"] > df["interval_growth_%"]).sum())
-    i_wins     = int((df["interval_growth_%"] > df["median_growth_%"]).sum())
-    draws      = n - m_wins - i_wins
-    m_avg      = df["median_growth_%"].mean()
-    i_avg      = df["interval_growth_%"].mean()
-    m_med      = df["median_growth_%"].median()
-    i_med      = df["interval_growth_%"].median()
-    m_best_row = df.loc[df["median_growth_%"].idxmax()]
-    i_best_row = df.loc[df["interval_growth_%"].idxmax()]
-    m_worst    = df.loc[df["median_growth_%"].idxmin(), "symbol"]
-    avg_diff   = m_avg - i_avg
-
-    avg_diff_sign  = "+" if avg_diff >= 0 else ""
-    avg_diff_color = "#4ade80" if avg_diff >= 0 else "#f87171"
-
-    summary_html = f"""
-<div style="margin-top:28px;background:#0f172a;border:1px solid #1e293b;
-  border-radius:10px;padding:20px 24px;font-size:13px;line-height:2">
-  <div style="font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:10px">Summary</div>
-  <table style="border-collapse:collapse;width:100%">
-    <tr>
-      <td style="color:#64748b;padding-right:24px">Symbols compared</td>
-      <td style="font-weight:600">{n}</td>
-    </tr>
-    <tr>
-      <td style="color:#64748b">Median1000 wins</td>
-      <td style="color:#4ade80;font-weight:600">{m_wins} &nbsp;<span style="color:#64748b;font-weight:400">({m_wins/n*100:.0f}%)</span></td>
-    </tr>
-    <tr>
-      <td style="color:#64748b">BuyInterval wins</td>
-      <td style="color:#f87171;font-weight:600">{i_wins} &nbsp;<span style="color:#64748b;font-weight:400">({i_wins/n*100:.0f}%)</span></td>
-    </tr>
-    <tr>
-      <td style="color:#64748b">Draws</td>
-      <td style="color:#94a3b8">{draws}</td>
-    </tr>
-    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
-    <tr>
-      <td style="color:#64748b">Avg growth — Median1000 / Interval</td>
-      <td><span style="color:#60a5fa">{m_avg:.2f}%</span> &nbsp;/&nbsp; <span style="color:#94a3b8">{i_avg:.2f}%</span>
-        &nbsp;<span style="color:{avg_diff_color};font-weight:600">({avg_diff_sign}{avg_diff:.2f}%)</span></td>
-    </tr>
-    <tr>
-      <td style="color:#64748b">Median growth — Median1000 / Interval</td>
-      <td><span style="color:#60a5fa">{m_med:.2f}%</span> &nbsp;/&nbsp; <span style="color:#94a3b8">{i_med:.2f}%</span></td>
-    </tr>
-    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
-    <tr>
-      <td style="color:#64748b">Best Median1000</td>
-      <td style="color:#4ade80"><b>{m_best_row['symbol']}</b> &nbsp;{m_best_row['median_growth_%']:.2f}%</td>
-    </tr>
-    <tr>
-      <td style="color:#64748b">Best BuyInterval</td>
-      <td style="color:#4ade80"><b>{i_best_row['symbol']}</b> &nbsp;{i_best_row['interval_growth_%']:.2f}%</td>
-    </tr>
-    <tr>
-      <td style="color:#64748b">Worst Median1000</td>
-      <td style="color:#f87171"><b>{m_worst}</b> &nbsp;{df.loc[df['median_growth_%'].idxmin(), 'median_growth_%']:.2f}%</td>
-    </tr>
-  </table>
-</div>"""
+    import json
+    data_js = json.dumps(data_json)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -214,7 +158,13 @@ def build_report(rows: list[dict], out_path: Path):
         position: sticky; top: 0; z-index: 1; }}
   td {{ padding: 6px 12px; border-bottom: 1px solid #1e293b; }}
   tr:hover td {{ background: rgba(255,255,255,0.04); }}
+  tr.excluded td {{ opacity: 0.35; }}
   a {{ color: #60a5fa; }}
+  #summary {{ margin-top:28px;background:#0f172a;border:1px solid #1e293b;
+    border-radius:10px;padding:20px 24px;font-size:13px;line-height:2; }}
+  #summary .s-title {{ font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:10px; }}
+  #summary table {{ font-size:13px; }}
+  #summary td:first-child {{ color:#64748b;padding-right:24px; }}
 </style>
 </head>
 <body>
@@ -225,7 +175,8 @@ def build_report(rows: list[dict], out_path: Path):
   Sell when &gt; median + {config.PERCENT_SELL}% &nbsp;|&nbsp;
   Reinvest when &lt; median − {config.PERCENT_REINVEST}% &nbsp;|&nbsp;
   vs BuyInterval (no sell/reinvest) &nbsp;|&nbsp;
-  Sorted by Median1000 growth descending.
+  Sorted by Median1000 growth descending. &nbsp;|&nbsp;
+  <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
 <table>
 <thead><tr>
@@ -238,7 +189,86 @@ def build_report(rows: list[dict], out_path: Path):
 {rows_html}
 </tbody>
 </table>
-{summary_html}
+
+<div id="summary">
+  <div class="s-title">Summary</div>
+  <table style="border-collapse:collapse;width:100%">
+    <tr><td>Symbols compared</td><td id="s-n" style="font-weight:600"></td></tr>
+    <tr><td>Median1000 wins</td><td id="s-mw" style="color:#4ade80;font-weight:600"></td></tr>
+    <tr><td>BuyInterval wins</td><td id="s-iw" style="color:#f87171;font-weight:600"></td></tr>
+    <tr><td>Draws</td><td id="s-dr" style="color:#94a3b8"></td></tr>
+    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
+    <tr><td>Avg growth — Median1000 / Interval</td><td id="s-avg"></td></tr>
+    <tr><td>Median growth — Median1000 / Interval</td><td id="s-med"></td></tr>
+    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
+    <tr><td>Best Median1000</td><td id="s-mbest" style="color:#4ade80"></td></tr>
+    <tr><td>Best BuyInterval</td><td id="s-ibest" style="color:#4ade80"></td></tr>
+    <tr><td>Worst Median1000</td><td id="s-mworst" style="color:#f87171"></td></tr>
+  </table>
+</div>
+
+<script>
+const ALL_DATA = {data_js};
+const excluded = new Set();
+
+function median(arr) {{
+  const s = [...arr].sort((a,b) => a-b);
+  const m = Math.floor(s.length/2);
+  return s.length % 2 ? s[m] : (s[m-1]+s[m])/2;
+}}
+
+function fmt(v) {{
+  return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+}}
+
+function updateSummary() {{
+  const active = ALL_DATA.filter(d => !excluded.has(d.sym));
+  if (!active.length) return;
+  const n  = active.length;
+  const ms = active.map(d => d.m);
+  const is_ = active.map(d => d.i);
+  const mw = active.filter(d => d.m > d.i).length;
+  const iw = active.filter(d => d.i > d.m).length;
+  const dr = n - mw - iw;
+  const mAvg = ms.reduce((a,b)=>a+b,0)/n;
+  const iAvg = is_.reduce((a,b)=>a+b,0)/n;
+  const mMed = median(ms);
+  const iMed = median(is_);
+  const diff = mAvg - iAvg;
+  const diffColor = diff >= 0 ? '#4ade80' : '#f87171';
+
+  const mBest = active.reduce((a,b) => b.m > a.m ? b : a);
+  const iBest = active.reduce((a,b) => b.i > a.i ? b : a);
+  const mWorst = active.reduce((a,b) => b.m < a.m ? b : a);
+
+  document.getElementById('s-n').textContent = n;
+  document.getElementById('s-mw').innerHTML = mw + ' <span style="color:#64748b;font-weight:400">(' + Math.round(mw/n*100) + '%)</span>';
+  document.getElementById('s-iw').innerHTML = iw + ' <span style="color:#64748b;font-weight:400">(' + Math.round(iw/n*100) + '%)</span>';
+  document.getElementById('s-dr').textContent = dr;
+  document.getElementById('s-avg').innerHTML =
+    '<span style="color:#60a5fa">' + mAvg.toFixed(2) + '%</span> &nbsp;/&nbsp; ' +
+    '<span style="color:#94a3b8">' + iAvg.toFixed(2) + '%</span> &nbsp;' +
+    '<span style="color:' + diffColor + ';font-weight:600">(' + fmt(diff) + ')</span>';
+  document.getElementById('s-med').innerHTML =
+    '<span style="color:#60a5fa">' + mMed.toFixed(2) + '%</span> &nbsp;/&nbsp; ' +
+    '<span style="color:#94a3b8">' + iMed.toFixed(2) + '%</span>';
+  document.getElementById('s-mbest').innerHTML = '<b>' + mBest.sym + '</b> &nbsp;' + mBest.m.toFixed(2) + '%';
+  document.getElementById('s-ibest').innerHTML = '<b>' + iBest.sym + '</b> &nbsp;' + iBest.i.toFixed(2) + '%';
+  document.getElementById('s-mworst').innerHTML = '<b>' + mWorst.sym + '</b> &nbsp;' + mWorst.m.toFixed(2) + '%';
+}}
+
+document.querySelectorAll('.sym-toggle').forEach(cb => {{
+  cb.addEventListener('change', () => {{
+    const sym = cb.dataset.sym;
+    const row = document.querySelector('tr[data-sym="' + sym + '"]');
+    if (cb.checked) {{ excluded.delete(sym); row.classList.remove('excluded'); }}
+    else            {{ excluded.add(sym);    row.classList.add('excluded'); }}
+    updateSummary();
+  }});
+}});
+
+updateSummary();
+</script>
 </body>
 </html>"""
 
