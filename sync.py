@@ -114,7 +114,7 @@ def main():
                     seen.add(sym)
                     stocks.append(sym)
 
-    if not indices:
+    if not indices and not stocks:
         steps -= {"outputs"}
     if not stocks:
         steps -= {"shares", "profit"}
@@ -127,7 +127,7 @@ def main():
     if "pe"             in steps: p.set_totals("pe",             len(stocks) + len(indices))
     if "range-stats"    in steps: p.set_totals("range-stats",    len(stocks) + len(indices))
     if "trend-signals"  in steps: p.set_totals("trend-signals",  len(stocks) + len(indices))
-    if "outputs"        in steps: p.set_totals("outputs",        len(indices))
+    if "outputs"        in steps: p.set_totals("outputs",        len(indices) + len(stocks))
 
     print("Progress: sync_progress.html")
 
@@ -263,7 +263,7 @@ def main():
     # ── Outputs ───────────────────────────────────────────────────────────────
     if "outputs" in steps:
         import os
-        from export.chart import pe_chart, save_chart
+        from export.chart import pe_chart, save_chart, save_stock_chart
         from export.excel import build_excel
 
         print(f"\n{'='*55}")
@@ -282,6 +282,15 @@ def main():
                 p.end("outputs", index, index.upper(), time.time() - t0)
             except Exception as e:
                 p.end("outputs", index, index.upper(), time.time() - t0, status="error", note=str(e)[:100])
+
+        for sym in stocks:
+            t0 = time.time()
+            p.begin("outputs", sym, sym)
+            try:
+                save_stock_chart(sym, f"charts/pe_{sym.lower()}.html")
+                p.end("outputs", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("outputs", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
 
     p.finish()
 

@@ -983,6 +983,24 @@ def _save_stock_chart(df: pd.DataFrame, symbol: str, path: str):
     save_chart(fig, pe_dates, pe_values, price_data, path)
 
 
+def save_stock_chart(symbol: str, path: str) -> None:
+    """Load price + P/E for a stock symbol from DB and save an interactive chart."""
+    prices_df = db.load_daily_prices(symbol).reset_index().rename(columns={"date": "time"})
+    pe_df     = db.load_pe_ratios(symbol).reset_index().rename(columns={"date": "time"})
+
+    if prices_df.empty:
+        print(f"  [chart] {symbol}: no price data — skipping")
+        return
+
+    if not pe_df.empty and "pe_ratio" in pe_df.columns:
+        df = prices_df.merge(pe_df[["time", "pe_ratio"]], on="time", how="left")
+        df["pe_ratio"] = df["pe_ratio"].ffill()
+    else:
+        df = prices_df
+
+    _save_stock_chart(df, symbol, path)
+
+
 def save_backtest_chart(
     df: pd.DataFrame,
     buyedInfos: list,
