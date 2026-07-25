@@ -96,27 +96,23 @@ def _rebuild_one(
         return
 
     # All window sizes to compute: window_step, 2*window_step, ..., max_lookback
-    window_sizes = range(window_step, min(max_lookback, N - 1) + 1, window_step)
-    # All date offsets: 0, step_days, ..., max_lookback
-    date_offsets = range(0, min(max_lookback, N - 1) + 1, step_days)
+    window_sizes = list(range(window_step, min(max_lookback, N - 1) + 1, window_step))
+
+    # Iterate forward through actual price history — no dependency on today's date.
+    # For each end_idx (every step_days), compute all window sizes that fit.
+    # Smallest window_size dictates the earliest possible end_idx.
+    min_window = window_sizes[0] if window_sizes else window_step
+    date_indices = range(min_window, N, step_days)
 
     rows: list[tuple] = []
 
-    for offset in date_offsets:
-        end_idx  = N - 1 - offset
-        if end_idx < 0:
-            break
+    for end_idx in date_indices:
         date_str = str(dates[end_idx].date())
 
         for window_days in window_sizes:
             start_idx = end_idx - window_days + 1
             if start_idx < 0:
-                break  # window too large for this date offset
-
-            # Incremental: skip if already stored and not overriding
-            if not override:
-                # We'll batch-check after collecting; for now just collect all
-                pass
+                continue  # not enough history yet for this window
 
             window = closes[start_idx : end_idx + 1]
             s1 = _signal1_slope(window)
@@ -130,7 +126,8 @@ def _rebuild_one(
 
     result = db.save_trend_signals(sym, rows, override=override)
     saved = result["saved"]
-    print(f"  [trend_signals] {sym}: saved {saved} rows ({len(window_sizes)} windows × {len(date_offsets)} dates)")
+    n_dates = len(date_indices)
+    print(f"  [trend_signals] {sym}: saved {saved} rows ({len(window_sizes)} windows × ~{n_dates} dates)")
 
 
 # ── Signal implementations ────────────────────────────────────────────────────
