@@ -1,13 +1,14 @@
 """
 SQLite storage for Vietnam stock data.
 
-Schema (6 tables):
+Schema (7 tables):
     symbols                — symbol registry: 'stock' or 'index'
     daily_prices           — collected: daily close for stocks and indices
     quarterly_fundamentals — collected: quarterly shares + net profit per symbol
     index_members          — collected: historical index composition
     pe_ratios              — calculated: daily P/E (stock-level or index aggregate)
     range_stats            — aggregate calculated: rolling window statistics
+    trend_signals          — calculated: rolling trend classification signals
 """
 
 import sqlite3
@@ -94,6 +95,16 @@ def init_db():
                 pe_median    REAL,
                 pe_p75       REAL,
                 PRIMARY KEY (symbol, date, range_days, direction)
+            );
+
+            CREATE TABLE IF NOT EXISTS trend_signals (
+                symbol          TEXT     NOT NULL,
+                date            TEXT     NOT NULL,  -- ISO date: YYYY-MM-DD
+                window_days     INTEGER  NOT NULL,  -- lookback window in trading days
+                signal1_slope   REAL,               -- normalized lin-reg slope (%/day)
+                signal2_return  REAL,               -- BuyInterval return % over window
+                signal3_sharpe  REAL,               -- annualized return / vol (Sharpe-like)
+                PRIMARY KEY (symbol, date, window_days)
             );
         """)
 
@@ -486,6 +497,74 @@ def load_range_stats(symbol: str, df: pd.DataFrame) -> "dict | None":
 
 
     return dict(cal)
+
+
+# ── Trend signals ────────────────────────────────────────────────────────────
+
+def save_trend_signals(
+    symbol: str,
+    rows: list[tuple],
+    override: bool = False,
+) -> dict:
+    """
+    Persist trend signals.
+    rows: list of (symbol, date, window_days, signal1_slope, signal2_return, signal3_sharpe)
+    """
+    if not rows:
+        return {"saved": 0}
+    verb = "INSERT OR REPLACE" if override else "INSERT OR IGNORE"
+    with _conn() as con:
+        con.executemany(
+            f"""{verb} INTO trend_signals
+               (symbol, date, window_days, signal1_slope, signal2_return, signal3_sharpe)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            rows,
+        )
+        saved = con.total_changes
+    return {"saved": saved}
+
+
+def load_trend_signals(
+    symbol: str,
+    window_days: int,
+) -> pd.DataFrame:
+    """
+    Load all stored trend signals for a symbol/window combination.
+    Returns DataFrame indexed by date with columns: signal1_slope, signal2_return, signal3_sharpe.
+    """
+    with _conn() as con:
+        df = pd.read_sql(
+            """SELECT date, signal1_slope, signal2_return, signal3_sharpe
+               FROM trend_signals WHERE symbol = ? AND window_days = ?
+               ORDER BY date""",
+            con, params=(symbol, window_days),
+        )
+    if not df.empty:
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.set_index("date")
+    return df
+
+
+def load_latest_trend_signals_date(symbol: str, window_days: int) -> str | None:
+    """Return the most recent date in trend_signals for (symbol, window_days), or None."""
+    with _conn() as con:
+        row = con.execute(
+            "SELECT MAX(date) FROM trend_signals WHERE symbol = ? AND window_days = ?",
+            (symbol, window_days),
+        ).fetchone()
+    return row[0] if row and row[0] else None
+
+
+def delete_trend_signals(symbol: str, window_days: int | None = None) -> None:
+    """Delete trend_signals rows for a symbol, optionally filtered by window_days."""
+    with _conn() as con:
+        if window_days is not None:
+            con.execute(
+                "DELETE FROM trend_signals WHERE symbol = ? AND window_days = ?",
+                (symbol, window_days),
+            )
+        else:
+            con.execute("DELETE FROM trend_signals WHERE symbol = ?", (symbol,))
 
 
 # ── Orchestrator helpers ──────────────────────────────────────────────────────

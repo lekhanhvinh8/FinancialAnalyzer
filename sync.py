@@ -13,13 +13,19 @@ Usage:
     python sync.py --pe --outputs    # P/E + outputs only, full sync
 
 Steps (flags):
-    --prices      price series
-    --shares      quarterly outstanding shares (stocks only)
-    --profit      quarterly net profit (stocks only)
-    --pe          recalculate P/E
-    --range-stats rebuild rolling-range stats cache
-    --outputs     regenerate charts + Excel exports (indices only)
-    --force       overwrite existing data
+    --prices         price series
+    --shares         quarterly outstanding shares (stocks only)
+    --profit         quarterly net profit (stocks only)
+    --pe             recalculate P/E
+    --range-stats    rebuild rolling-range stats cache
+    --trend-signals  rebuild trend classification signals
+    --outputs        regenerate charts + Excel exports (indices only)
+    --force          overwrite existing data
+
+Trend-signals tuning (optional, defaults shown):
+    --trend-window=500       rolling lookback window in trading days
+    --trend-step=10          compute a point every N trading days
+    --trend-lookback=1500    how far back (trading days) to go
 
 Progress is written to sync_progress.html (auto-refreshes every 3s).
 """
@@ -29,11 +35,12 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 import database as db
-from syncs import sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats
+from syncs import sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats, sync_trend_signals
+from syncs.trend_signals import WINDOW_DAYS as _TW, STEP_DAYS as _TS, MAX_LOOKBACK as _TL
 from progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
-ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "outputs"}
+ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "trend-signals", "outputs"}
 
 
 def _all_members() -> list[str]:
@@ -48,17 +55,24 @@ def _all_members() -> list[str]:
 
 
 def main():
-    args  = [a for a in sys.argv[1:] if not a.startswith("--")]
-    flags = {a.lstrip("-") for a in sys.argv[1:] if a.startswith("--")}
+    args      = [a for a in sys.argv[1:] if not a.startswith("--")]
+    raw_flags = [a.lstrip("-") for a in sys.argv[1:] if a.startswith("--")]
+    bool_flags = {f for f in raw_flags if "=" not in f}
+    kv_flags   = {f.split("=", 1)[0]: f.split("=", 1)[1] for f in raw_flags if "=" in f}
+    flags      = bool_flags
+
     force = "force" in flags
 
-    # --workers N (e.g. --workers 2)
-    workers = None
-    for f in flags:
-        if f.startswith("workers="):
-            try: workers = int(f.split("=", 1)[1])
-            except ValueError: pass
-    steps = flags - {"force"} or ALL_STEPS
+    def _kv_int(key: str, default: int | None) -> int | None:
+        try: return int(kv_flags[key])
+        except (KeyError, ValueError): return default
+
+    workers        = _kv_int("workers",        None)
+    trend_window   = _kv_int("trend-window",   _TW)
+    trend_step     = _kv_int("trend-step",     _TS)
+    trend_lookback = _kv_int("trend-lookback", _TL)
+
+    steps = (flags - {"force"}) or ALL_STEPS
 
     db.init_db()
 
@@ -107,12 +121,13 @@ def main():
 
     p = SyncProgress(steps, args or ["all"], force)
 
-    if "prices"      in steps: p.set_totals("prices",      len(stocks) + len(indices))
-    if "shares"      in steps: p.set_totals("shares",      len(stocks))
-    if "profit"      in steps: p.set_totals("profit",      len(stocks))
-    if "pe"          in steps: p.set_totals("pe",          len(stocks) + len(indices))
-    if "range-stats" in steps: p.set_totals("range-stats", len(stocks) + len(indices))
-    if "outputs"     in steps: p.set_totals("outputs",     len(indices))
+    if "prices"         in steps: p.set_totals("prices",         len(stocks) + len(indices))
+    if "shares"         in steps: p.set_totals("shares",         len(stocks))
+    if "profit"         in steps: p.set_totals("profit",         len(stocks))
+    if "pe"             in steps: p.set_totals("pe",             len(stocks) + len(indices))
+    if "range-stats"    in steps: p.set_totals("range-stats",    len(stocks) + len(indices))
+    if "trend-signals"  in steps: p.set_totals("trend-signals",  len(stocks) + len(indices))
+    if "outputs"        in steps: p.set_totals("outputs",        len(indices))
 
     print("Progress: sync_progress.html")
 
@@ -177,6 +192,21 @@ def main():
             except Exception as e:
                 p.end("range-stats", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
 
+        if "trend-signals" in steps:
+            t0 = time.time()
+            p.begin("trend-signals", sym, sym)
+            try:
+                sync_trend_signals(
+                    symbols=[sym],
+                    window_days=trend_window,
+                    step_days=trend_step,
+                    max_lookback=trend_lookback,
+                    override=force,
+                )
+                p.end("trend-signals", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("trend-signals", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
     # ── Index runs (index series only, no members) ────────────────────────────
     for index in indices:
         index_sym = index.upper()
@@ -214,6 +244,21 @@ def main():
                 p.end("range-stats", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        if "trend-signals" in steps:
+            t0 = time.time()
+            p.begin("trend-signals", index, index_sym)
+            try:
+                sync_trend_signals(
+                    index=index,
+                    window_days=trend_window,
+                    step_days=trend_step,
+                    max_lookback=trend_lookback,
+                    override=force,
+                )
+                p.end("trend-signals", index, index_sym, time.time() - t0)
+            except Exception as e:
+                p.end("trend-signals", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
     # ── Outputs ───────────────────────────────────────────────────────────────
     if "outputs" in steps:
