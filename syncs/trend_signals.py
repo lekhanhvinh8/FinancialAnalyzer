@@ -6,14 +6,17 @@ Three signals are computed per (symbol, date, window_days):
   signal2_return  — simulated BuyInterval return % over the window
   signal3_sharpe  — annualized return / annualized volatility (Sharpe-like ratio)
 
-Points are stored at step-day intervals going back from the latest price date:
-  offsets = 0, step_days, 2*step_days, ..., max_lookback
-so ~(max_lookback / step_days) rows per (symbol, window_days) instead of one per day.
+Two dimensions are swept:
+  window_days : 10, 20, 30, ..., max_lookback  (what window to look back over)
+  date offset : 0, step_days, 2*step_days, ..., max_lookback  (which historical date)
 
-Default parameters (can be overridden by callers):
-  window_days  = 500   rolling lookback in trading days
-  step_days    = 10    compute a point every N trading days
-  max_lookback = 1500  how far back (in trading days) to go
+So the total rows per symbol ≈ (max_lookback/window_step)² / 2  (triangular, since
+window must fit within available history at each date offset).
+
+Default parameters:
+  window_step  = 10    window_days increments: 10, 20, ..., 1500
+  step_days    = 10    date offset increments: compute every N trading days back
+  max_lookback = 1500  maximum for both window_days and date offsets
   interval_days   = 20          BuyInterval: one purchase every N trading days (signal2)
   interval_money  = 8_000_000   BuyInterval: VND per purchase (signal2)
 """
@@ -23,41 +26,45 @@ import numpy as np
 import database as db
 from ._helpers import resolve_symbols
 
-WINDOW_DAYS    = 500
+WINDOW_STEP    = 10
 STEP_DAYS      = 10
 MAX_LOOKBACK   = 1500
 INTERVAL_DAYS  = 20
 INTERVAL_MONEY = 8_000_000
 
+# Keep WINDOW_DAYS as a convenience alias (= default single window for callers that
+# only want one window, e.g. chart display default)
+WINDOW_DAYS = 500
+
 
 def sync_trend_signals(
-    symbols:       list[str] | None = None,
-    index:         str | None       = None,
-    window_days:   int               = WINDOW_DAYS,
-    step_days:     int               = STEP_DAYS,
-    max_lookback:  int               = MAX_LOOKBACK,
-    interval_days: int               = INTERVAL_DAYS,
-    interval_money: float            = INTERVAL_MONEY,
-    override:      bool              = False,
+    symbols:        list[str] | None = None,
+    index:          str | None       = None,
+    window_step:    int               = WINDOW_STEP,
+    step_days:      int               = STEP_DAYS,
+    max_lookback:   int               = MAX_LOOKBACK,
+    interval_days:  int               = INTERVAL_DAYS,
+    interval_money: float             = INTERVAL_MONEY,
+    override:       bool              = False,
 ) -> None:
     """
     Rebuild trend signals for one or more symbols.
 
-    symbols      : specific symbols; None = all in DB
-    index        : index name ("vn30") — resolved to its index symbol
-    window_days  : rolling lookback window in trading days
-    step_days    : compute a signal point every N trading days
-    max_lookback : how far back (trading days from latest) to go
-    interval_days: interval between buys for signal2 simulation
+    symbols       : specific symbols; None = all in DB
+    index         : index name ("vn30") — resolved to its index symbol
+    window_step   : window_days increments — computes for 10, 20, ..., max_lookback
+    step_days     : compute a signal point every N trading days back from latest
+    max_lookback  : maximum window size and maximum date lookback (trading days)
+    interval_days : interval between buys for signal2 BuyInterval simulation
     interval_money: amount invested per buy in signal2 simulation
-    override     : True → INSERT OR REPLACE; False → INSERT OR IGNORE (skip existing)
+    override      : True → INSERT OR REPLACE; False → INSERT OR IGNORE (skip existing)
     """
     targets = resolve_symbols(symbols, index)
 
     for sym, _ in targets:
         _rebuild_one(
             sym,
-            window_days=window_days,
+            window_step=window_step,
             step_days=step_days,
             max_lookback=max_lookback,
             interval_days=interval_days,
@@ -68,7 +75,7 @@ def sync_trend_signals(
 
 def _rebuild_one(
     sym: str,
-    window_days: int,
+    window_step: int,
     step_days: int,
     max_lookback: int,
     interval_days: int,
@@ -84,41 +91,46 @@ def _rebuild_one(
     dates  = prices_df.index
     N      = len(closes)
 
-    if N < window_days + 1:
-        print(f"  [trend_signals] {sym}: not enough data ({N} rows < window {window_days}) — skipping")
+    if N < window_step + 1:
+        print(f"  [trend_signals] {sym}: not enough data ({N} rows) — skipping")
         return
 
-    # Incremental: find latest already-stored date so we only add newer points
-    latest_stored = None if override else db.load_latest_trend_signals_date(sym, window_days)
+    # All window sizes to compute: window_step, 2*window_step, ..., max_lookback
+    window_sizes = range(window_step, min(max_lookback, N - 1) + 1, window_step)
+    # All date offsets: 0, step_days, ..., max_lookback
+    date_offsets = range(0, min(max_lookback, N - 1) + 1, step_days)
 
     rows: list[tuple] = []
-    offsets = range(0, min(max_lookback, N - window_days) + 1, step_days)
 
-    for offset in offsets:
-        end_idx   = N - 1 - offset
-        start_idx = end_idx - window_days + 1
-        if start_idx < 0:
+    for offset in date_offsets:
+        end_idx  = N - 1 - offset
+        if end_idx < 0:
             break
-
         date_str = str(dates[end_idx].date())
 
-        if latest_stored and date_str <= latest_stored and not override:
-            continue
+        for window_days in window_sizes:
+            start_idx = end_idx - window_days + 1
+            if start_idx < 0:
+                break  # window too large for this date offset
 
-        window = closes[start_idx : end_idx + 1]
+            # Incremental: skip if already stored and not overriding
+            if not override:
+                # We'll batch-check after collecting; for now just collect all
+                pass
 
-        s1 = _signal1_slope(window)
-        s2 = _signal2_interval_return(window, interval_days, interval_money)
-        s3 = _signal3_sharpe(window)
-
-        rows.append((sym, date_str, window_days, s1, s2, s3))
+            window = closes[start_idx : end_idx + 1]
+            s1 = _signal1_slope(window)
+            s2 = _signal2_interval_return(window, interval_days, interval_money)
+            s3 = _signal3_sharpe(window)
+            rows.append((sym, date_str, window_days, s1, s2, s3))
 
     if not rows:
         print(f"  [trend_signals] {sym}: up to date")
         return
 
     result = db.save_trend_signals(sym, rows, override=override)
-    print(f"  [trend_signals] {sym}: saved {result['saved']} rows")
+    saved = result["saved"]
+    print(f"  [trend_signals] {sym}: saved {saved} rows ({len(window_sizes)} windows × {len(date_offsets)} dates)")
 
 
 # ── Signal implementations ────────────────────────────────────────────────────

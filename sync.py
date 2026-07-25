@@ -36,7 +36,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="repla
 
 import database as db
 from syncs import sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats, sync_trend_signals
-from syncs.trend_signals import WINDOW_DAYS as _TW, STEP_DAYS as _TS, MAX_LOOKBACK as _TL
+from syncs.trend_signals import WINDOW_STEP as _TW, STEP_DAYS as _TS, MAX_LOOKBACK as _TL
 from progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
@@ -67,10 +67,10 @@ def main():
         try: return int(kv_flags[key])
         except (KeyError, ValueError): return default
 
-    workers        = _kv_int("workers",        None)
-    trend_window   = _kv_int("trend-window",   _TW)
-    trend_step     = _kv_int("trend-step",     _TS)
-    trend_lookback = _kv_int("trend-lookback", _TL)
+    workers        = _kv_int("workers",         None)
+    trend_window   = _kv_int("trend-window",    _TW)   # window_days increment
+    trend_step     = _kv_int("trend-step",      _TS)   # date offset increment
+    trend_lookback = _kv_int("trend-lookback",  _TL)
 
     steps = (flags - {"force"}) or ALL_STEPS
 
@@ -198,7 +198,7 @@ def main():
             try:
                 sync_trend_signals(
                     symbols=[sym],
-                    window_days=trend_window,
+                    window_step=trend_window,
                     step_days=trend_step,
                     max_lookback=trend_lookback,
                     override=force,
@@ -251,7 +251,7 @@ def main():
             try:
                 sync_trend_signals(
                     index=index,
-                    window_days=trend_window,
+                    window_step=trend_window,
                     step_days=trend_step,
                     max_lookback=trend_lookback,
                     override=force,
