@@ -301,6 +301,8 @@ if __name__ == "__main__":
     prog.finish()
 
     if report_rows:
-        build_report(report_rows, CHARTS_DIR / "report_all.html")
+        from datetime import datetime
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        build_report(report_rows, CHARTS_DIR / f"report_all_{ts}.html")
 
     print("\nDone.")

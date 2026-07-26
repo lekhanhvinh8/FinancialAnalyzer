@@ -1034,15 +1034,18 @@ def _build_signal_js(all_windows: dict) -> str:
     signal_trace_indices : plotly trace indices of [s1, s2, s3]
     """
     # Serialise: {window_days: {dates:[], s1:[], s2:[], s3:[]}}
+    # Downsample to every 5th point — strips are tiny, visual is identical, 5× less JS data
+    DISPLAY_STEP = 5
     data: dict = {}
     for w, df in sorted(all_windows.items()):
         if df.empty:
             continue
+        df_s = df.iloc[::DISPLAY_STEP]
         data[w] = {
-            "dates": df.index.strftime("%Y-%m-%d").tolist(),
-            "s1":    [round(v, 6) for v in df["signal1_slope"].tolist()],
-            "s2":    [round(v, 4) for v in df["signal2_return"].tolist()],
-            "s3":    [round(v, 6) for v in df["signal3_sharpe"].tolist()],
+            "dates": df_s.index.strftime("%Y-%m-%d").tolist(),
+            "s1":    [round(v, 4) for v in df_s["signal1_slope"].tolist()],
+            "s2":    [round(v, 4) for v in df_s["signal2_return"].tolist()],
+            "s3":    [round(v, 4) for v in df_s["signal3_sharpe"].tolist()],
         }
 
     available = sorted(data.keys())
@@ -1099,7 +1102,10 @@ def _build_signal_js(all_windows: dict) -> str:
           }});
         }}
 
-        inp.addEventListener('input',  function() {{ applyWindow(parseInt(inp.value)); }});
+        inp.addEventListener('input',  function() {{
+          clearTimeout(inp._t);
+          inp._t = setTimeout(function() {{ applyWindow(parseInt(inp.value)); }}, 80);
+        }});
         num.addEventListener('change', function() {{ applyWindow(parseInt(num.value)); }});
       }});
     }});
