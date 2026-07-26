@@ -14,8 +14,8 @@ So the total rows per symbol ≈ (max_lookback/window_step)² / 2  (triangular, 
 window must fit within available history at each date offset).
 
 Default parameters:
-  window_step  = 10    window_days increments: 10, 20, ..., 1500
-  step_days    = 10    date offset increments: compute every N trading days back
+  window_step  = 1    window_days increments: 1, 2,..., 1500
+  step_days    = 1     date offset increments: compute every trading day
   max_lookback = 1500  maximum for both window_days and date offsets
   interval_days   = 20          BuyInterval: one purchase every N trading days (signal2)
   interval_money  = 8_000_000   BuyInterval: VND per purchase (signal2)
@@ -26,8 +26,8 @@ import numpy as np
 import database as db
 from ._helpers import resolve_symbols
 
-WINDOW_STEP    = 10
-STEP_DAYS      = 10
+WINDOW_STEP    = 1
+STEP_DAYS      = 1
 MAX_LOOKBACK   = 1500
 INTERVAL_DAYS  = 20
 INTERVAL_MONEY = 8_000_000
@@ -40,6 +40,7 @@ WINDOW_DAYS = 500
 def sync_trend_signals(
     symbols:        list[str] | None = None,
     index:          str | None       = None,
+    start:          str | None       = None,
     window_step:    int               = WINDOW_STEP,
     step_days:      int               = STEP_DAYS,
     max_lookback:   int               = MAX_LOOKBACK,
@@ -64,6 +65,7 @@ def sync_trend_signals(
     for sym, _ in targets:
         _rebuild_one(
             sym,
+            start=start,
             window_step=window_step,
             step_days=step_days,
             max_lookback=max_lookback,
@@ -75,6 +77,7 @@ def sync_trend_signals(
 
 def _rebuild_one(
     sym: str,
+    start: str | None,
     window_step: int,
     step_days: int,
     max_lookback: int,
@@ -102,7 +105,11 @@ def _rebuild_one(
     # For each end_idx (every step_days), compute all window sizes that fit.
     # Smallest window_size dictates the earliest possible end_idx.
     min_window = window_sizes[0] if window_sizes else window_step
-    date_indices = range(min_window, N, step_days)
+    if start:
+        first_idx = next((i for i, d in enumerate(dates) if str(d.date()) > start), N)
+    else:
+        first_idx = min_window
+    date_indices = range(max(first_idx, min_window), N, step_days)
 
     rows: list[tuple] = []
 
@@ -134,6 +141,8 @@ def _rebuild_one(
 
 def _signal1_slope(prices: np.ndarray) -> float:
     """Normalized linear-regression slope: % of last price per trading day."""
+    if len(prices) < 2:
+        return 0.0
     x = np.arange(len(prices), dtype=float)
     slope = np.polyfit(x, prices, 1)[0]
     return float(slope / prices[-1] * 100)

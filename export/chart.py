@@ -983,8 +983,135 @@ def _save_stock_chart(df: pd.DataFrame, symbol: str, path: str):
     save_chart(fig, pe_dates, pe_values, price_data, path)
 
 
-def save_stock_chart(symbol: str, path: str) -> None:
-    """Load price + P/E for a stock symbol from DB and save an interactive chart."""
+def _add_signal_strips(fig: go.Figure, signal_df: pd.DataFrame) -> go.Figure:
+    """
+    Append 3 colored signal strips below the main chart for the initial window.
+    Returns the figure with layout adjusted and signal traces added.
+    """
+    SIGNALS = [
+        ("signal1_slope",  "Signal 1 — Slope",    "y3", [0.22, 0.30]),
+        ("signal2_return", "Signal 2 — Return %",  "y4", [0.11, 0.19]),
+        ("signal3_sharpe", "Signal 3 — Sharpe",    "y5", [0.00, 0.08]),
+    ]
+
+    fig.update_layout(**{
+        "yaxis.domain":  [0.32, 1.0],
+        "yaxis2.domain": [0.32, 1.0],
+    })
+
+    dates = signal_df.index.strftime("%Y-%m-%d").tolist()
+
+    for col, label, yref, domain in SIGNALS:
+        vals = signal_df[col].tolist() if col in signal_df.columns else []
+        fig.add_trace(go.Scatter(
+            x=dates, y=vals,
+            mode="markers",
+            marker=dict(color=vals, colorscale="RdYlGn", size=3, showscale=False),
+            name=label,
+            yaxis=yref,
+            hovertemplate=f"<b>%{{x}}</b><br>{label}: %{{y:.3f}}<extra></extra>",
+        ))
+        yaxis_key = f"yaxis{yref[1:]}" if yref != "y" else "yaxis"
+        fig.update_layout(**{
+            yaxis_key: dict(
+                domain=domain, anchor="x",
+                showgrid=False, zeroline=True,
+                zerolinecolor="rgba(150,150,150,0.4)",
+                showticklabels=True, tickfont=dict(size=9),
+                title=dict(text=label, font=dict(size=9)),
+            )
+        })
+
+    return fig
+
+
+def _build_signal_js(all_windows: dict) -> str:
+    """
+    Build the JS snippet that embeds all-window signal data and wires
+    the window-length input to update the 3 signal traces.
+
+    all_windows : {window_days: DataFrame indexed by date}
+    signal_trace_indices : plotly trace indices of [s1, s2, s3]
+    """
+    # Serialise: {window_days: {dates:[], s1:[], s2:[], s3:[]}}
+    data: dict = {}
+    for w, df in sorted(all_windows.items()):
+        if df.empty:
+            continue
+        data[w] = {
+            "dates": df.index.strftime("%Y-%m-%d").tolist(),
+            "s1":    [round(v, 6) for v in df["signal1_slope"].tolist()],
+            "s2":    [round(v, 4) for v in df["signal2_return"].tolist()],
+            "s3":    [round(v, 6) for v in df["signal3_sharpe"].tolist()],
+        }
+
+    available = sorted(data.keys())
+
+    return f"""
+<script>
+(function() {{
+  const ALL_SIGNALS = {json.dumps(data)};
+  const AVAILABLE   = {json.dumps(available)};
+
+  function snapWindow(w) {{
+    let best = AVAILABLE[0], bestDiff = Math.abs(w - best);
+    for (const v of AVAILABLE) {{
+      const d = Math.abs(w - v);
+      if (d < bestDiff) {{ best = v; bestDiff = d; }}
+    }}
+    return best;
+  }}
+
+  function initSignals() {{
+    const gd = document.getElementById('peChart') || document.querySelector('.plotly-graph-div');
+    if (!gd || !gd._fullLayout) {{ setTimeout(initSignals, 200); return; }}
+
+    const inp = document.getElementById('sigWinInput');
+    const num = document.getElementById('sigWinNumber');
+    const initW = snapWindow(parseInt(inp.value));
+    const d0 = ALL_SIGNALS[initW];
+
+    Plotly.relayout(gd, {{
+      'yaxis.domain':  [0.32, 1.0],
+      'yaxis2.domain': [0.32, 1.0],
+      'yaxis3': {{ domain: [0.22, 0.30], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Slope',   font: {{size: 9}}}} }},
+      'yaxis4': {{ domain: [0.11, 0.19], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Return%', font: {{size: 9}}}} }},
+      'yaxis5': {{ domain: [0.00, 0.08], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Sharpe',  font: {{size: 9}}}} }},
+    }}).then(function() {{
+      // Capture index BEFORE addTraces so we know where new traces land
+      const baseLen = gd.data.length;
+      return Plotly.addTraces(gd, [
+        {{ name: 'Signal 1 — Slope',    mode: 'markers', yaxis: 'y3', x: d0.dates, y: d0.s1, marker: {{ color: d0.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 2 — Return %', mode: 'markers', yaxis: 'y4', x: d0.dates, y: d0.s2, marker: {{ color: d0.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 3 — Sharpe',   mode: 'markers', yaxis: 'y5', x: d0.dates, y: d0.s3, marker: {{ color: d0.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+      ]).then(function() {{
+        const idx = [baseLen, baseLen + 1, baseLen + 2];
+
+        function applyWindow(w) {{
+          const snapped = snapWindow(w);
+          const d = ALL_SIGNALS[snapped];
+          if (!d) return;
+          inp.value = snapped;
+          num.value = snapped;
+          idx.forEach(function(ti, i) {{
+            const vals = [d.s1, d.s2, d.s3][i];
+            Plotly.restyle(gd, {{ x: [d.dates], y: [vals], 'marker.color': [vals] }}, [ti]);
+          }});
+        }}
+
+        inp.addEventListener('input',  function() {{ applyWindow(parseInt(inp.value)); }});
+        num.addEventListener('change', function() {{ applyWindow(parseInt(num.value)); }});
+      }});
+    }});
+  }}
+
+  initSignals();
+}})();
+</script>"""
+
+
+def save_stock_chart(symbol: str, path: str, default_window: int = 500) -> None:
+    """Load price + P/E + trend signals for a stock symbol and save an interactive chart."""
     prices_df = db.load_daily_prices(symbol).reset_index().rename(columns={"date": "time"})
     pe_df     = db.load_pe_ratios(symbol).reset_index().rename(columns={"date": "time"})
 
@@ -998,7 +1125,71 @@ def save_stock_chart(symbol: str, path: str) -> None:
     else:
         df = prices_df
 
-    _save_stock_chart(df, symbol, path)
+    fig, pe_dates, pe_values, price_data = _stock_pe_chart(df, symbol)
+
+    # Load all available windows from DB
+    with db._conn() as con:
+        available_windows = [
+            r[0] for r in con.execute(
+                "SELECT DISTINCT window_days FROM trend_signals WHERE symbol=? ORDER BY window_days",
+                (symbol,)
+            ).fetchall()
+        ]
+
+    if available_windows:
+        # Write base HTML first (clean fig, so save_chart trace indices are correct)
+        save_chart(fig, pe_dates, pe_values, price_data, path)
+
+        # Snap default_window to nearest available
+        init_window = min(available_windows, key=lambda w: abs(w - default_window))
+
+        # Load all windows in one query and split by window_days
+        with db._conn() as con:
+            all_df = pd.read_sql(
+                "SELECT date, window_days, signal1_slope, signal2_return, signal3_sharpe"
+                " FROM trend_signals WHERE symbol=? ORDER BY window_days, date",
+                con, params=(symbol,),
+            )
+        all_df["date"] = pd.to_datetime(all_df["date"])
+        all_windows = {
+            w: grp.set_index("date").drop(columns="window_days")
+            for w, grp in all_df.groupby("window_days")
+        }
+
+        control_html = f"""
+<div id="sigWinCtrl" style="font-family:sans-serif;font-size:13px;
+  display:flex;align-items:center;gap:10px;padding:6px 16px;
+  background:#f0f0f0;border:1px solid #ddd;border-radius:6px;margin-top:6px">
+  <span style="font-weight:600">Signal window:</span>
+  <input id="sigWinInput" type="range"
+    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
+    style="width:500px;cursor:pointer">
+  <input id="sigWinNumber" type="number"
+    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
+    style="width:70px;font-size:13px;font-weight:600;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px 4px">
+  <span style="color:#888">days</span>
+</div>"""
+
+        js = _build_signal_js(all_windows)
+
+        with open(path, "r", encoding="utf-8") as f:
+            html = f.read()
+        # Make the chart shrink to fit so the control above is visible
+        html = html.replace(
+            '<div id="peChart" class="plotly-graph-div" style="height:100%; width:100%;">',
+            '<div id="peChart" class="plotly-graph-div" style="height:calc(100vh - 56px); width:100%;">',
+        )
+        # Inject control above the chart
+        inject_before = '<div id="peChart"'
+        if inject_before in html:
+            html = html.replace(inject_before, control_html + inject_before, 1)
+        else:
+            html = html.replace("</body>", control_html + "</body>")
+        html = html.replace("</body>", js + "</body>")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(html)
+    else:
+        save_chart(fig, pe_dates, pe_values, price_data, path)
 
 
 def save_backtest_chart(

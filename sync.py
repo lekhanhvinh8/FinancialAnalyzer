@@ -196,8 +196,10 @@ def main():
             t0 = time.time()
             p.begin("trend-signals", sym, sym)
             try:
+                ts_start = None if force else db.load_latest_trend_signals_date(sym, trend_window)
                 sync_trend_signals(
                     symbols=[sym],
+                    start=ts_start,
                     window_step=trend_window,
                     step_days=trend_step,
                     max_lookback=trend_lookback,
@@ -249,8 +251,10 @@ def main():
             t0 = time.time()
             p.begin("trend-signals", index, index_sym)
             try:
+                ts_start = None if force else db.load_latest_trend_signals_date(index_sym, trend_window)
                 sync_trend_signals(
                     index=index,
+                    start=ts_start,
                     window_step=trend_window,
                     step_days=trend_step,
                     max_lookback=trend_lookback,
