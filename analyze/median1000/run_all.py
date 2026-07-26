@@ -29,10 +29,11 @@ from analyze.median1000 import config
 CHARTS_DIR = Path(__file__).parent / "charts"
 
 
-def make_median_strategies():
+def make_median_strategies(signal3_map: dict | None = None):
     return (
         BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,               use_pe=config.USE_PE),
-        SellMedian1000Strategy(percentSell=config.PERCENT_SELL,             use_pe=config.USE_PE),
+        SellMedian1000Strategy(percentSell=config.PERCENT_SELL,             use_pe=config.USE_PE,
+                               signal3_map=signal3_map or {}, min_signal3=config.MIN_SIGNAL3),
         ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
                                    timeoutDays=config.REINVEST_TIMEOUT_DAYS,
                                    timeoutPercent=config.REINVEST_TIMEOUT_PERCENT),
@@ -60,7 +61,18 @@ def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
             prog.end_err(symbol, "no range_stats in DB")
             return None
 
-        buy1, sell1, ri1 = make_median_strategies()
+        # Build signal3 map: {row_index → signal3_sharpe} for window=1000
+        sig3_df = db.load_trend_signals(symbol, window_days=1000)
+        signal3_map: dict = {}
+        if not sig3_df.empty:
+            import pandas as pd
+            date_to_idx = {pd.Timestamp(row["time"]): i for i, row in df.iterrows()}
+            for date, s3 in sig3_df["signal3_sharpe"].items():
+                idx = date_to_idx.get(pd.Timestamp(date))
+                if idx is not None:
+                    signal3_map[idx] = float(s3)
+
+        buy1, sell1, ri1 = make_median_strategies(signal3_map)
         r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1, cal_range_close)
 
         buy2, sell2, ri2 = make_interval_strategies()

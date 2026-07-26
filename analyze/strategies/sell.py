@@ -98,6 +98,10 @@ class SellTopOfMA1000Strategy(SellStrategy):
 class SellMedian1000Strategy(SellStrategy):
     percentSell: float = 0
     use_pe: bool = False
+    # map of {row_index: signal3_sharpe} for the 1000-day window.
+    # If signal3 < min_signal3 on the sell day, the sell is blocked.
+    signal3_map: dict = field(default_factory=dict)
+    min_signal3: float = 0.8
 
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
@@ -114,4 +118,9 @@ class SellMedian1000Strategy(SellStrategy):
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
             return False
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        return (current - median) / median * 100 > self.percentSell
+        if (current - median) / median * 100 <= self.percentSell:
+            return False
+        # Block sell when signal3 (Sharpe) indicates mean-reverting regime
+        if self.signal3_map and self.signal3_map.get(index, self.min_signal3) < self.min_signal3:
+            return False
+        return True

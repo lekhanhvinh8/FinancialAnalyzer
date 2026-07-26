@@ -20,3 +20,6 @@ REINVEST_TIMEOUT_DAYS    = 600   # (0 = disabled)
 REINVEST_TIMEOUT_PERCENT = 100
 
 USE_PE = False   # use P/E-adjusted median instead of price median
+
+# SellMedian1000: block sell when 1000-day signal3 (Sharpe) is below this threshold
+MIN_SIGNAL3 = 0.8
