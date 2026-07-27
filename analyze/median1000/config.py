@@ -17,7 +17,7 @@ PERCENT_REINVEST = -1
 # Timeout reinvest: if no reinvest has occurred X trading days after last sell,
 # use a looser threshold (same scale: -10 = reinvest if 10%+ below median)
 REINVEST_TIMEOUT_DAYS    = 600   # (0 = disabled)
-REINVEST_TIMEOUT_PERCENT = 100
+REINVEST_TIMEOUT_PERCENT = 1000
 
 USE_PE = False   # use P/E-adjusted median instead of price median
 

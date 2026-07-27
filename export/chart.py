@@ -1025,7 +1025,7 @@ def _add_signal_strips(fig: go.Figure, signal_df: pd.DataFrame) -> go.Figure:
     return fig
 
 
-def _build_signal_js(all_windows: dict) -> str:
+def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool = False, init_delay: int = 0) -> str:
     """
     Build the JS snippet that embeds all-window signal data and wires
     the window-length input to update the 3 signal traces.
@@ -1049,6 +1049,16 @@ def _build_signal_js(all_windows: dict) -> str:
         }
 
     available = sorted(data.keys())
+
+    ya, yb, yc = yaxis_start, yaxis_start + 1, yaxis_start + 2
+    ya_key = "yaxis" if ya == 1 else f"yaxis{ya}"
+    yb_key = f"yaxis{yb}"
+    yc_key = f"yaxis{yc}"
+    ya_ref = "y" if ya == 1 else f"y{ya}"
+    yb_ref = f"y{yb}"
+    yc_ref = f"y{yc}"
+    resize_main   = "true" if not is_backtest else "false"
+    rebase_backtest = "true" if is_backtest else "false"
 
     return f"""
 <script>
@@ -1074,19 +1084,30 @@ def _build_signal_js(all_windows: dict) -> str:
     const initW = snapWindow(parseInt(inp.value));
     const d0 = ALL_SIGNALS[initW];
 
-    Plotly.relayout(gd, {{
-      'yaxis.domain':  [0.32, 1.0],
-      'yaxis2.domain': [0.32, 1.0],
-      'yaxis3': {{ domain: [0.22, 0.30], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Slope',   font: {{size: 9}}}} }},
-      'yaxis4': {{ domain: [0.11, 0.19], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Return%', font: {{size: 9}}}} }},
-      'yaxis5': {{ domain: [0.00, 0.08], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Sharpe',  font: {{size: 9}}}} }},
-    }}).then(function() {{
+    const resizeMain    = {resize_main};
+    const rebaseBacktest = {rebase_backtest};
+    const relayoutArgs = {{
+      '{ya_key}': {{ domain: [0.22, 0.30], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Slope',   font: {{size: 9}}}} }},
+      '{yb_key}': {{ domain: [0.11, 0.19], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Return%', font: {{size: 9}}}} }},
+      '{yc_key}': {{ domain: [0.00, 0.08], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Sharpe',  font: {{size: 9}}}} }},
+    }};
+    if (resizeMain) {{
+      relayoutArgs['yaxis.domain']  = [0.32, 1.0];
+      relayoutArgs['yaxis2.domain'] = [0.32, 1.0];
+    }}
+    if (rebaseBacktest) {{
+      // Shrink main chart and push event-marker strip (y3) up above signal strips
+      relayoutArgs['yaxis.domain']  = [0.37, 1.0];
+      relayoutArgs['yaxis2.domain'] = [0.37, 1.0];
+      relayoutArgs['yaxis3.domain'] = [0.31, 0.36];
+    }}
+    Plotly.relayout(gd, relayoutArgs).then(function() {{
       // Capture index BEFORE addTraces so we know where new traces land
       const baseLen = gd.data.length;
       return Plotly.addTraces(gd, [
-        {{ name: 'Signal 1 — Slope',    mode: 'markers', yaxis: 'y3', x: d0.dates, y: d0.s1, marker: {{ color: d0.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-        {{ name: 'Signal 2 — Return %', mode: 'markers', yaxis: 'y4', x: d0.dates, y: d0.s2, marker: {{ color: d0.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-        {{ name: 'Signal 3 — Sharpe',   mode: 'markers', yaxis: 'y5', x: d0.dates, y: d0.s3, marker: {{ color: d0.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 1 — Slope',    mode: 'markers', yaxis: '{ya_ref}', x: d0.dates, y: d0.s1, marker: {{ color: d0.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 2 — Return %', mode: 'markers', yaxis: '{yb_ref}', x: d0.dates, y: d0.s2, marker: {{ color: d0.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 3 — Sharpe',   mode: 'markers', yaxis: '{yc_ref}', x: d0.dates, y: d0.s3, marker: {{ color: d0.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
       ]).then(function() {{
         const idx = [baseLen, baseLen + 1, baseLen + 2];
 
@@ -1111,9 +1132,57 @@ def _build_signal_js(all_windows: dict) -> str:
     }});
   }}
 
-  initSignals();
+  if ({init_delay} > 0) {{ setTimeout(initSignals, {init_delay}); }} else {{ initSignals(); }}
 }})();
 </script>"""
+
+
+def _inject_signals_into_html(symbol: str, path: str, available_windows: list, default_window: int = 500, yaxis_start: int = 3, is_backtest: bool = False, init_delay: int = 0) -> None:
+    """Inject signal slider control and JS into an already-saved stock chart HTML file."""
+    init_window = min(available_windows, key=lambda w: abs(w - default_window))
+
+    with db._conn() as con:
+        all_df = pd.read_sql(
+            "SELECT date, window_days, signal1_slope, signal2_return, signal3_sharpe"
+            " FROM trend_signals WHERE symbol=? ORDER BY window_days, date",
+            con, params=(symbol,),
+        )
+    all_df["date"] = pd.to_datetime(all_df["date"])
+    all_windows = {
+        w: grp.set_index("date").drop(columns="window_days")
+        for w, grp in all_df.groupby("window_days")
+    }
+
+    control_html = f"""
+<div id="sigWinCtrl" style="font-family:sans-serif;font-size:13px;
+  display:flex;align-items:center;gap:10px;padding:6px 16px;
+  background:#f0f0f0;border:1px solid #ddd;border-radius:6px;margin-top:6px">
+  <span style="font-weight:600">Signal window:</span>
+  <input id="sigWinInput" type="range"
+    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
+    style="width:500px;cursor:pointer">
+  <input id="sigWinNumber" type="number"
+    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
+    style="width:70px;font-size:13px;font-weight:600;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px 4px">
+  <span style="color:#888">days</span>
+</div>"""
+
+    js = _build_signal_js(all_windows, yaxis_start=yaxis_start, is_backtest=is_backtest, init_delay=init_delay)
+
+    with open(path, "r", encoding="utf-8") as f:
+        html = f.read()
+    html = html.replace(
+        '<div id="peChart" class="plotly-graph-div" style="height:100%; width:100%;">',
+        '<div id="peChart" class="plotly-graph-div" style="height:calc(100vh - 56px); width:100%;">',
+    )
+    inject_before = '<div id="peChart"'
+    if inject_before in html:
+        html = html.replace(inject_before, control_html + inject_before, 1)
+    else:
+        html = html.replace("</body>", control_html + "</body>")
+    html = html.replace("</body>", js + "</body>")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(html)
 
 
 def save_stock_chart(symbol: str, path: str, default_window: int = 500) -> None:
@@ -1145,55 +1214,7 @@ def save_stock_chart(symbol: str, path: str, default_window: int = 500) -> None:
     if available_windows:
         # Write base HTML first (clean fig, so save_chart trace indices are correct)
         save_chart(fig, pe_dates, pe_values, price_data, path)
-
-        # Snap default_window to nearest available
-        init_window = min(available_windows, key=lambda w: abs(w - default_window))
-
-        # Load all windows in one query and split by window_days
-        with db._conn() as con:
-            all_df = pd.read_sql(
-                "SELECT date, window_days, signal1_slope, signal2_return, signal3_sharpe"
-                " FROM trend_signals WHERE symbol=? ORDER BY window_days, date",
-                con, params=(symbol,),
-            )
-        all_df["date"] = pd.to_datetime(all_df["date"])
-        all_windows = {
-            w: grp.set_index("date").drop(columns="window_days")
-            for w, grp in all_df.groupby("window_days")
-        }
-
-        control_html = f"""
-<div id="sigWinCtrl" style="font-family:sans-serif;font-size:13px;
-  display:flex;align-items:center;gap:10px;padding:6px 16px;
-  background:#f0f0f0;border:1px solid #ddd;border-radius:6px;margin-top:6px">
-  <span style="font-weight:600">Signal window:</span>
-  <input id="sigWinInput" type="range"
-    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
-    style="width:500px;cursor:pointer">
-  <input id="sigWinNumber" type="number"
-    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
-    style="width:70px;font-size:13px;font-weight:600;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px 4px">
-  <span style="color:#888">days</span>
-</div>"""
-
-        js = _build_signal_js(all_windows)
-
-        with open(path, "r", encoding="utf-8") as f:
-            html = f.read()
-        # Make the chart shrink to fit so the control above is visible
-        html = html.replace(
-            '<div id="peChart" class="plotly-graph-div" style="height:100%; width:100%;">',
-            '<div id="peChart" class="plotly-graph-div" style="height:calc(100vh - 56px); width:100%;">',
-        )
-        # Inject control above the chart
-        inject_before = '<div id="peChart"'
-        if inject_before in html:
-            html = html.replace(inject_before, control_html + inject_before, 1)
-        else:
-            html = html.replace("</body>", control_html + "</body>")
-        html = html.replace("</body>", js + "</body>")
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(html)
+        _inject_signals_into_html(symbol, path, available_windows, default_window)
     else:
         save_chart(fig, pe_dates, pe_values, price_data, path)
 
@@ -1451,6 +1472,19 @@ setTimeout(function() {{
     html = html.replace("</body>", result_block + zone_toggle + inject + "</body>")
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
+
+    # Inject signal strips for individual stocks (same as pe_<symbol>.html)
+    if index.lower() not in _known_indices:
+        symbol = index.upper()
+        with db._conn() as con:
+            available_windows = [
+                r[0] for r in con.execute(
+                    "SELECT DISTINCT window_days FROM trend_signals WHERE symbol=? ORDER BY window_days",
+                    (symbol,)
+                ).fetchall()
+            ]
+        if available_windows:
+            _inject_signals_into_html(symbol, path, available_windows, yaxis_start=4, is_backtest=True, init_delay=1500)
 
     print(f"Backtest chart saved to {path}")
     return path
