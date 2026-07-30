@@ -120,7 +120,7 @@ class SellMedian1000Strategy(SellStrategy):
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
         if (current - median) / median * 100 <= self.percentSell:
             return False
-        # Block sell when signal3 (Sharpe) indicates mean-reverting regime
-        if self.signal3_map and self.signal3_map.get(index, self.min_signal3) < self.min_signal3:
+        # Block sell when signal3 (Sharpe) indicates stable/trending regime — let it run
+        if self.signal3_map and self.signal3_map.get(index, 0.0) >= self.min_signal3:
             return False
         return True
