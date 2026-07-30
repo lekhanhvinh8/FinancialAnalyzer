@@ -268,7 +268,7 @@ def pe_chart(
     fig.update_layout(
         title=dict(text=f"{title}  <sup>{date_range_str}</sup>", font_size=18),
         xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)"),
-        yaxis=dict(title="P/E (x)", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
+        yaxis=dict(title="P/E (x, log)", type="log", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
         yaxis2=dict(title=f"{label} Index (pts)", overlaying="y", side="right", showgrid=False, tickformat=","),
         hovermode="x unified",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
@@ -967,7 +967,7 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
     fig.update_layout(
         title=dict(text=f"{symbol} — P/E & Price  <sup>{date_range_str}</sup>", font_size=18),
         xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)"),
-        yaxis=dict(title="P/E (x)", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
+        yaxis=dict(title="P/E (x, log)", type="log", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
         yaxis2=dict(title=f"{symbol} Price (VND)", overlaying="y", side="right", showgrid=False, tickformat=","),
         hovermode="x unified",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
@@ -1219,6 +1219,23 @@ def save_stock_chart(symbol: str, path: str, default_window: int = 500) -> None:
         save_chart(fig, pe_dates, pe_values, price_data, path)
 
 
+def save_index_chart(index: str, path: str, default_window: int = 500) -> None:
+    """Save index P/E chart with signal strips injected (same as save_stock_chart for stocks)."""
+    fig, pe_dates, pe_values, price_data = pe_chart(index=index)
+    save_chart(fig, pe_dates, pe_values, price_data, path)
+
+    symbol = index.upper()
+    with db._conn() as con:
+        available_windows = [
+            r[0] for r in con.execute(
+                "SELECT DISTINCT window_days FROM trend_signals WHERE symbol=? ORDER BY window_days",
+                (symbol,)
+            ).fetchall()
+        ]
+    if available_windows:
+        _inject_signals_into_html(symbol, path, available_windows, default_window)
+
+
 def save_backtest_chart(
     df: pd.DataFrame,
     buyedInfos: list,
@@ -1247,6 +1264,16 @@ def save_backtest_chart(
     if index.lower() in _known_indices:
         fig, pe_dates, pe_values, price_data = pe_chart(index=index, bands=True)
         save_chart(fig, pe_dates, pe_values, price_data, path)
+        symbol = index.upper()
+        with db._conn() as con:
+            _idx_windows = [
+                r[0] for r in con.execute(
+                    "SELECT DISTINCT window_days FROM trend_signals WHERE symbol=? ORDER BY window_days",
+                    (symbol,)
+                ).fetchall()
+            ]
+        if _idx_windows:
+            _inject_signals_into_html(symbol, path, _idx_windows, yaxis_start=4, is_backtest=True, init_delay=1500)
         _yaxis = "y2"
     else:
         # Individual stock: build a styled price+PE chart from df

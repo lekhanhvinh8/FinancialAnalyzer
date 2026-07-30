@@ -267,7 +267,7 @@ def main():
     # ── Outputs ───────────────────────────────────────────────────────────────
     if "outputs" in steps:
         import os
-        from export.chart import pe_chart, save_chart, save_stock_chart
+        from export.chart import pe_chart, save_chart, save_stock_chart, save_index_chart
         from export.excel import build_excel
 
         print(f"\n{'='*55}")
@@ -280,8 +280,7 @@ def main():
             t0 = time.time()
             p.begin("outputs", index, index.upper())
             try:
-                fig, pe_dates, pe_values, price_data = pe_chart(index=index)
-                save_chart(fig, pe_dates, pe_values, price_data, f"charts/pe_{index}.html")
+                save_index_chart(index, f"charts/pe_{index}.html")
                 build_excel(index)
                 p.end("outputs", index, index.upper(), time.time() - t0)
             except Exception as e:
