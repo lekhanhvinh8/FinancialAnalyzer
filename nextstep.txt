@@ -12,3 +12,13 @@ SellMedian1000 strategy, take param have the meaning: How many increase percent 
 
 
 
+The threadhold of reinvest should still be trigger even when there no sell, because the not-buy can trigger it
+hover too the price see too many days
+
+wondering about line color, when we hover, there may be 3 lines appear together, each line may show different day
+
+we must show the signal in the report
+
+The slope can use for the optimize sell. 
+
+Put index to the price line information
