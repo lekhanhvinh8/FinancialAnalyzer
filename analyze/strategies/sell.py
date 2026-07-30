@@ -98,10 +98,12 @@ class SellTopOfMA1000Strategy(SellStrategy):
 class SellMedian1000Strategy(SellStrategy):
     percentSell: float = 0
     use_pe: bool = False
-    # map of {row_index: signal3_sharpe} for the 1000-day window.
-    # If signal3 < min_signal3 on the sell day, the sell is blocked.
+    # {row_index: signal3_sharpe} for 1000-day window — block sell when >= min_signal3 (stable/trending → hold)
     signal3_map: dict = field(default_factory=dict)
     min_signal3: float = 0.8
+    # {row_index: signal1_slope} for short-term window — block sell when >= min_signal1 (momentum still up → hold)
+    signal1_map: dict = field(default_factory=dict)
+    min_signal1: float = 0.05
 
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
@@ -120,7 +122,10 @@ class SellMedian1000Strategy(SellStrategy):
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
         if (current - median) / median * 100 <= self.percentSell:
             return False
-        # Block sell when signal3 (Sharpe) indicates stable/trending regime — let it run
+        # Block sell when short-term momentum (linear regression slope) is still strong — let it run
+        if self.signal1_map and self.signal1_map.get(index, 0.0) >= self.min_signal1:
+            return False
+        # Block sell when long-term Sharpe indicates stable/trending regime — let it run
         if self.signal3_map and self.signal3_map.get(index, 0.0) >= self.min_signal3:
             return False
         return True

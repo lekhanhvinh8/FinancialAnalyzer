@@ -21,5 +21,9 @@ REINVEST_TIMEOUT_PERCENT = 1000
 
 USE_PE = False   # use P/E-adjusted median instead of price median
 
-# SellMedian1000: block sell when 1000-day signal3 (Sharpe) is below this threshold
+# SellMedian1000: block sell when 1000-day Sharpe (signal3) is above this — stable/trending regime → hold
 MIN_SIGNAL3 = 0.8
+
+# SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
+SELL_SIGNAL1_WINDOW = 100   # trading days for the slope window
+SELL_MIN_SIGNAL1   = 0.05   # % per day (e.g. 0.05 = price rising ~0.05%/day over 100 days)
