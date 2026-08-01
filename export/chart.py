@@ -356,7 +356,7 @@ def save_chart(
   <div class="divider"></div>
   <span class="section-label">Price Mean</span>
   <div class="ma-group">
-    <label class="chk"><input type="checkbox" id="priceMeanVis" checked> Show</label>
+    <label class="chk"><input type="checkbox" id="priceMeanVis"> Show</label>
     <input type="number" id="priceMeanW" value="{mean_window}" min="5" max="5000" step="10" title="Rolling window (days)">
     <span class="unit">d</span>
   </div>
@@ -372,7 +372,7 @@ def save_chart(
     <span class="unit">d</span>
   </div>
   <label class="chk" style="margin-left:4px">
-    <input type="checkbox" class="pct-price-cb" data-sub="0" checked>
+    <input type="checkbox" class="pct-price-cb" data-sub="0">
     <span class="dot" style="background:rgba(46,160,67,0.9)"></span>25th</label>
   <span class="off-wrap"><input type="checkbox" id="off-en-prPct25">±<input type="number" id="off-pct-prPct25" class="off-pct" value="50">%</span>
   <label class="chk">
@@ -380,7 +380,7 @@ def save_chart(
     <span class="dot" style="background:rgba(100,100,200,0.9)"></span>Med</label>
   <span class="off-wrap"><input type="checkbox" id="off-en-prPctMed">±<input type="number" id="off-pct-prPctMed" class="off-pct" value="50">%</span>
   <label class="chk">
-    <input type="checkbox" class="pct-price-cb" data-sub="2" checked>
+    <input type="checkbox" class="pct-price-cb" data-sub="2">
     <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>
   <span class="off-wrap"><input type="checkbox" id="off-en-prPct75">±<input type="number" id="off-pct-prPct75" class="off-pct" value="50">%</span>"""
 
@@ -798,8 +798,10 @@ document.getElementById('peLineVis').addEventListener('change', function() {{
 {price_checkbox_js}
 // Sync initial visibility with checkbox defaults
 togglePePct();
+togglePricePct();
 Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [peMeanIdx]);
 Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [peLineIdx]);
+Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [priceMeanIdx]);
 // Apply default color mode (price)
 _applyColorSwitch();
 </script>
