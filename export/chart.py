@@ -1496,9 +1496,35 @@ setTimeout(function() {{
             f"<table style='border-collapse:collapse'>{header}{rows}</table></div>"
         )
 
+    import dataclasses
+    strategy_block = ""
+    strategies = [
+        ("Buy",     buy_strategy),
+        ("Sell",    sell_strategy),
+        ("Reinvest",reinvest_strategy),
+    ]
+    strat_rows = ""
+    for label, strat in strategies:
+        if strat is None:
+            continue
+        strat_rows += f"<tr><td colspan='2' style='padding:6px 0 2px;color:#94a3b8;font-weight:600'>{label}: {type(strat).__name__}</td></tr>"
+        if dataclasses.is_dataclass(strat):
+            for fld in dataclasses.fields(strat):
+                v = getattr(strat, fld.name)
+                if isinstance(v, dict) and len(v) > 3:
+                    v = f"{{...{len(v)} entries}}"
+                strat_rows += f"<tr><td style='padding:1px 16px 1px 12px;color:#64748b'>{fld.name}</td><td style='text-align:right'>{v}</td></tr>"
+
+    if strat_rows:
+        strategy_block = (
+            f"<div style='padding:16px;font:13px/1.8 monospace'>"
+            f"<div style='color:#60a5fa;font-weight:700;font-size:16px;margin-bottom:6px'>Strategy Parameters</div>"
+            f"<table style='border-collapse:collapse'>{strat_rows}</table></div>"
+        )
+
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
-    html = html.replace("</body>", result_block + zone_toggle + inject + "</body>")
+    html = html.replace("</body>", strategy_block + result_block + zone_toggle + inject + "</body>")
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
 
