@@ -1027,16 +1027,14 @@ def _add_signal_strips(fig: go.Figure, signal_df: pd.DataFrame) -> go.Figure:
     return fig
 
 
-def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool = False, init_delay: int = 0) -> str:
+def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool = False, init_delay: int = 0,
+                     default_w1: int = 100, default_w2: int = 500, default_w3: int = 1000) -> str:
     """
     Build the JS snippet that embeds all-window signal data and wires
-    the window-length input to update the 3 signal traces.
+    3 independent window sliders — one per signal.
 
     all_windows : {window_days: DataFrame indexed by date}
-    signal_trace_indices : plotly trace indices of [s1, s2, s3]
     """
-    # Serialise: {window_days: {dates:[], s1:[], s2:[], s3:[]}}
-    # Downsample to every 5th point — strips are tiny, visual is identical, 5× less JS data
     DISPLAY_STEP = 5
     data: dict = {}
     for w, df in sorted(all_windows.items()):
@@ -1059,7 +1057,7 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
     ya_ref = "y" if ya == 1 else f"y{ya}"
     yb_ref = f"y{yb}"
     yc_ref = f"y{yc}"
-    resize_main   = "true" if not is_backtest else "false"
+    resize_main     = "true" if not is_backtest else "false"
     rebase_backtest = "true" if is_backtest else "false"
 
     return f"""
@@ -1081,12 +1079,11 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
     const gd = document.getElementById('peChart') || document.querySelector('.plotly-graph-div');
     if (!gd || !gd._fullLayout) {{ setTimeout(initSignals, 200); return; }}
 
-    const inp = document.getElementById('sigWinInput');
-    const num = document.getElementById('sigWinNumber');
-    const initW = snapWindow(parseInt(inp.value));
-    const d0 = ALL_SIGNALS[initW];
+    const initW1 = snapWindow({default_w1});
+    const initW2 = snapWindow({default_w2});
+    const initW3 = snapWindow({default_w3});
 
-    const resizeMain    = {resize_main};
+    const resizeMain     = {resize_main};
     const rebaseBacktest = {rebase_backtest};
     const relayoutArgs = {{
       '{ya_key}': {{ domain: [0.22, 0.30], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Slope',   font: {{size: 9}}}} }},
@@ -1098,38 +1095,45 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
       relayoutArgs['yaxis2.domain'] = [0.32, 1.0];
     }}
     if (rebaseBacktest) {{
-      // Shrink main chart and push event-marker strip (y3) up above signal strips
       relayoutArgs['yaxis.domain']  = [0.37, 1.0];
       relayoutArgs['yaxis2.domain'] = [0.37, 1.0];
       relayoutArgs['yaxis3.domain'] = [0.31, 0.36];
     }}
-    Plotly.relayout(gd, relayoutArgs).then(function() {{
-      // Capture index BEFORE addTraces so we know where new traces land
-      const baseLen = gd.data.length;
-      return Plotly.addTraces(gd, [
-        {{ name: 'Signal 1 — Slope',    mode: 'markers', yaxis: '{ya_ref}', x: d0.dates, y: d0.s1, marker: {{ color: d0.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-        {{ name: 'Signal 2 — Return %', mode: 'markers', yaxis: '{yb_ref}', x: d0.dates, y: d0.s2, marker: {{ color: d0.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-        {{ name: 'Signal 3 — Sharpe',   mode: 'markers', yaxis: '{yc_ref}', x: d0.dates, y: d0.s3, marker: {{ color: d0.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-      ]).then(function() {{
-        const idx = [baseLen, baseLen + 1, baseLen + 2];
 
-        function applyWindow(w) {{
+    Plotly.relayout(gd, relayoutArgs).then(function() {{
+      const baseLen = gd.data.length;
+      const d1 = ALL_SIGNALS[initW1], d2 = ALL_SIGNALS[initW2], d3 = ALL_SIGNALS[initW3];
+      return Plotly.addTraces(gd, [
+        {{ name: 'Signal 1 — Slope',    mode: 'markers', yaxis: '{ya_ref}', x: d1.dates, y: d1.s1, marker: {{ color: d1.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 2 — Return %', mode: 'markers', yaxis: '{yb_ref}', x: d2.dates, y: d2.s2, marker: {{ color: d2.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 3 — Sharpe',   mode: 'markers', yaxis: '{yc_ref}', x: d3.dates, y: d3.s3, marker: {{ color: d3.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+      ]).then(function() {{
+        const ti1 = baseLen, ti2 = baseLen + 1, ti3 = baseLen + 2;
+
+        function applySignal(ti, key, rangeEl, numEl, w) {{
           const snapped = snapWindow(w);
           const d = ALL_SIGNALS[snapped];
           if (!d) return;
-          inp.value = snapped;
-          num.value = snapped;
-          idx.forEach(function(ti, i) {{
-            const vals = [d.s1, d.s2, d.s3][i];
-            Plotly.restyle(gd, {{ x: [d.dates], y: [vals], 'marker.color': [vals] }}, [ti]);
-          }});
+          rangeEl.value = snapped;
+          numEl.value   = snapped;
+          Plotly.restyle(gd, {{ x: [d.dates], y: [d[key]], 'marker.color': [d[key]] }}, [ti]);
         }}
 
-        inp.addEventListener('input',  function() {{
-          clearTimeout(inp._t);
-          inp._t = setTimeout(function() {{ applyWindow(parseInt(inp.value)); }}, 80);
-        }});
-        num.addEventListener('change', function() {{ applyWindow(parseInt(num.value)); }});
+        function wire(ti, key, rangeId, numberId) {{
+          const rangeEl = document.getElementById(rangeId);
+          const numEl   = document.getElementById(numberId);
+          rangeEl.addEventListener('input', function() {{
+            clearTimeout(rangeEl._t);
+            rangeEl._t = setTimeout(function() {{ applySignal(ti, key, rangeEl, numEl, parseInt(rangeEl.value)); }}, 80);
+          }});
+          numEl.addEventListener('change', function() {{ applySignal(ti, key, rangeEl, numEl, parseInt(numEl.value)); }});
+          rangeEl.value = snapWindow(parseInt(rangeEl.value));
+          numEl.value   = rangeEl.value;
+        }}
+
+        wire(ti1, 's1', 'sig1WinInput', 'sig1WinNumber');
+        wire(ti2, 's2', 'sig2WinInput', 'sig2WinNumber');
+        wire(ti3, 's3', 'sig3WinInput', 'sig3WinNumber');
       }});
     }});
   }}
@@ -1139,9 +1143,17 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
 </script>"""
 
 
-def _inject_signals_into_html(symbol: str, path: str, available_windows: list, default_window: int = 500, yaxis_start: int = 3, is_backtest: bool = False, init_delay: int = 0) -> None:
-    """Inject signal slider control and JS into an already-saved stock chart HTML file."""
-    init_window = min(available_windows, key=lambda w: abs(w - default_window))
+def _inject_signals_into_html(symbol: str, path: str, available_windows: list,
+                              default_window: int = 500, yaxis_start: int = 3,
+                              is_backtest: bool = False, init_delay: int = 0,
+                              default_w1: int = 100, default_w2: int = 500, default_w3: int = 1000) -> None:
+    """Inject 3 independent signal sliders and JS into an already-saved stock chart HTML file."""
+    wmin, wmax = available_windows[0], available_windows[-1]
+
+    def snap(w):
+        return min(available_windows, key=lambda v: abs(v - w))
+
+    iw1, iw2, iw3 = snap(default_w1), snap(default_w2), snap(default_w3)
 
     with db._conn() as con:
         all_df = pd.read_sql(
@@ -1155,21 +1167,29 @@ def _inject_signals_into_html(symbol: str, path: str, available_windows: list, d
         for w, grp in all_df.groupby("window_days")
     }
 
-    control_html = f"""
-<div id="sigWinCtrl" style="font-family:sans-serif;font-size:13px;
-  display:flex;align-items:center;gap:10px;padding:6px 16px;
-  background:#f0f0f0;border:1px solid #ddd;border-radius:6px;margin-top:6px">
-  <span style="font-weight:600">Signal window:</span>
-  <input id="sigWinInput" type="range"
-    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
-    style="width:500px;cursor:pointer">
-  <input id="sigWinNumber" type="number"
-    min="{available_windows[0]}" max="{available_windows[-1]}" step="1" value="{init_window}"
-    style="width:70px;font-size:13px;font-weight:600;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px 4px">
-  <span style="color:#888">days</span>
-</div>"""
+    def _slider_row(label, range_id, num_id, init_w):
+        return (
+            f'<div style="display:flex;align-items:center;gap:8px">'
+            f'<span style="width:80px;font-weight:600;color:#555">{label}</span>'
+            f'<input id="{range_id}" type="range" min="{wmin}" max="{wmax}" step="1" value="{init_w}" style="width:460px;cursor:pointer">'
+            f'<input id="{num_id}" type="number" min="{wmin}" max="{wmax}" step="1" value="{init_w}" '
+            f'style="width:70px;font-size:13px;font-weight:600;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px 4px">'
+            f'<span style="color:#888">days</span>'
+            f'</div>'
+        )
 
-    js = _build_signal_js(all_windows, yaxis_start=yaxis_start, is_backtest=is_backtest, init_delay=init_delay)
+    control_html = (
+        f'<div id="sigWinCtrl" style="font-family:sans-serif;font-size:13px;'
+        f'display:flex;flex-direction:column;gap:6px;padding:8px 16px;'
+        f'background:#f0f0f0;border:1px solid #ddd;border-radius:6px;margin-top:6px">'
+        + _slider_row("Signal 1 — Slope",    "sig1WinInput", "sig1WinNumber", iw1)
+        + _slider_row("Signal 2 — Return%",  "sig2WinInput", "sig2WinNumber", iw2)
+        + _slider_row("Signal 3 — Sharpe",   "sig3WinInput", "sig3WinNumber", iw3)
+        + '</div>'
+    )
+
+    js = _build_signal_js(all_windows, yaxis_start=yaxis_start, is_backtest=is_backtest,
+                          init_delay=init_delay, default_w1=iw1, default_w2=iw2, default_w3=iw3)
 
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
