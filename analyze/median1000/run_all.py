@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 import time
 import traceback
+from datetime import datetime
 import pandas as pd
 import database as db
 from analyze.runner import load_symbol_df, run_estimate
@@ -48,7 +49,7 @@ def make_interval_strategies():
     )
 
 
-def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
+def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir: Path | None = None) -> dict | None:
     t0 = time.time()
     prog.begin(symbol)
     try:
@@ -88,7 +89,8 @@ def process_symbol(symbol: str, prog: RunAllProgress) -> dict | None:
         buy2, sell2, ri2 = make_interval_strategies()
         r2 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy2, sell2, ri2, cal_range_close)
 
-        chart_path = CHARTS_DIR / f"backtest_{symbol.lower()}.html"
+        out_dir = run_dir if run_dir is not None else CHARTS_DIR
+        chart_path = out_dir / f"backtest_{symbol.lower()}.html"
         save_backtest_chart(
             df,
             r1["buyedInfos"], r1["sellInfos"], r1["reinvestInfos"],
@@ -305,15 +307,21 @@ if __name__ == "__main__":
     CHARTS_DIR.mkdir(exist_ok=True)
 
     symbols = [s.upper() for s in sys.argv[1:]] if len(sys.argv) > 1 else db.list_symbols()
-    print(f"Processing {len(symbols)} symbols: {', '.join(symbols)}")
-    print(f"Progress -> {CHARTS_DIR}/run_all_progress.html\n")
 
-    prog = RunAllProgress(symbols, out=str(CHARTS_DIR / "run_all_progress.html"))
+    run_ts  = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_dir = CHARTS_DIR / run_ts
+    run_dir.mkdir(exist_ok=True)
+
+    print(f"Processing {len(symbols)} symbols: {', '.join(symbols)}")
+    print(f"Output    -> {run_dir}")
+    print(f"Progress  -> {run_dir}/run_all_progress.html\n")
+
+    prog = RunAllProgress(symbols, out=str(run_dir / "run_all_progress.html"))
 
     report_rows = []
     for i, sym in enumerate(symbols, 1):
         print(f"[{i}/{len(symbols)}] {sym}", end=" ... ", flush=True)
-        row = process_symbol(sym, prog)
+        row = process_symbol(sym, prog, run_ts="", run_dir=run_dir)
         if row:
             report_rows.append(row)
             print(f"median={row['median_growth_%']:.1f}%  interval={row['interval_growth_%']:.1f}%")
@@ -323,8 +331,6 @@ if __name__ == "__main__":
     prog.finish()
 
     if report_rows:
-        from datetime import datetime
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        build_report(report_rows, CHARTS_DIR / f"report_all_{ts}.html")
+        build_report(report_rows, run_dir / "report_all.html")
 
     print("\nDone.")
