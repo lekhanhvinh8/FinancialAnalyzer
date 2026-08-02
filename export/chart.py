@@ -43,6 +43,14 @@ _INDEX_PRICE_SYMBOL = {
     "vnfinlead":  "VNFINLEAD",
 }
 
+# Price-line colors/labels per P/E zone (cheap → expensive). The hover anchor
+# feeds these per point as customdata, so the tooltip's dot and label match the
+# line segment under the cursor.
+_ZONE_COLORS   = ["#2ca02c", "#f0c040", "#ff7f0e", "#d62728"]
+_ZONE_LABELS   = ["Cheap", "Fair", "High", "Exp."]
+_NO_ZONE_COLOR = "#888888"
+_NO_ZONE_LABEL = "—"
+
 _DEFAULT_PCT_WINDOW = 1000
 
 
@@ -192,10 +200,10 @@ def pe_chart(
         n_p   = len(price_values)
 
         PRICE_ZONES = [
-            (0, f"#2ca02c", f"Cheap  P/E<{p25_s:.1f}"),
-            (1, f"#f0c040", f"Fair   P/E {p25_s:.1f}–{median_s:.1f}"),
-            (2, f"#ff7f0e", f"High   P/E {median_s:.1f}–{p75_s:.1f}"),
-            (3, f"#d62728", f"Exp.   P/E>{p75_s:.1f}"),
+            (0, _ZONE_COLORS[0], f"Cheap  P/E<{p25_s:.1f}"),
+            (1, _ZONE_COLORS[1], f"Fair   P/E {p25_s:.1f}–{median_s:.1f}"),
+            (2, _ZONE_COLORS[2], f"High   P/E {median_s:.1f}–{p75_s:.1f}"),
+            (3, _ZONE_COLORS[3], f"Exp.   P/E>{p75_s:.1f}"),
         ]
         for z, color, name in PRICE_ZONES:
             y_zone = []
@@ -211,7 +219,10 @@ def pe_chart(
                 line=dict(color=color, width=1.5),
                 legendgroup="price_color", legendgrouptitle_text=f"{label} Price",
                 yaxis="y2",
-                hovertemplate=f"<b>%{{x|%Y-%m-%d}}</b><br>{label}: %{{y:,.0f}} pts<extra></extra>",
+                # Hover is served by the gap-free anchor trace below: these four are
+                # null outside their zone, and "x unified" would otherwise pull each
+                # one's nearest non-null point (weeks away) into the tooltip.
+                hoverinfo="skip",
             ))
 
         # Price rolling percentile lines (traces 7, 8, 9)
@@ -241,15 +252,34 @@ def pe_chart(
             yaxis="y2",
         ))
 
+        # ── Price hover anchor (trace 15) ────────────────────────────────────
+        # Invisible, gap-free copy of the price series. The four colored zone
+        # traces are hoverinfo="skip", so this is the single source of the price
+        # row in the unified tooltip — always at the hovered date. Plotly's row
+        # swatch is per-trace, so the zone color rides along per point in
+        # customdata and is drawn as a ● inside the row text instead.
+        fig.add_trace(go.Scatter(
+            x=idx_price.index, y=price_values,
+            mode="lines", name=f"{label} Price",
+            line=dict(width=0, color=_NO_ZONE_COLOR),
+            yaxis="y2", showlegend=False, legendgroup="price_color",
+            customdata=[
+                [_ZONE_COLORS[z], _ZONE_LABELS[z]] if z >= 0 else [_NO_ZONE_COLOR, _NO_ZONE_LABEL]
+                for z in zones
+            ],
+            # No date here — "x unified" already prints it once in the header.
+            hovertemplate=(
+                "<span style='color:%{customdata[0]}'>●</span> "
+                "%{customdata[1]}: %{y:,.0f} pts<extra></extra>"
+            ),
+        ))
+
     # ── P/E line ──────────────────────────────────────────────────────────────
     fig.add_trace(go.Scatter(
         x=df["date"], y=pe_values,
         mode="lines", name="Aggregate P/E",
         line=dict(color="#1f77b4", width=1.8), yaxis="y1",
-        hovertemplate=(
-            "<b>%{x|%Y-%m-%d}</b><br>P/E: %{y:.2f}x<br>"
-            "Members: %{customdata}<extra></extra>"
-        ),
+        hovertemplate="P/E: %{y:.2f}x<br>Members: %{customdata}<extra></extra>",
         customdata=df["member_count"],
     ))
 
@@ -260,7 +290,7 @@ def pe_chart(
         mode="markers+text", marker=dict(size=8, color="#ff7f0e"),
         text=[f"  {current:.2f}x"], textposition="middle right",
         name=f"Current P/E ({current_date})", yaxis="y1",
-        hovertemplate=f"<b>{current_date}</b><br>P/E: {current:.2f}x<extra></extra>",
+        hovertemplate=f"P/E: {current:.2f}x<extra></extra>",
     ))
 
     # ── Layout ────────────────────────────────────────────────────────────────
@@ -302,23 +332,25 @@ def save_chart(
 
     # Trace layout (bands=True, has_price=True):
     # 0,1,2=bands | 3,4,5=pe_pct | 6,7,8,9=price_colored | 10,11,12=price_pct |
-    # 13=pe_mean | 14=price_mean | 15=pe_line | 16=marker
+    # 13=pe_mean | 14=price_mean | 15=price_hover_anchor | 16=pe_line | 17=marker
     # Trace layout (bands=True, has_price=False):
     # 0,1,2=bands | 3,4,5=pe_pct | 6=pe_mean | 7=pe_line | 8=marker
     if has_price:
-        pe_pct_idx     = [3, 4, 5]
-        price_pct_idx  = [10, 11, 12]
-        pe_mean_idx    = 13
-        price_mean_idx = 14
-        pe_line_idx    = n - 2
-        marker_idx     = n - 1
+        pe_pct_idx       = [3, 4, 5]
+        price_pct_idx    = [10, 11, 12]
+        pe_mean_idx      = 13
+        price_mean_idx   = 14
+        price_anchor_idx = 15
+        pe_line_idx      = n - 2
+        marker_idx       = n - 1
     else:
-        pe_pct_idx     = [3, 4, 5]
-        price_pct_idx  = []
-        pe_mean_idx    = 6
-        price_mean_idx = None
-        pe_line_idx    = n - 2
-        marker_idx     = n - 1
+        pe_pct_idx       = [3, 4, 5]
+        price_pct_idx    = []
+        pe_mean_idx      = 6
+        price_mean_idx   = None
+        price_anchor_idx = None
+        pe_line_idx      = n - 2
+        marker_idx       = n - 1
 
     plot_html = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
 
@@ -331,8 +363,13 @@ def save_chart(
     global_med_json      = json.dumps(price_data[4] if price_data else None)
     global_p75_json      = json.dumps(price_data[5] if price_data else None)
 
-    pe_mean_idx_json    = json.dumps(pe_mean_idx)
-    price_mean_idx_json = json.dumps(price_mean_idx)
+    pe_mean_idx_json      = json.dumps(pe_mean_idx)
+    price_mean_idx_json   = json.dumps(price_mean_idx)
+    price_anchor_idx_json = json.dumps(price_anchor_idx)
+    zone_colors_json      = json.dumps(_ZONE_COLORS)
+    zone_labels_json      = json.dumps(_ZONE_LABELS)
+    no_zone_color_json    = json.dumps(_NO_ZONE_COLOR)
+    no_zone_label_json    = json.dumps(_NO_ZONE_LABEL)
 
     pe_mean_control = f"""
   <div class="divider"></div>
@@ -390,7 +427,9 @@ document.getElementById('peLineVis').addEventListener('change', function() {{
 }});
 document.getElementById('priceColorVis').addEventListener('change', function() {{
   const v = this.checked ? true : 'legendonly';
-  Plotly.restyle(gd, {{ visible: [v, v, v, v] }}, [6, 7, 8, 9]);
+  // {price_anchor_idx} is the invisible hover-anchor trace — hide it with the
+  // colored zone lines so the tooltip's price row disappears too.
+  Plotly.restyle(gd, {{ visible: [v, v, v, v, v] }}, [6, 7, 8, 9, {price_anchor_idx}]);
 }});
 function togglePricePct() {{
   const vis = document.getElementById('pricePctVis').checked;
@@ -411,6 +450,7 @@ function recomputePricePct() {{
   if (priceValues.length > 0 && colorMode === 'price') {{
     const zoneY = _computeZoneY();
     [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+    _syncAnchorZones(zoneY.zones);
   }}
   const prP25Y = rollingQuantile(priceValues, ppw, 0.25);
   const prMedY = rollingQuantile(priceValues, ppw, 0.50);
@@ -460,6 +500,7 @@ function _applyColorSwitch() {{
   if (priceValues.length > 0) {{
     const zoneY = _computeZoneY();
     [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+    _syncAnchorZones(zoneY.zones);
     if (_hasBands) {{
       if (colorMode === 'price') {{
         [0, 1, 2].forEach((ti, i) => {{
@@ -641,11 +682,13 @@ function splitByZone(priceVals, compareVals, p25arr, medArr, p75arr, fbP25, fbMe
     else if (pv < p75)  zones[i] = 2;
     else                zones[i] = 3;
   }}
-  return [0,1,2,3].map(z => priceVals.map((v, i) => {{
+  const out = [0,1,2,3].map(z => priceVals.map((v, i) => {{
     if (zones[i] === z) return v;
     const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
     return adj ? v : null;
   }}));
+  out.zones = zones;  // owning zone per point — drives the hover dot color
+  return out;
 }}
 
 function splitByMean(priceVals, compareVals, meanArr) {{
@@ -657,11 +700,26 @@ function splitByMean(priceVals, compareVals, meanArr) {{
     if (cv == null || m == null) continue;
     zones[i] = cv < m ? 0 : 3;
   }}
-  return [0,1,2,3].map(z => priceVals.map((v, i) => {{
+  const out = [0,1,2,3].map(z => priceVals.map((v, i) => {{
     if (zones[i] === z) return v;
     const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
     return adj ? v : null;
   }}));
+  out.zones = zones;
+  return out;
+}}
+
+// The hover anchor is one dense trace, so Plotly's per-trace row swatch can't
+// show the zone. Feed [color, label] per point instead; the hovertemplate paints
+// a ● and names the zone. Must be re-run wherever gd.data[6..9].y is recomputed.
+const ZONE_COLORS = {zone_colors_json};
+const ZONE_LABELS = {zone_labels_json};
+function _syncAnchorZones(zones) {{
+  if ({price_anchor_idx_json} == null || !zones) return;
+  gd.data[{price_anchor_idx_json}].customdata = zones.map(
+    z => (z >= 0 ? [ZONE_COLORS[z], ZONE_LABELS[z]]
+                 : [{no_zone_color_json}, {no_zone_label_json}])
+  );
 }}
 
 function _computeZoneY() {{
@@ -707,6 +765,7 @@ function recomputePePct() {{
   if (priceValues.length > 0) {{
     const zoneY = _computeZoneY();
     [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+    _syncAnchorZones(zoneY.zones);
     layoutUpd['yaxis2.range'] = priceY2Range;
   }}
   Plotly.update(gd, dataUpd, layoutUpd, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
@@ -889,10 +948,10 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
         zones = [_zone(v) for v in pe_vals]
         n_p   = len(prices)
         PRICE_ZONES = [
-            (0, "#2ca02c", f"Cheap  P/E<{p25:.1f}"),
-            (1, "#f0c040", f"Fair   P/E {p25:.1f}–{med:.1f}"),
-            (2, "#ff7f0e", f"High   P/E {med:.1f}–{p75:.1f}"),
-            (3, "#d62728", f"Exp.   P/E>{p75:.1f}"),
+            (0, _ZONE_COLORS[0], f"Cheap  P/E<{p25:.1f}"),
+            (1, _ZONE_COLORS[1], f"Fair   P/E {p25:.1f}–{med:.1f}"),
+            (2, _ZONE_COLORS[2], f"High   P/E {med:.1f}–{p75:.1f}"),
+            (3, _ZONE_COLORS[3], f"Exp.   P/E>{p75:.1f}"),
         ]
         for z, color, name in PRICE_ZONES:
             y_zone = []
@@ -908,7 +967,8 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
                 line=dict(color=color, width=1.5),
                 legendgroup="price_color", legendgrouptitle_text=f"{symbol} Price",
                 yaxis="y2",
-                hovertemplate=f"<b>%{{x|%Y-%m-%d}}</b><br>{symbol}: %{{y:,.0f}}<extra></extra>",
+                # Hover is served by the gap-free anchor trace below — see pe_chart().
+                hoverinfo="skip",
             ))
 
         # ── Price rolling percentile lines (traces 10, 11, 12) ───────────────
@@ -941,13 +1001,30 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
             yaxis="y2",
         ))
 
+        # ── Price hover anchor (trace 15) — see pe_chart() ───────────────────
+        fig.add_trace(go.Scatter(
+            x=dates, y=prices,
+            mode="lines", name=f"{symbol} Price",
+            line=dict(width=0, color=_NO_ZONE_COLOR),
+            yaxis="y2", showlegend=False, legendgroup="price_color",
+            customdata=[
+                [_ZONE_COLORS[z], _ZONE_LABELS[z]] if z >= 0 else [_NO_ZONE_COLOR, _NO_ZONE_LABEL]
+                for z in zones
+            ],
+            # No date here — "x unified" already prints it once in the header.
+            hovertemplate=(
+                "<span style='color:%{customdata[0]}'>●</span> "
+                "%{customdata[1]}: %{y:,.0f}<extra></extra>"
+            ),
+        ))
+
     # ── P/E line ──────────────────────────────────────────────────────────────
     if has_pe:
         fig.add_trace(go.Scatter(
             x=dates, y=pe_vals,
             mode="lines", name=f"{symbol} P/E",
             line=dict(color="#1f77b4", width=1.8), yaxis="y1",
-            hovertemplate="<b>%{x|%Y-%m-%d}</b><br>P/E: %{y:.2f}x<extra></extra>",
+            hovertemplate="P/E: %{y:.2f}x<extra></extra>",
         ))
         current = pe_vals[-1]
         fig.add_trace(go.Scatter(
@@ -955,7 +1032,7 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
             mode="markers+text", marker=dict(size=8, color="#ff7f0e"),
             text=[f"  {current:.2f}x"], textposition="middle right",
             name=f"Current P/E", yaxis="y1",
-            hovertemplate=f"<b>%{{x|%Y-%m-%d}}</b><br>P/E: {current:.2f}x<extra></extra>",
+            hovertemplate=f"P/E: {current:.2f}x<extra></extra>",
         ))
     else:
         # price-only fallback
@@ -1011,7 +1088,7 @@ def _add_signal_strips(fig: go.Figure, signal_df: pd.DataFrame) -> go.Figure:
             marker=dict(color=vals, colorscale="RdYlGn", size=3, showscale=False),
             name=label,
             yaxis=yref,
-            hovertemplate=f"<b>%{{x}}</b><br>{label}: %{{y:.3f}}<extra></extra>",
+            hovertemplate=f"{label}: %{{y:.3f}}<extra></extra>",
         ))
         yaxis_key = f"yaxis{yref[1:]}" if yref != "y" else "yaxis"
         fig.update_layout(**{
@@ -1332,11 +1409,11 @@ def save_backtest_chart(
             "customdata": prices_at_event,
             "marker": {"symbol": symbol, "size": size, "color": fill,
                        "line": {"color": border, "width": 1}},
-            "hovertemplate": (
-                f"<b>%{{x}}</b><br>"
-                f"<span style='color:{fill}'>●</span> <b>{name}</b><br>"
-                f"Price: %{{customdata:,.0f}}<br>%{{text}}<extra></extra>"
-            ),
+            # Markers are visual-only. A handful of events across years is far too
+            # sparse for "x unified", which would pull the nearest one and report
+            # e.g. a Sell five weeks away as if it happened on the hovered date.
+            # The dense anchor below reports only what truly occurred that day.
+            "hoverinfo": "skip",
         })
 
     # ── Condition-zone overlay traces ─────────────────────────────────────────
@@ -1385,7 +1462,39 @@ def save_backtest_chart(
                 "line": {"color": color, "width": 3},
                 "opacity": 0.7,
                 "legendgroup": "condzone",
-                "hovertemplate": f"<b>%{{x}}</b><br><span style='color:{color}'>●</span> {label}<br>Price: %{{y:,.2f}}<extra></extra>",
+                # Same null-gap problem as the P/E zone traces: under "x unified"
+                # Plotly would pull each zone's nearest non-null point (potentially
+                # weeks off) into the tooltip. The zone label comes from the
+                # gap-free anchor below instead.
+                "hoverinfo": "skip",
+            })
+
+        # ── Condition-zone hover anchor ──────────────────────────────────────
+        # Invisible, gap-free trace that reports which zone the hovered date is
+        # in. Unlike the P/E zones these flags are fixed at build time, so no
+        # runtime re-sync is needed. Colors/labels come from the same
+        # _COMBO_COLORS map that paints the lines, so they can't drift.
+        if zone_traces:
+            zone_meta = [
+                _COMBO_COLORS.get((b_flags[i], s_flags[i], r_flags[i]),
+                                  (_NO_ZONE_COLOR, "—"))
+                for i in range(n)
+            ]
+            zone_traces.append({
+                "type": "scatter",
+                "mode": "lines",
+                "name": "Condition zone",
+                "yaxis": _yaxis,
+                "x": dates,
+                "y": prices,
+                "line": {"width": 0, "color": _NO_ZONE_COLOR},
+                "showlegend": False,
+                "legendgroup": "condzone",
+                "customdata": [[c, lbl] for c, lbl in zone_meta],
+                "hovertemplate": (
+                    "<span style='color:%{customdata[0]}'>●</span> "
+                    "%{customdata[1]}<extra></extra>"
+                ),
             })
 
     # ── Compare trace (interval buy) ─────────────────────────────────────────
@@ -1403,11 +1512,44 @@ def save_backtest_chart(
             "marker": {"symbol": "triangle-up", "size": 9,
                        "color": "rgba(34,197,94,0.75)",
                        "line": {"color": "#15803d", "width": 1}},
-            "hovertemplate": (
-                "<b>%{x}</b><br>"
-                "<span style='color:rgba(99,179,237,0.75)'>●</span> <b>Buy (Interval)</b><br>"
-                "Price: %{customdata:,.0f}<br>%{text}<extra></extra>"
-            ),
+            "hoverinfo": "skip",  # see the event hover anchor below
+        })
+
+    # ── Event hover anchor (y3) ──────────────────────────────────────────────
+    # One dense trace covering every date, carrying the events that actually
+    # occurred on it. Dates with no event resolve to an empty string, which
+    # Plotly renders as a zero-height (invisible) row — so the strip reports
+    # events exactly, instead of the nearest one within Plotly's 20px reach.
+    _event_html: dict[str, list[str]] = {}
+
+    def _add_event(day: str, color: str, name: str, price: float, detail: str):
+        _event_html.setdefault(day, []).append(
+            f"<span style='color:{color}'>●</span> <b>{name}</b><br>"
+            f"Price: {price:,.0f}<br>{detail}"
+        )
+
+    for _infos, _name, _fill, _b, _s, _sz, _hover_fn in _EVENTS:
+        for _i in _infos:
+            _add_event(str(times.iloc[_i.index])[:10], _fill, _name,
+                       _i.close / 1000, _hover_fn(_i))
+    if compare_result and compare_result.get("buyedInfos"):
+        for _i in compare_result["buyedInfos"]:
+            _add_event(str(times.iloc[_i.index])[:10], "rgba(99,179,237,0.75)",
+                       "Buy (Interval)", _i.close / 1000, f"Invested: {_i.finalBuy:,.0f}")
+
+    if _event_html:
+        _all_dates = [str(times.iloc[i])[:10] for i in range(len(df))]
+        trace_specs.append({
+            "type": "scatter",
+            "mode": "lines",
+            "name": "Events",
+            "yaxis": "y3",
+            "x": _all_dates,
+            "y": [0.5] * len(_all_dates),
+            "line": {"width": 0},
+            "showlegend": False,
+            "customdata": ["<br>".join(_event_html.get(d, [])) for d in _all_dates],
+            "hovertemplate": "%{customdata}<extra></extra>",
         })
 
     # PE chart uses div id="peChart"; plotly write_html uses the first div it creates
