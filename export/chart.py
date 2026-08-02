@@ -267,7 +267,7 @@ def pe_chart(
     date_range_str = f"{df['date'].iloc[0].strftime('%Y')} – {df['date'].iloc[-1].strftime('%Y')}"
     fig.update_layout(
         title=dict(text=f"{title}  <sup>{date_range_str}</sup>", font_size=18),
-        xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)"),
+        xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)", hoverformat="%Y-%m-%d"),
         yaxis=dict(title="P/E (x, log)", type="log", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
         yaxis2=dict(title=f"{label} Index (pts)", overlaying="y", side="right", showgrid=False, tickformat=","),
         hovermode="x unified",
@@ -968,7 +968,7 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
     date_range_str = f"{str(dates[0])[:4]} – {str(dates[-1])[:4]}"
     fig.update_layout(
         title=dict(text=f"{symbol} — P/E & Price  <sup>{date_range_str}</sup>", font_size=18),
-        xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)"),
+        xaxis=dict(title="Date", showgrid=True, gridcolor="rgba(200,200,200,0.3)", hoverformat="%Y-%m-%d"),
         yaxis=dict(title="P/E (x, log)", type="log", showgrid=True, gridcolor="rgba(200,200,200,0.3)", side="left"),
         yaxis2=dict(title=f"{symbol} Price (VND)", overlaying="y", side="right", showgrid=False, tickformat=","),
         hovermode="x unified",
