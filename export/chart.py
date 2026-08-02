@@ -545,20 +545,20 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
 <div id="ctrl">
   <span class="section-label">P/E Percentiles</span>
   <div class="ma-group">
-    <label class="chk"><input type="checkbox" id="pePctVis"> Show</label>
+    <label class="chk"><input type="checkbox" id="pePctVis" checked> Show</label>
     <input type="number" id="pePctW" value="{pct_window}" min="20" max="5000" step="50" title="Rolling window (days)">
     <span class="unit">d</span>
   </div>
   <label class="chk" style="margin-left:4px">
-    <input type="checkbox" class="pct-pe-cb" data-sub="0" checked>
+    <input type="checkbox" class="pct-pe-cb" data-sub="0">
     <span class="dot" style="background:rgba(46,160,67,0.9)"></span>25th</label>
   <span class="off-wrap"><input type="checkbox" id="off-en-pePct25">±<input type="number" id="off-pct-pePct25" class="off-pct" value="50">%</span>
   <label class="chk">
-    <input type="checkbox" class="pct-pe-cb" data-sub="1" checked>
+    <input type="checkbox" class="pct-pe-cb" data-sub="1">
     <span class="dot" style="background:rgba(100,100,200,0.9)"></span>Med</label>
   <span class="off-wrap"><input type="checkbox" id="off-en-pePctMed">±<input type="number" id="off-pct-pePctMed" class="off-pct" value="50">%</span>
   <label class="chk">
-    <input type="checkbox" class="pct-pe-cb" data-sub="2" checked>
+    <input type="checkbox" class="pct-pe-cb" data-sub="2">
     <span class="dot" style="background:rgba(220,53,69,0.9)"></span>75th</label>
   <span class="off-wrap"><input type="checkbox" id="off-en-pePct75">±<input type="number" id="off-pct-pePct75" class="off-pct" value="50">%</span>
   {pe_mean_control}
