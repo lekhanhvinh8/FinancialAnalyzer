@@ -1409,11 +1409,17 @@ def save_backtest_chart(
             "customdata": prices_at_event,
             "marker": {"symbol": symbol, "size": size, "color": fill,
                        "line": {"color": border, "width": 1}},
-            # Markers are visual-only. A handful of events across years is far too
-            # sparse for "x unified", which would pull the nearest one and report
-            # e.g. a Sell five weeks away as if it happened on the hovered date.
-            # The dense anchor below reports only what truly occurred that day.
-            "hoverinfo": "skip",
+            # Events are sparse, so these keep their own hover rather than going
+            # through a dense anchor: an anchor only has text on the event's exact
+            # trading day, which at ~0.6px per bar is unhittable with a mouse.
+            # Plotly's 20px hoverdistance gives a usable grab zone instead — and
+            # unlike the price line, the date stays in the template here so a
+            # nearby match identifies itself instead of borrowing the header's date.
+            "hovertemplate": (
+                f"<b>%{{x}}</b> "
+                f"<span style='color:{fill}'>●</span> <b>{name}</b><br>"
+                f"Price: %{{customdata:,.0f}}<br>%{{text}}<extra></extra>"
+            ),
         })
 
     # ── Condition-zone overlay traces ─────────────────────────────────────────
@@ -1512,44 +1518,11 @@ def save_backtest_chart(
             "marker": {"symbol": "triangle-up", "size": 9,
                        "color": "rgba(34,197,94,0.75)",
                        "line": {"color": "#15803d", "width": 1}},
-            "hoverinfo": "skip",  # see the event hover anchor below
-        })
-
-    # ── Event hover anchor (y3) ──────────────────────────────────────────────
-    # One dense trace covering every date, carrying the events that actually
-    # occurred on it. Dates with no event resolve to an empty string, which
-    # Plotly renders as a zero-height (invisible) row — so the strip reports
-    # events exactly, instead of the nearest one within Plotly's 20px reach.
-    _event_html: dict[str, list[str]] = {}
-
-    def _add_event(day: str, color: str, name: str, price: float, detail: str):
-        _event_html.setdefault(day, []).append(
-            f"<span style='color:{color}'>●</span> <b>{name}</b><br>"
-            f"Price: {price:,.0f}<br>{detail}"
-        )
-
-    for _infos, _name, _fill, _b, _s, _sz, _hover_fn in _EVENTS:
-        for _i in _infos:
-            _add_event(str(times.iloc[_i.index])[:10], _fill, _name,
-                       _i.close / 1000, _hover_fn(_i))
-    if compare_result and compare_result.get("buyedInfos"):
-        for _i in compare_result["buyedInfos"]:
-            _add_event(str(times.iloc[_i.index])[:10], "rgba(99,179,237,0.75)",
-                       "Buy (Interval)", _i.close / 1000, f"Invested: {_i.finalBuy:,.0f}")
-
-    if _event_html:
-        _all_dates = [str(times.iloc[i])[:10] for i in range(len(df))]
-        trace_specs.append({
-            "type": "scatter",
-            "mode": "lines",
-            "name": "Events",
-            "yaxis": "y3",
-            "x": _all_dates,
-            "y": [0.5] * len(_all_dates),
-            "line": {"width": 0},
-            "showlegend": False,
-            "customdata": ["<br>".join(_event_html.get(d, [])) for d in _all_dates],
-            "hovertemplate": "%{customdata}<extra></extra>",
+            "hovertemplate": (
+                "<b>%{x}</b> "
+                "<span style='color:rgba(99,179,237,0.75)'>●</span> <b>Buy (Interval)</b><br>"
+                "Price: %{customdata:,.0f}<br>%{text}<extra></extra>"
+            ),
         })
 
     # PE chart uses div id="peChart"; plotly write_html uses the first div it creates
