@@ -30,7 +30,9 @@ from analyze.median1000 import config
 CHARTS_DIR = Path(__file__).parent / "charts"
 
 
-def make_median_strategies(signal3_map: dict | None = None, signal1_map: dict | None = None):
+def make_median_strategies(signal3_map: dict | None = None, signal1_map: dict | None = None,
+                           reinvest_signal1_map: dict | None = None):
+    gate = config.REINVEST_MIN_SIGNAL1 is not None
     return (
         BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,               use_pe=config.USE_PE),
         SellMedian1000Strategy(percentSell=config.PERCENT_SELL,             use_pe=config.USE_PE,
@@ -38,7 +40,9 @@ def make_median_strategies(signal3_map: dict | None = None, signal1_map: dict | 
                                signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1),
         ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
                                    timeoutDays=config.REINVEST_TIMEOUT_DAYS,
-                                   timeoutPercent=config.REINVEST_TIMEOUT_PERCENT),
+                                   timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
+                                   signal1_map=(reinvest_signal1_map or {}) if gate else {},
+                                   min_signal1=config.REINVEST_MIN_SIGNAL1 or 0.0),
     )
 
 def make_interval_strategies():
@@ -83,7 +87,19 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir:
                 if idx is not None:
                     signal1_map[idx] = float(s1)
 
-        buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map)
+        # Reinvest slope map — reuse signal1_map when the window matches, else load it
+        if config.REINVEST_SIGNAL1_WINDOW == config.SELL_SIGNAL1_WINDOW:
+            reinvest_signal1_map = signal1_map
+        else:
+            reinvest_signal1_map = {}
+            ri_df = db.load_trend_signals(symbol, window_days=config.REINVEST_SIGNAL1_WINDOW)
+            if not ri_df.empty:
+                for date, s1 in ri_df["signal1_slope"].items():
+                    idx = date_to_idx.get(pd.Timestamp(date))
+                    if idx is not None:
+                        reinvest_signal1_map[idx] = float(s1)
+
+        buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map, reinvest_signal1_map)
         r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1, cal_range_close)
 
         buy2, sell2, ri2 = make_interval_strategies()

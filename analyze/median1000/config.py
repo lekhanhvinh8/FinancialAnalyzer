@@ -27,3 +27,9 @@ MIN_SIGNAL3 = 1.8
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
 SELL_SIGNAL1_WINDOW = 100   # trading days for the slope window
 SELL_MIN_SIGNAL1   = 0.05   # % per day (e.g. 0.05 = price rising ~0.05%/day over 100 days)
+
+# ReInvestMedian1000: require the slope to have turned up before redeploying the reserve.
+# Inverse polarity to the sell gate above: sell is BLOCKED while momentum is up, reinvest
+# is only ALLOWED once momentum is up. Set REINVEST_MIN_SIGNAL1 = None to disable.
+REINVEST_SIGNAL1_WINDOW = 100    # trading days for the slope window
+REINVEST_MIN_SIGNAL1    = 0.05   # % per day — reinvest only once slope >= this

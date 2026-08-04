@@ -82,9 +82,22 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     use_pe: bool = False
     timeoutDays: int = 0        # 0 = disabled
     timeoutPercent: float = 0   # threshold used after timeout (same scale as percentReinvest)
+    # {row_index: signal1_slope} for a short-term window — REQUIRE slope >= min_signal1
+    # before redeploying, i.e. wait for momentum to turn up rather than catching a
+    # falling knife. Note the polarity is the inverse of SellMedian1000Strategy, which
+    # uses the same signal to *block* a sell while momentum is still running.
+    signal1_map: dict = field(default_factory=dict)
+    min_signal1: float = 0.0
+
+    def _slope_ok(self, index) -> bool:
+        if not self.signal1_map:
+            return True
+        return self.signal1_map.get(index, 0.0) >= self.min_signal1
 
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalReserveFinal <= 0:
+            return
+        if not self._slope_ok(index):
             return
         if self.check(index, close, pe, cal_range_close):
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
@@ -111,7 +124,10 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
             return False
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        return (current - median) / median * 100 < self.percentReinvest
+        if (current - median) / median * 100 >= self.percentReinvest:
+            return False
+        # Only redeploy once short-term momentum has turned up
+        return self._slope_ok(index)
 
 
 @dataclass

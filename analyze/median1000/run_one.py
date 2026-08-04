@@ -26,13 +26,31 @@ CHARTS_DIR = Path(__file__).parent / "charts"
 SYMBOL     = sys.argv[1].upper() if len(sys.argv) > 1 else "VN30"
 
 
-def make_strategies():
+def _signal_map(symbol, df, window, col):
+    """{row_index: signal value} for one trend-signal window."""
+    date_to_idx = {pd.Timestamp(row["time"]): i for i, row in df.iterrows()}
+    sig = db.load_trend_signals(symbol, window_days=window)
+    out = {}
+    if not sig.empty:
+        for date, v in sig[col].items():
+            idx = date_to_idx.get(pd.Timestamp(date))
+            if idx is not None:
+                out[idx] = float(v)
+    return out
+
+
+def make_strategies(signal3_map=None, signal1_map=None, reinvest_signal1_map=None):
+    gate = config.REINVEST_MIN_SIGNAL1 is not None
     return (
         BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,           use_pe=config.USE_PE),
-        SellMedian1000Strategy(percentSell=config.PERCENT_SELL,         use_pe=config.USE_PE),
+        SellMedian1000Strategy(percentSell=config.PERCENT_SELL,         use_pe=config.USE_PE,
+                               signal3_map=signal3_map or {}, min_signal3=config.MIN_SIGNAL3,
+                               signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1),
         ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
                                    timeoutDays=config.REINVEST_TIMEOUT_DAYS,
-                                   timeoutPercent=config.REINVEST_TIMEOUT_PERCENT),
+                                   timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
+                                   signal1_map=(reinvest_signal1_map or {}) if gate else {},
+                                   min_signal1=config.REINVEST_MIN_SIGNAL1 or 0.0),
     )
 
 
@@ -48,7 +66,12 @@ if __name__ == "__main__":
         print("ERROR: no range_stats in DB for", SYMBOL)
         sys.exit(1)
 
-    buy, sell, reinvest = make_strategies()
+    s3 = _signal_map(SYMBOL, df, 1000, "signal3_sharpe")
+    s1 = _signal_map(SYMBOL, df, config.SELL_SIGNAL1_WINDOW, "signal1_slope")
+    ri_s1 = (s1 if config.REINVEST_SIGNAL1_WINDOW == config.SELL_SIGNAL1_WINDOW
+             else _signal_map(SYMBOL, df, config.REINVEST_SIGNAL1_WINDOW, "signal1_slope"))
+
+    buy, sell, reinvest = make_strategies(s3, s1, ri_s1)
     result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY, buy, sell, reinvest,
                           cal_range_close)
 
