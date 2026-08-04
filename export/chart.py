@@ -53,6 +53,11 @@ _NO_ZONE_LABEL = "—"
 
 _DEFAULT_PCT_WINDOW = 1000
 
+# z_dev strip: which stored configuration the charts read, and how densely the
+# stat-window slider is populated. See syncs/zdev.py for the sweep itself.
+ZDEV_MEDIAN_WINDOW = 1000
+ZDEV_WINDOW_STEP   = 10
+
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -1105,7 +1110,8 @@ def _add_signal_strips(fig: go.Figure, signal_df: pd.DataFrame) -> go.Figure:
 
 
 def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool = False, init_delay: int = 0,
-                     default_w1: int = 100, default_w2: int = 500, default_w3: int = 1000) -> str:
+                     default_w1: int = 100, default_w2: int = 500, default_w3: int = 1000,
+                     zdev_windows: dict | None = None, default_wz: int = 500) -> str:
     """
     Build the JS snippet that embeds all-window signal data and wires
     3 independent window sliders — one per signal.
@@ -1127,13 +1133,29 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
 
     available = sorted(data.keys())
 
+    # z_dev rides along as a fourth strip: same slider mechanics, own source table.
+    zdata: dict = {}
+    for w, df in sorted((zdev_windows or {}).items()):
+        if df.empty:
+            continue
+        df_s = df.iloc[::DISPLAY_STEP]
+        zdata[w] = {
+            "dates": df_s.index.strftime("%Y-%m-%d").tolist(),
+            "z":     [round(v, 3) for v in df_s["z_dev"].tolist()],
+        }
+    z_available = sorted(zdata.keys())
+    has_zdev    = "true" if zdata else "false"
+
     ya, yb, yc = yaxis_start, yaxis_start + 1, yaxis_start + 2
+    yd = yaxis_start + 3                      # z_dev strip
     ya_key = "yaxis" if ya == 1 else f"yaxis{ya}"
     yb_key = f"yaxis{yb}"
     yc_key = f"yaxis{yc}"
+    yd_key = f"yaxis{yd}"
     ya_ref = "y" if ya == 1 else f"y{ya}"
     yb_ref = f"y{yb}"
     yc_ref = f"y{yc}"
+    yd_ref = f"y{yd}"
     resize_main     = "true" if not is_backtest else "false"
     rebase_backtest = "true" if is_backtest else "false"
 
@@ -1142,15 +1164,20 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
 (function() {{
   const ALL_SIGNALS = {json.dumps(data)};
   const AVAILABLE   = {json.dumps(available)};
+  const ALL_ZDEV    = {json.dumps(zdata)};
+  const Z_AVAILABLE = {json.dumps(z_available)};
+  const HAS_ZDEV    = {has_zdev};
 
-  function snapWindow(w) {{
-    let best = AVAILABLE[0], bestDiff = Math.abs(w - best);
-    for (const v of AVAILABLE) {{
+  function snapTo(list, w) {{
+    let best = list[0], bestDiff = Math.abs(w - best);
+    for (const v of list) {{
       const d = Math.abs(w - v);
       if (d < bestDiff) {{ best = v; bestDiff = d; }}
     }}
     return best;
   }}
+  function snapWindow(w)  {{ return snapTo(AVAILABLE, w); }}
+  function snapZWindow(w) {{ return snapTo(Z_AVAILABLE, w); }}
 
   function initSignals() {{
     const gd = document.getElementById('peChart') || document.querySelector('.plotly-graph-div');
@@ -1159,33 +1186,68 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
     const initW1 = snapWindow({default_w1});
     const initW2 = snapWindow({default_w2});
     const initW3 = snapWindow({default_w3});
+    const initWZ = HAS_ZDEV ? snapZWindow({default_wz}) : 0;
 
     const resizeMain     = {resize_main};
     const rebaseBacktest = {rebase_backtest};
+    // Four strips when z_dev is present, three when it is not — the older layout
+    // is kept so a symbol with no z_dev rows does not leave an empty band.
+    const zTop = HAS_ZDEV ? 0.39 : 0.30;
     const relayoutArgs = {{
-      '{ya_key}': {{ domain: [0.22, 0.30], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Slope',   font: {{size: 9}}}} }},
-      '{yb_key}': {{ domain: [0.11, 0.19], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Return%', font: {{size: 9}}}} }},
-      '{yc_key}': {{ domain: [0.00, 0.08], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Sharpe',  font: {{size: 9}}}} }},
+      '{ya_key}': {{ domain: [0.22, 0.29], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Slope',   font: {{size: 9}}}} }},
+      '{yb_key}': {{ domain: [0.11, 0.18], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Return%', font: {{size: 9}}}} }},
+      '{yc_key}': {{ domain: [0.00, 0.07], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Sharpe',  font: {{size: 9}}}} }},
     }};
+    if (HAS_ZDEV) {{
+      relayoutArgs['{yd_key}'] = {{
+        domain: [0.32, zTop], anchor: 'x', showgrid: false,
+        zeroline: true, zerolinecolor: '#888', zerolinewidth: 1,
+        tickfont: {{size: 9}}, title: {{text: 'z_dev', font: {{size: 9}}}},
+      }};
+    }}
+    const mainTop = HAS_ZDEV ? 0.42 : 0.32;
     if (resizeMain) {{
-      relayoutArgs['yaxis.domain']  = [0.32, 1.0];
-      relayoutArgs['yaxis2.domain'] = [0.32, 1.0];
+      relayoutArgs['yaxis.domain']  = [mainTop, 1.0];
+      relayoutArgs['yaxis2.domain'] = [mainTop, 1.0];
     }}
     if (rebaseBacktest) {{
-      relayoutArgs['yaxis.domain']  = [0.37, 1.0];
-      relayoutArgs['yaxis2.domain'] = [0.37, 1.0];
-      relayoutArgs['yaxis3.domain'] = [0.31, 0.36];
+      const bt = HAS_ZDEV ? 0.47 : 0.37;
+      relayoutArgs['yaxis.domain']  = [bt, 1.0];
+      relayoutArgs['yaxis2.domain'] = [bt, 1.0];
+      relayoutArgs['yaxis3.domain'] = HAS_ZDEV ? [0.41, 0.46] : [0.31, 0.36];
+    }}
+    // +/-1 and +/-2 reference lines on the z_dev strip. Appended, never assigned,
+    // so any shapes the base chart already owns survive.
+    if (HAS_ZDEV) {{
+      const refs = [1, -1, 2, -2].map(function(v) {{
+        return {{ type: 'line', xref: 'paper', x0: 0, x1: 1, yref: '{yd_ref}', y0: v, y1: v,
+                 line: {{ color: Math.abs(v) === 1 ? '#cbd5e1' : '#f0a0a0', width: 1, dash: 'dot' }},
+                 layer: 'below' }};
+      }});
+      relayoutArgs['shapes'] = (gd.layout.shapes || []).concat(refs);
     }}
 
     Plotly.relayout(gd, relayoutArgs).then(function() {{
       const baseLen = gd.data.length;
       const d1 = ALL_SIGNALS[initW1], d2 = ALL_SIGNALS[initW2], d3 = ALL_SIGNALS[initW3];
-      return Plotly.addTraces(gd, [
+      const newTraces = [
         {{ name: 'Signal 1 — Slope',    mode: 'markers', yaxis: '{ya_ref}', x: d1.dates, y: d1.s1, marker: {{ color: d1.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
         {{ name: 'Signal 2 — Return %', mode: 'markers', yaxis: '{yb_ref}', x: d2.dates, y: d2.s2, marker: {{ color: d2.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
         {{ name: 'Signal 3 — Sharpe',   mode: 'markers', yaxis: '{yc_ref}', x: d3.dates, y: d3.s3, marker: {{ color: d3.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-      ]).then(function() {{
-        const ti1 = baseLen, ti2 = baseLen + 1, ti3 = baseLen + 2;
+      ];
+      if (HAS_ZDEV) {{
+        const dz = ALL_ZDEV[initWZ];
+        // A line, not coloured markers: z_dev's sign is the point, so it has to be
+        // read against the zero baseline rather than by hue.
+        newTraces.push({{
+          name: 'z_dev', mode: 'lines', yaxis: '{yd_ref}',
+          x: dz.dates, y: dz.z,
+          line: {{ color: '#7c3aed', width: 1.2 }},
+          hovertemplate: 'z_dev: %{{y:.2f}}<extra></extra>',
+        }});
+      }}
+      return Plotly.addTraces(gd, newTraces).then(function() {{
+        const ti1 = baseLen, ti2 = baseLen + 1, ti3 = baseLen + 2, tiZ = baseLen + 3;
 
         function applySignal(ti, key, rangeEl, numEl, w) {{
           const snapped = snapWindow(w);
@@ -1211,6 +1273,28 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
         wire(ti1, 's1', 'sig1WinInput', 'sig1WinNumber');
         wire(ti2, 's2', 'sig2WinInput', 'sig2WinNumber');
         wire(ti3, 's3', 'sig3WinInput', 'sig3WinNumber');
+
+        if (HAS_ZDEV) {{
+          // Own snap list and no marker.color — z_dev is a line, and its windows
+          // come from valuation_zdev, not trend_signals.
+          const rangeEl = document.getElementById('zdevWinInput');
+          const numEl   = document.getElementById('zdevWinNumber');
+          function applyZ(w) {{
+            const snapped = snapZWindow(w);
+            const d = ALL_ZDEV[snapped];
+            if (!d) return;
+            rangeEl.value = snapped;
+            numEl.value   = snapped;
+            Plotly.restyle(gd, {{ x: [d.dates], y: [d.z] }}, [tiZ]);
+          }}
+          rangeEl.addEventListener('input', function() {{
+            clearTimeout(rangeEl._t);
+            rangeEl._t = setTimeout(function() {{ applyZ(parseInt(rangeEl.value)); }}, 80);
+          }});
+          numEl.addEventListener('change', function() {{ applyZ(parseInt(numEl.value)); }});
+          rangeEl.value = initWZ;
+          numEl.value   = initWZ;
+        }}
       }});
     }});
   }}
@@ -1223,7 +1307,8 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
 def _inject_signals_into_html(symbol: str, path: str, available_windows: list,
                               default_window: int = 500, yaxis_start: int = 3,
                               is_backtest: bool = False, init_delay: int = 0,
-                              default_w1: int = 100, default_w2: int = 500, default_w3: int = 1000) -> None:
+                              default_w1: int = 100, default_w2: int = 500, default_w3: int = 1000,
+                              default_wz: int = 500) -> None:
     """Inject 3 independent signal sliders and JS into an already-saved stock chart HTML file."""
     wmin, wmax = available_windows[0], available_windows[-1]
 
@@ -1244,12 +1329,35 @@ def _inject_signals_into_html(symbol: str, path: str, available_windows: list,
         for w, grp in all_df.groupby("window_days")
     }
 
-    def _slider_row(label, range_id, num_id, init_w):
+    # z_dev: only every ZDEV_WINDOW_STEP-th stat window is embedded. All 1499 would
+    # add ~12 MB to a file that is already tens of MB; every 10th is ~1.2 MB and the
+    # slider snaps, so it still feels continuous — and it lands on round numbers.
+    with db._conn() as con:
+        z_df = pd.read_sql(
+            f"""SELECT date, stat_window, z_dev FROM valuation_zdev
+                WHERE symbol=? AND median_window=? AND z_dev IS NOT NULL
+                  AND stat_window % {ZDEV_WINDOW_STEP} = 0
+                ORDER BY stat_window, date""",
+            con, params=(symbol, ZDEV_MEDIAN_WINDOW),
+        )
+    zdev_windows: dict = {}
+    if not z_df.empty:
+        z_df["date"] = pd.to_datetime(z_df["date"])
+        zdev_windows = {
+            w: grp.set_index("date").drop(columns="stat_window")
+            for w, grp in z_df.groupby("stat_window")
+        }
+    z_avail = sorted(zdev_windows.keys())
+    iwz = min(z_avail, key=lambda v: abs(v - default_wz)) if z_avail else default_wz
+
+    def _slider_row(label, range_id, num_id, init_w, lo=None, hi=None):
+        lo = wmin if lo is None else lo
+        hi = wmax if hi is None else hi
         return (
             f'<div style="display:flex;align-items:center;gap:8px">'
             f'<span style="width:80px;font-weight:600;color:#555">{label}</span>'
-            f'<input id="{range_id}" type="range" min="{wmin}" max="{wmax}" step="1" value="{init_w}" style="width:460px;cursor:pointer">'
-            f'<input id="{num_id}" type="number" min="{wmin}" max="{wmax}" step="1" value="{init_w}" '
+            f'<input id="{range_id}" type="range" min="{lo}" max="{hi}" step="1" value="{init_w}" style="width:460px;cursor:pointer">'
+            f'<input id="{num_id}" type="number" min="{lo}" max="{hi}" step="1" value="{init_w}" '
             f'style="width:70px;font-size:13px;font-weight:600;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px 4px">'
             f'<span style="color:#888">days</span>'
             f'</div>'
@@ -1262,11 +1370,14 @@ def _inject_signals_into_html(symbol: str, path: str, available_windows: list,
         + _slider_row("Signal 1 — Slope",    "sig1WinInput", "sig1WinNumber", iw1)
         + _slider_row("Signal 2 — Return%",  "sig2WinInput", "sig2WinNumber", iw2)
         + _slider_row("Signal 3 — Sharpe",   "sig3WinInput", "sig3WinNumber", iw3)
+        + (_slider_row("z_dev", "zdevWinInput", "zdevWinNumber", iwz,
+                       lo=z_avail[0], hi=z_avail[-1]) if z_avail else "")
         + '</div>'
     )
 
     js = _build_signal_js(all_windows, yaxis_start=yaxis_start, is_backtest=is_backtest,
-                          init_delay=init_delay, default_w1=iw1, default_w2=iw2, default_w3=iw3)
+                          init_delay=init_delay, default_w1=iw1, default_w2=iw2, default_w3=iw3,
+                          zdev_windows=zdev_windows, default_wz=iwz)
 
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
