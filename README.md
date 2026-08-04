@@ -151,7 +151,7 @@ python export/excel.py vn30 2026-07-01   # specific as-of date
 python calculate.py                       # recalculate P/E only
 ```
 
-Charts → `charts/pe_<index>.html` (git-ignored)
+Charts → `charts/<index>_valuation.html` (git-ignored)
 Excel  → `exports/<index>_pe_<date>.xlsx` (git-ignored)
 
 ---

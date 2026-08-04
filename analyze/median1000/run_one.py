@@ -79,7 +79,7 @@ if __name__ == "__main__":
                               BuyIntervalStrategy(), SellStrategy(), ReinvestStrategy(),
                               cal_range_close)
 
-    out = CHARTS_DIR / f"backtest_{SYMBOL.lower()}.html"
+    out = CHARTS_DIR / f"{SYMBOL.lower()}_backtest.html"
     save_backtest_chart(
         df,
         result["buyedInfos"], result["sellInfos"], result["reinvestInfos"],

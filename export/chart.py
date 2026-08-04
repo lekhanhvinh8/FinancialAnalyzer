@@ -1685,6 +1685,6 @@ if __name__ == "__main__":
     idx = sys.argv[1] if len(sys.argv) > 1 else "vn30"
     os.makedirs("charts", exist_ok=True)
     fig, pe_dates, pe_values, price_data = pe_chart(index=idx, bands=True)
-    path = f"charts/pe_{idx}.html"
+    path = f"charts/{idx}_valuation.html"
     save_chart(fig, pe_dates, pe_values, price_data, path)
     os.startfile(path)

@@ -19,6 +19,7 @@ Steps (flags):
     --pe             recalculate P/E
     --range-stats    rebuild rolling-range stats cache
     --trend-signals  rebuild trend classification signals
+    --zdev           rebuild relative-valuation z_dev (swept stat windows)
     --outputs        regenerate charts + Excel exports (indices only)
     --force          overwrite existing data
 
@@ -302,7 +303,7 @@ def main():
             t0 = time.time()
             p.begin("outputs", index, index.upper())
             try:
-                save_index_chart(index, f"charts/pe_{index}.html")
+                save_index_chart(index, f"charts/{index}_valuation.html")
                 build_excel(index)
                 p.end("outputs", index, index.upper(), time.time() - t0)
             except Exception as e:
@@ -312,7 +313,7 @@ def main():
             t0 = time.time()
             p.begin("outputs", sym, sym)
             try:
-                save_stock_chart(sym, f"charts/pe_{sym.lower()}.html")
+                save_stock_chart(sym, f"charts/{sym.lower()}_valuation.html")
                 p.end("outputs", sym, sym, time.time() - t0)
             except Exception as e:
                 p.end("outputs", sym, sym, time.time() - t0, status="error", note=str(e)[:100])

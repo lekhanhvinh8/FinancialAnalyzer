@@ -2,7 +2,7 @@
 Sweep all symbols in the DB with the Median1000 strategy.
 
 Outputs (in analyze/median1000/charts/):
-  - backtest_<symbol>.html       per-symbol backtest chart
+  - <symbol>_backtest.html       per-symbol backtest chart
   - run_all_progress.html        live progress (auto-refreshes every 3s)
   - report_all.html              final comparison table
 
@@ -106,7 +106,7 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir:
         r2 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy2, sell2, ri2, cal_range_close)
 
         out_dir = run_dir if run_dir is not None else CHARTS_DIR
-        chart_path = out_dir / f"backtest_{symbol.lower()}.html"
+        chart_path = out_dir / f"{symbol.lower()}_backtest.html"
         save_backtest_chart(
             df,
             r1["buyedInfos"], r1["sellInfos"], r1["reinvestInfos"],
