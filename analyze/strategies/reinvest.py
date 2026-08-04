@@ -83,9 +83,10 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     timeoutDays: int = 0        # 0 = disabled
     timeoutPercent: float = 0   # threshold used after timeout (same scale as percentReinvest)
     # {row_index: signal1_slope} for a short-term window — REQUIRE slope >= min_signal1
-    # before redeploying, i.e. wait for momentum to turn up rather than catching a
-    # falling knife. Note the polarity is the inverse of SellMedian1000Strategy, which
-    # uses the same signal to *block* a sell while momentum is still running.
+    # before redeploying on the price condition, i.e. wait for momentum to turn up
+    # rather than catching a falling knife. Gates check() only, not the timeout.
+    # Polarity is the inverse of SellMedian1000Strategy, which uses the same signal
+    # to *block* a sell while momentum is still running.
     signal1_map: dict = field(default_factory=dict)
     min_signal1: float = 0.0
 
@@ -97,8 +98,8 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalReserveFinal <= 0:
             return
-        if not self._slope_ok(index):
-            return
+        # No slope guard here: the requirement applies to the price condition inside
+        # check() only. The timeout below stays an unconditional release valve.
         if self.check(index, close, pe, cal_range_close):
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
             return
