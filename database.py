@@ -106,6 +106,32 @@ def init_db():
                 signal3_sharpe  REAL,               -- annualized return / vol (Sharpe-like)
                 PRIMARY KEY (symbol, date, window_days)
             );
+
+            -- ln(price / rolling median). Depends only on median_window, so it is
+            -- stored once rather than duplicated across every stat-window config.
+            CREATE TABLE IF NOT EXISTS valuation_dev (
+                symbol          TEXT     NOT NULL,
+                date            TEXT     NOT NULL,  -- ISO date: YYYY-MM-DD
+                median_window   INTEGER  NOT NULL,  -- window for the price base M
+                dev             REAL,               -- ln(price / M)
+                PRIMARY KEY (symbol, date, median_window)
+            );
+
+            -- Relative valuation: how far price sits from its own long-term base,
+            -- normalized by that symbol's own history. See analyze/zdev_calc.py.
+            -- Windows are in the key so configurations coexist; join to
+            -- valuation_dev on (symbol, date, median_window) for dev itself.
+            CREATE TABLE IF NOT EXISTS valuation_zdev (
+                symbol          TEXT     NOT NULL,
+                date            TEXT     NOT NULL,  -- ISO date: YYYY-MM-DD
+                median_window   INTEGER  NOT NULL,  -- window for the price base M
+                stat_window     INTEGER  NOT NULL,  -- window for mu/sigma of dev
+                min_periods     INTEGER  NOT NULL,  -- observations required for mu/sigma
+                mu              REAL,               -- rolling mean of dev, shifted 1 bar
+                sigma           REAL,               -- rolling std of dev, shifted 1 bar
+                z_dev           REAL,               -- (dev - mu) / sigma
+                PRIMARY KEY (symbol, date, median_window, stat_window, min_periods)
+            );
         """)
 
 
@@ -565,6 +591,126 @@ def delete_trend_signals(symbol: str, window_days: int | None = None) -> None:
             )
         else:
             con.execute("DELETE FROM trend_signals WHERE symbol = ?", (symbol,))
+
+
+# ── Valuation z_dev ───────────────────────────────────────────────────────────
+
+def save_dev(symbol: str, rows: list[tuple], override: bool = True) -> dict:
+    """rows: (symbol, date, median_window, dev)"""
+    if not rows:
+        return {"saved": 0}
+    verb = "INSERT OR REPLACE" if override else "INSERT OR IGNORE"
+    with _conn() as con:
+        con.executemany(
+            f"""{verb} INTO valuation_dev (symbol, date, median_window, dev)
+               VALUES (?, ?, ?, ?)""",
+            rows,
+        )
+        saved = con.total_changes
+    return {"saved": saved}
+
+
+def load_dev(symbol: str, median_window: int = 1000) -> pd.DataFrame:
+    """DataFrame indexed by date with a 'dev' column."""
+    with _conn() as con:
+        df = pd.read_sql(
+            """SELECT date, dev FROM valuation_dev
+               WHERE symbol = ? AND median_window = ? ORDER BY date""",
+            con, params=(symbol, median_window),
+        )
+    if not df.empty:
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.set_index("date")
+    return df
+
+
+def save_zdev(symbol: str, rows: list[tuple], override: bool = True) -> dict:
+    """
+    Persist z_dev rows.
+    rows: (symbol, date, median_window, stat_window, min_periods, mu, sigma, z_dev)
+
+    override defaults to True, unlike the other sync tables: this is a derived
+    metric that is always recomputed in full, so a revised price must be able to
+    overwrite the value it produced.
+    """
+    if not rows:
+        return {"saved": 0}
+    verb = "INSERT OR REPLACE" if override else "INSERT OR IGNORE"
+    with _conn() as con:
+        con.executemany(
+            f"""{verb} INTO valuation_zdev
+               (symbol, date, median_window, stat_window, min_periods,
+                mu, sigma, z_dev)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            rows,
+        )
+        saved = con.total_changes
+    return {"saved": saved}
+
+
+def load_zdev(
+    symbol: str,
+    median_window: int = 1000,
+    stat_window:   int = 1000,
+    min_periods:   int | None = None,   # None → stat_window, as the sweep writes it
+) -> pd.DataFrame:
+    """
+    Load stored z_dev for one symbol/configuration, joined to dev.
+    Returns DataFrame indexed by date with columns: dev, mu, sigma, z_dev.
+
+    min_periods defaults to stat_window because that is the only relationship the
+    sweep produces. Passing a mismatched pair returns an empty frame rather than
+    an error — the row simply does not exist.
+    """
+    if min_periods is None:
+        min_periods = stat_window
+    with _conn() as con:
+        df = pd.read_sql(
+            """SELECT z.date, d.dev, z.mu, z.sigma, z.z_dev
+               FROM valuation_zdev z
+               LEFT JOIN valuation_dev d
+                 ON d.symbol = z.symbol AND d.date = z.date
+                AND d.median_window = z.median_window
+               WHERE z.symbol = ? AND z.median_window = ? AND z.stat_window = ?
+                 AND z.min_periods = ?
+               ORDER BY z.date""",
+            con, params=(symbol, median_window, stat_window, min_periods),
+        )
+    if not df.empty:
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.set_index("date")
+    return df
+
+
+def load_latest_zdev_date(
+    symbol: str,
+    median_window: int = 1000,
+    stat_window:   int = 1000,
+    min_periods:   int | None = None,   # None → stat_window, as the sweep writes it
+) -> str | None:
+    """Most recent date in valuation_zdev for this symbol/configuration, or None."""
+    if min_periods is None:
+        min_periods = stat_window
+    with _conn() as con:
+        row = con.execute(
+            """SELECT MAX(date) FROM valuation_zdev
+               WHERE symbol = ? AND median_window = ? AND stat_window = ?
+                 AND min_periods = ?""",
+            (symbol, median_window, stat_window, min_periods),
+        ).fetchone()
+    return row[0] if row and row[0] else None
+
+
+def delete_zdev(symbol: str, median_window: int | None = None) -> None:
+    """Delete z_dev rows for a symbol, optionally filtered by median_window."""
+    with _conn() as con:
+        if median_window is not None:
+            con.execute(
+                "DELETE FROM valuation_zdev WHERE symbol = ? AND median_window = ?",
+                (symbol, median_window),
+            )
+        else:
+            con.execute("DELETE FROM valuation_zdev WHERE symbol = ?", (symbol,))
 
 
 # ── Orchestrator helpers ──────────────────────────────────────────────────────

@@ -35,12 +35,13 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 import database as db
-from syncs import sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats, sync_trend_signals
+from syncs import (sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats,
+                   sync_trend_signals, sync_zdev)
 from syncs.trend_signals import WINDOW_STEP as _TW, STEP_DAYS as _TS, MAX_LOOKBACK as _TL
 from progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
-ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "trend-signals", "outputs"}
+ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "trend-signals", "zdev", "outputs"}
 
 
 def _all_members() -> list[str]:
@@ -127,6 +128,7 @@ def main():
     if "pe"             in steps: p.set_totals("pe",             len(stocks) + len(indices))
     if "range-stats"    in steps: p.set_totals("range-stats",    len(stocks) + len(indices))
     if "trend-signals"  in steps: p.set_totals("trend-signals",  len(stocks) + len(indices))
+    if "zdev"           in steps: p.set_totals("zdev",           len(stocks) + len(indices))
     if "outputs"        in steps: p.set_totals("outputs",        len(indices) + len(stocks))
 
     print("Progress: sync_progress.html")
@@ -209,6 +211,17 @@ def main():
             except Exception as e:
                 p.end("trend-signals", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
 
+        if "zdev" in steps:
+            t0 = time.time()
+            p.begin("zdev", sym, sym)
+            try:
+                # Always a full recompute — see syncs/zdev.py for why there is no
+                # incremental mode, and why override defaults to True.
+                sync_zdev(symbols=[sym])
+                p.end("zdev", sym, sym, time.time() - t0)
+            except Exception as e:
+                p.end("zdev", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
     # ── Index runs (index series only, no members) ────────────────────────────
     for index in indices:
         index_sym = index.upper()
@@ -263,6 +276,15 @@ def main():
                 p.end("trend-signals", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("trend-signals", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        if "zdev" in steps:
+            t0 = time.time()
+            p.begin("zdev", index, index_sym)
+            try:
+                sync_zdev(index=index)
+                p.end("zdev", index, index_sym, time.time() - t0)
+            except Exception as e:
+                p.end("zdev", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
 
     # ── Outputs ───────────────────────────────────────────────────────────────
     if "outputs" in steps:
