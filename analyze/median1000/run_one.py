@@ -39,13 +39,16 @@ def _signal_map(symbol, df, window, col):
     return out
 
 
-def make_strategies(signal3_map=None, signal1_map=None, reinvest_signal1_map=None):
-    gate = config.REINVEST_MIN_SIGNAL1 is not None
+def make_strategies(signal3_map=None, signal1_map=None, reinvest_signal1_map=None, zdev_map=None):
+    gate  = config.REINVEST_MIN_SIGNAL1 is not None
+    zgate = config.SELL_MIN_ZDEV is not None
     return (
         BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,           use_pe=config.USE_PE),
         SellMedian1000Strategy(percentSell=config.PERCENT_SELL,         use_pe=config.USE_PE,
                                signal3_map=signal3_map or {}, min_signal3=config.MIN_SIGNAL3,
-                               signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1),
+                               signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1,
+                               zdev_map=(zdev_map or {}) if zgate else {},
+                               min_zdev=config.SELL_MIN_ZDEV or 0.0),
         ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
                                    timeoutDays=config.REINVEST_TIMEOUT_DAYS,
                                    timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
@@ -71,7 +74,17 @@ if __name__ == "__main__":
     ri_s1 = (s1 if config.REINVEST_SIGNAL1_WINDOW == config.SELL_SIGNAL1_WINDOW
              else _signal_map(SYMBOL, df, config.REINVEST_SIGNAL1_WINDOW, "signal1_slope"))
 
-    buy, sell, reinvest = make_strategies(s3, s1, ri_s1)
+    zmap = {}
+    if config.SELL_MIN_ZDEV is not None:
+        _zd = db.load_zdev(SYMBOL, 1000, config.SELL_ZDEV_WINDOW)
+        _d2i = {pd.Timestamp(r["time"]): i for i, r in df.iterrows()}
+        if not _zd.empty:
+            for date, z in _zd["z_dev"].items():
+                idx = _d2i.get(pd.Timestamp(date))
+                if idx is not None and z is not None:
+                    zmap[idx] = float(z)
+
+    buy, sell, reinvest = make_strategies(s3, s1, ri_s1, zmap)
     result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY, buy, sell, reinvest,
                           cal_range_close)
 

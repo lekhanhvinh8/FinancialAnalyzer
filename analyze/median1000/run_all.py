@@ -31,13 +31,16 @@ CHARTS_DIR = Path(__file__).parent / "charts"
 
 
 def make_median_strategies(signal3_map: dict | None = None, signal1_map: dict | None = None,
-                           reinvest_signal1_map: dict | None = None):
-    gate = config.REINVEST_MIN_SIGNAL1 is not None
+                           reinvest_signal1_map: dict | None = None, zdev_map: dict | None = None):
+    gate  = config.REINVEST_MIN_SIGNAL1 is not None
+    zgate = config.SELL_MIN_ZDEV is not None
     return (
         BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,               use_pe=config.USE_PE),
         SellMedian1000Strategy(percentSell=config.PERCENT_SELL,             use_pe=config.USE_PE,
                                signal3_map=signal3_map or {}, min_signal3=config.MIN_SIGNAL3,
-                               signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1),
+                               signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1,
+                               zdev_map=(zdev_map or {}) if zgate else {},
+                               min_zdev=config.SELL_MIN_ZDEV or 0.0),
         ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
                                    timeoutDays=config.REINVEST_TIMEOUT_DAYS,
                                    timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
@@ -99,7 +102,17 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir:
                     if idx is not None:
                         reinvest_signal1_map[idx] = float(s1)
 
-        buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map, reinvest_signal1_map)
+        # z_dev map for the sell filter — {row_index: z_dev} at the configured stat window
+        zdev_map: dict = {}
+        if config.SELL_MIN_ZDEV is not None:
+            zd = db.load_zdev(symbol, 1000, config.SELL_ZDEV_WINDOW)
+            for date, z in zd["z_dev"].items() if not zd.empty else []:
+                idx = date_to_idx.get(pd.Timestamp(date))
+                if idx is not None and z is not None:
+                    zdev_map[idx] = float(z)
+
+        buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map,
+                                                  reinvest_signal1_map, zdev_map)
         r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1, cal_range_close)
 
         buy2, sell2, ri2 = make_interval_strategies()

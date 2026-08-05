@@ -28,6 +28,12 @@ MIN_SIGNAL3 = 1.1
 SELL_SIGNAL1_WINDOW = 100   # trading days for the slope window
 SELL_MIN_SIGNAL1   = 0.05   # % per day (e.g. 0.05 = price rising ~0.05%/day over 100 days)
 
+# SellMedian1000: block sell when relative valuation (z_dev) is at or above this —
+# the symbol is far above its own historical norm, so let it run rather than sell.
+# Set SELL_MIN_ZDEV = None to disable. Window is the z_dev stat_window to read.
+SELL_ZDEV_WINDOW = 700    # stat_window in valuation_zdev (median_window is fixed at 1000)
+SELL_MIN_ZDEV    = 1.3
+
 # ReInvestMedian1000: require the slope to have turned up before redeploying the reserve.
 # Inverse polarity to the sell gate above: sell is BLOCKED while momentum is up, reinvest
 # is only ALLOWED once momentum is up. Set REINVEST_MIN_SIGNAL1 = None to disable.

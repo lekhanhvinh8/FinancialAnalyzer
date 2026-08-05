@@ -104,6 +104,10 @@ class SellMedian1000Strategy(SellStrategy):
     # {row_index: signal1_slope} for short-term window — block sell when >= min_signal1 (momentum still up → hold)
     signal1_map: dict = field(default_factory=dict)
     min_signal1: float = 0.05
+    # {row_index: z_dev} from valuation_zdev — block sell when >= min_zdev.
+    # Same polarity as the two filters above: a high reading means hold, not sell.
+    zdev_map: dict = field(default_factory=dict)
+    min_zdev: float = 1.3
 
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
@@ -127,5 +131,10 @@ class SellMedian1000Strategy(SellStrategy):
             return False
         # Block sell when long-term Sharpe indicates stable/trending regime — let it run
         if self.signal3_map and self.signal3_map.get(index, 0.0) >= self.min_signal3:
+            return False
+        # Block sell when relative valuation is far above this symbol's own norm.
+        # Missing rows (the z_dev warmup) default to 0.0 and therefore do not block,
+        # matching how the two filters above treat absent signal values.
+        if self.zdev_map and self.zdev_map.get(index, 0.0) >= self.min_zdev:
             return False
         return True
