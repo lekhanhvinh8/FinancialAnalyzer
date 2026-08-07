@@ -84,13 +84,33 @@ if __name__ == "__main__":
                 if idx is not None and z is not None:
                     zmap[idx] = float(z)
 
+    # Start once every input is available — latest first-appearance wins.
+    # See run_all.py for why. Both arms use the same index.
+    first_idx = {
+        "median1000":       1000,
+        "signal1":          min(s1)    if s1    else None,
+        "signal3":          min(s3)    if s3    else None,
+        "reinvest_signal1": min(ri_s1) if ri_s1 else None,
+        "zdev":             min(zmap)  if zmap  else None,
+    }
+    if config.SELL_MIN_ZDEV is not None and not zmap:
+        print(f"ERROR: no z_dev for {SYMBOL} at stat_window={config.SELL_ZDEV_WINDOW}")
+        sys.exit(1)
+    available = {k: v for k, v in first_idx.items() if v is not None}
+    start_idx = max(available.values())
+    binding   = max(available, key=available.get)
+    print(f"Start index: {start_idx} ({df['time'].iloc[start_idx].date()}) "
+          f"— bound by '{binding}'")
+    print(f"  first available: " + ", ".join(f"{k}={v}" for k, v in sorted(available.items(), key=lambda kv: kv[1])))
+    print(f"  evaluated bars:  {len(df) - start_idx}")
+
     buy, sell, reinvest = make_strategies(s3, s1, ri_s1, zmap)
     result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY, buy, sell, reinvest,
-                          cal_range_close)
+                          cal_range_close, start_index=start_idx)
 
     cmp_result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY,
                               BuyIntervalStrategy(), SellStrategy(), ReinvestStrategy(),
-                              cal_range_close)
+                              cal_range_close, start_index=start_idx)
 
     out = CHARTS_DIR / f"{SYMBOL.lower()}_backtest.html"
     save_backtest_chart(

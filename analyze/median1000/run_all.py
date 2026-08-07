@@ -111,12 +111,36 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir:
                 if idx is not None and z is not None:
                     zdev_map[idx] = float(z)
 
+        # Start once EVERY input the strategies read is available — the latest
+        # first-appearance wins. Before that point the early period would be running
+        # a different strategy than the later one, because whichever inputs are still
+        # missing simply do not filter. Adding a signal means adding a line here;
+        # nothing else needs to know the arithmetic.
+        #
+        # Applied to BOTH arms. Moving only the treatment's start would hand the
+        # interval arm extra years of compounding and invalidate the comparison.
+        first_idx = {
+            "median1000":       1000,   # the index > 1000 guard inside the strategies
+            "signal1":          min(signal1_map)          if signal1_map          else None,
+            "signal3":          min(signal3_map)          if signal3_map          else None,
+            "reinvest_signal1": min(reinvest_signal1_map) if reinvest_signal1_map else None,
+            "zdev":             min(zdev_map)             if zdev_map             else None,
+        }
+        if config.SELL_MIN_ZDEV is not None and not zdev_map:
+            prog.end_err(symbol, f"no z_dev at stat_window={config.SELL_ZDEV_WINDOW}")
+            return None
+        available = {k: v for k, v in first_idx.items() if v is not None}
+        start_idx = max(available.values())
+        binding   = max(available, key=available.get)
+
         buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map,
                                                   reinvest_signal1_map, zdev_map)
-        r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1, cal_range_close)
+        r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1,
+                          cal_range_close, start_index=start_idx)
 
         buy2, sell2, ri2 = make_interval_strategies()
-        r2 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy2, sell2, ri2, cal_range_close)
+        r2 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy2, sell2, ri2,
+                          cal_range_close, start_index=start_idx)
 
         out_dir = run_dir if run_dir is not None else CHARTS_DIR
         chart_path = out_dir / f"{symbol.lower()}_backtest.html"
