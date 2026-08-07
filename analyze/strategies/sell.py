@@ -104,8 +104,13 @@ class SellMedian1000Strategy(SellStrategy):
     # {row_index: signal1_slope} for short-term window — block sell when >= min_signal1 (momentum still up → hold)
     signal1_map: dict = field(default_factory=dict)
     min_signal1: float = 0.05
-    # {row_index: z_dev} from valuation_zdev — block sell when >= min_zdev.
-    # Same polarity as the two filters above: a high reading means hold, not sell.
+    # {row_index: z_dev} from valuation_zdev — block sell when <= min_zdev, i.e.
+    # require the price to be genuinely stretched against this symbol's own norm
+    # before selling. Opposite comparison to the two filters above, and
+    # deliberately so: those are momentum readings where high means "trend intact,
+    # hold", while z_dev is a valuation reading where high is the reason to sell.
+    # A low z_dev says the price is only above its trailing median because the
+    # business grew into it — not a dislocation, so do not sell.
     zdev_map: dict = field(default_factory=dict)
     min_zdev: float = 1.3
 
@@ -132,9 +137,13 @@ class SellMedian1000Strategy(SellStrategy):
         # Block sell when long-term Sharpe indicates stable/trending regime — let it run
         if self.signal3_map and self.signal3_map.get(index, 0.0) >= self.min_signal3:
             return False
-        # Block sell when relative valuation is far above this symbol's own norm.
-        # Missing rows (the z_dev warmup) default to 0.0 and therefore do not block,
-        # matching how the two filters above treat absent signal values.
-        if self.zdev_map and self.zdev_map.get(index, 0.0) >= self.min_zdev:
-            return False
+        # Require the price to be stretched against this symbol's own norm before
+        # selling. Missing rows (the z_dev warmup) are skipped rather than treated
+        # as 0.0: with this comparison a 0.0 default would block every sell before
+        # the warmup completes, which is the opposite of how the filters above
+        # behave when a signal is absent.
+        if self.zdev_map:
+            z = self.zdev_map.get(index)
+            if z is not None and z <= self.min_zdev:
+                return False
         return True

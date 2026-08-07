@@ -22,3 +22,17 @@ we must show the signal in the report
 The slope can use for the optimize sell. 
 
 Put index to the price line information
+
+
+
++ reinvest too soon, just reinvest when the slope go back positive
++ how to prevent sell for stock grow stable ?
+
+
+re-generate z-score.
+Think of it's meaning
+use it's for our strategy
+
+
+when run run_all. We should have the current status buy/sell/zone of every symbols, so we can action
+Develop a new strategy that hold multiple symbols -> when a change come, we have multiple choise
