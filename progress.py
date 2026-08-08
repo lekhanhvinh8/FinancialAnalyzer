@@ -347,6 +347,15 @@ function pctColor(v) {
   return "background:#7f1d1d;color:#fee2e2";
 }
 
+// Diff is signed, so it gets its own scale: sign matters, magnitude is secondary.
+// pctColor's absolute bands would read a -5% diff the same as a -300% one.
+function diffColor(v) {
+  if (v === null) return "color:#64748b";
+  if (v > 0)  return "color:#4ade80;font-weight:700";
+  if (v < 0)  return "color:#f87171;font-weight:700";
+  return "color:#94a3b8";
+}
+
 const done  = D.results.length + D.errors.length;
 const total = D.total;
 const pct   = total > 0 ? Math.round(done / total * 100) : 0;
@@ -387,11 +396,13 @@ if (D.results.length === 0 && D.errors.length === 0) {
   h += `<table><thead><tr>
     <th>#</th><th>Symbol</th>
     <th>Median growth</th><th>Buys</th><th>Sells</th><th>Reinvests</th>
-    <th>Interval growth</th><th>Chart</th><th>Duration</th>
+    <th>Interval growth</th><th>Diff</th><th>Chart</th><th>Duration</th>
   </tr></thead><tbody>`;
   D.results.forEach((r, i) => {
     const ms = pctColor(r.median_growth);
     const is = pctColor(r.interval_growth);
+    const dv = (r.median_growth !== null && r.interval_growth !== null)
+             ? r.median_growth - r.interval_growth : null;
     h += `<tr>
       <td style="color:#475569">${i+1}</td>
       <td class="sym">${r.symbol}</td>
@@ -400,13 +411,14 @@ if (D.results.length === 0 && D.errors.length === 0) {
       <td style="text-align:right">${r.sells}</td>
       <td style="text-align:right">${r.reinvests}</td>
       <td style="${is};text-align:right;padding:6px 12px">${r.interval_growth !== null ? r.interval_growth.toFixed(2) + "%" : "—"}</td>
+      <td style="${diffColor(dv)};text-align:right;padding:6px 12px">${dv !== null ? (dv >= 0 ? "+" : "") + dv.toFixed(2) + "%" : "—"}</td>
       <td><a href="${r.chart}" target="_blank">open</a></td>
       <td style="color:#475569">${r.duration_s.toFixed(1)}s</td>
     </tr>`;
   });
   D.errors.forEach(e => {
     h += `<tr><td style="color:#475569">—</td><td class="sym">${e.symbol}</td>
-      <td class="err" colspan="7">${e.note}</td></tr>`;
+      <td class="err" colspan="8">${e.note}</td></tr>`;
   });
   h += `</tbody></table>`;
 }
