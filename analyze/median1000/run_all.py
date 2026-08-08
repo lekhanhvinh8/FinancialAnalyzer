@@ -163,6 +163,22 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
             compare_result=r2,
         )
 
+        # Current state of the three conditions at the latest bar — the same
+        # check() calls the backtest chart uses to paint its condition zones.
+        # Note reinvest.check() covers only the price path; the timeout fallback
+        # lives in considerReinvest and is not reflected here.
+        last = len(df) - 1
+        close_last = float(df["close"].iloc[last]) * 1000
+        pe_last = df["pe_ratio"].iloc[last] if "pe_ratio" in df.columns else None
+        if pe_last is not None and pe_last != pe_last:   # NaN
+            pe_last = None
+        def _chk(strategy):
+            try:
+                return bool(strategy.check(last, close_last, pe_last, cal_range_close))
+            except Exception:
+                return False
+        now_flags = (_chk(buy1), _chk(sell1), _chk(ri1))
+
         dur = time.time() - t0
         mg  = float(round(r1["allRatioGrowth"], 2))
         ig  = float(round(r2["allRatioGrowth"], 2))
@@ -181,6 +197,7 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
             "median_reinvests":  r1["totalReinvest"],
             "interval_growth_%": ig,
             "chart":             chart_path.name,
+            "now_flags":         now_flags,
         }, None
 
     except Exception:
@@ -195,6 +212,19 @@ def build_report(rows: list[dict], out_path: Path,
     df = pd.DataFrame(rows)
     df["diff_%"] = df["median_growth_%"] - df["interval_growth_%"]
     df = df.sort_values("diff_%", ascending=False)
+
+    # Same (buy, sell, reinvest) -> colour/label map the backtest chart uses for
+    # its condition zones, so a row here and the chart agree on wording.
+    NOW_COMBO = {
+        (False, False, False): ("#64748b", "—"),
+        (True,  False, False): ("#22c55e", "Buy"),
+        (False, True,  False): ("#ef4444", "Sell"),
+        (False, False, True):  ("#f97316", "Reinvest"),
+        (True,  False, True):  ("#14b8a6", "Buy + Reinvest"),
+        (True,  True,  False): ("#eab308", "Buy + Sell"),
+        (False, True,  True):  ("#ec4899", "Sell + Reinvest"),
+        (True,  True,  True):  ("#94a3b8", "All"),
+    }
 
     WIN_GREEN  = "background:#14532d;color:#bbf7d0"
     LOSE_RED   = "background:#7f1d1d;color:#fca5a5"
@@ -251,6 +281,8 @@ def build_report(rows: list[dict], out_path: Path,
         diff_color = "#4ade80" if diff >= 0 else "#f87171"
         diff_sign  = "+" if diff >= 0 else ""
         sym = row["symbol"]
+        now_color, now_label = NOW_COMBO.get(
+            tuple(row.get("now_flags") or (False, False, False)), ("#64748b", "?"))
         rows_html += (
             f'<tr data-sym="{sym}">'
             f'<td><label style="display:flex;align-items:center;gap:6px;cursor:pointer">'
@@ -262,10 +294,13 @@ def build_report(rows: list[dict], out_path: Path,
             f"<td style='text-align:right'>{int(row['median_buys'])}</td>"
             f"<td style='text-align:right'>{int(row['median_sells'])}</td>"
             f"<td style='text-align:right'>{int(row['median_reinvests'])}</td>"
+            f"<td style='text-align:center;color:{now_color};font-weight:600'>{now_label}</td>"
             f"<td style='text-align:center'><a href='{row['chart']}' target='_blank'>open</a></td>"
             f"</tr>\n"
         )
-        data_json.append({"sym": sym, "m": round(m, 4), "i": round(i, 4)})
+        # "s" = sells, used by the activity row in the summary
+        data_json.append({"sym": sym, "m": round(m, 4), "i": round(i, 4),
+                          "s": int(row["median_sells"])})
 
     import json
     data_js = json.dumps(data_json)
@@ -307,7 +342,7 @@ def build_report(rows: list[dict], out_path: Path,
   <th>Symbol</th>
   <th>Median1000</th><th>BuyInterval</th><th>Diff</th>
   <th>Buys</th><th>Sells</th><th>Reinvests</th>
-  <th>Chart</th>
+  <th>Signal now</th><th>Chart</th>
 </tr></thead>
 <tbody>
 {rows_html}
@@ -324,6 +359,15 @@ def build_report(rows: list[dict], out_path: Path,
     <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
     <tr><td>Avg growth — Median1000 / Interval</td><td id="s-avg"></td></tr>
     <tr><td>Median growth — Median1000 / Interval</td><td id="s-med"></td></tr>
+    <tr><td><b>Median per-symbol diff</b></td><td id="s-mdiff"></td></tr>
+    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
+    <tr><td>Win rate (sign test)</td><td id="s-sign"></td></tr>
+    <tr><td>Avg win / avg loss</td><td id="s-wl"></td></tr>
+    <tr><td>Diff spread — p25 / p50 / p75</td><td id="s-quart"></td></tr>
+    <tr><td>Gains concentration — top 1 / top 3</td><td id="s-conc"></td></tr>
+    <tr><td>Net diff — all / excluding best</td><td id="s-net"></td></tr>
+    <tr><td>Activity — avg sells, never sold</td><td id="s-act"></td></tr>
+    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
     <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
     <tr><td>Best Median1000</td><td id="s-mbest" style="color:#4ade80"></td></tr>
     <tr><td>Best BuyInterval</td><td id="s-ibest" style="color:#4ade80"></td></tr>
@@ -376,6 +420,66 @@ function updateSummary() {{
   document.getElementById('s-med').innerHTML =
     '<span style="color:#60a5fa">' + mMed.toFixed(2) + '%</span> &nbsp;/&nbsp; ' +
     '<span style="color:#94a3b8">' + iMed.toFixed(2) + '%</span>';
+  // Median of the per-symbol differences, NOT median(m) - median(i). The two are
+  // not the same: the symbol at the middle of one distribution is not the symbol
+  // at the middle of the other, so a difference of medians describes no actual
+  // symbol. On the 45-symbol run they read +1.42% and +8.42% respectively.
+  const diffs  = active.map(d => d.m - d.i).sort((a,b)=>a-b);
+  const mdiff  = median(diffs);
+  document.getElementById('s-mdiff').innerHTML =
+    '<span style="color:' + (mdiff>=0?'#4ade80':'#f87171') + ';font-weight:700">' + fmt(mdiff) + '</span>' +
+    ' <span style="color:#64748b;font-weight:400">(median of per-symbol diffs — not the difference of the two medians above)</span>';
+
+  // Sign test over decided symbols only; exact draws carry no directional info.
+  const dec = diffs.filter(v => Math.abs(v) > 1e-9);
+  const wins = dec.filter(v => v > 0).length;
+  let p = 1;
+  if (dec.length) {{
+    let c = 0;
+    const lg = k => {{ let r = 0; for (let j = 2; j <= k; j++) r += Math.log(j); return r; }};
+    for (let k = wins; k <= dec.length; k++)
+      c += Math.exp(lg(dec.length) - lg(k) - lg(dec.length - k) - dec.length * Math.LN2);
+    p = c;
+  }}
+  document.getElementById('s-sign').innerHTML =
+    wins + '/' + dec.length + ' <span style="color:#64748b">(' +
+    (dec.length ? Math.round(100*wins/dec.length) : 0) + '%)</span> &nbsp; ' +
+    '<span style="color:' + (p<0.05?'#4ade80':'#94a3b8') + '">p = ' + p.toFixed(4) + '</span>';
+
+  const wArr = dec.filter(v=>v>0), lArr = dec.filter(v=>v<0);
+  const avg = a => a.length ? a.reduce((x,y)=>x+y,0)/a.length : 0;
+  document.getElementById('s-wl').innerHTML =
+    '<span style="color:#4ade80">' + fmt(avg(wArr)) + '</span> &nbsp;/&nbsp; ' +
+    '<span style="color:#f87171">' + fmt(avg(lArr)) + '</span>' +
+    (lArr.length ? ' <span style="color:#64748b">(' + Math.abs(avg(wArr)/avg(lArr)).toFixed(2) + 'x)</span>' : '');
+
+  const q = f => diffs[Math.min(diffs.length-1, Math.max(0, Math.floor(f*(diffs.length-1))))];
+  document.getElementById('s-quart').innerHTML =
+    '<span style="color:#94a3b8">' + fmt(q(0.25)) + ' &nbsp;/&nbsp; ' + fmt(q(0.50)) +
+    ' &nbsp;/&nbsp; ' + fmt(q(0.75)) + '</span>';
+
+  const totW = wArr.reduce((a,b)=>a+b,0);
+  const sortedW = wArr.slice().sort((a,b)=>b-a);
+  const top1 = totW ? 100*sortedW[0]/totW : 0;
+  const top3 = totW ? 100*sortedW.slice(0,3).reduce((a,b)=>a+b,0)/totW : 0;
+  document.getElementById('s-conc').innerHTML =
+    '<span style="color:' + (top1>25?'#fbbf24':'#94a3b8') + '">' + top1.toFixed(0) + '%</span>' +
+    ' &nbsp;/&nbsp; <span style="color:' + (top3>50?'#fbbf24':'#94a3b8') + '">' + top3.toFixed(0) + '%</span>' +
+    ' <span style="color:#64748b">of total gains</span>';
+
+  const netAll  = diffs.reduce((a,b)=>a+b,0);
+  const bestSym = active.reduce((a,b) => (b.m-b.i) > (a.m-a.i) ? b : a);
+  document.getElementById('s-net').innerHTML =
+    fmt(netAll) + ' &nbsp;-> &nbsp;' + fmt(netAll - (bestSym.m - bestSym.i)) +
+    ' <span style="color:#64748b">(excl. ' + bestSym.sym + ')</span>';
+
+  const noSell = active.filter(d => d.s === 0).length;
+  const flat   = active.filter(d => Math.abs(d.m - d.i) < 1e-9).length;
+  document.getElementById('s-act').innerHTML =
+    (active.reduce((a,b)=>a+b.s,0)/n).toFixed(1) + ' sells &nbsp;|&nbsp; ' +
+    '<span style="color:' + (noSell > n/4 ? '#fbbf24' : '#94a3b8') + '">' + noSell + '/' + n +
+    ' never sold</span>' + (flat ? ' <span style="color:#64748b">(' + flat + ' identical to interval)</span>' : '');
+
   document.getElementById('s-mbest').innerHTML = '<b>' + mBest.sym + '</b> &nbsp;' + mBest.m.toFixed(2) + '%';
   document.getElementById('s-ibest').innerHTML = '<b>' + iBest.sym + '</b> &nbsp;' + iBest.i.toFixed(2) + '%';
   document.getElementById('s-mworst').innerHTML = '<b>' + mWorst.sym + '</b> &nbsp;' + mWorst.m.toFixed(2) + '%';
