@@ -56,19 +56,21 @@ def make_interval_strategies():
     )
 
 
-def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir: Path | None = None) -> dict | None:
+def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
+                   run_dir: Path | None = None) -> tuple[dict | None, str | None]:
+    """Returns (row, skip_reason). Exactly one is non-None."""
     t0 = time.time()
     prog.begin(symbol)
     try:
         df = load_symbol_df(symbol)
         if len(df) < 1010:
             prog.end_err(symbol, f"skipped — only {len(df)} rows")
-            return None
+            return None, f"only {len(df)} rows"
 
         cal_range_close = db.load_range_stats(symbol, df)
         if cal_range_close is None:
             prog.end_err(symbol, "no range_stats in DB")
-            return None
+            return None, "no range_stats in DB"
 
         date_to_idx = {pd.Timestamp(row["time"]): i for i, row in df.iterrows()}
 
@@ -128,16 +130,16 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir:
         }
         if config.SELL_MIN_ZDEV is not None and not zdev_map:
             prog.end_err(symbol, f"no z_dev at stat_window={config.SELL_ZDEV_WINDOW}")
-            return None
+            return None, f"no z_dev at stat_window={config.SELL_ZDEV_WINDOW}"
         available = {k: v for k, v in first_idx.items() if v is not None}
         start_idx = max(available.values())
         binding   = max(available, key=available.get)
 
         eval_bars = len(df) - start_idx
         if config.MIN_EVAL_BARS and eval_bars < config.MIN_EVAL_BARS:
-            prog.end_err(symbol, f"only {eval_bars} bars after warmup "
-                                 f"(start {start_idx}, bound by {binding})")
-            return None
+            msg = f"only {eval_bars} bars after warmup (start {start_idx}, bound by {binding})"
+            prog.end_err(symbol, msg)
+            return None, msg
 
         buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map,
                                                   reinvest_signal1_map, zdev_map)
@@ -179,16 +181,17 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir:
             "median_reinvests":  r1["totalReinvest"],
             "interval_growth_%": ig,
             "chart":             chart_path.name,
-        }
+        }, None
 
     except Exception:
         err = traceback.format_exc().strip().splitlines()[-1]
         prog.end_err(symbol, err)
         print(f"  {symbol}: ERROR — {err}")
-        return None
+        return None, err
 
 
-def build_report(rows: list[dict], out_path: Path):
+def build_report(rows: list[dict], out_path: Path,
+                 skipped: list[tuple[str, str]] | None = None):
     df = pd.DataFrame(rows)
     df["diff_%"] = df["median_growth_%"] - df["interval_growth_%"]
     df = df.sort_values("diff_%", ascending=False)
@@ -201,6 +204,43 @@ def build_report(rows: list[dict], out_path: Path):
         if m > i:   return WIN_GREEN, LOSE_RED
         if i > m:   return LOSE_RED,  WIN_GREEN
         return DRAW_GRAY, DRAW_GRAY
+
+    # Every uppercase name in config.py, read at render time. Introspected rather
+    # than listed so a parameter added later cannot silently go unreported — the
+    # whole point is that a saved report says what produced it.
+    cfg = {k: getattr(config, k) for k in dir(config)
+           if k.isupper() and not k.startswith("_")}
+    cfg_cells = "".join(
+        f"<div><span style='color:#64748b'>{k}</span> "
+        f"<span style='color:#e2e8f0;font-weight:600'>{v}</span></div>"
+        for k, v in sorted(cfg.items())
+    )
+    config_html = (
+        "<div style='margin:10px 0;padding:10px 14px;background:#0f172a;"
+        "border:1px solid #1e293b;border-radius:8px;font-size:12px'>"
+        "<div style='color:#94a3b8;font-weight:700;margin-bottom:6px'>"
+        "Configuration used for this run</div>"
+        "<div style='display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));"
+        f"gap:2px 18px'>{cfg_cells}</div></div>"
+    )
+
+    skipped = skipped or []
+    skipped_note = f", {len(skipped)} skipped" if skipped else ""
+    skipped_html = ""
+    if skipped:
+        items = "".join(
+            f"<div><span style='color:#e2e8f0;font-weight:600'>{sym}</span> "
+            f"<span style='color:#64748b'>— {why}</span></div>"
+            for sym, why in sorted(skipped)
+        )
+        skipped_html = (
+            "<div style='margin:10px 0;padding:10px 14px;background:#0f172a;"
+            "border:1px solid #1e293b;border-radius:8px;font-size:12px'>"
+            f"<div style='color:#94a3b8;font-weight:700;margin-bottom:6px'>"
+            f"Skipped ({len(skipped)}) — excluded from every figure below</div>"
+            "<div style='display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));"
+            f"gap:2px 18px'>{items}</div></div>"
+        )
 
     rows_html = ""
     data_json  = []
@@ -255,14 +295,13 @@ def build_report(rows: list[dict], out_path: Path):
 <body>
 <h1>Median1000 Backtest — All Symbols</h1>
 <p style="color:#64748b;font-size:12px">
-  Interval money: {config.INTERVAL_MONEY:,} VND &nbsp;|&nbsp;
-  Buy when &lt; median − {config.PERCENT_BUY}% &nbsp;|&nbsp;
-  Sell when &gt; median + {config.PERCENT_SELL}% &nbsp;|&nbsp;
-  Reinvest when &lt; median − {config.PERCENT_REINVEST}% &nbsp;|&nbsp;
-  vs BuyInterval (no sell/reinvest) &nbsp;|&nbsp;
+  {len(rows)} symbols reported{skipped_note} &nbsp;|&nbsp;
+  vs BuyInterval (no sell/reinvest), both arms starting at the same bar &nbsp;|&nbsp;
   Sorted by Diff (Median1000 − Interval) descending. &nbsp;|&nbsp;
   <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
+{config_html}
+{skipped_html}
 <table>
 <thead><tr>
   <th>Symbol</th>
@@ -377,19 +416,20 @@ if __name__ == "__main__":
 
     prog = RunAllProgress(symbols, out=str(run_dir / "run_all_progress.html"))
 
-    report_rows = []
+    report_rows, skipped = [], []
     for i, sym in enumerate(symbols, 1):
         print(f"[{i}/{len(symbols)}] {sym}", end=" ... ", flush=True)
-        row = process_symbol(sym, prog, run_ts="", run_dir=run_dir)
+        row, skip_reason = process_symbol(sym, prog, run_ts="", run_dir=run_dir)
         if row:
             report_rows.append(row)
             print(f"median={row['median_growth_%']:.1f}%  interval={row['interval_growth_%']:.1f}%")
         else:
-            print("skipped/error")
+            skipped.append((sym, skip_reason or "unknown"))
+            print(f"skipped — {skip_reason}")
 
     prog.finish()
 
     if report_rows:
-        build_report(report_rows, run_dir / "report_all.html")
+        build_report(report_rows, run_dir / "report_all.html", skipped)
 
     print("\nDone.")
