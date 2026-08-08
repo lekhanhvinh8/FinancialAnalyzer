@@ -133,6 +133,12 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "", run_dir:
         start_idx = max(available.values())
         binding   = max(available, key=available.get)
 
+        eval_bars = len(df) - start_idx
+        if config.MIN_EVAL_BARS and eval_bars < config.MIN_EVAL_BARS:
+            prog.end_err(symbol, f"only {eval_bars} bars after warmup "
+                                 f"(start {start_idx}, bound by {binding})")
+            return None
+
         buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map,
                                                   reinvest_signal1_map, zdev_map)
         r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1,

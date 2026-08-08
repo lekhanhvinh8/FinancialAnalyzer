@@ -21,6 +21,14 @@ REINVEST_TIMEOUT_PERCENT = 999
 
 USE_PE = False   # use P/E-adjusted median instead of price median
 
+# Minimum bars a symbol must have AFTER the start index (see run_all.py) to be
+# reported. Not total history — the existing len(df) < 1010 check covers that.
+# Below this there is too little post-warmup data for the result to mean anything:
+# the strategy may make no trades at all, and every short symbol ends up testing
+# the same recent months, so they add correlated noise rather than evidence.
+# 0 disables the guard.
+MIN_EVAL_BARS = 500
+
 # SellMedian1000: block sell when 1000-day Sharpe (signal3) is above this — stable/trending regime → hold
 MIN_SIGNAL3 = 1.1
 
@@ -35,7 +43,7 @@ SELL_MIN_SIGNAL1   = 0.05   # % per day (e.g. 0.05 = price rising ~0.05%/day ove
 # intact, hold", whereas a high z_dev is the reason to sell.
 # Set SELL_MIN_ZDEV = None to disable. Window is the z_dev stat_window to read.
 SELL_ZDEV_WINDOW = 700    # stat_window in valuation_zdev (median_window is fixed at 1000)
-SELL_MIN_ZDEV    = 1.5
+SELL_MIN_ZDEV    = 0.9
 
 # ReInvestMedian1000: require the slope to have turned up before redeploying the reserve.
 # Inverse polarity to the sell gate above: sell is BLOCKED while momentum is up, reinvest

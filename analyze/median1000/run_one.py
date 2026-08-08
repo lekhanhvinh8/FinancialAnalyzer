@@ -102,7 +102,11 @@ if __name__ == "__main__":
     print(f"Start index: {start_idx} ({df['time'].iloc[start_idx].date()}) "
           f"— bound by '{binding}'")
     print(f"  first available: " + ", ".join(f"{k}={v}" for k, v in sorted(available.items(), key=lambda kv: kv[1])))
-    print(f"  evaluated bars:  {len(df) - start_idx}")
+    eval_bars = len(df) - start_idx
+    print(f"  evaluated bars:  {eval_bars}")
+    if config.MIN_EVAL_BARS and eval_bars < config.MIN_EVAL_BARS:
+        print(f"  WARNING: below MIN_EVAL_BARS={config.MIN_EVAL_BARS} — run_all would "
+              f"skip this symbol; treat the result as an empty sample")
 
     buy, sell, reinvest = make_strategies(s3, s1, ri_s1, zmap)
     result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY, buy, sell, reinvest,
