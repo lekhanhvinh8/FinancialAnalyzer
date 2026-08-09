@@ -161,6 +161,7 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
             cal_range_close=cal_range_close,
             result=r1,
             compare_result=r2,
+            start_index=start_idx,
         )
 
         # Current state of the three conditions at the latest bar — the same

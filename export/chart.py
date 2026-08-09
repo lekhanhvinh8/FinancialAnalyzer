@@ -49,6 +49,9 @@ _INDEX_PRICE_SYMBOL = {
 _ZONE_COLORS   = ["#2ca02c", "#f0c040", "#ff7f0e", "#d62728"]
 _ZONE_LABELS   = ["Cheap", "Fair", "High", "Exp."]
 _NO_ZONE_COLOR = "#888888"
+# Bars before a backtest's start index — a state of its own, distinct from
+# "evaluated, no condition true". See save_backtest_chart.
+_NOT_EVALUATED_COLOR = "#475569"
 _NO_ZONE_LABEL = "—"
 
 _DEFAULT_PCT_WINDOW = 1000
@@ -1461,6 +1464,7 @@ def save_backtest_chart(
     cal_range_close: dict | None = None,
     result: dict | None = None,
     compare_result: dict | None = None,
+    start_index: int = 0,
 ) -> str:
     """
     Export a backtest chart built on top of the full PE chart (all percentile
@@ -1553,7 +1557,13 @@ def save_backtest_chart(
         b_flags = [False] * n
         s_flags = [False] * n
         r_flags = [False] * n
+        # Only from start_index. check() is stateless and answers for any bar, so
+        # without this the zones paint years before the backtest actually begins —
+        # BuyMedian1000Strategy.check goes true at bar 1000 while the run may not
+        # start until every signal exists, e.g. 1699.
         for row_i, row in df.iterrows():
+            if row_i < start_index:
+                continue
             close = row["close"] * 1000
             pe    = row.get("pe_ratio", None)
             b_flags[row_i] = buy_strategy.check(row_i, close, pe, cal_range_close)
@@ -1563,8 +1573,35 @@ def save_backtest_chart(
         dates  = [str(times.iloc[i])[:10] for i in range(n)]
         prices = [df["close"].iloc[i] for i in range(n)]  # chart scale (no ×1000)
 
+        # Bars before the strategy starts are a third state, distinct from both
+        # "evaluated, nothing triggered" and "no overlay at all". Without it the
+        # absence of an overlay silently carries meaning: previously (F,F,F)
+        # matched here and painted grey "No condition" over years the strategy
+        # could not act in; clipping alone then let the underlying P/E colouring
+        # show through, which reads as a different chart rather than a state.
+        if start_index > 0:
+            zone_traces.append({
+                "type": "scatter",
+                "mode": "lines",
+                "name": "Not evaluated",
+                "yaxis": _yaxis,
+                "x": dates,
+                # inclusive of start_index so it meets the first painted zone with no gap
+                "y": [prices[i] if i <= min(start_index, n - 1) else None for i in range(n)],
+                "connectgaps": False,
+                # Same width/opacity as every other condition zone — a dotted or
+                # faded line lets the Cheap/Fair/High/Exp layer show through the
+                # gaps, which is the very ambiguity this state exists to remove.
+                # Only the colour distinguishes it.
+                "line": {"color": _NOT_EVALUATED_COLOR, "width": 3},
+                "opacity": 0.7,
+                "legendgroup": "condzone",
+                "hoverinfo": "skip",
+            })
+
         for (b, s, r), (color, label) in _COMBO_COLORS.items():
-            y_vals = [prices[i] if (b_flags[i] == b and s_flags[i] == s and r_flags[i] == r) else None
+            y_vals = [prices[i] if (i >= start_index and b_flags[i] == b
+                                    and s_flags[i] == s and r_flags[i] == r) else None
                       for i in range(n)]
             if all(v is None for v in y_vals):
                 continue
@@ -1595,6 +1632,7 @@ def save_backtest_chart(
             zone_meta = [
                 _COMBO_COLORS.get((b_flags[i], s_flags[i], r_flags[i]),
                                   (_NO_ZONE_COLOR, "—"))
+                if i >= start_index else (_NOT_EVALUATED_COLOR, "Not evaluated")
                 for i in range(n)
             ]
             zone_traces.append({

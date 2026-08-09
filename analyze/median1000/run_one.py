@@ -126,6 +126,7 @@ if __name__ == "__main__":
         cal_range_close=cal_range_close,
         result=result,
         compare_result=cmp_result,
+        start_index=start_idx,
     )
     print(f"\nChart -> {out}")
     os.startfile(out)
