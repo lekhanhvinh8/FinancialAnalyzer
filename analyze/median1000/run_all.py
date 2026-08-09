@@ -162,6 +162,9 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
             result=r1,
             compare_result=r2,
             start_index=start_idx,
+            sig1_window=config.SELL_SIGNAL1_WINDOW,
+            sig3_window=1000,   # run_all reads signal3 at window 1000
+            zdev_window=config.SELL_ZDEV_WINDOW,
         )
 
         # Current state of the three conditions at the latest bar — the same

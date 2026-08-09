@@ -127,6 +127,9 @@ if __name__ == "__main__":
         result=result,
         compare_result=cmp_result,
         start_index=start_idx,
+        sig1_window=config.SELL_SIGNAL1_WINDOW,
+        sig3_window=1000,   # signal3 is read at window 1000
+        zdev_window=config.SELL_ZDEV_WINDOW,
     )
     print(f"\nChart -> {out}")
     os.startfile(out)

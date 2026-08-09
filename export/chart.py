@@ -1465,6 +1465,12 @@ def save_backtest_chart(
     result: dict | None = None,
     compare_result: dict | None = None,
     start_index: int = 0,
+    # Windows the run actually used, so the chart's sliders open on the same
+    # values rather than on generic defaults. Passed in rather than imported:
+    # export/ should not depend on a strategy package's config.
+    sig1_window: int | None = None,
+    sig3_window: int | None = None,
+    zdev_window: int | None = None,
 ) -> str:
     """
     Export a backtest chart built on top of the full PE chart (all percentile
@@ -1473,6 +1479,13 @@ def save_backtest_chart(
     """
     import os
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+
+    # Only override a slider default when the caller supplied a window; omitted
+    # ones keep _inject_signals_into_html's own defaults.
+    _slider_defaults = {}
+    if sig1_window is not None: _slider_defaults["default_w1"] = sig1_window
+    if sig3_window is not None: _slider_defaults["default_w3"] = sig3_window
+    if zdev_window is not None: _slider_defaults["default_wz"] = zdev_window
 
     _known_indices = {"vn30", "vndiamond", "vnfinlead", "vnindex"}
     if index.lower() in _known_indices:
@@ -1487,7 +1500,9 @@ def save_backtest_chart(
                 ).fetchall()
             ]
         if _idx_windows:
-            _inject_signals_into_html(symbol, path, _idx_windows, yaxis_start=4, is_backtest=True, init_delay=1500)
+            _inject_signals_into_html(symbol, path, _idx_windows, yaxis_start=4,
+                                      is_backtest=True, init_delay=1500,
+                                      **_slider_defaults)
         _yaxis = "y2"
     else:
         # Individual stock: build a styled price+PE chart from df
@@ -1823,7 +1838,9 @@ setTimeout(function() {{
                 ).fetchall()
             ]
         if available_windows:
-            _inject_signals_into_html(symbol, path, available_windows, yaxis_start=4, is_backtest=True, init_delay=1500)
+            _inject_signals_into_html(symbol, path, available_windows, yaxis_start=4,
+                                      is_backtest=True, init_delay=1500,
+                                      **_slider_defaults)
 
     print(f"Backtest chart saved to {path}")
     return path
