@@ -202,6 +202,7 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
             "interval_growth_%": ig,
             "chart":             chart_path.name,
             "now_flags":         now_flags,
+            "eval_bars":         eval_bars,
         }, None
 
     except Exception:
@@ -276,6 +277,8 @@ def build_report(rows: list[dict], out_path: Path,
             f"gap:2px 18px'>{items}</div></div>"
         )
 
+    max_eb = max((int(r.get("eval_bars") or 0) for r in rows), default=0)
+
     rows_html = ""
     data_json  = []
     for _, row in df.iterrows():
@@ -285,6 +288,10 @@ def build_report(rows: list[dict], out_path: Path,
         diff_color = "#4ade80" if diff >= 0 else "#f87171"
         diff_sign  = "+" if diff >= 0 else ""
         sym = row["symbol"]
+        # Amber a row whose evaluated window is under half the longest one — the
+        # rows are not equally weighted evidence and the table should show it.
+        eb = int(row.get("eval_bars") or 0)
+        eb_color = "#fbbf24" if (max_eb and eb < max_eb / 2) else "#64748b"
         now_color, now_label = NOW_COMBO.get(
             tuple(row.get("now_flags") or (False, False, False)), ("#64748b", "?"))
         rows_html += (
@@ -298,13 +305,15 @@ def build_report(rows: list[dict], out_path: Path,
             f"<td style='text-align:right'>{int(row['median_buys'])}</td>"
             f"<td style='text-align:right'>{int(row['median_sells'])}</td>"
             f"<td style='text-align:right'>{int(row['median_reinvests'])}</td>"
+            f"<td style='text-align:right;color:{eb_color}'>{eb:,}</td>"
             f"<td style='text-align:center;color:{now_color};font-weight:600'>{now_label}</td>"
             f"<td style='text-align:center'><a href='{row['chart']}' target='_blank'>open</a></td>"
             f"</tr>\n"
         )
         # "s" = sells, used by the activity row in the summary
         data_json.append({"sym": sym, "m": round(m, 4), "i": round(i, 4),
-                          "s": int(row["median_sells"])})
+                          "s": int(row["median_sells"]),
+                          "eb": int(row.get("eval_bars") or 0)})
 
     import json
     data_js = json.dumps(data_json)
@@ -346,7 +355,7 @@ def build_report(rows: list[dict], out_path: Path,
   <th>Symbol</th>
   <th>Median1000</th><th>BuyInterval</th><th>Diff</th>
   <th>Buys</th><th>Sells</th><th>Reinvests</th>
-  <th>Signal now</th><th>Chart</th>
+  <th>Eval bars</th><th>Signal now</th><th>Chart</th>
 </tr></thead>
 <tbody>
 {rows_html}
@@ -361,11 +370,12 @@ def build_report(rows: list[dict], out_path: Path,
     <tr><td>BuyInterval wins</td><td id="s-iw" style="color:#f87171;font-weight:600"></td></tr>
     <tr><td>Draws</td><td id="s-dr" style="color:#94a3b8"></td></tr>
     <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
+    <tr><td><b>Median per-symbol diff</b></td><td id="s-mdiff"></td></tr>
+    <tr><td>Win rate (sign test)</td><td id="s-sign"></td></tr>
+    <tr><td>Evaluated bars — median (min / max)</td><td id="s-eb"></td></tr>
+    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
     <tr><td>Avg growth — Median1000 / Interval</td><td id="s-avg"></td></tr>
     <tr><td>Median growth — Median1000 / Interval</td><td id="s-med"></td></tr>
-    <tr><td><b>Median per-symbol diff</b></td><td id="s-mdiff"></td></tr>
-    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
-    <tr><td>Win rate (sign test)</td><td id="s-sign"></td></tr>
     <tr><td>Avg win / avg loss</td><td id="s-wl"></td></tr>
     <tr><td>Diff spread — p25 / p50 / p75</td><td id="s-quart"></td></tr>
     <tr><td>Gains concentration — top 1 / top 3</td><td id="s-conc"></td></tr>
@@ -432,7 +442,7 @@ function updateSummary() {{
   const mdiff  = median(diffs);
   document.getElementById('s-mdiff').innerHTML =
     '<span style="color:' + (mdiff>=0?'#4ade80':'#f87171') + ';font-weight:700">' + fmt(mdiff) + '</span>' +
-    ' <span style="color:#64748b;font-weight:400">(median of per-symbol diffs — not the difference of the two medians above)</span>';
+    ' <span style="color:#64748b;font-weight:400">(median of the per-symbol diffs, not the difference of the two medians below)</span>';
 
   // Sign test over decided symbols only; exact draws carry no directional info.
   const dec = diffs.filter(v => Math.abs(v) > 1e-9);
@@ -449,6 +459,14 @@ function updateSummary() {{
     wins + '/' + dec.length + ' <span style="color:#64748b">(' +
     (dec.length ? Math.round(100*wins/dec.length) : 0) + '%)</span> &nbsp; ' +
     '<span style="color:' + (p<0.05?'#4ade80':'#94a3b8') + '">p = ' + p.toFixed(4) + '</span>';
+
+  const ebs = active.map(d => d.eb || 0).filter(v => v > 0).sort((a,b)=>a-b);
+  document.getElementById('s-eb').innerHTML = ebs.length
+    ? median(ebs).toFixed(0) + ' <span style="color:#64748b">(min ' + ebs[0] +
+      ' / max ' + ebs[ebs.length-1] + ')</span>' +
+      (ebs[0] < ebs[ebs.length-1]/2
+        ? ' <span style="color:#fbbf24">— shortest is under half the longest</span>' : '')
+    : '—';
 
   const wArr = dec.filter(v=>v>0), lArr = dec.filter(v=>v<0);
   const avg = a => a.length ? a.reduce((x,y)=>x+y,0)/a.length : 0;
