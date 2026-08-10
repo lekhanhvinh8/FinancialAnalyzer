@@ -33,8 +33,12 @@ MIN_EVAL_BARS = 500
 MIN_SIGNAL3 = 1.1
 
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
-SELL_SIGNAL1_WINDOW = 100   # trading days for the slope window
-SELL_MIN_SIGNAL1   = 0.05   # % per day (e.g. 0.05 = price rising ~0.05%/day over 100 days)
+SELL_SIGNAL1_WINDOW = 120    # trading days for the slope window
+SELL_MIN_SIGNAL1   = 0.1369   # % per day. From the window x k sweep: k=1 at window 20
+                            # (k/sqrt(w)). Chosen from the flat region (+21%, 69% win)
+                            # rather than the +24.45% peak at w=100,k=3, which sits on a
+                            # steep slope. Previous 100/0.05 scored +1.42%, near the worst
+                            # of the 180 cells. See sweep_signal1.html.
 
 # SellMedian1000: block sell when relative valuation (z_dev) is at or BELOW this —
 # the price is above its trailing median only because the business grew into it,
