@@ -6,20 +6,32 @@ combined — and has never been tuned. This maps the surface.
 
 WHY THE THRESHOLD IS SCALED BY THE WINDOW
 
-  The slope's spread shrinks as the window grows: measured across six symbols,
-  p95 ~= 4.1/sqrt(window). A fixed threshold therefore means something different
-  at every window — at w=200 anything above 0.3 blocks nothing, while at w=10
-  the same number sits mid-distribution. A rectangular grid of raw thresholds
-  spends most of its cells on two degenerate states ("never sells" and "no
-  filter at all").
+  The slope's spread shrinks as the window grows. Measured over all 45 eligible
+  symbols (~3.1M observations, 20 windows):
+
+      p95 = 3.991 * w^(-0.494)      R^2 = 0.9994
+
+  i.e. very close to 4/sqrt(w). A fixed threshold therefore means something
+  different at every window — at w=200 anything above 0.3 blocks nothing, while
+  at w=10 the same number sits mid-distribution. A rectangular grid of raw
+  thresholds spends most of its cells on two degenerate states ("never sells"
+  and "no filter at all").
+
+  What matters is not the formula but that a column means one thing everywhere,
+  and it does — share of sell-eligible days blocked, by window:
+
+      k        -4    -2    -1     0     1     2     4
+      w=10    95%   86%   74%   52%   30%   17%    5%
+      w=100   95%   86%   75%   56%   36%   21%    6%
+      w=200   95%   87%   78%   60%   40%   23%    5%
 
   So the swept quantity is k, with
 
       min_signal1 = k / sqrt(window)
 
-  which holds strictness roughly constant across windows: k=0 blocks ~50% of
-  days, k~=4 blocks ~5%. It is arithmetic on the window, not a fitted quantile,
-  so it introduces no look-ahead.
+  which holds strictness roughly constant across windows: k=-4 blocks ~95% of
+  days, k=0 about 55%, k=+4 about 5%. It is arithmetic on the window, not a
+  fitted quantile, so it introduces no look-ahead.
 
 READING THE RESULT
 
@@ -58,7 +70,11 @@ from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStra
 from analyze.median1000 import config
 
 WINDOWS = list(range(10, 201, 10))                      # 20
-KS      = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]  # 9
+KS      = [round(-4.0 + 0.5 * i, 1) for i in range(17)]   # -4.0 .. 4.0, 17 values
+#          Negative k blocks MORE days, positive blocks fewer. The first sweep
+#          started at k=0 and so only explored 'block 55% -> block 5%'. That was a
+#          mistake: at window 20 the best cell in the row WAS k=0, sitting on the
+#          grid edge, so there was no way to tell whether it kept improving below it.
 OUT     = Path(__file__).parent / "sweep_signal1.html"
 
 
@@ -210,7 +226,7 @@ th{{background:#111c30;color:#94a3b8;font-weight:600}}
 <p class="note">Cell = <b>mean per-symbol diff</b> (Median1000 − BuyInterval) over
 {n_syms} symbols; small text = win rate. Threshold is <code>k/&radic;window</code>,
 so a column is roughly constant strictness across windows
-(k=0 blocks ~50% of days, k=4 about 5%). Current live config is
+(k=-4 blocks ~95% of sell-eligible days, k=0 about 55%, k=+4 about 5%). Current live config is
 <b>window {config.SELL_SIGNAL1_WINDOW}, min_signal1 {config.SELL_MIN_SIGNAL1}</b>
 (k&nbsp;&asymp;&nbsp;{config.SELL_MIN_SIGNAL1*math.sqrt(config.SELL_SIGNAL1_WINDOW):.2f}).
 <br><b>Read the plateau, not the ★.</b> The best of ~{len(WINDOWS)*len(KS)} cells looks
