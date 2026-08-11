@@ -50,7 +50,7 @@ MIN_SIGNAL3 = 1.1
 
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
 SELL_SIGNAL1_WINDOW = 120    # trading days for the slope window
-SELL_MIN_SIGNAL1   = 0.1369  # % per day, = k/sqrt(window) with k=1.5 at window 120.
+SELL_MIN_SIGNAL1   = 0.228   # % per day, = k/sqrt(window) with k=2.5 at window 120.
                             # The one sell filter that earns its keep. Paired against
                             # the gate switched off, over 44 symbols: +1039 gain / -402
                             # loss = net +637, mean +14.47, 23/36 improved (p=0.066).
@@ -59,12 +59,21 @@ SELL_MIN_SIGNAL1   = 0.1369  # % per day, = k/sqrt(window) with k=1.5 at window 
                             # 3 contributors carry the mean from +14.5 down to +2.6. It
                             # rescues a handful of symbols; it does not improve the
                             # typical one. Quote both halves or the number misleads.
-                            # The value is kept, not tuned. sweep_signal1.py is scored
-                            # on the median, which lands in that 20-symbol dead zone and
-                            # reads 0.00 for every cell, so the grid cannot rank this
-                            # filter at all — nothing in it argued for moving, which is
-                            # not the same as this value being right. Read that file's
-                            # docstring before re-sweeping.
+                            #
+                            # Chosen as the CENTRE of the only region that ranks in the
+                            # top 15% on both grids that can rank this filter — mean and
+                            # the round-robin vote — which is w=110-130, k=2-3. Here
+                            # mean 34 / vote 294, with 7 of 8 neighbours also qualifying.
+                            # The previous 0.1369 (k=1.5) sat on the edge of that region
+                            # at mean 31 / vote 271 and only 4 of 8 neighbours.
+                            # Two parts of this are judgement, not data: the top-15% cut,
+                            # and w=120 over w=130 (which has a higher mean of 39 but a
+                            # lower vote of 261) — 120 was kept because it was already
+                            # the live window. What the data supports is the region, not
+                            # the point: k anywhere in 2-3 at w=110-130 is equivalent.
+                            # Do not score this filter on the median. 20 of 44 symbols
+                            # sit at exactly zero, so the median lands among them and
+                            # reads 0.00 at every cell in the grid, best included.
 
 # SellMedian1000: block sell when relative valuation (z_dev) is at or BELOW this —
 # the price is above its trailing median only because the business grew into it,

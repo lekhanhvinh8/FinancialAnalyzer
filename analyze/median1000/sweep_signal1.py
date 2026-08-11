@@ -26,11 +26,22 @@ HOW TO READ THIS, AND WHY THE GRID ALONE WILL MISLEAD YOU
   - Even paired, the median of this filter's effect is 0.00 at every cell in the
     grid, including the best one, because 20 of 44 symbols sit at exactly zero
     and the median lands among them. Median is blind to an effect carried by a
-    minority, which is precisely this one. The grid is median-scored, so it
-    cannot rank settings for this filter at all.
+    minority, which is precisely this one. The default score cannot rank this
+    filter; use the mean and vote grids, below.
   - Do not trim the tails to make the mean behave. VND's +277 is a real result,
     not noise. Trimming answers "is the effect broad?" and is a diagnostic only;
     it is never the figure to report.
+
+  Two grids can rank cells here, and they must be read together:
+
+      mean   size, and who is paying for it   — carried by VND
+      vote   agreement, one vote per symbol   — blind to size
+
+  They disagree, and the disagreement is informative. Mean picks w=130/k=2.5
+  (+39); the vote picks w=10/k=-2.5 (331 of 339) — which is in the inert region,
+  because the filter helps ~8 symbols a great deal and costs many symbols a
+  little, and one-symbol-one-vote counts the many. The only region in the top 15%
+  of BOTH is w=110-130, k=2-3, and that is where SELL_MIN_SIGNAL1 comes from.
 
   Two further traps in the grid itself:
 
@@ -98,6 +109,10 @@ READING THE RESULT
   tracks whichever symbol dominates. When the two disagree that IS the finding —
   the effect lives in the tails — so read the per-symbol list rather than picking
   the aggregate you prefer. See the section above for what that costs here.
+
+  Every metric is computed for every cell and embedded in the page, so the
+  selector switches between them without recomputing; --mean only chooses which
+  one the console prints and stars.
 
   Per-symbol diffs are saved to sweep_signal1_raw.json, so switching score costs
   seconds instead of another full sweep:
