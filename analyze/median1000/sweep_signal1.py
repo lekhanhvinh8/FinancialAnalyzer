@@ -190,8 +190,26 @@ def eval_symbol(sym: str):
         return sym, None, f"{type(e).__name__}: {e}"
 
 
+def apply_exclusions(per_symbol: dict) -> dict:
+    """
+    config.EXCLUDE_SYMBOLS is applied HERE rather than before computing, so the
+    raw JSON keeps every symbol and the exclusion can be changed by re-scoring
+    instead of re-running the sweep.
+    """
+    drop = {s.upper() for s in getattr(config, "EXCLUDE_SYMBOLS", [])}
+    hit = sorted(drop & {s.upper() for s in per_symbol})
+    if not hit:
+        return per_symbol
+    kept = {s: d for s, d in per_symbol.items() if s.upper() not in drop}
+    print(f"  EXCLUDE_SYMBOLS {hit}: {len(per_symbol)} -> {len(kept)} symbols")
+    return kept
+
+
 def aggregate(per_symbol: dict, score: str):
-    """score: 'median' or 'mean'. Returns (grid_score, grid_winrate)."""
+    """
+    score: 'median' or 'mean'. Returns (grid_score, grid_winrate).
+    Caller is expected to have run apply_exclusions() first.
+    """
     fn = st.median if score == "median" else st.mean
     grid, win = {}, {}
     for w in WINDOWS:
@@ -289,6 +307,9 @@ good by construction; a contiguous good region is evidence, a lone spike is nois
 
 
 def _report(per_symbol, skipped, score, elapsed):
+    per_symbol = apply_exclusions(per_symbol)
+    if not per_symbol:
+        print("every symbol was excluded — nothing to report"); return
     grid, win = aggregate(per_symbol, score)
     OUT.write_text(build_html(grid, win, len(per_symbol), elapsed, skipped, score),
                    encoding="utf-8")

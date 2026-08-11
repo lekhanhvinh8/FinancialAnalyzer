@@ -62,6 +62,10 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
     t0 = time.time()
     prog.begin(symbol)
     try:
+        if symbol.upper() in {s.upper() for s in getattr(config, "EXCLUDE_SYMBOLS", [])}:
+            prog.end_err(symbol, "excluded by config")
+            return None, "excluded by EXCLUDE_SYMBOLS"
+
         df = load_symbol_df(symbol)
         if len(df) < 1010:
             prog.end_err(symbol, f"skipped — only {len(df)} rows")

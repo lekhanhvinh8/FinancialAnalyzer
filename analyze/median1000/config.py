@@ -29,6 +29,17 @@ USE_PE = False   # use P/E-adjusted median instead of price median
 # 0 disables the guard.
 MIN_EVAL_BARS = 500
 
+# Symbols kept out of every aggregate. Not a data-quality guard like the one
+# above — these are excluded by judgement, so the reason belongs here in writing.
+#   VIX — has been ~30% of total gains in every run; the mean diff largely
+#         tracked it rather than the strategy, and it swung from -35 to +702
+#         on a single signal1 parameter change.
+#   VIC — the mirror case on the loss side (-458 in one run, larger than the
+#         entire net), so removing only the big winner would bias the result.
+# They are still computed and still written to the sweep's raw JSON; only the
+# aggregation drops them, so the decision stays reversible without a re-run.
+EXCLUDE_SYMBOLS = ["VIX", "VIC"]
+
 # SellMedian1000: block sell when 1000-day Sharpe (signal3) is above this — stable/trending regime → hold
 MIN_SIGNAL3 = 1.1
 
