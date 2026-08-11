@@ -130,6 +130,7 @@ import time
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor
 
+import numpy as np
 import pandas as pd
 
 import database as db
@@ -281,6 +282,7 @@ METRICS = {
     "p":      ("Sign-test p",   "",  -1),
     "p25":    ("25th pct diff", "%", +1),
     "worst":  ("Worst symbol",  "%", +1),
+    "vote":   ("Cells beaten",  "",  +1),
 }
 
 
@@ -307,7 +309,53 @@ def aggregate(per_symbol: dict):
             grids["p"][(w, k)] = (
                 sum(math.comb(dec, i) for i in range(wins, dec + 1)) / 2 ** dec
                 if dec else 1.0)
+    grids["vote"] = _vote_grid(per_symbol)
     return grids
+
+
+def _fmt(metric: str, v: float) -> str:
+    """Vote is a count, not a percentage — a signed '+339.00%' would be nonsense."""
+    if metric == "vote":
+        return f"{v:.0f} of {len(WINDOWS)*len(KS) - 1}"
+    return f"{v:+.2f}{METRICS[metric][1]}"
+
+
+def _vote_grid(per_symbol: dict):
+    """
+    Round-robin: every cell plays every other cell, one vote per symbol, and a
+    cell's score is how many of the other 339 it beats on a majority of the
+    symbols that distinguish them.
+
+    This is the one metric here that is neither an average nor a middle value.
+    It exists because the others cannot answer "do the symbols agree?". Mean
+    ranks cells fine — mean(A-B) = mean(A) - mean(B), so pairing is irrelevant
+    to it — but that ranking can be carried by one symbol; here VND alone is
+    +277 of a +637 net. Under one-symbol-one-vote VND cannot outvote anyone.
+
+    The price is that it is blind to size: a symbol preferring A by 0.01 points
+    votes exactly as loudly as one preferring it by 300. So read it beside the
+    mean grid, never instead of it. A cell high on both is a real candidate; a
+    cell high on only one is telling you which way it is biased.
+
+    Scores clustered around 170 (half of 339) mean the symbols disagree with
+    each other and no cell is genuinely preferred — at which point the honest
+    answer is to keep the current value rather than pick from noise.
+    """
+    cells = [(w, k) for w in WINDOWS for k in KS]
+    syms = [s for s in per_symbol if all(c in per_symbol[s] for c in cells)]
+    if len(syms) < 3:
+        return {}
+    m = np.array([[per_symbol[s][c] for c in cells] for s in syms])  # symbols x cells
+    n = len(cells)
+    beaten = np.zeros(n, dtype=int)
+    # One cell at a time against all cells at once: 340 passes over a 44x340
+    # array rather than 57,800 Python-level pairings.
+    for i in range(n):
+        col = m[:, i][:, None]
+        prefer_i = (col - m > 1e-9).sum(axis=0)     # symbols preferring cell i
+        prefer_j = (m - col > 1e-9).sum(axis=0)     # symbols preferring cell j
+        beaten[i] = int((prefer_i > prefer_j).sum())  # i vs itself is a tie, so 0
+    return {c: int(beaten[i]) for i, c in enumerate(cells)}
 
 
 def save_raw(per_symbol: dict, skipped: list, path: Path, elapsed: float = 0.0):
@@ -360,7 +408,7 @@ def build_html(grids, n_syms, elapsed, skipped):
                  f"<td>{'higher' if direction > 0 else 'lower'} is better</td>"
                  f"<td><b>w={bw}, k={bk:g}</b></td>"
                  f"<td>min_signal1 = {_threshold(bk, bw):.3f}</td>"
-                 f"<td style='color:#4ade80'>{bv:+.2f}{unit}</td></tr>")
+                 f"<td style='color:#4ade80'>{_fmt(m, bv)}</td></tr>")
 
     skip_html = ""
     if skipped:
@@ -456,6 +504,7 @@ function render() {{
       const star = (v === best) ? ' \u2605' : '';
       const txt = (m === 'p') ? v.toFixed(4)
                 : (m === 'win') ? v.toFixed(0) + '%'
+                : (m === 'vote') ? v.toFixed(0)
                 : (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
       h += "<td style='background:" + bg + "'>" + txt + star + '</td>';
     }});
@@ -525,7 +574,7 @@ def _report(per_symbol, skipped, score, elapsed):
             continue
         (bw, bk), bv = (max if direction > 0 else min)(g.items(), key=lambda kv: kv[1])
         print(f"  {label:<15} w={bw:<4} k={bk:<5g} "
-              f"min_signal1={_threshold(bk, bw):.3f}  -> {bv:+.2f}{unit}")
+              f"min_signal1={_threshold(bk, bw):.3f}  -> {_fmt(m, bv)}")
     print(f"\nreport -> {OUT}   (all metrics selectable in the page)")
 
 
