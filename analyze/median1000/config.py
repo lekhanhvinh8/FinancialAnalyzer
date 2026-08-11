@@ -45,11 +45,17 @@ MIN_SIGNAL3 = 1.1
 
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
 SELL_SIGNAL1_WINDOW = 120    # trading days for the slope window
-SELL_MIN_SIGNAL1   = 0.1369   # % per day. From the window x k sweep: k=1 at window 20
-                            # (k/sqrt(w)). Chosen from the flat region (+21%, 69% win)
-                            # rather than the +24.45% peak at w=100,k=3, which sits on a
-                            # steep slope. Previous 100/0.05 scored +1.42%, near the worst
-                            # of the 180 cells. See sweep_signal1.html.
+SELL_MIN_SIGNAL1   = 0.1369  # % per day, = k/sqrt(window) with k=1.5 at window 120.
+                            # Kept, not chosen: the 20x17 sweep found no setting of this
+                            # filter that beats switching it off. Off scores +20.19%
+                            # median over 44 symbols; paired against off, this value is
+                            # +0.02 points on 24/40 symbols (p=0.134), and so is the best
+                            # cell in the whole grid (w=100/k=3, +0.00, p=0.134). The
+                            # grid's apparent +5-point edge is median(A)-median(B), which
+                            # is not median(A-B).
+                            # So do not read this number as tuned, and do not re-sweep it
+                            # expecting to find something — see the docstring at the top
+                            # of sweep_signal1.py for the two ways this grid misleads.
 
 # SellMedian1000: block sell when relative valuation (z_dev) is at or BELOW this —
 # the price is above its trailing median only because the business grew into it,

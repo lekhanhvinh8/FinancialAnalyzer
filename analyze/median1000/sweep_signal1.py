@@ -2,7 +2,41 @@
 Sweep the signal1 sell filter: SELL_SIGNAL1_WINDOW x SELL_MIN_SIGNAL1.
 
 signal1 blocks ~61% of all sell-eligible days — more than the other two filters
-combined — and has never been tuned. This maps the surface.
+combined — so it looked like the obvious thing to tune. This maps the surface.
+
+WHAT IT FOUND: NOTHING. READ THIS BEFORE SWEEPING IT AGAIN
+
+  Turning the sell gate off entirely (min_signal1 = +inf) scores +20.19% median
+  over 44 symbols. Only 51 of the 340 cells beat that, and the best of them,
+  w=100/k=3, beats it by +5.03 points.
+
+  That +5 is an artifact of comparing the medians of two different distributions.
+  Paired symbol by symbol against the same symbol with the gate off:
+
+      cell                improved   median paired diff   sign-test p
+      w=100 k=3 (best)      24/40           +0.00            0.134
+      w=120 k=1.5 (live)    24/40           +0.02            0.134
+      w=200 k=-1.5          12/40          -11.24            0.997
+
+  So the best cell in the grid is a coin flip, and the live setting is
+  indistinguishable from having no filter at all. Remember median(A) - median(B)
+  is not median(A - B); only the paired column answers "does this help".
+
+  Two traps this grid sets, both of which caught us:
+
+  - The flat green region at w=10-20 is flat because the gate is INERT there,
+    not because it is robust. Blocking share is held constant across windows by
+    k/sqrt(w), but persistence is not: at w=10 a block lasts ~36 days on average,
+    at w=100 it lasts ~293. A 10-day slope flips sign constantly, so a sell is
+    merely postponed and still happens. Going k=0 -> k=4 at w=10 (17x fewer days
+    blocked) changes the number of sells by 0.2. A plateau can mean "every value
+    works" or "no value does anything" — both render as smooth green.
+  - The cell with the best win rate (w=200/k=-1.5, 77%) is the most harmful one
+    in the grid. Win rate is measured against the DCA arm, not against the gate
+    being off, so it stays high while the gate destroys 11 points per symbol.
+
+  The leverage is not here. Losses correlate -0.83 with buy-and-hold return,
+  which points at the buy leg (PERCENT_BUY), not at sell timing.
 
 WHY THE THRESHOLD IS SCALED BY THE WINDOW
 
@@ -45,9 +79,13 @@ READING THE RESULT
       python sweep_signal1.py --rescore          # median
       python sweep_signal1.py --rescore --mean   # mean
 
-  Look for a plateau, not the maximum. Taking the best of ~180 cells will find a
+  Look for a plateau, not the maximum. Taking the best of 340 cells will find a
   good-looking number whether or not any edge exists; a contiguous region that
-  stays good is evidence, an isolated spike beside bad neighbours is noise.
+  stays good is evidence, an isolated spike beside bad neighbours is noise. And
+  a plateau is still only a candidate — check it against the gate-off baseline,
+  paired per symbol, before believing it. Note that at 340 cells about 17 are
+  expected to reach p < 0.05 by chance alone, so a single significant cell means
+  nothing on its own.
 
 Usage:
     python analyze/median1000/sweep_signal1.py            # all eligible symbols
