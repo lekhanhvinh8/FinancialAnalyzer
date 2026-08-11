@@ -4,31 +4,35 @@ Sweep the signal1 sell filter: SELL_SIGNAL1_WINDOW x SELL_MIN_SIGNAL1.
 signal1 blocks ~61% of all sell-eligible days — more than the other two filters
 combined — so it looked like the obvious thing to tune. This maps the surface.
 
-WHAT THE GRID CANNOT TELL YOU — READ BEFORE ACTING ON IT
+HOW TO READ THIS, AND WHY THE GRID ALONE WILL MISLEAD YOU
 
-  The filter works. Measured against the sell gate switched off entirely
-  (min_signal1 = +inf), signal1 alone is worth +1039 points of gain against 402
-  of loss across 44 symbols, net +637:
+  Difference PER SYMBOL, against the same symbol with the gate switched off
+  (min_signal1 = +inf). Then keep every symbol and report two things together:
+  the mean, and how concentrated it is. Neither half stands alone.
 
-      mean +14.47    10% trimmed mean +7.31    23/36 symbols improved, p=0.066
+      signal1, all 44 symbols:  +1039 gain / -402 loss = net +637
+                                mean +14.47, 23/36 improved, p=0.066
+      concentration:            VND alone is +277 of the +637
+                                20 of 44 symbols are untouched at any setting
+                                dropping the top 3 takes the mean to +2.6
 
-  But this grid will not show you that, because the grid is scored on the MEDIAN
-  and 20 of 44 symbols are untouched by the filter at any setting. The median
-  sits inside that dead zone, so it reads ~0.00 no matter what happens in the
-  tails — and the tails are the whole effect. Paired against gate-off, the best
-  cell in the grid scores +0.00 (p=0.134) and so does the live setting.
+  The honest sentence needs both: "worth +637 net, but carried by ~8 symbols
+  while half are unaffected". No single statistic says that, so do not look for
+  one. In particular:
 
-  The effect is real but CONCENTRATED, not broad: VND alone is +277 of the +637,
-  and dropping the three largest contributors takes the mean from +14.5 to +2.6.
-  Read it as "rescues a handful of symbols", never as "improves the typical one".
+  - median(A) - median(B) is not median(A - B). The first compares the middle
+    symbol of one run with a DIFFERENT symbol in the middle of the other. Only
+    the paired form answers "what does this filter do".
+  - Even paired, the median of this filter's effect is 0.00 at every cell in the
+    grid, including the best one, because 20 of 44 symbols sit at exactly zero
+    and the median lands among them. Median is blind to an effect carried by a
+    minority, which is precisely this one. The grid is median-scored, so it
+    cannot rank settings for this filter at all.
+  - Do not trim the tails to make the mean behave. VND's +277 is a real result,
+    not noise. Trimming answers "is the effect broad?" and is a diagnostic only;
+    it is never the figure to report.
 
-  Median was chosen here to resist a single dominant symbol, and it does — but it
-  is blind to an effect carried by a minority, which is exactly this one. Mean
-  sees it and is hostage to VND. The trimmed mean is the honest lens for this
-  question. Whatever the statistic, difference it PER SYMBOL: median(A) - median(B)
-  is not median(A - B), and the first is what a heat map of aggregates shows you.
-
-  Two traps this grid sets, both of which caught us:
+  Two further traps in the grid itself:
 
   - The flat green region at w=10-20 is flat because the gate is INERT there,
     not because it is robust. Blocking share is held constant across windows by
@@ -41,24 +45,23 @@ WHAT THE GRID CANNOT TELL YOU — READ BEFORE ACTING ON IT
     in the grid, -11.24 points paired. Win rate is measured against the DCA arm,
     not against the gate being off, so it stays high while the gate does damage.
 
-WHERE THE PROBLEM ACTUALLY IS: THE OTHER TWO SELL FILTERS
+THE OTHER TWO SELL FILTERS ARE THE UNTUNED ONES
 
   Same paired measurement, isolating each gate (44 symbols, diff vs DCA):
 
-      signal1 alone, vs no gates at all      mean +14.47   23/36   p=0.066
-      signal3 + z_dev, vs no gates at all    mean  +1.76   13/27   p=0.649
-      adding signal3 + z_dev on top of signal1  mean -2.50   10/26   p=0.916
+      signal1 alone, vs no gates at all         mean +14.47   23/36   p=0.066
+      signal3 + z_dev, vs no gates at all       mean  +1.76   13/27   p=0.649
+      adding signal3 + z_dev on top of signal1  mean  -2.50   10/26   p=0.916
 
-  signal1 is not redundant with them — it is the only one of the three carrying
-  weight. signal3 and z_dev contribute almost nothing on their own and cost about
-  2.5 mean points when layered on signal1, so signal1 alone (+14.47) beats all
-  three together (+11.97). z_dev is not miscomputed (no look-ahead, verified three
-  ways); it is simply not paying for itself at SELL_MIN_ZDEV = 0.9.
+  signal1 is the only one of the three carrying weight. signal3 and z_dev are
+  worth almost nothing alone and cost ~2.5 mean points layered on signal1, so
+  signal1 alone (+14.47) beats all three together (+11.97). z_dev is not
+  miscomputed (no look-ahead, verified three ways); it is not paying for itself
+  at SELL_MIN_ZDEV = 0.9. Neither has ever been swept.
 
-  Caveat on all of the above: one period, one 44-symbol set, and many things were
-  tried against it. p=0.066 is a suggestion, not proof. The direction is
-  consistent across mean, trimmed mean and sign test; the magnitude is not to be
-  trusted to better than its order.
+  Caveat on all of it: one period, one 44-symbol set, many things tried against
+  it. p=0.066 is a suggestion. The direction holds across mean and sign test;
+  the magnitude is good to its order and no further.
 
 WHY THE THRESHOLD IS SCALED BY THE WINDOW
 
@@ -91,16 +94,10 @@ WHY THE THRESHOLD IS SCALED BY THE WINDOW
 
 READING THE RESULT
 
-  Default score is the MEDIAN per-symbol diff. Mean is available via --mean but
-  tracks whichever symbol dominates — VIX has been ~30% of total gains in every
-  run, so a mean-scored grid largely maps "what is best for VIX".
-
-  Neither is sufficient alone, and choosing between them is not a matter of
-  taste. Median is robust to one dominant symbol and blind to an effect carried
-  by a minority; mean sees that effect and is hostage to the dominant symbol.
-  When the two disagree, do not pick the one you prefer — that disagreement is
-  the finding, and it means the effect lives in the tails. Reach for the trimmed
-  mean and for the per-symbol list, not for a third aggregate.
+  Default score is the MEDIAN per-symbol diff; --mean switches to the mean, which
+  tracks whichever symbol dominates. When the two disagree that IS the finding —
+  the effect lives in the tails — so read the per-symbol list rather than picking
+  the aggregate you prefer. See the section above for what that costs here.
 
   Per-symbol diffs are saved to sweep_signal1_raw.json, so switching score costs
   seconds instead of another full sweep:
