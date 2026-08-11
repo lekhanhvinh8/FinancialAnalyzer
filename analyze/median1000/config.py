@@ -41,21 +41,34 @@ MIN_EVAL_BARS = 500
 EXCLUDE_SYMBOLS = ["VIX", "VIC"]
 
 # SellMedian1000: block sell when 1000-day Sharpe (signal3) is above this — stable/trending regime → hold
+# UNTUNED AND UNDER SUSPICION. Paired over 44 symbols, signal3 and z_dev together
+# are worth mean +1.76 (13/27 symbols, p=0.649) against no sell gate at all, and
+# layering them on top of signal1 costs mean -2.50 (10/26, p=0.916) — so signal1
+# alone (+14.47) beats all three together (+11.97). Neither has been swept. Do
+# that before trusting either value. See SELL_MIN_ZDEV below and the docstring in
+# sweep_signal1.py for how to measure it (paired per symbol, trimmed mean).
 MIN_SIGNAL3 = 1.1
 
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
 SELL_SIGNAL1_WINDOW = 120    # trading days for the slope window
 SELL_MIN_SIGNAL1   = 0.1369  # % per day, = k/sqrt(window) with k=1.5 at window 120.
-                            # Kept, not chosen: the 20x17 sweep found no setting of this
-                            # filter that beats switching it off. Off scores +20.19%
-                            # median over 44 symbols; paired against off, this value is
-                            # +0.02 points on 24/40 symbols (p=0.134), and so is the best
-                            # cell in the whole grid (w=100/k=3, +0.00, p=0.134). The
-                            # grid's apparent +5-point edge is median(A)-median(B), which
-                            # is not median(A-B).
-                            # So do not read this number as tuned, and do not re-sweep it
-                            # expecting to find something — see the docstring at the top
-                            # of sweep_signal1.py for the two ways this grid misleads.
+                            # This filter is the one that works. Measured against the
+                            # sell gate switched off, over 44 symbols: +1039 points of
+                            # gain against 402 of loss, net +637 — mean +14.47, 10%
+                            # trimmed mean +7.31, 23/36 symbols improved (p=0.066).
+                            # But the effect is CONCENTRATED: 20 of 44 symbols are
+                            # untouched at any setting, VND alone is +277 of the +637,
+                            # and dropping the three largest contributors takes the mean
+                            # to +2.6. It rescues a handful of symbols; it does not
+                            # improve the typical one.
+                            # The exact value is kept, not tuned. The 20x17 sweep is
+                            # scored on the median, which sits in that 20-symbol dead
+                            # zone and reads ~0.00 for every cell including the best
+                            # one, so the grid cannot rank settings for this filter at
+                            # all. Nothing in it justified moving off this value; that
+                            # is not the same as the value being optimal.
+                            # Before re-sweeping, read the docstring at the top of
+                            # sweep_signal1.py — it records why the grid misleads here.
 
 # SellMedian1000: block sell when relative valuation (z_dev) is at or BELOW this —
 # the price is above its trailing median only because the business grew into it,
@@ -63,6 +76,10 @@ SELL_MIN_SIGNAL1   = 0.1369  # % per day, = k/sqrt(window) with k=1.5 at window 
 # comparison to the two momentum filters above: there a high reading means "trend
 # intact, hold", whereas a high z_dev is the reason to sell.
 # Set SELL_MIN_ZDEV = None to disable. Window is the z_dev stat_window to read.
+# UNTUNED AND UNDER SUSPICION, same measurement as MIN_SIGNAL3 above — the two were
+# only ever measured together. The z_dev computation itself is sound (no
+# look-ahead, verified three ways), but at 0.9 it is not paying for itself. Sweep
+# it before assuming the threshold is the problem; the window may be.
 SELL_ZDEV_WINDOW = 700    # stat_window in valuation_zdev (median_window is fixed at 1000)
 SELL_MIN_ZDEV    = 0.9
 
