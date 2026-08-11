@@ -35,9 +35,15 @@ WHY THE THRESHOLD IS SCALED BY THE WINDOW
 
 READING THE RESULT
 
-  Score is currently the MEAN per-symbol diff (temporary, under review — one
-  symbol (VIX) has been 30% of total gains in every run so far, so the mean
-  may track it rather than the strategy).
+  Default score is the MEDIAN per-symbol diff. Mean is available via --mean but
+  tracks whichever symbol dominates — VIX has been ~30% of total gains in every
+  run, so a mean-scored grid largely maps "what is best for VIX".
+
+  Per-symbol diffs are saved to sweep_signal1_raw.json, so switching score costs
+  seconds instead of another full sweep:
+
+      python sweep_signal1.py --rescore          # median
+      python sweep_signal1.py --rescore --mean   # mean
 
   Look for a plateau, not the maximum. Taking the best of ~180 cells will find a
   good-looking number whether or not any edge exists; a contiguous region that
@@ -52,6 +58,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+import json
 import math
 import sqlite3
 import statistics as st
@@ -76,6 +83,11 @@ KS      = [round(-4.0 + 0.5 * i, 1) for i in range(17)]   # -4.0 .. 4.0, 17 valu
 #          mistake: at window 20 the best cell in the row WAS k=0, sitting on the
 #          grid edge, so there was no way to tell whether it kept improving below it.
 OUT     = Path(__file__).parent / "sweep_signal1.html"
+RAW     = Path(__file__).parent / "sweep_signal1_raw.json"
+#          Per-symbol diffs are written to RAW before any aggregation. Scoring is a
+#          choice (mean tracks whichever symbol dominates; median does not), and
+#          without the raw data every change of mind costs another full re-run of
+#          work that has already been done.
 
 
 def _threshold(k: float, window: int) -> float:
@@ -178,6 +190,43 @@ def eval_symbol(sym: str):
         return sym, None, f"{type(e).__name__}: {e}"
 
 
+def aggregate(per_symbol: dict, score: str):
+    """score: 'median' or 'mean'. Returns (grid_score, grid_winrate)."""
+    fn = st.median if score == "median" else st.mean
+    grid, win = {}, {}
+    for w in WINDOWS:
+        for k in KS:
+            vals = [d[(w, k)] for d in per_symbol.values() if (w, k) in d]
+            if vals:
+                grid[(w, k)] = fn(vals)
+                win[(w, k)] = 100 * sum(1 for v in vals if v > 0) / len(vals)
+    return grid, win
+
+
+def save_raw(per_symbol: dict, skipped: list, path: Path):
+    """JSON keys must be strings, so (window, k) is encoded as 'window|k'."""
+    path.write_text(json.dumps({
+        "meta": {
+            "windows": WINDOWS, "ks": KS,
+            "config": {c: getattr(config, c) for c in dir(config)
+                       if c.isupper() and not c.startswith("_")},
+        },
+        "skipped": skipped,
+        "results": {sym: {f"{w}|{k}": round(v, 4) for (w, k), v in d.items()}
+                    for sym, d in per_symbol.items()},
+    }), encoding="utf-8")
+
+
+def load_raw(path: Path):
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    per_symbol = {
+        sym: {(int(kk.split("|")[0]), float(kk.split("|")[1])): v
+              for kk, v in d.items()}
+        for sym, d in raw["results"].items()
+    }
+    return per_symbol, [tuple(x) for x in raw["skipped"]]
+
+
 def _cell_color(v, lo, hi):
     if v is None:
         return "#1e293b", "#64748b"
@@ -188,7 +237,7 @@ def _cell_color(v, lo, hi):
     return f"rgba(239,68,68,{0.12 + 0.55*f:.2f})", "#fee2e2"
 
 
-def build_html(grid_med, grid_win, n_syms, elapsed, skipped):
+def build_html(grid_med, grid_win, n_syms, elapsed, skipped, score="median"):
     meds = [v for v in grid_med.values() if v is not None]
     lo, hi = (min(meds), max(meds)) if meds else (0, 0)
     best = max(grid_med.items(), key=lambda kv: (kv[1] is not None, kv[1]))
@@ -239,8 +288,36 @@ good by construction; a contiguous good region is evidence, a lone spike is nois
 </body></html>"""
 
 
+def _report(per_symbol, skipped, score, elapsed):
+    grid, win = aggregate(per_symbol, score)
+    OUT.write_text(build_html(grid, win, len(per_symbol), elapsed, skipped, score),
+                   encoding="utf-8")
+    print(f"\nscore = {score.upper()} per-symbol diff, {len(per_symbol)} symbols")
+    print(f"{'w':>5} " + " ".join(f"k={k:<5g}" for k in KS))
+    for w in WINDOWS:
+        print(f"{w:>5} " + " ".join(
+            f"{grid.get((w,k), float('nan')):+7.2f}" for k in KS))
+    best = max(grid.items(), key=lambda kv: kv[1])
+    print(f"\nbest: window {best[0][0]}, k={best[0][1]:g} "
+          f"(min_signal1={_threshold(best[0][1], best[0][0]):.3f}) -> {best[1]:+.2f}%")
+    print(f"report -> {OUT}")
+
+
 def main():
-    syms = [s.upper() for s in sys.argv[1:]] or db.list_symbols()
+    args  = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags = [a for a in sys.argv[1:] if a.startswith("--")]
+    score = "mean" if "--mean" in flags else "median"
+
+    # Re-score an existing run without recomputing anything.
+    if "--rescore" in flags:
+        if not RAW.exists():
+            print(f"no raw data at {RAW} — run the sweep first"); return
+        per_symbol, skipped = load_raw(RAW)
+        print(f"re-scoring {len(per_symbol)} symbols from {RAW.name} as {score}")
+        _report(per_symbol, skipped, score, 0.0)
+        return
+
+    syms = [s.upper() for s in args] or db.list_symbols()
     print(f"Sweeping {len(WINDOWS)}x{len(KS)} = {len(WINDOWS)*len(KS)} combos "
           f"over {len(syms)} symbols")
     t0 = time.time()
@@ -250,34 +327,23 @@ def main():
         for i, (sym, res, note) in enumerate(ex.map(eval_symbol, syms), 1):
             if res is None:
                 skipped.append((sym, note))
-                print(f"[{i}/{len(syms)}] {sym} skipped — {note}")
+                print(f"[{i}/{len(syms)}] {sym} skipped — {note}", flush=True)
             else:
                 per_symbol[sym] = res
-                print(f"[{i}/{len(syms)}] {sym} ok")
+                print(f"[{i}/{len(syms)}] {sym} ok", flush=True)
 
     if not per_symbol:
         print("nothing to report"); return
 
-    grid_med, grid_win = {}, {}
-    for w in WINDOWS:
-        for k in KS:
-            vals = [d[(w, k)] for d in per_symbol.values() if (w, k) in d]
-            if vals:
-                grid_med[(w, k)] = st.mean(vals)
-                grid_win[(w, k)] = 100 * sum(1 for v in vals if v > 0) / len(vals)
+    # Written before aggregating, so a crash in the reporting code cannot destroy
+    # an hour of computation.
+    save_raw(per_symbol, skipped, RAW)
+    print(f"raw -> {RAW}")
 
     elapsed = time.time() - t0
-    OUT.write_text(build_html(grid_med, grid_win, len(per_symbol), elapsed, skipped),
-                   encoding="utf-8")
-
-    print(f"\n{'w':>5} " + " ".join(f"k={k:<5g}" for k in KS))
-    for w in WINDOWS:
-        print(f"{w:>5} " + " ".join(
-            f"{grid_med.get((w,k), float('nan')):+7.2f}" for k in KS))
-    best = max(grid_med.items(), key=lambda kv: kv[1])
-    print(f"\nbest: window {best[0][0]}, k={best[0][1]:g} "
-          f"(min_signal1={_threshold(best[0][1], best[0][0]):.3f}) -> {best[1]:+.2f}%")
-    print(f"report -> {OUT}   ({elapsed/60:.1f} min)")
+    _report(per_symbol, skipped, score, elapsed)
+    print(f"({elapsed/60:.1f} min)   re-score with: "
+          f"python {Path(__file__).name} --rescore [--mean]")
 
 
 if __name__ == "__main__":
