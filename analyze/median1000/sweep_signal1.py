@@ -84,6 +84,7 @@ KS      = [round(-4.0 + 0.5 * i, 1) for i in range(17)]   # -4.0 .. 4.0, 17 valu
 #          grid edge, so there was no way to tell whether it kept improving below it.
 OUT     = Path(__file__).parent / "sweep_signal1.html"
 RAW     = Path(__file__).parent / "sweep_signal1_raw.json"
+PROG    = Path(__file__).parent / "sweep_signal1_progress.html"
 #          Per-symbol diffs are written to RAW before any aggregation. Scoring is a
 #          choice (mean tracks whichever symbol dominates; median does not), and
 #          without the raw data every change of mind costs another full re-run of
@@ -205,27 +206,51 @@ def apply_exclusions(per_symbol: dict) -> dict:
     return kept
 
 
-def aggregate(per_symbol: dict, score: str):
+# name -> (label, unit, direction). direction +1 = higher is better, -1 = lower.
+# Every metric is computed for every cell and all of them are embedded in the
+# HTML, so comparing "which config does each metric prefer" costs nothing and
+# needs no re-run.
+METRICS = {
+    "median": ("Median diff",   "%", +1),
+    "mean":   ("Mean diff",     "%", +1),
+    "win":    ("Win rate",      "%", +1),
+    "p":      ("Sign-test p",   "",  -1),
+    "p25":    ("25th pct diff", "%", +1),
+    "worst":  ("Worst symbol",  "%", +1),
+}
+
+
+def aggregate(per_symbol: dict):
     """
-    score: 'median' or 'mean'. Returns (grid_score, grid_winrate).
+    Returns {metric_name: {(window, k): value}} for every metric in METRICS.
     Caller is expected to have run apply_exclusions() first.
     """
-    fn = st.median if score == "median" else st.mean
-    grid, win = {}, {}
+    grids = {m: {} for m in METRICS}
     for w in WINDOWS:
         for k in KS:
-            vals = [d[(w, k)] for d in per_symbol.values() if (w, k) in d]
-            if vals:
-                grid[(w, k)] = fn(vals)
-                win[(w, k)] = 100 * sum(1 for v in vals if v > 0) / len(vals)
-    return grid, win
+            vals = sorted(d[(w, k)] for d in per_symbol.values() if (w, k) in d)
+            if not vals:
+                continue
+            n = len(vals)
+            wins = sum(1 for v in vals if v > 0)
+            dec = sum(1 for v in vals if abs(v) > 1e-9)
+            grids["median"][(w, k)] = st.median(vals)
+            grids["mean"][(w, k)] = st.mean(vals)
+            grids["win"][(w, k)] = 100 * wins / n
+            grids["p25"][(w, k)] = vals[int(0.25 * (n - 1))]
+            grids["worst"][(w, k)] = vals[0]
+            # one-sided exact binomial, decided symbols only
+            grids["p"][(w, k)] = (
+                sum(math.comb(dec, i) for i in range(wins, dec + 1)) / 2 ** dec
+                if dec else 1.0)
+    return grids
 
 
-def save_raw(per_symbol: dict, skipped: list, path: Path):
+def save_raw(per_symbol: dict, skipped: list, path: Path, elapsed: float = 0.0):
     """JSON keys must be strings, so (window, k) is encoded as 'window|k'."""
     path.write_text(json.dumps({
         "meta": {
-            "windows": WINDOWS, "ks": KS,
+            "windows": WINDOWS, "ks": KS, "elapsed": elapsed,
             "config": {c: getattr(config, c) for c in dir(config)
                        if c.isupper() and not c.startswith("_")},
         },
@@ -242,7 +267,10 @@ def load_raw(path: Path):
               for kk, v in d.items()}
         for sym, d in raw["results"].items()
     }
-    return per_symbol, [tuple(x) for x in raw["skipped"]]
+    # elapsed is carried so --rescore can report the original sweep time
+    # instead of the ~0s the re-score itself takes.
+    return (per_symbol, [tuple(x) for x in raw["skipped"]],
+            raw.get("meta", {}).get("elapsed", 0.0))
 
 
 def _cell_color(v, lo, hi):
@@ -255,73 +283,186 @@ def _cell_color(v, lo, hi):
     return f"rgba(239,68,68,{0.12 + 0.55*f:.2f})", "#fee2e2"
 
 
-def build_html(grid_med, grid_win, n_syms, elapsed, skipped, score="median"):
-    meds = [v for v in grid_med.values() if v is not None]
-    lo, hi = (min(meds), max(meds)) if meds else (0, 0)
-    best = max(grid_med.items(), key=lambda kv: (kv[1] is not None, kv[1]))
+def build_html(grids, n_syms, elapsed, skipped):
+    live_k = config.SELL_MIN_SIGNAL1 * math.sqrt(config.SELL_SIGNAL1_WINDOW)
 
-    head = "".join(f"<th>k={k:g}<br><span style='color:#64748b;font-weight:400'>"
-                   f"{_threshold(k,100):.2f} @w100</span></th>" for k in KS)
-    body = ""
-    for w in WINDOWS:
-        body += f"<tr><th style='text-align:right'>{w}</th>"
-        for k in KS:
-            v = grid_med.get((w, k))
-            bg, fg = _cell_color(v, lo, hi)
-            wr = grid_win.get((w, k))
-            mark = " ★" if (w, k) == best[0] else ""
-            body += (f"<td style='background:{bg};color:{fg}'>"
-                     f"{'—' if v is None else f'{v:+.2f}%'}{mark}"
-                     f"<br><span style='font-size:10px;color:#94a3b8'>"
-                     f"{'' if wr is None else f'{wr:.0f}% win'}</span></td>")
-        body += "</tr>"
+    rows = ""
+    for m, (label, unit, direction) in METRICS.items():
+        g = grids[m]
+        if not g:
+            continue
+        (bw, bk), bv = (max if direction > 0 else min)(g.items(), key=lambda kv: kv[1])
+        rows += (f"<tr><td style='text-align:left'>{label}</td>"
+                 f"<td>{'higher' if direction > 0 else 'lower'} is better</td>"
+                 f"<td><b>w={bw}, k={bk:g}</b></td>"
+                 f"<td>min_signal1 = {_threshold(bk, bw):.3f}</td>"
+                 f"<td style='color:#4ade80'>{bv:+.2f}{unit}</td></tr>")
 
     skip_html = ""
     if skipped:
-        skip_html = ("<p style='color:#64748b;font-size:12px'>Skipped: " +
-                     ", ".join(f"{s} ({why})" for s, why in sorted(skipped)) + "</p>")
+        skip_html = ("<p class='note'>Skipped: " +
+                     ", ".join(f"{sy} ({why})" for sy, why in sorted(skipped)) + "</p>")
+    excl = getattr(config, "EXCLUDE_SYMBOLS", [])
+    excl_html = (f"<p class='note'>EXCLUDE_SYMBOLS: <b>{', '.join(excl)}</b>"
+                 f" — left out of every figure here.</p>" if excl else "")
+
+    # Keys are built in Python and shipped as strings. Letting JS build them with
+    # `w + "|" + k` silently breaks on whole floats: Python writes "10|-4.0" but
+    # JS stringifies -4.0 as "-4", so every round k missed its cell and rendered
+    # as an empty dash.
+    ks_keys = [repr(float(k)) for k in KS]
+    data = {m: {f"{w}|{kk}": grids[m].get((w, k))
+                for w in WINDOWS for k, kk in zip(KS, ks_keys)}
+            for m in METRICS}
+    meta = {m: {"label": lbl, "unit": u, "dir": d} for m, (lbl, u, d) in METRICS.items()}
+    opts = "".join(f"<option value='{m}'{' selected' if m == 'median' else ''}>"
+                   f"{lbl} ({'higher' if d > 0 else 'lower'} better)</option>"
+                   for m, (lbl, _, d) in METRICS.items())
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
 <title>signal1 sweep</title><style>
 body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:20px}}
-table{{border-collapse:collapse;font-size:12px}}
+table{{border-collapse:collapse;font-size:12px;margin:10px 0}}
 th,td{{border:1px solid #1e293b;padding:5px 8px;text-align:center}}
 th{{background:#111c30;color:#94a3b8;font-weight:600}}
-.note{{color:#94a3b8;font-size:13px;line-height:1.7;max-width:900px}}
+.note{{color:#94a3b8;font-size:13px;line-height:1.7;max-width:960px}}
+select{{background:#111c30;color:#e2e8f0;border:1px solid #334155;padding:6px 10px;
+  border-radius:6px;font-size:14px}}
+.card{{background:#0f172a;border:1px solid #1e293b;border-radius:8px;
+  padding:12px 16px;margin:12px 0;display:inline-block}}
 </style></head><body>
-<h2>signal1 sell filter — window x k sweep</h2>
-<p class="note">Cell = <b>mean per-symbol diff</b> (Median1000 − BuyInterval) over
-{n_syms} symbols; small text = win rate. Threshold is <code>k/&radic;window</code>,
-so a column is roughly constant strictness across windows
-(k=-4 blocks ~95% of sell-eligible days, k=0 about 55%, k=+4 about 5%). Current live config is
-<b>window {config.SELL_SIGNAL1_WINDOW}, min_signal1 {config.SELL_MIN_SIGNAL1}</b>
-(k&nbsp;&asymp;&nbsp;{config.SELL_MIN_SIGNAL1*math.sqrt(config.SELL_SIGNAL1_WINDOW):.2f}).
-<br><b>Read the plateau, not the ★.</b> The best of ~{len(WINDOWS)*len(KS)} cells looks
-good by construction; a contiguous good region is evidence, a lone spike is noise.</p>
-{skip_html}
-<table><thead><tr><th>window</th>{head}</tr></thead><tbody>{body}</tbody></table>
-<p class="note">Best cell: window {best[0][0]}, k={best[0][1]:g}
-(min_signal1 = {_threshold(*best[0][::-1]) if False else _threshold(best[0][1], best[0][0]):.3f})
-&rarr; mean diff {best[1]:+.2f}%. Swept in {elapsed/60:.1f} min.</p>
+<h2>signal1 sell filter &mdash; window &times; k sweep</h2>
+
+<p class="note">{n_syms} symbols, {len(WINDOWS)}&times;{len(KS)} =
+{len(WINDOWS)*len(KS)} cells, swept in {elapsed/60:.1f} min. Threshold is
+<code>k/&radic;window</code>, so a column is roughly constant strictness at every
+window (k=&minus;4 blocks ~95% of sell-eligible days, k=0 about 55%, k=+4 about 5%).
+<br>Live config: <b>window {config.SELL_SIGNAL1_WINDOW},
+min_signal1 {config.SELL_MIN_SIGNAL1}</b> (k &asymp; {live_k:.2f}).</p>
+{excl_html}{skip_html}
+
+<div class="card"><b>What each metric prefers</b>
+<table><thead><tr><th>metric</th><th>direction</th><th>best cell</th>
+<th>threshold</th><th>value</th></tr></thead><tbody>{rows}</tbody></table>
+<span class="note">Disagreement between metrics is informative: a cell only one
+metric likes is probably fitting that metric's quirk. Mean follows whichever
+symbol is largest; median and 25th pct do not.</span></div>
+
+<p><b>Heat map:</b> <select id="metric">{opts}</select>
+<span class="note" id="dirNote"></span></p>
+<table id="grid"></table>
+<p class="note"><b>Read the plateau, not the &#9733;.</b> The best of
+{len(WINDOWS)*len(KS)} cells looks good by construction; a contiguous good region
+is evidence, a lone spike beside poor neighbours is noise.</p>
+
+<script>
+const DATA = {json.dumps(data)};
+const META = {json.dumps(meta)};
+const WS = {json.dumps(WINDOWS)}, KS = {json.dumps(KS)};
+const KK = {json.dumps(ks_keys)};   // exact cell-key strings, see note above
+
+function render() {{
+  const m = document.getElementById('metric').value;
+  const g = DATA[m], meta = META[m];
+  const vals = Object.values(g).filter(v => v !== null && v !== undefined);
+  if (!vals.length) return;
+  const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  // Colour always means "good". A lower-is-better metric is inverted here rather
+  // than in the data, so the printed numbers stay exactly as measured.
+  const good = v => hi === lo ? 0.5
+      : (meta.dir > 0 ? (v - lo) / (hi - lo) : (hi - v) / (hi - lo));
+  const best = meta.dir > 0 ? hi : lo;
+  document.getElementById('dirNote').textContent =
+      '   ' + meta.label + ' \u2014 ' + (meta.dir > 0 ? 'higher' : 'lower') + ' is better';
+
+  let h = '<thead><tr><th>window</th>';
+  KS.forEach(function(k) {{ h += '<th>k=' + k + '</th>'; }});
+  h += '</tr></thead><tbody>';
+  WS.forEach(function(w) {{
+    h += "<tr><th style='text-align:right'>" + w + '</th>';
+    KS.forEach(function(k, j) {{
+      const v = g[w + '|' + KK[j]];
+      if (v === null || v === undefined) {{
+        h += "<td style='color:#475569'>&mdash;</td>"; return;
+      }}
+      const f = good(v);
+      const bg = f >= 0.5
+        ? 'rgba(34,197,94,' + (0.10 + 0.62 * (f - 0.5) * 2).toFixed(2) + ')'
+        : 'rgba(239,68,68,' + (0.10 + 0.62 * (0.5 - f) * 2).toFixed(2) + ')';
+      const star = (v === best) ? ' \u2605' : '';
+      const txt = (m === 'p') ? v.toFixed(4)
+                : (m === 'win') ? v.toFixed(0) + '%'
+                : (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+      h += "<td style='background:" + bg + "'>" + txt + star + '</td>';
+    }});
+    h += '</tr>';
+  }});
+  document.getElementById('grid').innerHTML = h + '</tbody>';
+}}
+document.getElementById('metric').addEventListener('change', render);
+render();
+</script>
 </body></html>"""
+
+
+def write_progress(done, total, started, current_note=""):
+    """
+    Live progress while the sweep runs. Self-refreshing, because a sweep is long
+    enough that "is it stuck or just slow?" is a real question.
+
+    Note the counter advances in INPUT order, not completion order: ex.map yields
+    results in the order symbols were submitted, so a slow symbol early in the
+    list holds back everything behind it and the count moves in bursts. The
+    elapsed clock is honest either way.
+    """
+    el = time.time() - started
+    pct = 100 * done / total if total else 0
+    eta = (el / done * (total - done)) if done else 0
+    PROG.write_text(f"""<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta http-equiv="refresh" content="3"><title>sweep progress</title><style>
+body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
+.bar{{background:#1e293b;border-radius:6px;height:22px;width:520px;overflow:hidden}}
+.fill{{background:#22c55e;height:100%;width:{pct:.1f}%}}
+.k{{color:#64748b}} .v{{font-weight:700}}
+</style></head><body>
+<h2>signal1 sweep &mdash; {'running' if done < total else 'done'}</h2>
+<div class="bar"><div class="fill"></div></div>
+<p><span class="v">{done} / {total}</span> symbols
+<span class="k">({pct:.0f}%)</span></p>
+<p><span class="k">grid</span> <span class="v">{len(WINDOWS)}&times;{len(KS)}
+= {len(WINDOWS)*len(KS)}</span> cells per symbol</p>
+<p><span class="k">elapsed</span> <span class="v">{el/60:.1f} min</span>
+&nbsp;&nbsp;<span class="k">eta</span> <span class="v">
+{('%.1f min' % (eta/60)) if done and done < total else '—'}</span></p>
+<p class="k">{current_note}</p>
+</body></html>""", encoding="utf-8")
 
 
 def _report(per_symbol, skipped, score, elapsed):
     per_symbol = apply_exclusions(per_symbol)
     if not per_symbol:
-        print("every symbol was excluded — nothing to report"); return
-    grid, win = aggregate(per_symbol, score)
-    OUT.write_text(build_html(grid, win, len(per_symbol), elapsed, skipped, score),
+        print("every symbol was excluded — nothing to report")
+        return
+    grids = aggregate(per_symbol)
+    OUT.write_text(build_html(grids, len(per_symbol), elapsed, skipped),
                    encoding="utf-8")
+
+    grid = grids[score]
     print(f"\nscore = {score.upper()} per-symbol diff, {len(per_symbol)} symbols")
     print(f"{'w':>5} " + " ".join(f"k={k:<5g}" for k in KS))
     for w in WINDOWS:
         print(f"{w:>5} " + " ".join(
             f"{grid.get((w,k), float('nan')):+7.2f}" for k in KS))
-    best = max(grid.items(), key=lambda kv: kv[1])
-    print(f"\nbest: window {best[0][0]}, k={best[0][1]:g} "
-          f"(min_signal1={_threshold(best[0][1], best[0][0]):.3f}) -> {best[1]:+.2f}%")
-    print(f"report -> {OUT}")
+
+    print("\nwhat each metric prefers:")
+    for m, (label, unit, direction) in METRICS.items():
+        g = grids[m]
+        if not g:
+            continue
+        (bw, bk), bv = (max if direction > 0 else min)(g.items(), key=lambda kv: kv[1])
+        print(f"  {label:<15} w={bw:<4} k={bk:<5g} "
+              f"min_signal1={_threshold(bk, bw):.3f}  -> {bv:+.2f}{unit}")
+    print(f"\nreport -> {OUT}   (all metrics selectable in the page)")
 
 
 def main():
@@ -333,9 +474,9 @@ def main():
     if "--rescore" in flags:
         if not RAW.exists():
             print(f"no raw data at {RAW} — run the sweep first"); return
-        per_symbol, skipped = load_raw(RAW)
+        per_symbol, skipped, elapsed = load_raw(RAW)
         print(f"re-scoring {len(per_symbol)} symbols from {RAW.name} as {score}")
-        _report(per_symbol, skipped, score, 0.0)
+        _report(per_symbol, skipped, score, elapsed)
         return
 
     syms = [s.upper() for s in args] or db.list_symbols()
@@ -344,6 +485,8 @@ def main():
     t0 = time.time()
 
     per_symbol, skipped = {}, []
+    write_progress(0, len(syms), t0, "starting workers…")
+    print(f"progress -> {PROG}")
     with ProcessPoolExecutor() as ex:
         for i, (sym, res, note) in enumerate(ex.map(eval_symbol, syms), 1):
             if res is None:
@@ -352,16 +495,17 @@ def main():
             else:
                 per_symbol[sym] = res
                 print(f"[{i}/{len(syms)}] {sym} ok", flush=True)
+            write_progress(i, len(syms), t0, f"last: {sym}")
 
     if not per_symbol:
         print("nothing to report"); return
 
     # Written before aggregating, so a crash in the reporting code cannot destroy
     # an hour of computation.
-    save_raw(per_symbol, skipped, RAW)
+    elapsed = time.time() - t0
+    save_raw(per_symbol, skipped, RAW, elapsed)
     print(f"raw -> {RAW}")
 
-    elapsed = time.time() - t0
     _report(per_symbol, skipped, score, elapsed)
     print(f"({elapsed/60:.1f} min)   re-score with: "
           f"python {Path(__file__).name} --rescore [--mean]")
