@@ -60,6 +60,7 @@ _DEFAULT_PCT_WINDOW = 1000
 # stat-window slider is populated. See syncs/zdev.py for the sweep itself.
 ZDEV_MEDIAN_WINDOW = 1000
 ZDEV_WINDOW_STEP   = 10
+SIGNAL_WINDOW_STEP = 10   # same idea for trend_signals — see _inject_signals_into_html
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -1313,6 +1314,16 @@ def _inject_signals_into_html(symbol: str, path: str, available_windows: list,
                               default_w1: int = 100, default_w2: int = 500, default_w3: int = 1000,
                               default_wz: int = 500) -> None:
     """Inject 3 independent signal sliders and JS into an already-saved stock chart HTML file."""
+    # Only every SIGNAL_WINDOW_STEP-th window is embedded, plus whichever windows
+    # the run is actually configured with. All 1500 cost ~36 MB of the ~40 MB file
+    # — the same problem z_dev already solves below, and the same fix: the slider
+    # snaps to what is present, so it still feels continuous. The configured
+    # windows are kept unconditionally, since the chart's job is to show the run
+    # that produced it and those need not be round numbers.
+    wanted = {default_w1, default_w2, default_w3}
+    keep = sorted({w for w in available_windows
+                   if w % SIGNAL_WINDOW_STEP == 0 or w in wanted})
+    available_windows = keep or available_windows
     wmin, wmax = available_windows[0], available_windows[-1]
 
     def snap(w):
@@ -1320,11 +1331,13 @@ def _inject_signals_into_html(symbol: str, path: str, available_windows: list,
 
     iw1, iw2, iw3 = snap(default_w1), snap(default_w2), snap(default_w3)
 
+    placeholders = ",".join("?" * len(available_windows))
     with db._conn() as con:
         all_df = pd.read_sql(
             "SELECT date, window_days, signal1_slope, signal2_return, signal3_sharpe"
-            " FROM trend_signals WHERE symbol=? ORDER BY window_days, date",
-            con, params=(symbol,),
+            f" FROM trend_signals WHERE symbol=? AND window_days IN ({placeholders})"
+            " ORDER BY window_days, date",
+            con, params=(symbol, *available_windows),
         )
     all_df["date"] = pd.to_datetime(all_df["date"])
     all_windows = {
