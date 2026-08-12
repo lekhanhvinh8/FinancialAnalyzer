@@ -107,7 +107,12 @@ SELL_MIN_SIGNAL1   = 0.228   # % per day, = k/sqrt(window) with k=2.5 at window 
 # computation is sound (no look-ahead, verified three ways); at 0.9 it is simply
 # not paying for itself. The window may be as much at fault as the threshold.
 SELL_ZDEV_WINDOW = 700    # stat_window in valuation_zdev (median_window is fixed at 1000)
-SELL_MIN_ZDEV    = 0.9
+SELL_MIN_ZDEV    = None   # OFF. It cost mean -2.50 layered on signal1 (see above), and
+                          # its 700-bar warmup pushed the start index to 1699, which
+                          # skipped 12 of 57 symbols outright — a quarter of the universe
+                          # paid for a filter that was not earning anything. Set a float
+                          # to switch it back on; the threshold has never been swept, so
+                          # off is a measured default, not a verdict on the idea.
 
 # ReInvestMedian1000: require the slope to have turned up before redeploying the reserve.
 # Inverse polarity to the sell gate above: sell is BLOCKED while momentum is up, reinvest
