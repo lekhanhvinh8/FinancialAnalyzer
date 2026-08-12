@@ -51,21 +51,23 @@ def make_median_strategies(signal3_map: dict | None = None,
                            signal1_map: dict | None = None,
                            reinvest_signal1_map: dict | None = None,
                            zdev_map: dict | None = None,
-                           min_signal1=_FROM_CONFIG):
+                           min_signal1=_FROM_CONFIG,
+                           percent_buy=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
 
-    min_signal1 overrides config.SELL_MIN_SIGNAL1 — the sweep varies it per cell.
-    Pass None to disable that one gate while leaving config alone.
+    min_signal1 and percent_buy override their config values — the sweeps vary
+    one parameter per cell. Passing None disables that one setting (per the
+    convention above) while leaving config alone; omitting it uses config.
     """
     s1_min = config.SELL_MIN_SIGNAL1 if min_signal1 is _FROM_CONFIG else min_signal1
+    pct_buy = config.PERCENT_BUY if percent_buy is _FROM_CONFIG else percent_buy
 
-    if config.PERCENT_BUY is None:
+    if pct_buy is None:
         buy = BuyIntervalStrategy()
     else:
-        buy = BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,
-                                    use_pe=config.USE_PE)
+        buy = BuyMedian1000Strategy(percentBuy=pct_buy, use_pe=config.USE_PE)
 
     if config.PERCENT_SELL is None:
         sell = SellStrategy()
