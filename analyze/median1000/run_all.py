@@ -26,40 +26,12 @@ from datetime import datetime
 import pandas as pd
 import database as db
 from analyze.runner import load_symbol_df, run_estimate
-from analyze.strategies.buy import BuyMedian1000Strategy, BuyIntervalStrategy
-from analyze.strategies.sell import SellMedian1000Strategy, SellStrategy
-from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStrategy
 from export.chart import save_backtest_chart
 from progress import RunAllProgress
 from analyze.median1000 import config
+from analyze.median1000.factory import make_median_strategies, make_interval_strategies
 
 CHARTS_DIR = Path(__file__).parent / "charts"
-
-
-def make_median_strategies(signal3_map: dict | None = None, signal1_map: dict | None = None,
-                           reinvest_signal1_map: dict | None = None, zdev_map: dict | None = None):
-    gate  = config.REINVEST_MIN_SIGNAL1 is not None
-    zgate = config.SELL_MIN_ZDEV is not None
-    return (
-        BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,               use_pe=config.USE_PE),
-        SellMedian1000Strategy(percentSell=config.PERCENT_SELL,             use_pe=config.USE_PE,
-                               signal3_map=signal3_map or {}, min_signal3=config.MIN_SIGNAL3,
-                               signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1,
-                               zdev_map=(zdev_map or {}) if zgate else {},
-                               min_zdev=config.SELL_MIN_ZDEV or 0.0),
-        ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
-                                   timeoutDays=config.REINVEST_TIMEOUT_DAYS,
-                                   timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
-                                   signal1_map=(reinvest_signal1_map or {}) if gate else {},
-                                   min_signal1=config.REINVEST_MIN_SIGNAL1 or 0.0),
-    )
-
-def make_interval_strategies():
-    return (
-        BuyIntervalStrategy(),
-        SellStrategy(),
-        ReinvestStrategy(),
-    )
 
 
 def process_symbol(symbol: str, run_dir: Path | None = None
@@ -92,35 +64,43 @@ def process_symbol(symbol: str, run_dir: Path | None = None
 
         date_to_idx = {pd.Timestamp(row["time"]): i for i, row in df.iterrows()}
 
-        # Build signal3 map: {row_index → signal3_sharpe} for window=1000
-        sig3_df = db.load_trend_signals(symbol, window_days=1000)
-        signal3_map: dict = {}
-        if not sig3_df.empty:
-            for date, s3 in sig3_df["signal3_sharpe"].items():
-                idx = date_to_idx.get(pd.Timestamp(date))
-                if idx is not None:
-                    signal3_map[idx] = float(s3)
-
-        # Build signal1 map: {row_index → signal1_slope} for short-term window
-        sig1_df = db.load_trend_signals(symbol, window_days=config.SELL_SIGNAL1_WINDOW)
-        signal1_map: dict = {}
-        if not sig1_df.empty:
-            for date, s1 in sig1_df["signal1_slope"].items():
-                idx = date_to_idx.get(pd.Timestamp(date))
-                if idx is not None:
-                    signal1_map[idx] = float(s1)
-
-        # Reinvest slope map — reuse signal1_map when the window matches, else load it
-        if config.REINVEST_SIGNAL1_WINDOW == config.SELL_SIGNAL1_WINDOW:
-            reinvest_signal1_map = signal1_map
-        else:
-            reinvest_signal1_map = {}
-            ri_df = db.load_trend_signals(symbol, window_days=config.REINVEST_SIGNAL1_WINDOW)
-            if not ri_df.empty:
-                for date, s1 in ri_df["signal1_slope"].items():
+        # A gate set to None is not loaded at all. This is not just saved work:
+        # an unused signal must not appear in first_idx below, or its warmup would
+        # keep pushing the start index forward and keep costing symbols for a
+        # filter that is switched off.
+        def _slope_map(window: int) -> dict:
+            d = db.load_trend_signals(symbol, window_days=window)
+            out: dict = {}
+            if not d.empty:
+                for date, v in d["signal1_slope"].items():
                     idx = date_to_idx.get(pd.Timestamp(date))
                     if idx is not None:
-                        reinvest_signal1_map[idx] = float(s1)
+                        out[idx] = float(v)
+            return out
+
+        # signal3 map: {row_index → signal3_sharpe} for window=1000
+        signal3_map: dict = {}
+        if config.MIN_SIGNAL3 is not None:
+            sig3_df = db.load_trend_signals(symbol, window_days=1000)
+            if not sig3_df.empty:
+                for date, s3 in sig3_df["signal3_sharpe"].items():
+                    idx = date_to_idx.get(pd.Timestamp(date))
+                    if idx is not None:
+                        signal3_map[idx] = float(s3)
+
+        # signal1 map for the sell gate
+        signal1_map: dict = {}
+        if config.SELL_MIN_SIGNAL1 is not None:
+            signal1_map = _slope_map(config.SELL_SIGNAL1_WINDOW)
+
+        # Reinvest slope map — reuse signal1_map when the window matches, else load it
+        reinvest_signal1_map: dict = {}
+        if config.REINVEST_MIN_SIGNAL1 is not None:
+            reinvest_signal1_map = (
+                signal1_map
+                if (signal1_map
+                    and config.REINVEST_SIGNAL1_WINDOW == config.SELL_SIGNAL1_WINDOW)
+                else _slope_map(config.REINVEST_SIGNAL1_WINDOW))
 
         # z_dev map for the sell filter — {row_index: z_dev} at the configured stat window
         zdev_map: dict = {}

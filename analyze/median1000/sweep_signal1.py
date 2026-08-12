@@ -151,10 +151,11 @@ import pandas as pd
 import database as db
 from analyze.models import RangeDaysClose, IndexCloses
 from analyze.runner import load_symbol_df, run_estimate
-from analyze.strategies.buy import BuyMedian1000Strategy, BuyIntervalStrategy
-from analyze.strategies.sell import SellMedian1000Strategy, SellStrategy
-from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStrategy
+from analyze.strategies.buy import BuyIntervalStrategy
+from analyze.strategies.sell import SellStrategy
+from analyze.strategies.reinvest import ReinvestStrategy
 from analyze.median1000 import config
+from analyze.median1000.factory import make_median_strategies
 
 WINDOWS = list(range(10, 201, 10))                      # 20
 KS      = [round(-4.0 + 0.5 * i, 1) for i in range(17)]   # -4.0 .. 4.0, 17 values
@@ -251,20 +252,15 @@ def eval_symbol(sym: str):
         for w in WINDOWS:
             s1 = s1_by_w[w]
             for k in KS:
-                sell = SellMedian1000Strategy(
-                    percentSell=config.PERCENT_SELL, use_pe=config.USE_PE,
-                    signal3_map=s3, min_signal3=config.MIN_SIGNAL3,
-                    signal1_map=s1, min_signal1=_threshold(k, w),
-                    zdev_map=z, min_zdev=config.SELL_MIN_ZDEV or 0.0)
-                ri = ReInvestMedian1000Strategy(
-                    percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
-                    timeoutDays=config.REINVEST_TIMEOUT_DAYS,
-                    timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
-                    signal1_map=s1, min_signal1=config.REINVEST_MIN_SIGNAL1 or 0.0)
+                # Same factory run_all uses, so the None convention cannot drift
+                # between the two. Only min_signal1 is swept; everything else,
+                # including whether each gate is on at all, comes from config.
+                buy, sell, ri = make_median_strategies(
+                    signal3_map=s3, signal1_map=s1,
+                    reinvest_signal1_map=s1, zdev_map=z,
+                    min_signal1=_threshold(k, w))
                 r = run_estimate(sym, df, config.INTERVAL_MONEY,
-                                 BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,
-                                                       use_pe=config.USE_PE),
-                                 sell, ri, crc, start_index=start_idx)
+                                 buy, sell, ri, crc, start_index=start_idx)
                 out[(w, k)] = r["allRatioGrowth"] - base
         return sym, out, None
     except Exception as e:

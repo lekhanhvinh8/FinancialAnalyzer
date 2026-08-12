@@ -1,23 +1,45 @@
 """
 Median1000 strategy configuration.
 Edit these parameters to tune the analysis, then re-run run_one.py or run_all.py.
+
+None SWITCHES A CONDITION OFF — see analyze/median1000/factory.py, which is the
+one place that implements it. Two kinds, and "off" means something different
+for each:
+
+  Filters      MIN_SIGNAL3, SELL_MIN_SIGNAL1, SELL_MIN_ZDEV, REINVEST_MIN_SIGNAL1
+               None removes a restriction, so the arm acts MORE often. The
+               signal is then not loaded at all, which also stops its warmup
+               from pushing the backtest start index forward.
+
+  Conditions   PERCENT_BUY, PERCENT_SELL, PERCENT_REINVEST
+               None replaces the whole arm with its neutral base class:
+               buy every interval / never sell / never reinvest.
+
+Setting all three PERCENT_* to None makes the median1000 arm identical to the
+interval arm, so every diff must come out at 0.00 — a cheap engine check.
 """
 
 INTERVAL_MONEY = 8_000_000   # VND invested per interval
 
-# BuyMedian1000: buy when price is this % below the 1000-day median
+# BuyMedian1000: buy while price is BELOW median x (1 + PERCENT_BUY/100).
+# Read the sign carefully: the code tests (price - median)/median*100 < this, so
+# 60 means "buy unless the price is more than 60% ABOVE the median" — a permissive
+# condition that buys nearly every interval, not "buy when 60% below".
 PERCENT_BUY      = 60
 
 # SellMedian1000: sell when price is this % above the 1000-day median
 PERCENT_SELL     = 60
 
-# ReInvestMedian1000: reinvest when price is this % below the 1000-day median
+# ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
+# Same sign as PERCENT_BUY, not "below the median": 10 means "up to 10% ABOVE it".
 PERCENT_REINVEST = 10
 
 # Timeout reinvest: if no reinvest has occurred X trading days after last sell,
-# use a looser threshold (same scale: -10 = reinvest if 10%+ below median)
+# release the reserve using a looser threshold, on the same scale as
+# PERCENT_REINVEST above (so -10 = only if 10%+ BELOW the median).
 REINVEST_TIMEOUT_DAYS    = 400   # (0 = disabled)
-REINVEST_TIMEOUT_PERCENT = 999
+REINVEST_TIMEOUT_PERCENT = 999   # 999 is effectively no price condition at all:
+                                 # once the timeout is reached, reinvest regardless
 
 USE_PE = False   # use P/E-adjusted median instead of price median
 

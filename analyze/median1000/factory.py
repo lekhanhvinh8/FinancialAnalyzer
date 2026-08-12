@@ -1,0 +1,103 @@
+"""
+Build the Median1000 strategy trio from config, in one place.
+
+THE None CONVENTION
+
+  Every gate and condition in config.py can be switched off by setting it to
+  None, and None always means the same thing: that condition is not applied.
+  What "not applied" does depends on which of the two kinds it is.
+
+  Filters — MIN_SIGNAL3, SELL_MIN_SIGNAL1, SELL_MIN_ZDEV, REINVEST_MIN_SIGNAL1.
+  These only ever block an action that the primary condition already wants to
+  take. None removes the restriction, so the arm acts MORE often. Implemented by
+  handing the strategy an empty map, which is what its `if self.signalX_map`
+  guard already tests.
+
+  Primary conditions — PERCENT_BUY, PERCENT_SELL, PERCENT_REINVEST. These are
+  the reason an action happens at all, so switching one off replaces the whole
+  arm with its neutral base class:
+
+      PERCENT_BUY      = None  ->  BuyIntervalStrategy   buy every interval
+      PERCENT_SELL     = None  ->  SellStrategy          never sell
+      PERCENT_REINVEST = None  ->  ReinvestStrategy      never reinvest
+
+  Buy looks inverted next to the other two and is not: for the buy arm, doing
+  nothing IS buying every interval, because the money has to go somewhere. For
+  sell and reinvest, doing nothing is standing still. The asymmetry is in the
+  three arms, not in the convention — and these three base classes are exactly
+  the comparison arm run_all already measures against.
+
+  Setting all three PERCENT_* to None therefore turns the median1000 arm into
+  the interval arm, and every symbol's diff must come out at 0.00. That is a
+  cheap end-to-end check on the engine, available at any time.
+
+  This module exists so that the convention lives in one place. run_all and
+  sweep_signal1 both build the same trio, and when the rule was written twice
+  they disagreed: the sweep honoured None for z_dev in its skip check but still
+  applied the gate afterwards.
+"""
+
+from analyze.strategies.buy import BuyMedian1000Strategy, BuyIntervalStrategy
+from analyze.strategies.sell import SellMedian1000Strategy, SellStrategy
+from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStrategy
+from analyze.median1000 import config
+
+# Distinguishes "caller said nothing, use config" from "caller said None, disable
+# it" — both are None to a normal default.
+_FROM_CONFIG = object()
+
+
+def make_median_strategies(signal3_map: dict | None = None,
+                           signal1_map: dict | None = None,
+                           reinvest_signal1_map: dict | None = None,
+                           zdev_map: dict | None = None,
+                           min_signal1=_FROM_CONFIG):
+    """
+    Returns (buy, sell, reinvest) built from config, honouring the None
+    convention documented at the top of this module.
+
+    min_signal1 overrides config.SELL_MIN_SIGNAL1 — the sweep varies it per cell.
+    Pass None to disable that one gate while leaving config alone.
+    """
+    s1_min = config.SELL_MIN_SIGNAL1 if min_signal1 is _FROM_CONFIG else min_signal1
+
+    if config.PERCENT_BUY is None:
+        buy = BuyIntervalStrategy()
+    else:
+        buy = BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,
+                                    use_pe=config.USE_PE)
+
+    if config.PERCENT_SELL is None:
+        sell = SellStrategy()
+    else:
+        sell = SellMedian1000Strategy(
+            percentSell=config.PERCENT_SELL, use_pe=config.USE_PE,
+            # An empty map is how each gate is switched off; the strategy's own
+            # `if self.signalX_map` guard then skips the comparison entirely, so
+            # the threshold beside it is never read.
+            signal3_map=(signal3_map or {}) if config.MIN_SIGNAL3 is not None else {},
+            min_signal3=config.MIN_SIGNAL3 if config.MIN_SIGNAL3 is not None else 0.0,
+            signal1_map=(signal1_map or {}) if s1_min is not None else {},
+            min_signal1=s1_min if s1_min is not None else 0.0,
+            zdev_map=(zdev_map or {}) if config.SELL_MIN_ZDEV is not None else {},
+            min_zdev=config.SELL_MIN_ZDEV if config.SELL_MIN_ZDEV is not None else 0.0,
+        )
+
+    if config.PERCENT_REINVEST is None:
+        reinvest = ReinvestStrategy()
+    else:
+        ri_min = config.REINVEST_MIN_SIGNAL1
+        reinvest = ReInvestMedian1000Strategy(
+            percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
+            timeoutDays=config.REINVEST_TIMEOUT_DAYS,
+            timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
+            signal1_map=(reinvest_signal1_map or {}) if ri_min is not None else {},
+            min_signal1=ri_min if ri_min is not None else 0.0,
+        )
+
+    return buy, sell, reinvest
+
+
+def make_interval_strategies():
+    """The neutral arm: buy every interval, never sell, never reinvest."""
+    return BuyIntervalStrategy(), SellStrategy(), ReinvestStrategy()
