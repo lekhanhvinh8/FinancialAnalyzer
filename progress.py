@@ -373,16 +373,21 @@ let h = `<div class="header">
 // Progress bar
 h += `<div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>`;
 
-// Current
-h += `<div class="section"><div class="section-title">Currently Processing</div>`;
-if (D.current) {
-  h += `<div class="cur-card">
-    <div class="spinner"></div>
-    <div>
-      <div class="cur-sym">${D.current.symbol}</div>
-      <div class="cur-sub">started ${D.current.started_at}</div>
-    </div>
-  </div>`;
+// In flight — several at once, so one card per worker
+const inflight = D.running || [];
+h += `<div class="section"><div class="section-title">Currently Processing`;
+h += inflight.length > 1 ? ` (${inflight.length} workers)` : ``;
+h += `</div>`;
+if (inflight.length) {
+  for (const r of inflight) {
+    h += `<div class="cur-card">
+      <div class="spinner"></div>
+      <div>
+        <div class="cur-sym">${r.symbol}</div>
+        <div class="cur-sub">started ${r.started_at}</div>
+      </div>
+    </div>`;
+  }
 } else {
   h += `<div class="no-cur">${running ? "Preparing…" : "Finished at " + (D.finished_at || "—")}</div>`;
 }
@@ -442,20 +447,26 @@ class RunAllProgress:
             "elapsed_s":   0,
             "status":      "running",
             "total":       len(symbols),
-            "current":     None,
+            # A list, not a single "current": run_all works several symbols at
+            # once, so there is no one symbol being processed.
+            "running":     [],
             "results":     [],
             "errors":      [],
         }
         self._flush()
 
     def begin(self, symbol: str):
-        self.data["current"] = {"symbol": symbol, "started_at": _now()}
+        self.data["running"].append({"symbol": symbol, "started_at": _now()})
         self._flush()
+
+    def _drop_running(self, symbol: str):
+        self.data["running"] = [r for r in self.data["running"]
+                                if r["symbol"] != symbol]
 
     def end_ok(self, symbol: str, duration_s: float,
                median_growth: float, buys: int, sells: int, reinvests: int,
                interval_growth: float, chart: str):
-        self.data["current"] = None
+        self._drop_running(symbol)
         self.data["results"].append({
             "symbol":          symbol,
             "median_growth":   median_growth,
@@ -469,14 +480,14 @@ class RunAllProgress:
         self._flush()
 
     def end_err(self, symbol: str, note: str):
-        self.data["current"] = None
+        self._drop_running(symbol)
         self.data["errors"].append({"symbol": symbol, "note": note[:120]})
         self._flush()
 
     def finish(self):
         self.data["status"]      = "done"
         self.data["finished_at"] = _now()
-        self.data["current"]     = None
+        self.data["running"]     = []
         self._flush()
 
     def _flush(self):

@@ -6,8 +6,13 @@ Outputs (in analyze/median1000/charts/):
   - run_all_progress.html        live progress (auto-refreshes every 3s)
   - report_all.html              final comparison table
 
+Symbols are processed in parallel, one process each — the work is CPU-bound
+inside run_estimate and every symbol is independent.
+
 Usage:
-    python analyze/median1000/run_all.py
+    python analyze/median1000/run_all.py                 # all symbols, all cores
+    python analyze/median1000/run_all.py FPT STB         # a subset
+    python analyze/median1000/run_all.py --workers=4     # cap the pool
 """
 
 import sys
@@ -16,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 import time
 import traceback
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 import pandas as pd
 import database as db
@@ -56,25 +62,33 @@ def make_interval_strategies():
     )
 
 
-def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
-                   run_dir: Path | None = None) -> tuple[dict | None, str | None]:
-    """Returns (row, skip_reason). Exactly one is non-None."""
+def process_symbol(symbol: str, run_dir: Path | None = None
+                   ) -> tuple[str, dict | None, str | None, float]:
+    """
+    Returns (symbol, row, skip_reason, duration_s). Exactly one of row and
+    skip_reason is non-None.
+
+    Runs in a worker process, so it takes no progress object: RunAllProgress
+    writes an HTML file and each worker would own a private copy of it. The
+    parent owns progress and updates it from what this returns. Everything in
+    and out must be picklable, which is why run_dir is a Path and not an
+    open handle.
+    """
     t0 = time.time()
-    prog.begin(symbol)
     try:
         if symbol.upper() in {s.upper() for s in getattr(config, "EXCLUDE_SYMBOLS", [])}:
-            prog.end_err(symbol, "excluded by config")
-            return None, "excluded by EXCLUDE_SYMBOLS"
+            return symbol, None, "excluded by EXCLUDE_SYMBOLS", time.time() - t0
 
         df = load_symbol_df(symbol)
         if len(df) < 1010:
-            prog.end_err(symbol, f"skipped — only {len(df)} rows")
-            return None, f"only {len(df)} rows"
+            return symbol, None, f"only {len(df)} rows", time.time() - t0
 
-        cal_range_close = db.load_range_stats(symbol, df)
+        # Only window 1000: every strategy on both arms reads rangeDayCloses[1000]
+        # and nothing else, and the chart only forwards this to strategy.check().
+        # Loading all ~1500 windows was the slowest step in the run.
+        cal_range_close = db.load_range_stats(symbol, df, range_days=1000)
         if cal_range_close is None:
-            prog.end_err(symbol, "no range_stats in DB")
-            return None, "no range_stats in DB"
+            return symbol, None, "no range_stats in DB", time.time() - t0
 
         date_to_idx = {pd.Timestamp(row["time"]): i for i, row in df.iterrows()}
 
@@ -133,8 +147,9 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
             "zdev":             min(zdev_map)             if zdev_map             else None,
         }
         if config.SELL_MIN_ZDEV is not None and not zdev_map:
-            prog.end_err(symbol, f"no z_dev at stat_window={config.SELL_ZDEV_WINDOW}")
-            return None, f"no z_dev at stat_window={config.SELL_ZDEV_WINDOW}"
+            return (symbol, None,
+                    f"no z_dev at stat_window={config.SELL_ZDEV_WINDOW}",
+                    time.time() - t0)
         available = {k: v for k, v in first_idx.items() if v is not None}
         start_idx = max(available.values())
         binding   = max(available, key=available.get)
@@ -142,8 +157,7 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
         eval_bars = len(df) - start_idx
         if config.MIN_EVAL_BARS and eval_bars < config.MIN_EVAL_BARS:
             msg = f"only {eval_bars} bars after warmup (start {start_idx}, bound by {binding})"
-            prog.end_err(symbol, msg)
-            return None, msg
+            return symbol, None, msg, time.time() - t0
 
         buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map,
                                                   reinvest_signal1_map, zdev_map)
@@ -187,17 +201,9 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
                 return False
         now_flags = (_chk(buy1), _chk(sell1), _chk(ri1))
 
-        dur = time.time() - t0
-        mg  = float(round(r1["allRatioGrowth"], 2))
-        ig  = float(round(r2["allRatioGrowth"], 2))
-        prog.end_ok(
-            symbol, dur,
-            median_growth=mg,
-            buys=r1["totalBuys"], sells=r1["totalSells"], reinvests=r1["totalReinvest"],
-            interval_growth=ig,
-            chart=chart_path.name,
-        )
-        return {
+        mg = float(round(r1["allRatioGrowth"], 2))
+        ig = float(round(r2["allRatioGrowth"], 2))
+        return symbol, {
             "symbol":            symbol,
             "median_growth_%":   mg,
             "median_buys":       r1["totalBuys"],
@@ -207,13 +213,11 @@ def process_symbol(symbol: str, prog: RunAllProgress, run_ts: str = "",
             "chart":             chart_path.name,
             "now_flags":         now_flags,
             "eval_bars":         eval_bars,
-        }, None
+        }, None, time.time() - t0
 
     except Exception:
         err = traceback.format_exc().strip().splitlines()[-1]
-        prog.end_err(symbol, err)
-        print(f"  {symbol}: ERROR — {err}")
-        return None, err
+        return symbol, None, err, time.time() - t0
 
 
 def build_report(rows: list[dict], out_path: Path,
@@ -531,13 +535,17 @@ updateSummary();
 
 
 if __name__ == "__main__":
+    args    = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags   = [a for a in sys.argv[1:] if a.startswith("--")]
+    workers = next((int(f.split("=", 1)[1]) for f in flags if f.startswith("--workers=")),
+                   None)   # None -> ProcessPoolExecutor picks os.cpu_count()
+
     db.init_db()
     CHARTS_DIR.mkdir(exist_ok=True)
 
-    symbols = [s.upper() for s in sys.argv[1:]] if len(sys.argv) > 1 else db.list_symbols()
+    symbols = [s.upper() for s in args] if args else db.list_symbols()
 
-    run_ts  = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_dir = CHARTS_DIR / run_ts
+    run_dir = CHARTS_DIR / datetime.now().strftime("%Y%m%d_%H%M%S")
     run_dir.mkdir(exist_ok=True)
 
     print(f"Processing {len(symbols)} symbols: {', '.join(symbols)}")
@@ -545,21 +553,49 @@ if __name__ == "__main__":
     print(f"Progress  -> {run_dir}/run_all_progress.html\n")
 
     prog = RunAllProgress(symbols, out=str(run_dir / "run_all_progress.html"))
+    t0 = time.time()
 
-    report_rows, skipped = [], []
-    for i, sym in enumerate(symbols, 1):
-        print(f"[{i}/{len(symbols)}] {sym}", end=" ... ", flush=True)
-        row, skip_reason = process_symbol(sym, prog, run_ts="", run_dir=run_dir)
-        if row:
-            report_rows.append(row)
-            print(f"median={row['median_growth_%']:.1f}%  interval={row['interval_growth_%']:.1f}%")
-        else:
-            skipped.append((sym, skip_reason or "unknown"))
-            print(f"skipped — {skip_reason}")
+    report_rows, skipped, done = [], [], 0
+    with ProcessPoolExecutor(max_workers=workers) as ex:
+        n_slots = ex._max_workers
+        futures = {ex.submit(process_symbol, s, run_dir): s for s in symbols}
+
+        # The pool runs submissions FIFO, so the first n_slots symbols are the
+        # ones actually in flight. Tracked here rather than reported by the
+        # workers, which would need a Manager queue to say "I started".
+        for s in symbols[:n_slots]:
+            prog.begin(s)
+        next_start = n_slots
+
+        # as_completed, not ex.map: map yields in submission order, so one slow
+        # symbol holds back every result behind it and the progress page moves
+        # in bursts. Order does not matter here — the report sorts by diff.
+        for fut in as_completed(futures):
+            sym, row, skip_reason, dur = fut.result()
+            done += 1
+            if row:
+                report_rows.append(row)
+                prog.end_ok(sym, dur,
+                            median_growth=row["median_growth_%"],
+                            buys=row["median_buys"], sells=row["median_sells"],
+                            reinvests=row["median_reinvests"],
+                            interval_growth=row["interval_growth_%"],
+                            chart=row["chart"])
+                print(f"[{done}/{len(symbols)}] {sym} ... "
+                      f"median={row['median_growth_%']:.1f}%  "
+                      f"interval={row['interval_growth_%']:.1f}%", flush=True)
+            else:
+                skipped.append((sym, skip_reason or "unknown"))
+                prog.end_err(sym, skip_reason or "unknown")
+                print(f"[{done}/{len(symbols)}] {sym} ... skipped — {skip_reason}",
+                      flush=True)
+            if next_start < len(symbols):
+                prog.begin(symbols[next_start])
+                next_start += 1
 
     prog.finish()
 
     if report_rows:
         build_report(report_rows, run_dir / "report_all.html", skipped)
 
-    print("\nDone.")
+    print(f"\nDone in {(time.time() - t0)/60:.1f} min on {n_slots} workers.")

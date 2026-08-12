@@ -480,22 +480,33 @@ def delete_range_stats(symbol: str) -> None:
         con.execute("DELETE FROM range_stats WHERE symbol = ?", (symbol,))
 
 
-def load_range_stats(symbol: str, df: pd.DataFrame) -> "dict | None":
+def load_range_stats(symbol: str, df: pd.DataFrame,
+                     range_days: "int | None" = None) -> "dict | None":
     """
     Load cal_range_close from range_stats table.
     Returns dict[int, IndexCloses] or None if no cached data.
     df must have a 'time' column so dates map back to row positions.
+
+    range_days restricts the load to a single window. The table holds ~1500
+    windows per symbol and this is the slowest step in every pipeline that calls
+    it, so a caller whose strategies only read one window should say so — the
+    Median1000 family reads rangeDayCloses[1000] and nothing else. Left as None
+    the behaviour is unchanged: every window is loaded, which is what callers
+    using windowed strategies (localRangeDays, action.rangeDays) need.
     """
     from analyze.models import RangeDaysClose, IndexCloses
 
+    sql = """SELECT date, range_days, direction,
+                    local_top, local_avg, local_bottom, p25, median, p75,
+                    pe_top, pe_avg, pe_bottom, pe_p25, pe_median, pe_p75
+             FROM range_stats WHERE symbol = ?"""
+    params: tuple = (symbol,)
+    if range_days is not None:
+        sql += " AND range_days = ?"
+        params += (range_days,)
+
     with _conn() as con:
-        rows = con.execute(
-            """SELECT date, range_days, direction,
-                      local_top, local_avg, local_bottom, p25, median, p75,
-                      pe_top, pe_avg, pe_bottom, pe_p25, pe_median, pe_p75
-               FROM range_stats WHERE symbol = ?""",
-            (symbol,),
-        ).fetchall()
+        rows = con.execute(sql, params).fetchall()
 
     if not rows:
         return None
