@@ -89,6 +89,11 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     # to *block* a sell while momentum is still running.
     signal1_map: dict = field(default_factory=dict)
     min_signal1: float = 0.0
+    # Same guard as BuyMedian1000Strategy: no reinvest on a bar that sells. The
+    # timeout path below needs no guard — a sell sets tracker.lastSellIndex to
+    # this index, so its "timeoutDays since the last sell" test is False here.
+    # Untyped to keep reinvest.py from importing sell.py; only .check() is used.
+    sell_strategy: object = None
 
     def _slope_ok(self, index) -> bool:
         if not self.signal1_map:
@@ -126,6 +131,9 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return False
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
         if (current - median) / median * 100 >= self.percentReinvest:
+            return False
+        if self.sell_strategy is not None and self.sell_strategy.check(
+                index, close, pe, cal_range_close):
             return False
         # Only redeploy once short-term momentum has turned up
         return self._slope_ok(index)

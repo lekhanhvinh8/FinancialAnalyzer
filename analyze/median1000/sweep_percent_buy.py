@@ -26,6 +26,13 @@ READ THE SIGN BEFORE READING THE GRID
   The all-arms check (every PERCENT_* at None, diff must be 0.00) belongs to
   run_all, not here.
 
+  Read that row apart from the rest for a second reason. Every other setting
+  uses BuyMedian1000Strategy, which stands down on a bar the sell arm fires;
+  None replaces it with BuyIntervalStrategy, which has no such guard because
+  "no buy condition" has to mean exactly that. So None sells ~19 times against
+  ~5 everywhere else, and part of its number is same-bar churn rather than the
+  threshold being permissive.
+
 SCORING
 
   Same lesson as sweep_signal1: no single statistic answers this. Read the mean

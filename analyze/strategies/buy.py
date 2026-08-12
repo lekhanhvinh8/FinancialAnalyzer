@@ -129,6 +129,16 @@ class BuyPartialMA(BuyStrategy):
 class BuyMedian1000Strategy(BuyStrategy):
     percentBuy: float = 0
     use_pe: bool = False
+    # If set, no buy on a bar where this strategy would sell. The engine runs
+    # sell before buy, so without it a bar that satisfies both sells the whole
+    # position and buys straight back the same day. Cannot happen while
+    # PERCENT_BUY <= PERCENT_SELL, since the two price conditions are then
+    # complementary — it bites as soon as they are swept or tuned apart.
+    # Deliberately the FULL sell check, gates included: the point is to avoid
+    # churn on bars that actually sell, not to refuse to buy whenever the price
+    # happens to be high.
+    # Untyped to keep buy.py from importing sell.py; only .check() is used.
+    sell_strategy: object = None
 
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.intervalAmount <= 0:
@@ -149,7 +159,12 @@ class BuyMedian1000Strategy(BuyStrategy):
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
             return False
         median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        return (current - median) / median * 100 < self.percentBuy
+        if (current - median) / median * 100 >= self.percentBuy:
+            return False
+        if self.sell_strategy is not None and self.sell_strategy.check(
+                index, close, pe, cal_range_close):
+            return False
+        return True
 
 
 @dataclass

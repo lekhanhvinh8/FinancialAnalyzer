@@ -64,11 +64,12 @@ def make_median_strategies(signal3_map: dict | None = None,
     s1_min = config.SELL_MIN_SIGNAL1 if min_signal1 is _FROM_CONFIG else min_signal1
     pct_buy = config.PERCENT_BUY if percent_buy is _FROM_CONFIG else percent_buy
 
-    if pct_buy is None:
-        buy = BuyIntervalStrategy()
-    else:
-        buy = BuyMedian1000Strategy(percentBuy=pct_buy, use_pe=config.USE_PE)
-
+    # Sell is built first: the other two hold a reference to it so they can stand
+    # down on a bar it would sell. The engine order is sell -> reinvest -> buy, so
+    # without that a bar satisfying both conditions liquidates and re-enters the
+    # same day. Impossible while PERCENT_BUY <= PERCENT_SELL, since the price
+    # conditions are complementary — and immediately real once a sweep moves
+    # PERCENT_BUY above PERCENT_SELL.
     if config.PERCENT_SELL is None:
         sell = SellStrategy()
     else:
@@ -85,6 +86,15 @@ def make_median_strategies(signal3_map: dict | None = None,
             min_zdev=config.SELL_MIN_ZDEV if config.SELL_MIN_ZDEV is not None else 0.0,
         )
 
+    # A no-op SellStrategy never fires, so there is nothing to stand down for.
+    sell_ref = sell if isinstance(sell, SellMedian1000Strategy) else None
+
+    if pct_buy is None:
+        buy = BuyIntervalStrategy()
+    else:
+        buy = BuyMedian1000Strategy(percentBuy=pct_buy, use_pe=config.USE_PE,
+                                    sell_strategy=sell_ref)
+
     if config.PERCENT_REINVEST is None:
         reinvest = ReinvestStrategy()
     else:
@@ -95,6 +105,7 @@ def make_median_strategies(signal3_map: dict | None = None,
             timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
             signal1_map=(reinvest_signal1_map or {}) if ri_min is not None else {},
             min_signal1=ri_min if ri_min is not None else 0.0,
+            sell_strategy=sell_ref,
         )
 
     return buy, sell, reinvest
