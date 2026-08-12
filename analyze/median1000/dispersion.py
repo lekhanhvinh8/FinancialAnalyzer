@@ -41,6 +41,54 @@ QUANTITIES
          so the 3.991 * w^-0.494 claim can be re-derived.
   sharpe signal3_sharpe from trend_signals, for MIN_SIGNAL3.
 
+RESULTS SO FAR
+
+  Kept here rather than in whichever sweep consumes them, so every figure sits
+  next to the command that re-derives it. That is the whole point of the file:
+  the slope constant below spent months in a docstring that nobody could check.
+
+  dev    p95 = 1.200 * w^0.712     R2 = 0.9983
+         59 symbols, w in 50..1000, 182,522 observations per window
+         python analyze/median1000/dispersion.py dev
+
+         Spread GROWS with the window, opposite to slope: p95 runs 19.5 at w=50
+         to 156.0 at w=1000. So PERCENT_BUY = 60 is three different strategies —
+         above the whole distribution at w=50 (never blocks), the 95th percentile
+         at w=250, the 78th at w=1000 (blocks ~22% of days).
+
+         Two limits on the fit, both worth knowing before leaning on it:
+         - It normalises SCALE only, and the centre moves too. p50 drifts from
+           +0.4 at w=50 to +16.8 at w=1000, because a long median sits far below
+           a price that has been rising. Columns are therefore well matched in
+           the upper tail, where a buy ceiling actually binds, and drift in the
+           lower half — q=0 is about the 49th percentile at w=50 and the 35th at
+           w=1000.
+         - Worst residual is +8.3 at w=1000 (164 predicted against 156 measured,
+           5% high) and -6.7 at w=600. Fine for choosing grid points. Not
+           validated below w=50 or above w=1000; measure before extrapolating.
+
+  slope  p95 = 3.991 * w^-0.494    R2 = 0.9994
+         45 symbols, w in 10..200, ~3.1M observations
+         python analyze/median1000/dispersion.py slope
+
+         Predates this tool, and is what sweep_signal1's k/sqrt(window) rests on.
+         Re-derived here on 3 symbols x 5 windows as a = -0.494, R2 = 0.9992 —
+         the exponent matches to three decimals, the constant does not (3.604),
+         which is what a 3-symbol sample buys you. Re-run in full if the constant
+         ever matters; the universe is 59 symbols now, not 45.
+
+  sharpe not measured. Needed before MIN_SIGNAL3 can be swept sensibly.
+
+  A NOTE ON "NO LOOK-AHEAD"
+
+  sweep_signal1's docstring calls k/sqrt(w) "arithmetic on the window, not a
+  fitted quantile, so it introduces no look-ahead". That is too strong: the 4 in
+  4/sqrt(w) is 3.991 rounded, and it was fitted on the full history. The accurate
+  claim is narrower — one constant, fixed once, applied identically to every
+  symbol and every date, never re-estimated inside the backtest. It shapes which
+  cells are worth testing; the winning cell is still a plain fixed pair. Mild,
+  standard for grid design, but not none.
+
 Usage:
     python analyze/median1000/dispersion.py dev
     python analyze/median1000/dispersion.py slope
