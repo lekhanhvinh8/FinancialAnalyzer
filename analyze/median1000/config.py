@@ -21,6 +21,16 @@ interval arm, so every diff must come out at 0.00 — a cheap engine check.
 
 INTERVAL_MONEY = 8_000_000   # VND invested per interval
 
+# BuyMedian1000: which median the buy arm measures the price against. Sell and
+# reinvest are fixed at 1000 and do not follow this. Not a condition, so the None
+# convention does not apply — it is a size, like SELL_SIGNAL1_WINDOW.
+# PERCENT_BUY below is not transferable across values of this: the price's
+# distance from its own median grows as p95 = 1.29 * w^0.698, so 60 blocks
+# nothing at w=50 and about a fifth of days at w=1000. See dispersion.py.
+# Keep it <= 1000 unless you mean to move the backtest start: the sell arm needs
+# 1000 bars of warmup either way, so anything below that is free.
+BUY_MEDIAN_WINDOW = 1000
+
 # BuyMedian1000: buy while price is BELOW median x (1 + PERCENT_BUY/100).
 # Read the sign carefully: the code tests (price - median)/median*100 < this, so
 # 60 means "buy unless the price is more than 60% ABOVE the median" — a permissive

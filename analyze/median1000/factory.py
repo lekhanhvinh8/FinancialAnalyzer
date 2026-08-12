@@ -52,17 +52,22 @@ def make_median_strategies(signal3_map: dict | None = None,
                            reinvest_signal1_map: dict | None = None,
                            zdev_map: dict | None = None,
                            min_signal1=_FROM_CONFIG,
-                           percent_buy=_FROM_CONFIG):
+                           percent_buy=_FROM_CONFIG,
+                           buy_window=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
 
-    min_signal1 and percent_buy override their config values — the sweeps vary
-    one parameter per cell. Passing None disables that one setting (per the
-    convention above) while leaving config alone; omitting it uses config.
+    min_signal1, percent_buy and buy_window override their config values — the
+    sweeps vary one parameter per cell. Passing None disables that one setting
+    (per the convention above) while leaving config alone; omitting it uses
+    config. buy_window is a size, not a condition, so None is not meaningful for
+    it and it is simply passed through.
     """
     s1_min = config.SELL_MIN_SIGNAL1 if min_signal1 is _FROM_CONFIG else min_signal1
     pct_buy = config.PERCENT_BUY if percent_buy is _FROM_CONFIG else percent_buy
+    buy_w = (getattr(config, "BUY_MEDIAN_WINDOW", 1000)
+             if buy_window is _FROM_CONFIG else buy_window)
 
     # Sell is built first: the other two hold a reference to it so they can stand
     # down on a bar it would sell. The engine order is sell -> reinvest -> buy, so
@@ -93,7 +98,7 @@ def make_median_strategies(signal3_map: dict | None = None,
         buy = BuyIntervalStrategy()
     else:
         buy = BuyMedian1000Strategy(percentBuy=pct_buy, use_pe=config.USE_PE,
-                                    sell_strategy=sell_ref)
+                                    medianWindow=buy_w, sell_strategy=sell_ref)
 
     if config.PERCENT_REINVEST is None:
         reinvest = ReinvestStrategy()

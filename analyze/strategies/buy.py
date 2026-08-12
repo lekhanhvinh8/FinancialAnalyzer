@@ -129,6 +129,13 @@ class BuyPartialMA(BuyStrategy):
 class BuyMedian1000Strategy(BuyStrategy):
     percentBuy: float = 0
     use_pe: bool = False
+    # Which median the price is measured against. The sell and reinvest arms stay
+    # on 1000 whatever this is, so the two conditions stop being complementary as
+    # soon as it moves — which is what sell_strategy below is for.
+    # percentBuy has to move with it: the price's distance from its own median
+    # grows with the window, p95 = 1.29 * w^0.698 (analyze/median1000/dispersion.py),
+    # so 60 blocks nothing at w=50 and about a fifth of days at w=1000.
+    medianWindow: int = 1000
     # If set, no buy on a bar where this strategy would sell. The engine runs
     # sell before buy, so without it a bar that satisfies both sells the whole
     # position and buys straight back the same day. Cannot happen while
@@ -151,14 +158,15 @@ class BuyMedian1000Strategy(BuyStrategy):
             tracker.intervalAmount = 0
 
     def check(self, index, close, pe, cal_range_close) -> bool:
-        if index <= 1000:
+        if index <= self.medianWindow:
             return False
         current = pe if self.use_pe else close
         if current is None:
             return False
-        if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
+        if (index not in cal_range_close
+                or self.medianWindow not in cal_range_close[index].rangeDayCloses):
             return False
-        median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+        median = cal_range_close[index].rangeDayCloses[self.medianWindow].pct50(self.use_pe)
         if (current - median) / median * 100 >= self.percentBuy:
             return False
         if self.sell_strategy is not None and self.sell_strategy.check(

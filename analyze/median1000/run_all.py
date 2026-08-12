@@ -55,10 +55,13 @@ def process_symbol(symbol: str, run_dir: Path | None = None
         if len(df) < 1010:
             return symbol, None, f"only {len(df)} rows", time.time() - t0
 
-        # Only window 1000: every strategy on both arms reads rangeDayCloses[1000]
-        # and nothing else, and the chart only forwards this to strategy.check().
-        # Loading all ~1500 windows was the slowest step in the run.
-        cal_range_close = db.load_range_stats(symbol, df, range_days=1000)
+        # Only the windows actually read: the sell and reinvest arms are fixed at
+        # 1000, the buy arm uses BUY_MEDIAN_WINDOW. Loading all ~1500 was the
+        # slowest step in the run. The chart only forwards this to strategy.check(),
+        # so it needs nothing more.
+        buy_w = getattr(config, "BUY_MEDIAN_WINDOW", 1000)
+        cal_range_close = db.load_range_stats(symbol, df,
+                                              range_days={1000, buy_w})
         if cal_range_close is None:
             return symbol, None, "no range_stats in DB", time.time() - t0
 
@@ -120,7 +123,9 @@ def process_symbol(symbol: str, run_dir: Path | None = None
         # Applied to BOTH arms. Moving only the treatment's start would hand the
         # interval arm extra years of compounding and invalidate the comparison.
         first_idx = {
-            "median1000":       1000,   # the index > 1000 guard inside the strategies
+            # The sell and reinvest arms guard on index > 1000; the buy arm guards
+            # on its own window, so whichever is longer sets the floor.
+            "median1000":       max(1000, buy_w),
             "signal1":          min(signal1_map)          if signal1_map          else None,
             "signal3":          min(signal3_map)          if signal3_map          else None,
             "reinvest_signal1": min(reinvest_signal1_map) if reinvest_signal1_map else None,

@@ -481,18 +481,20 @@ def delete_range_stats(symbol: str) -> None:
 
 
 def load_range_stats(symbol: str, df: pd.DataFrame,
-                     range_days: "int | None" = None) -> "dict | None":
+                     range_days: "int | list[int] | None" = None) -> "dict | None":
     """
     Load cal_range_close from range_stats table.
     Returns dict[int, IndexCloses] or None if no cached data.
     df must have a 'time' column so dates map back to row positions.
 
-    range_days restricts the load to a single window. The table holds ~1500
-    windows per symbol and this is the slowest step in every pipeline that calls
-    it, so a caller whose strategies only read one window should say so — the
-    Median1000 family reads rangeDayCloses[1000] and nothing else. Left as None
-    the behaviour is unchanged: every window is loaded, which is what callers
-    using windowed strategies (localRangeDays, action.rangeDays) need.
+    range_days restricts the load to one window, or to a list of them. The table
+    holds ~1500 windows per symbol and this is the slowest step in every pipeline
+    that calls it, so a caller should name the windows its strategies read — the
+    Median1000 family reads the sell arm's 1000 plus whatever BUY_MEDIAN_WINDOW
+    is. Pass them together: one query with an IN list, not a call per window.
+    Left as None the behaviour is unchanged: every window is loaded, which is
+    what callers using windowed strategies (localRangeDays, action.rangeDays)
+    need.
     """
     from analyze.models import RangeDaysClose, IndexCloses
 
@@ -502,8 +504,10 @@ def load_range_stats(symbol: str, df: pd.DataFrame,
              FROM range_stats WHERE symbol = ?"""
     params: tuple = (symbol,)
     if range_days is not None:
-        sql += " AND range_days = ?"
-        params += (range_days,)
+        wanted = ([range_days] if isinstance(range_days, int)
+                  else sorted({int(w) for w in range_days}))
+        sql += f" AND range_days IN ({','.join('?' * len(wanted))})"
+        params += tuple(wanted)
 
     with _conn() as con:
         rows = con.execute(sql, params).fetchall()
