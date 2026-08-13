@@ -44,15 +44,22 @@ INCREMENTAL, AND WHY IT IS SAFE
   that happens a few times a year per symbol.
 
   So the input is fingerprinted instead. A hash of the close series is stored
-  beside the output; on the next sync it is recomputed and compared:
+  beside the output, along with the date it was synced through. Two comparisons
+  then separate the three cases, without reading valuation_zdev at all:
 
-      same hash  -> history is untouched, only write dates past what is stored
-      differs    -> history was revised, rebuild this symbol in full
-      override=True -> rebuild regardless, which is what a code change needs
-                       since the hash tracks inputs and not this file
+      full hash matches      -> byte-identical series. Nothing revised, nothing
+                                appended, nothing to do. Return.
+      prefix hash matches    -> rows were only appended. Write dates after the
+                                stored one and leave the rest alone.
+      neither                -> history was revised. Rebuild this symbol.
+      override=True          -> rebuild regardless, which is what a change to
+                                this file needs, since the hash tracks the input
+                                and cannot see a new formula.
 
-  A hash match plus a stored date equal to the last price means a window is
-  already current and is skipped entirely — no rolling computation, no write.
+  Asking the table instead is what the first version did — MAX(date) grouped by
+  stat_window — and it cost 1.08s per symbol, 96% of the sync, because 1500 group
+  maxima mean walking all ~2.3M index entries for that symbol. Two hashes cost
+  ~30ms and answer the same question more precisely.
 
   What is NOT skipped is the warmup: a value still needs median_window +
   stat_window bars behind it, so dev and the rolling stats are computed over the
@@ -82,6 +89,14 @@ WRITE_CHUNK = 500_000
 
 def stat_windows(start: int = STAT_START, end: int = STAT_END, step: int = STAT_STEP) -> list[int]:
     return list(range(start, end + 1, step))
+
+
+def _split(stored: "str | None"):
+    """Stored value is 'hash:last_synced_date'. Returns (hash, date) or (None, None)."""
+    if not stored or ":" not in stored:
+        return None, None
+    h, _, d = stored.partition(":")
+    return h, d
 
 
 def price_fingerprint(closes: "pd.Series") -> str:
@@ -118,8 +133,9 @@ def adopt_existing(symbols: list[str] | None = None, index: str | None = None,
         last_price = str(prices.index[-1].date())
         latest = db.load_zdev_latest_by_window(sym, median_window)
         if latest and max(latest.values()) >= last_price:
-            db.save_sync_fingerprint("zdev", sym, str(median_window),
-                                     price_fingerprint(prices["close"]))
+            db.save_sync_fingerprint(
+                "zdev", sym, str(median_window),
+                f'{price_fingerprint(prices["close"])}:{last_price}')
             adopted += 1
         else:
             skipped += 1
@@ -163,14 +179,35 @@ def _rebuild_one(sym: str, median_window: int, windows: list[int], override: boo
         print(f"  [zdev] {sym}: {n} rows < median_window {median_window} — skipping")
         return
 
-    # Has the input changed, or only grown?
-    variant = str(median_window)
-    fp      = price_fingerprint(prices["close"])
-    stored  = db.load_sync_fingerprint("zdev", sym, variant)
-    full    = override or stored != fp
-
-    latest = {} if full else db.load_zdev_latest_by_window(sym, median_window)
+    # Has the input changed, only grown, or neither?
+    #
+    # Two hashes answer this without touching valuation_zdev. Asking the table
+    # instead — MAX(date) grouped by stat_window — cost 1.08s per symbol, 96% of
+    # the whole sync, because 1500 group maxima mean walking all ~2.3M index
+    # entries for that symbol.
+    #
+    # The full hash covers every date AND every value, so a match means the
+    # series is byte-identical: nothing revised and nothing appended, so there is
+    # nothing to do at all. On a mismatch, re-hashing the prefix up to the date we
+    # last synced through separates the two cases: prefix still matching means
+    # rows were only appended.
+    variant  = str(median_window)
+    closes   = prices["close"]
+    fp       = price_fingerprint(closes)
+    stored   = db.load_sync_fingerprint("zdev", sym, variant)
+    prev_fp, prev_date = _split(stored)
     last_price_date = str(prices.index[-1].date())
+
+    if not override and prev_fp == fp:
+        print(f"  [zdev] {sym}: unchanged")
+        return
+
+    cutoff = None
+    if not override and prev_date is not None:
+        head = closes[closes.index <= pd.Timestamp(prev_date)]
+        if price_fingerprint(head) == prev_fp:
+            cutoff = prev_date        # appended only — resume from here
+    full = cutoff is None
 
     # dev once — it does not depend on the stat window
     dev = compute_dev(prices["close"], median_window)
@@ -204,16 +241,9 @@ def _rebuild_one(sym: str, median_window: int, windows: list[int], override: boo
     # re-formatting ~3M datetimes per symbol.
     all_dates = [str(d.date()) for d in dev.index]
 
-    skipped = 0
     for sw in windows:
         if sw > len(dev_valid):
             break  # no chance of a full window from here on
-
-        # Already current: nothing to compute and nothing to write.
-        cutoff = latest.get(sw)
-        if cutoff is not None and cutoff >= last_price_date:
-            skipped += 1
-            continue
 
         # Computed over the FULL series even when only the tail is written — a
         # value needs median_window + stat_window bars behind it, and slicing the
@@ -238,13 +268,12 @@ def _rebuild_one(sym: str, median_window: int, windows: list[int], override: boo
 
     # Written last: if anything above raised, the fingerprint stays stale and the
     # next run rebuilds rather than trusting a half-written symbol.
-    db.save_sync_fingerprint("zdev", sym, variant, fp)
+    db.save_sync_fingerprint("zdev", sym, variant, f"{fp}:{last_price_date}")
 
-    if cfgs or skipped:
-        mode = "full" if full else "incremental"
+    if cfgs:
+        mode = "full" if full else f"incremental from {cutoff}"
         print(f"  [zdev] {sym}: {mode} | dev {len(dev_valid)} rows | "
-              f"z_dev {total} rows across {cfgs} stat windows"
-              + (f", {skipped} already current" if skipped else ""))
+              f"z_dev {total} rows across {cfgs} stat windows")
     else:
         need = median_window + windows[0]
         print(f"  [zdev] {sym}: dev {len(dev_valid)} rows | no z_dev yet "
