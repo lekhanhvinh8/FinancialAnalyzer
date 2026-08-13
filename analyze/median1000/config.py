@@ -135,6 +135,25 @@ SELL_MIN_ZDEV    = None   # OFF. It cost mean -2.50 layered on signal1 (see abov
 
 # ReInvestMedian1000: require the slope to have turned up before redeploying the reserve.
 # Inverse polarity to the sell gate above: sell is BLOCKED while momentum is up, reinvest
-# is only ALLOWED once momentum is up. Set REINVEST_MIN_SIGNAL1 = None to disable.
-REINVEST_SIGNAL1_WINDOW = 100    # trading days for the slope window
-REINVEST_MIN_SIGNAL1    = 0.05   # % per day — reinvest only once slope >= this
+# is only ALLOWED once momentum is up.
+#
+# OFF, and its premise is what the sweep rejected. 340 cells over 52 symbols
+# (sweep_reinvest_signal1.py): not one beats switching the gate off, and the mean
+# falls monotonically as the gate gets stricter — at w=100, k=-4 scores 45.9 and
+# k=+4 scores 16.4. "Wait for momentum to turn before redeploying" costs 29 points
+# across the grid. Redeploying immediately is better; idle cash earns nothing,
+# and that outweighs entering a few months early.
+#
+# The mechanism is worth knowing before anyone tries this idea again. Mean spans
+# 31 points across the grid while the reinvest COUNT spans 0.4 (3.1 to 3.5), so
+# the gate never changed how often the arm acts — only when. With ~3 reinvests per
+# symbol over ~11 years each one is a large allocation, and delaying it by months
+# swings a symbol by hundreds of points. Unlike the sell gate this one cannot
+# block anything outright: REINVEST_TIMEOUT_DAYS releases the reserve regardless.
+#
+# Set a float to switch it back on. Note the direct comparison, off against the
+# old 0.05, is only +4.85 mean and 88% of that is STB alone (+0.61 without it),
+# 20/38 symbols improved, p=0.436. The reason to leave it off is the monotone
+# trend across 17 thresholds and every window, not that number.
+REINVEST_SIGNAL1_WINDOW = 100    # kept for when the gate is switched back on
+REINVEST_MIN_SIGNAL1    = None
