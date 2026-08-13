@@ -29,12 +29,21 @@ INTERVAL_MONEY = 8_000_000   # VND invested per interval
 # nothing at w=50 and about a fifth of days at w=1000. See dispersion.py.
 # Keep it <= 1000 unless you mean to move the backtest start: the sell arm needs
 # 1000 bars of warmup either way, so anything below that is free.
+# Swept 20..1000 against the threshold, 500 cells over 52 symbols. This barely
+# matters: taking the best threshold in each row, the mean spans 36.5 to 41.1
+# across a 50x change in window. The good region is w=500..1000 and 1000 is
+# inside it, 0.2 mean points off the best cell. Left where it was. Nothing above
+# 1000 is worth trying — the top rows are flat, not climbing.
 BUY_MEDIAN_WINDOW = 1000
 
 # BuyMedian1000: buy while price is BELOW median x (1 + PERCENT_BUY/100).
 # Read the sign carefully: the code tests (price - median)/median*100 < this, so
 # 60 means "buy unless the price is more than 60% ABOVE the median" — a permissive
 # condition that buys nearly every interval, not "buy when 60% below".
+# Confirmed twice, and this one does matter unlike the window beside it. Swept
+# alone at w=1000 it was the best of 19 settings on both mean and vote; swept
+# again as part of the 2D window x threshold grid, every one of the top ten cells
+# is the column 60 sits in. See sweep_buy_window.py.
 PERCENT_BUY      = 60
 
 # SellMedian1000: sell when price is this % above the 1000-day median

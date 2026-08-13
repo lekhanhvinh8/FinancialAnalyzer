@@ -34,14 +34,41 @@ WHY q AND NOT PERCENT_BUY
   - The constant is fitted on the full history. It decides which cells are worth
     testing, not what the strategy does; the winning cell is a plain fixed pair.
 
+WHAT IT FOUND: THE WINDOW BARELY MATTERS, AND 1000 IS ALREADY FINE
+
+  52 symbols, 500 cells, 30.7 min. Region in the top 10% of BOTH mean and vote:
+  w = 500..1000, q = 0.2..0.6, 39 cells.
+
+      w     q    PERCENT_BUY   mean   vote   neighbours in region
+    820   0.4           55.8   41.1    471   7/8   interior
+    780   0.4           53.9   41.0    467   7/8
+   1000   0.4           64.1   40.9    488   2/5   live
+
+  Nothing to change. The live setting is inside the region and 0.2 mean points
+  off the best of 500 cells, which is noise. Two independent sweeps now agree.
+
+  The window is close to irrelevant: taking the best cell in each row, the mean
+  spans 36.5 to 41.1 across a 50x change in window length. The threshold is what
+  moves the result — every one of the top ten cells is q=0.4.
+
+  Its 2/5 neighbours is a grid artefact, not an edge in the surface. w=1000 is
+  the last row so it only has five neighbours; the rows below it read 40.6, 40.8,
+  40.9, so nothing is falling away.
+
+  The worst symbol sits between -275 and -250 in every cell in the grid. LPB is
+  out of reach of this parameter as well.
+
 WHY THE GRID STOPS AT 1000
 
   The sell arm needs 1000 bars of warmup whatever the buy arm does, so any buy
   window at or below 1000 leaves the start index exactly where it is. Every cell
   then sees the same symbols over the same bars and the whole grid is comparable
   for free. Going above 1000 would move the start, cost symbols, and force a
-  fixed start at the longest window — a different sweep, worth doing separately
-  if the surface trends upward at the top of this one.
+  fixed start at the longest window.
+
+  That follow-up is NOT needed: the surface is flat at the top, w=740 through
+  1000 reading 40.1, 41.1, 40.6, 40.8, 40.9. It would only be worth running if
+  the top rows were still climbing.
 
 READING IT
 

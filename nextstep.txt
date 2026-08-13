@@ -43,31 +43,16 @@ the sweep must evaluate in combination of signals, now we just simply do signal1
 report all should use Process to run multipl sumbols
 
 
-=== TOMORROW: run the buy-window sweep ===
+=== DONE: buy-window sweep ===
 
-    python analyze/median1000/sweep_buy_window.py
+Ran, 52 symbols, 500 cells, 30.7 min. Nothing changed: the live w=1000 /
+PERCENT_BUY=60 is inside the good region and 0.2 mean points off the best of 500
+cells. The window turns out to barely matter (36.5..41.1 across a 50x change);
+the threshold does, and 60 is where it already was. No follow-up above w=1000 —
+the top rows are flat, not climbing. sweep_percent_buy.py deleted as superseded.
+Full numbers in sweep_buy_window.py's docstring.
 
-Ready to run, nothing left to code. 500 cells (50 windows x 10 q values) over 59
-symbols, ~25 min on 8 workers. Started it tonight and stopped it at 2 min, no
-results kept.
-
-Watch: analyze/median1000/sweep_buy_window_progress.html (refreshes itself; the
-counter only moves when a whole symbol finishes, so it jumps ~8 at a time).
-Do NOT pipe the command through tail — that buffers the console until it ends.
-
-Afterwards:
-  - python analyze/median1000/sweep_buy_window.py --rescore   re-reads the raw
-    JSON in seconds, so changing how it is scored costs nothing.
-  - Look for a contiguous region high on BOTH mean and vote, not the best cell.
-    Compare against the live setting, w=1000 / q=0.37.
-  - If the good region sits at w=1000 with q near 0.4, sweep_percent_buy.py has
-    been fully superseded and can go. If it points elsewhere, keep that one — it
-    is finer around w=1000 and has the "no buy condition" row this one lacks.
-  - If the surface still improves at the top edge (w=1000), a follow-up sweep
-    above 1000 is worth it, but that one has to fix the start index at the
-    longest window and will cost symbols.
-
-Still open after that:
+Still open:
   - LPB: -256 diff, 29% of all losses, only 16 buys in 1200 bars. Not reachable
     by PERCENT_BUY — the worst-symbol column barely moved across that whole
     sweep.
