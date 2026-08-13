@@ -95,6 +95,38 @@ def price_fingerprint(closes: "pd.Series") -> str:
     return h.hexdigest()
 
 
+def adopt_existing(symbols: list[str] | None = None, index: str | None = None,
+                   median_window: int = MEDIAN_WINDOW) -> None:
+    """
+    Record the fingerprint for symbols whose z_dev is already complete, so the
+    switch to incremental costs nothing.
+
+    Without this, every symbol needs one full rebuild purely to establish a
+    fingerprint — ~2 minutes each, ~2 hours over the universe — to produce rows
+    that already exist and are already correct: the old full-rebuild sync built
+    them from the same prices this fingerprint is taken from.
+
+    A symbol is adopted only when its newest stored z_dev date equals its newest
+    price. Anything short of that is left alone and rebuilt normally, so a
+    partially built symbol is never adopted.
+    """
+    adopted = skipped = 0
+    for sym, _ in resolve_symbols(symbols, index):
+        prices = db.load_daily_prices(sym)
+        if prices.empty or len(prices) < median_window:
+            continue
+        last_price = str(prices.index[-1].date())
+        latest = db.load_zdev_latest_by_window(sym, median_window)
+        if latest and max(latest.values()) >= last_price:
+            db.save_sync_fingerprint("zdev", sym, str(median_window),
+                                     price_fingerprint(prices["close"]))
+            adopted += 1
+        else:
+            skipped += 1
+    print(f"  [zdev] adopted {adopted} symbols as current, "
+          f"{skipped} left for a normal rebuild")
+
+
 def sync_zdev(
     symbols:       list[str] | None = None,
     index:         str | None       = None,
@@ -137,10 +169,6 @@ def _rebuild_one(sym: str, median_window: int, windows: list[int], override: boo
     stored  = db.load_sync_fingerprint("zdev", sym, variant)
     full    = override or stored != fp
 
-    if full and stored is not None:
-        # Clearing first turns INSERT OR REPLACE (delete + insert per row) into a
-        # plain INSERT into empty space.
-        db.delete_zdev_symbol(sym, median_window)
     latest = {} if full else db.load_zdev_latest_by_window(sym, median_window)
     last_price_date = str(prices.index[-1].date())
 
