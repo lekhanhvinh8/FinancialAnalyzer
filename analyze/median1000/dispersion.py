@@ -10,7 +10,7 @@ WHY THIS EXISTS
   grid spends most of its cells on two degenerate states — "always fires" and
   "never fires" — with a thin diagonal of usable cells between them.
 
-  sweep_signal1 hit this and solved it by sweeping k in
+  sweep_sell_signal1 hit this and solved it by sweeping k in
 
       min_signal1 = k / sqrt(window)
 
@@ -71,7 +71,7 @@ RESULTS SO FAR
          45 symbols, w in 10..200, ~3.1M observations
          python analyze/median1000/dispersion.py slope
 
-         Predates this tool, and is what sweep_signal1's k/sqrt(window) rests on.
+         Predates this tool, and is what sweep_sell_signal1's k/sqrt(window) rests on.
          Re-derived here on 3 symbols x 5 windows as a = -0.494, R2 = 0.9992 —
          the exponent matches to three decimals, the constant does not (3.604),
          which is what a 3-symbol sample buys you. Re-run in full if the constant
@@ -81,7 +81,7 @@ RESULTS SO FAR
 
   A NOTE ON "NO LOOK-AHEAD"
 
-  sweep_signal1's docstring calls k/sqrt(w) "arithmetic on the window, not a
+  sweep_sell_signal1's docstring calls k/sqrt(w) "arithmetic on the window, not a
   fitted quantile, so it introduces no look-ahead". That is too strong: the 4 in
   4/sqrt(w) is 3.991 rounded, and it was fitted on the full history. The accurate
   claim is narrower — one constant, fixed once, applied identically to every

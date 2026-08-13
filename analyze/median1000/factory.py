@@ -32,7 +32,7 @@ THE None CONVENTION
   cheap end-to-end check on the engine, available at any time.
 
   This module exists so that the convention lives in one place. run_all and
-  sweep_signal1 both build the same trio, and when the rule was written twice
+  sweep_sell_signal1 both build the same trio, and when the rule was written twice
   they disagreed: the sweep honoured None for z_dev in its skip check but still
   applied the gate afterwards.
 """
@@ -53,13 +53,14 @@ def make_median_strategies(signal3_map: dict | None = None,
                            zdev_map: dict | None = None,
                            min_signal1=_FROM_CONFIG,
                            percent_buy=_FROM_CONFIG,
-                           buy_window=_FROM_CONFIG):
+                           buy_window=_FROM_CONFIG,
+                           reinvest_min_signal1=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
 
-    min_signal1, percent_buy and buy_window override their config values — the
-    sweeps vary one parameter per cell. Passing None disables that one setting
+    min_signal1, percent_buy, buy_window and reinvest_min_signal1 override their
+    config values — the sweeps vary one parameter per cell. Passing None disables that one setting
     (per the convention above) while leaving config alone; omitting it uses
     config. buy_window is a size, not a condition, so None is not meaningful for
     it and it is simply passed through.
@@ -103,7 +104,8 @@ def make_median_strategies(signal3_map: dict | None = None,
     if config.PERCENT_REINVEST is None:
         reinvest = ReinvestStrategy()
     else:
-        ri_min = config.REINVEST_MIN_SIGNAL1
+        ri_min = (config.REINVEST_MIN_SIGNAL1
+                  if reinvest_min_signal1 is _FROM_CONFIG else reinvest_min_signal1)
         reinvest = ReInvestMedian1000Strategy(
             percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
             timeoutDays=config.REINVEST_TIMEOUT_DAYS,

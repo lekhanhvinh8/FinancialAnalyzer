@@ -1,5 +1,12 @@
 """
-Sweep the signal1 sell filter: SELL_SIGNAL1_WINDOW x SELL_MIN_SIGNAL1.
+Sweep the SELL arm's signal1 gate: SELL_SIGNAL1_WINDOW x SELL_MIN_SIGNAL1.
+
+The reinvest arm reads the same slope with the opposite polarity and is swept
+separately in sweep_reinvest_signal1.py. Neither sweep may move the other's
+window: this one used to hand the reinvest gate whatever window it was sweeping,
+which changed the reinvest strictness row by row — REINVEST_MIN_SIGNAL1 is a raw
+slope derived as k/sqrt(its own window) — so a cell answered two questions at
+once. Fixed; the reinvest map is now read at its configured window.
 
 signal1 blocks ~61% of all sell-eligible days — more than the other two filters
 combined — so it looked like the obvious thing to tune. This maps the surface.
@@ -114,11 +121,11 @@ READING THE RESULT
   selector switches between them without recomputing; --mean only chooses which
   one the console prints and stars.
 
-  Per-symbol diffs are saved to sweep_signal1_raw.json, so switching score costs
+  Per-symbol diffs are saved to sweep_sell_signal1_raw.json, so switching score costs
   seconds instead of another full sweep:
 
-      python sweep_signal1.py --rescore          # median
-      python sweep_signal1.py --rescore --mean   # mean
+      python sweep_sell_signal1.py --rescore          # median
+      python sweep_sell_signal1.py --rescore --mean   # mean
 
   Look for a plateau, not the maximum. Taking the best of 340 cells will find a
   good-looking number whether or not any edge exists; a contiguous region that
@@ -129,8 +136,8 @@ READING THE RESULT
   nothing on its own.
 
 Usage:
-    python analyze/median1000/sweep_signal1.py            # all eligible symbols
-    python analyze/median1000/sweep_signal1.py FPT VIX    # a subset
+    python analyze/median1000/sweep_sell_signal1.py            # all eligible symbols
+    python analyze/median1000/sweep_sell_signal1.py FPT VIX    # a subset
 """
 
 import sys
@@ -163,9 +170,9 @@ KS      = [round(-4.0 + 0.5 * i, 1) for i in range(17)]   # -4.0 .. 4.0, 17 valu
 #          started at k=0 and so only explored 'block 55% -> block 5%'. That was a
 #          mistake: at window 20 the best cell in the row WAS k=0, sitting on the
 #          grid edge, so there was no way to tell whether it kept improving below it.
-OUT     = Path(__file__).parent / "sweep_signal1.html"
-RAW     = Path(__file__).parent / "sweep_signal1_raw.json"
-PROG    = Path(__file__).parent / "sweep_signal1_progress.html"
+OUT     = Path(__file__).parent / "sweep_sell_signal1.html"
+RAW     = Path(__file__).parent / "sweep_sell_signal1_raw.json"
+PROG    = Path(__file__).parent / "sweep_sell_signal1_progress.html"
 #          Per-symbol diffs are written to RAW before any aggregation. Scoring is a
 #          choice (mean tracks whichever symbol dominates; median does not), and
 #          without the raw data every change of mind costs another full re-run of
@@ -242,6 +249,16 @@ def eval_symbol(sym: str):
         # signal1 once per window, reused across every k
         s1_by_w = {w: sig(w, "signal1_slope") for w in WINDOWS}
 
+        # The reinvest gate reads its OWN configured window and must not follow the
+        # sweep. Handing it the swept map moved two things per cell: the reinvest
+        # window, and — because REINVEST_MIN_SIGNAL1 is a raw slope derived as
+        # k/sqrt(its own window) — the reinvest strictness as well. A cell then
+        # answered a question nobody asked. Sweep the reinvest arm in
+        # sweep_reinvest_signal1.py instead.
+        ri_map = (s1_by_w.get(config.REINVEST_SIGNAL1_WINDOW)
+                  or sig(config.REINVEST_SIGNAL1_WINDOW, "signal1_slope")
+                  ) if config.REINVEST_MIN_SIGNAL1 is not None else {}
+
         # The interval arm does not depend on the swept parameters — computing it
         # per cell would double the run for an identical answer.
         base = run_estimate(sym, df, config.INTERVAL_MONEY, BuyIntervalStrategy(),
@@ -257,7 +274,7 @@ def eval_symbol(sym: str):
                 # including whether each gate is on at all, comes from config.
                 buy, sell, ri = make_median_strategies(
                     signal3_map=s3, signal1_map=s1,
-                    reinvest_signal1_map=s1, zdev_map=z,
+                    reinvest_signal1_map=ri_map, zdev_map=z,
                     min_signal1=_threshold(k, w))
                 r = run_estimate(sym, df, config.INTERVAL_MONEY,
                                  buy, sell, ri, crc, start_index=start_idx)
