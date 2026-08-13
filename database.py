@@ -717,6 +717,41 @@ def load_zdev(
     return df
 
 
+def ensure_zdev_read_index() -> str:
+    """
+    Give the old-layout valuation_zdev an index matching how it is read.
+
+    Databases created before the primary key was reordered have it as
+    (symbol, date, median_window, stat_window, min_periods). date sits second and
+    is never pinned by a query, so the planner can only use `symbol` and every
+    read scans that symbol's ~2.3M rows — confirmed by
+    SEARCH USING INDEX sqlite_autoindex_valuation_zdev_1 (symbol=?).
+
+    Rebuilding the table with the right key would cost ~12.5 GB of copy on a
+    124.7M-row table, so an index is added instead: same read benefit at about a
+    quarter of the space. median_window and min_periods are deliberately left
+    out — the first is always 1000 and the second always equals stat_window, so
+    three columns narrow the scan to a handful of rows and SQLite filters the
+    rest. Narrower index, less disk.
+
+    A database created from the current schema already has the right key and
+    needs nothing, so this is a no-op there.
+    """
+    with _conn() as con:
+        row = con.execute(
+            "SELECT sql FROM sqlite_master WHERE type='table' AND name='valuation_zdev'"
+        ).fetchone()
+        if not row:
+            return "no valuation_zdev table"
+        if "PRIMARY KEY (symbol, median_window" in (row[0] or ""):
+            return "primary key already covers the read pattern — no index needed"
+        con.execute(
+            "CREATE INDEX IF NOT EXISTS idx_zdev_read "
+            "ON valuation_zdev(symbol, stat_window, date)"
+        )
+    return "idx_zdev_read ready"
+
+
 def load_zdev_latest_by_window(symbol: str, median_window: int = 1000) -> dict:
     """
     {stat_window: latest stored date} for one symbol, in a single query.
