@@ -130,7 +130,27 @@ def init_db():
                 mu              REAL,               -- rolling mean of dev, shifted 1 bar
                 sigma           REAL,               -- rolling std of dev, shifted 1 bar
                 z_dev           REAL,               -- (dev - mu) / sigma
-                PRIMARY KEY (symbol, date, median_window, stat_window, min_periods)
+                -- Key order matches how the writer produces rows (one stat_window
+                -- at a time, dates ascending) AND how load_zdev reads them (all
+                -- four config columns pinned, ordered by date). The original order
+                -- put `date` second, which meant inserts landed at random offsets
+                -- in a 100M-row index and reads could only use `symbol` — the
+                -- planner said so: SEARCH USING INDEX (symbol=?).
+                PRIMARY KEY (symbol, median_window, stat_window, min_periods, date)
+            );
+
+            -- Fingerprint of the input a derived table was built from, so a sync
+            -- can tell "nothing changed, only append" from "history was revised,
+            -- rebuild". prices are re-fetched from 2012 and INSERT OR REPLACE'd on
+            -- every run, so a corporate action rewrites the past silently; without
+            -- this, incremental syncing would quietly keep stale values.
+            CREATE TABLE IF NOT EXISTS sync_fingerprint (
+                kind        TEXT NOT NULL,   -- 'zdev', and whatever follows
+                symbol      TEXT NOT NULL,
+                variant     TEXT NOT NULL,   -- config that changes the output, e.g. median_window
+                fingerprint TEXT NOT NULL,
+                updated_at  TEXT NOT NULL,
+                PRIMARY KEY (kind, symbol, variant)
             );
         """)
 
@@ -695,6 +715,56 @@ def load_zdev(
         df["date"] = pd.to_datetime(df["date"])
         df = df.set_index("date")
     return df
+
+
+def load_zdev_latest_by_window(symbol: str, median_window: int = 1000) -> dict:
+    """
+    {stat_window: latest stored date} for one symbol, in a single query.
+
+    Asking per window would be 1500 round trips. This is what lets a sync skip
+    the windows that are already current instead of recomputing all of them.
+    """
+    with _conn() as con:
+        rows = con.execute(
+            """SELECT stat_window, MAX(date) FROM valuation_zdev
+               WHERE symbol = ? AND median_window = ?
+               GROUP BY stat_window""",
+            (symbol, median_window),
+        ).fetchall()
+    return {int(w): d for w, d in rows if d}
+
+
+def load_sync_fingerprint(kind: str, symbol: str, variant: str) -> "str | None":
+    with _conn() as con:
+        row = con.execute(
+            "SELECT fingerprint FROM sync_fingerprint "
+            "WHERE kind = ? AND symbol = ? AND variant = ?",
+            (kind, symbol, variant),
+        ).fetchone()
+    return row[0] if row else None
+
+
+def save_sync_fingerprint(kind: str, symbol: str, variant: str, fingerprint: str) -> None:
+    from datetime import datetime
+    with _conn() as con:
+        con.execute(
+            """INSERT OR REPLACE INTO sync_fingerprint
+               (kind, symbol, variant, fingerprint, updated_at)
+               VALUES (?, ?, ?, ?, ?)""",
+            (kind, symbol, variant, fingerprint,
+             datetime.now().isoformat(timespec="seconds")),
+        )
+
+
+def delete_zdev_symbol(symbol: str, median_window: int) -> int:
+    """Drop one symbol's rows for a median_window. Used before a full rebuild:
+    plain INSERT into empty space beats INSERT OR REPLACE over existing rows."""
+    with _conn() as con:
+        cur = con.execute(
+            "DELETE FROM valuation_zdev WHERE symbol = ? AND median_window = ?",
+            (symbol, median_window),
+        )
+        return cur.rowcount
 
 
 def load_latest_zdev_date(
