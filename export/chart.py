@@ -1825,6 +1825,13 @@ setTimeout(function() {{
                 v = getattr(strat, fld.name)
                 if isinstance(v, dict) and len(v) > 3:
                     v = f"{{...{len(v)} entries}}"
+                elif dataclasses.is_dataclass(v):
+                    # A field holding another strategy — the churn guard's
+                    # reference to the sell arm. Its repr drags in that whole
+                    # object including its signal maps, thousands of entries
+                    # inline, once per arm that holds it. The object is already
+                    # a section of this same table, so name it and stop.
+                    v = f"→ {type(v).__name__} (above)"
                 strat_rows += f"<tr><td style='padding:1px 16px 1px 12px;color:#64748b'>{fld.name}</td><td style='text-align:right'>{v}</td></tr>"
 
     if strat_rows:
