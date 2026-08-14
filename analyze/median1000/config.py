@@ -51,10 +51,28 @@ PERCENT_BUY      = 60
 # reinvest arm is still fixed at 1000 and does not follow this — which is also
 # what keeps the backtest start index from moving when this drops below 1000.
 # PERCENT_SELL below is not transferable across values of this; see dispersion.py.
+# Swept 20..1000 against 15 thresholds, 750 cells (sweep_sell_window.py). The
+# window contributes nothing: the only five cells that beat live are five
+# different windows all landing on the same THRESHOLD band, 73 to 78. Same
+# conclusion the buy window reached.
 SELL_MEDIAN_WINDOW = 1000
 
-# SellMedian1000: sell when price is this % above the SELL_MEDIAN_WINDOW median
-PERCENT_SELL     = 60
+# SellMedian1000: sell when price is this % above the SELL_MEDIAN_WINDOW median.
+# Raised from 60 — the arm was selling too early. Three independent grids agree:
+#
+#   1D, step 5 at w=1000     65..80 significant against 60, p from 0.000 to 0.036
+#   1D refined 60..110       the band is exactly 65, 70, 75, 80; 85 and up is not
+#   2D, 750 cells            the only 5 cells beating live are PERCENT_SELL 73..78
+#
+# Paired per symbol against 60, +75 is 31/45 symbols with a median of +5.25 and
+# p=0.008. Unlike most findings here the evidence is BROAD, not carried by one
+# symbol: 29 to 35 of ~45 symbols improve across the whole band. The mean is
+# still one-symbol business — HPG alone is +425 — so quote the median and count.
+#
+# Mechanism: sells fall from 4.3 to 2.3 per symbol and the worst symbol improves
+# from -238 to -101. Three gates were bolted onto this arm to restrain selling,
+# and it turns out the price condition itself was the thing to loosen.
+PERCENT_SELL     = 75
 
 # ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
 # Same sign as PERCENT_BUY, not "below the median": 10 means "up to 10% ABOVE it".

@@ -42,6 +42,41 @@ WHY THE GRID STOPS AT 1000
   longer provides it, and the day reinvest gets its own window this stops being
   free.
 
+WHAT IT FOUND: THE WINDOW CONTRIBUTES NOTHING
+
+  52 symbols, 750 cells. Five beat live at p<0.05, and they are five consecutive
+  windows all sitting in one q column:
+
+      w     q   PERCENT_SELL   paired      p   nb   sells
+    880   0.5           73.3    +3.05  0.004    1    2.12
+    900   0.5           74.4    +2.53  0.004    2    2.12
+    920   0.5           75.6    +2.23  0.007    2    2.15
+    940   0.5           76.7    +1.56  0.007    2    2.12
+    960   0.5           77.8    +1.55  0.016    1    2.12
+
+  Those are not five window findings. They are the five windows where q=0.5
+  happens to land inside the threshold band the 1D sweep already located, 65..80.
+  The window is incidental; the threshold is the finding, and it is ~75.
+
+  Extending q past p95 settled the other open question. The q=1.3 edge of the
+  first run was still climbing at short windows, so the grid now runs to 4.0. It
+  peaks and turns: at w=20 the mean reads 16, 30, 13, 7, 9, 6 across q = 1.3, 1.6,
+  2.0, 2.5, 3.0, 4.0. Nothing in that region is significant against live.
+
+TWO LIMITS OF THIS GRID, BOTH WORTH KNOWING BEFORE TRUSTING nb
+
+  The neighbour count reads 0 everywhere at the 4+ threshold, and that is an
+  artefact rather than a verdict. At w=900 the q step spans PERCENT_SELL 59.5 to
+  74.4 — fifteen points, which is exactly as wide as the significant band itself.
+  A band that wide can only ever occupy ONE column, so counting agreement in two
+  directions cannot reach 4. nb only means something when the grid resolves the
+  effect in both directions; here it does not.
+
+  And the "live" cell is w=1000, q=0.4, which is PERCENT_SELL 64.1 rather than
+  the actual 60 — the grid cannot express 60, that would need q=0.375. So every
+  comparison in this table is against 64.1. It is why w=1000/q=0.5 reads p=0.063
+  here while the 1D sweep's 80-against-60 reads p=0.036.
+
 WATCH THE BUY COUNT
 
   With different windows on the two arms the buy and sell conditions stop being
@@ -76,9 +111,13 @@ from analyze.median1000 import config
 from analyze.median1000.factory import make_median_strategies, make_interval_strategies
 
 WINDOWS = list(range(20, 1001, 20))                        # 50
-QS      = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.3]
-#          Dense where the 1D sweep found signal (q 0.41..0.50 is the
-#          significant band at w=1000), thin after. Live is q=0.375.
+QS      = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8,
+           1.0, 1.3, 1.6, 2.0, 2.5, 3.0, 4.0]              # 15
+#          Dense where the 1D sweep found signal (q 0.41..0.50 is the significant
+#          band at w=1000), and carried well past p95 because the first run was
+#          still climbing at its q=1.3 edge for short windows: paired against
+#          q=1.0 that edge was significant at w=20..120 (p 0.000..0.019) while
+#          w>=140 had already saturated at 0.00. Live is q=0.375.
 
 # p95 = C * w^A, from dispersion.py on 59 symbols, w in 20..1000, R^2 = 0.9991.
 # Only ever used to place grid points.
@@ -137,9 +176,15 @@ def eval_symbol(sym: str):
                 if i is not None and v is not None:
                     z[i] = float(v)
 
-        # One start index for every cell, and it does not depend on the swept
-        # window because the grid stops at 1000 and the sell arm needs that
+        # One start index for every cell, and it does not move with the swept
+        # window because the grid stops at 1000 and the reinvest arm needs that
         # anyway. Every cell is therefore judged on identical bars.
+        #
+        # Going past 1000 would change that: a cell at w=1500 would start 500 bars
+        # later than one at w=200. It would cost 500 bars on every cell and drop
+        # VNDIAMOND and VNFINLEAD below MIN_EVAL_BARS — 50 symbols instead of 52,
+        # median eval bars 2315 instead of 2815. Not done; the q edge was the
+        # open question, not the window.
         start_idx = max([1000] + [min(m) for m in (s1, s3, ri, z) if m])
         eval_bars = len(df) - start_idx
         if config.MIN_EVAL_BARS and eval_bars < config.MIN_EVAL_BARS:
@@ -174,11 +219,37 @@ def apply_exclusions(per_symbol: dict) -> dict:
     return kept
 
 
+def _neighbours(w, q):
+    """The up-to-8 cells around one, in grid coordinates rather than value."""
+    iw, iq = WINDOWS.index(w), QS.index(q)
+    out = []
+    for dw in (-1, 0, 1):
+        for dq in (-1, 0, 1):
+            a, b = iw + dw, iq + dq
+            if (dw or dq) and 0 <= a < len(WINDOWS) and 0 <= b < len(QS):
+                out.append(_key(WINDOWS[a], QS[b]))
+    return out
+
+
 def aggregate(per_symbol: dict) -> dict:
-    """{metric: {key: value}} — mean, vote, buys, sells, win, worst."""
+    """
+    {metric: {key: value}}.
+
+    Three of these answer questions the plain aggregates cannot:
+
+    paired  the median per-symbol difference against the live cell. Two aggregate
+            columns must never be subtracted from each other — the symbol at the
+            median of one is a different symbol from the one at the median of
+            another, because changing a parameter reorders the ranking.
+    pairp   the sign-test p for that difference.
+    nb      how many of the cell's up-to-8 grid neighbours are also a significant
+            improvement. The best of 750 cells looks good whether or not any edge
+            exists; a cell whose neighbours agree is much harder to get by luck.
+    """
     keys = [_key(w, q) for w in WINDOWS for q in QS]
     syms = [s for s in per_symbol if all(k in per_symbol[s] for k in keys)]
-    grids = {m: {} for m in ("mean", "median", "win", "worst", "vote", "buys", "sells")}
+    grids = {m: {} for m in ("mean", "median", "win", "worst", "vote",
+                             "paired", "pairp", "nb", "buys", "sells")}
     if not syms:
         return grids
 
@@ -197,6 +268,28 @@ def aggregate(per_symbol: dict) -> dict:
         grids["worst"][k] = vals[0]
         grids["buys"][k] = st.mean([per_symbol[s][k][1] for s in syms])
         grids["sells"][k] = st.mean([per_symbol[s][k][2] for s in syms])
+
+    # Paired against the live cell, per symbol.
+    live_w = getattr(config, "SELL_MEDIAN_WINDOW", 1000)
+    live_q = min(QS, key=lambda q: abs(threshold(q, live_w) - config.PERCENT_SELL))
+    live_k = _key(live_w, live_q)
+    if live_k in keys:
+        li = keys.index(live_k)
+        base = m[:, li]
+        for i, k in enumerate(keys):
+            d = m[:, i] - base
+            up  = int((d > 1e-9).sum())
+            dec = int((np.abs(d) > 1e-9).sum())
+            grids["paired"][k] = float(np.median(d))
+            grids["pairp"][k] = (
+                sum(math.comb(dec, j) for j in range(up, dec + 1)) / 2 ** dec
+                if dec else 1.0)
+        good = {k for k in keys
+                if grids["paired"][k] > 0 and grids["pairp"][k] < 0.05}
+        for w in WINDOWS:
+            for q in QS:
+                k = _key(w, q)
+                grids["nb"][k] = sum(1 for n in _neighbours(w, q) if n in good)
     return grids
 
 
@@ -239,6 +332,9 @@ body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
 
 METRICS = {
     "mean":   ("Mean diff",    "%", +1),
+    "paired": ("Paired vs live", "%", +1),
+    "pairp":  ("Sign-test p",  "",  -1),
+    "nb":     ("Neighbours agreeing", "", +1),
     "vote":   ("Cells beaten", "",  +1),
     "median": ("Median diff",  "%", +1),
     "win":    ("Win rate",     "%", +1),
@@ -257,7 +353,9 @@ def build_html(grids, n_syms, skipped, elapsed):
         g = grids.get(m) or {}
         if not g or direction == 0:
             continue
-        bk, bv = max(g.items(), key=lambda kv: kv[1])
+        # direction -1 means lower is better; Sign-test p reported its worst
+        # cell as its best until this looked at it.
+        bk, bv = (max if direction > 0 else min)(g.items(), key=lambda kv: kv[1])
         w, q = bk.split("|")
         rows += (f"<tr><td style='text-align:left'>{label}</td>"
                  f"<td><b>w={w}, q={q}</b></td>"
@@ -356,6 +454,26 @@ def _report(per_symbol, skipped, elapsed):
     if not per_symbol:
         print("every symbol was excluded"); return
     grids = aggregate(per_symbol)
+    pr, pp, nb = grids["paired"], grids["pairp"], grids["nb"]
+    good = sorted(((pr[k], k) for k in pr if pr[k] > 0 and pp[k] < 0.05),
+                  reverse=True)
+    print(f"\ncells beating live with p<0.05: {len(good)}/{len(pr)}")
+    if good:
+        print(f"{'w':>5}{'q':>6}{'PERCENT_SELL':>14}{'paired':>9}{'p':>8}"
+              f"{'nb':>4}{'mean':>7}{'vote':>6}{'sells':>7}")
+        for _, k in good[:15]:
+            w, q = k.split("|")
+            w, q = int(w), float(q)
+            print(f"{w:>5}{q:>6g}{threshold(q, w):14.1f}{pr[k]:+9.2f}{pp[k]:8.3f}"
+                  f"{nb[k]:4d}{grids['mean'][k]:7.0f}{grids['vote'][k]:6d}"
+                  f"{grids['sells'][k]:7.2f}")
+        ws = sorted({int(k.split("|")[0]) for _, k in good})
+        qs = sorted({float(k.split("|")[1]) for _, k in good})
+        print(f"  windows {ws[0]}..{ws[-1]}   q {qs}")
+        solid = [k for _, k in good if nb[k] >= 4]
+        print(f"  with 4+ agreeing neighbours: {len(solid)}"
+              f"{' — ' + ', '.join(solid[:6]) if solid else ' (none: isolated cells only)'}")
+
     OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
                    encoding="utf-8")
 
@@ -370,7 +488,7 @@ def _report(per_symbol, skipped, elapsed):
         gg = grids.get(m) or {}
         if not gg or d == 0:
             continue
-        bk, bv = max(gg.items(), key=lambda kv: kv[1])
+        bk, bv = (max if d > 0 else min)(gg.items(), key=lambda kv: kv[1])
         w, q = bk.split("|")
         print(f"  {label:<14} w={w:<5} q={q:<6} "
               f"PERCENT_SELL={threshold(float(q), int(w)):7.1f}  -> {bv:+.2f}{unit}")
