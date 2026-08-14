@@ -51,6 +51,17 @@ PERCENT_SELL     = 60
 
 # ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
 # Same sign as PERCENT_BUY, not "below the median": 10 means "up to 10% ABOVE it".
+# Swept over 14 settings and 52 symbols (sweep_percent_reinvest.py). 10 is the
+# peak of a cleanly unimodal median curve and also wins the mean and the win rate.
+# The safe region is wide, -5 to +35 all give a median of 16 to 21, so this does
+# not need to be right to the point. Above +50 it collapses: redeploying
+# constantly means holding more shares, which triggers more sells — reinvests run
+# 4.4 to 22.9 and sells 4.3 to 11.8 across the top of the grid.
+#
+# This arm matters far more than its trade count suggests. It carries 94% of all
+# capital deployed (median over 52 symbols), because a blocked buy goes into the
+# reserve and the reserve only leaves through here. Setting this to None costs 78
+# mean points.
 PERCENT_REINVEST = 10
 
 # Timeout reinvest: if no reinvest has occurred X trading days after last sell,
