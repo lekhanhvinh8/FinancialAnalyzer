@@ -55,13 +55,14 @@ def make_median_strategies(signal3_map: dict | None = None,
                            percent_buy=_FROM_CONFIG,
                            buy_window=_FROM_CONFIG,
                            reinvest_min_signal1=_FROM_CONFIG,
-                           percent_reinvest=_FROM_CONFIG):
+                           percent_reinvest=_FROM_CONFIG,
+                           percent_sell=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
 
-    min_signal1, percent_buy, buy_window, reinvest_min_signal1 and
-    percent_reinvest override their config values — the sweeps vary one parameter
+    min_signal1, percent_buy, buy_window, reinvest_min_signal1,
+    percent_reinvest and percent_sell override their config values — the sweeps vary one parameter
     per cell. Passing None disables that one setting
     (per the convention above) while leaving config alone; omitting it uses
     config. buy_window is a size, not a condition, so None is not meaningful for
@@ -78,11 +79,13 @@ def make_median_strategies(signal3_map: dict | None = None,
     # same day. Impossible while PERCENT_BUY <= PERCENT_SELL, since the price
     # conditions are complementary — and immediately real once a sweep moves
     # PERCENT_BUY above PERCENT_SELL.
-    if config.PERCENT_SELL is None:
+    pct_sell = (config.PERCENT_SELL
+                if percent_sell is _FROM_CONFIG else percent_sell)
+    if pct_sell is None:
         sell = SellStrategy()
     else:
         sell = SellMedian1000Strategy(
-            percentSell=config.PERCENT_SELL, use_pe=config.USE_PE,
+            percentSell=pct_sell, use_pe=config.USE_PE,
             # An empty map is how each gate is switched off; the strategy's own
             # `if self.signalX_map` guard then skips the comparison entirely, so
             # the threshold beside it is never read.

@@ -207,9 +207,37 @@ def _vote(per_symbol: dict, keys: list) -> dict:
             for i, k in enumerate(keys)}
 
 
+def _paired(per_symbol: dict, k: str, live_key: str) -> dict:
+    """Per-symbol difference against the live cell — the only valid comparison
+    between two settings. Returns the median of those differences, how many
+    symbols improved, and the sign-test p."""
+    if k == live_key:
+        return {"pair": 0.0, "pair_up": "", "pair_p": 1.0}
+    d = [v[k][0] - v[live_key][0]
+         for v in per_symbol.values() if k in v and live_key in v]
+    if not d:
+        return {"pair": float("nan"), "pair_up": "", "pair_p": 1.0}
+    up = sum(1 for x in d if x > 1e-9)
+    dec = sum(1 for x in d if abs(x) > 1e-9)
+    p = (sum(math.comb(dec, i) for i in range(up, dec + 1)) / 2 ** dec
+         if dec else 1.0)
+    return {"pair": st.median(d), "pair_up": f"{up}/{dec}", "pair_p": p}
+
+
 def aggregate(per_symbol: dict) -> dict:
+    """
+    Every column here is an aggregate OVER symbols at one setting. Two of them
+    cannot be subtracted from each other: the symbol sitting at the median of one
+    column is a different symbol from the one at the median of another, because
+    changing the threshold reorders the ranking. On this sweep that mistake read
+    +5.51 in favour of a cell that is in fact worse for 33 of 48 symbols.
+
+    So the paired comparison against the live setting is computed here and shown
+    as its own column, rather than left for the reader to derive by subtracting.
+    """
     keys = [_key(v) for v in GRID]
     votes = _vote(per_symbol, keys)
+    live_key = _key(config.PERCENT_REINVEST)
     rows = {}
     for k in keys:
         vals = sorted(d[k][0] for d in per_symbol.values() if k in d)
@@ -223,6 +251,7 @@ def aggregate(per_symbol: dict) -> dict:
             "win": 100 * wins / n, "worst": vals[0], "vote": votes.get(k, 0),
             "p": (sum(math.comb(dec, i) for i in range(wins, dec + 1)) / 2 ** dec
                   if dec else 1.0),
+            **_paired(per_symbol, k, live_key),
             "reinv": st.mean([d[k][1] for d in per_symbol.values() if k in d]),
             "buys":  st.mean([d[k][2] for d in per_symbol.values() if k in d]),
             "sells": st.mean([d[k][3] for d in per_symbol.values() if k in d]),
@@ -285,7 +314,14 @@ def build_html(rows, n_syms, skipped, elapsed):
             f"<tr style='{hl}'><td><b>{_label(v)}</b>{mark}</td>"
             + cell("mean", f"{r['mean']:+.1f}%") + cell("median", f"{r['median']:+.1f}%")
             + cell("win", f"{r['win']:.0f}%") + cell("vote", f"{r['vote']}")
-            + cell("worst", f"{r['worst']:+.0f}%") + cell("p", f"{r['p']:.3f}")
+            + cell("worst", f"{r['worst']:+.0f}%")
+            + ("<td style='border-left:2px solid #334155;text-align:right;"
+               "color:#64748b'>&mdash;</td><td></td>" if k == live else
+               f"<td style='border-left:2px solid #334155;text-align:right;"
+               f"color:{'#4ade80' if r['pair'] > 0 and r['pair_p'] < 0.05 else '#e2e8f0'}'>"
+               f"{r['pair']:+.2f}</td>"
+               f"<td style='text-align:right;color:#94a3b8'>{r['pair_up']} "
+               f"p={r['pair_p']:.3f}</td>")
             + f"<td style='text-align:right;color:#94a3b8'>{r['reinv']:.1f}</td>"
             + f"<td style='text-align:right;color:#94a3b8'>{r['buys']:.0f}</td>"
             + f"<td style='text-align:right;color:#94a3b8'>{r['sells']:.1f}</td></tr>")
@@ -315,9 +351,15 @@ This arm carries <b>94% of all capital deployed</b> (median over 52 symbols): a
 blocked buy goes into the reserve, and the reserve only leaves through here.</p>
 {skip_html}
 <table><thead><tr><th>PERCENT_REINVEST</th><th>mean</th><th>median</th><th>win</th>
-<th>vote</th><th>worst</th><th>p</th><th>reinv</th><th>buys</th><th>sells</th>
+<th>vote</th><th>worst</th><th style='border-left:2px solid #334155'>vs live</th>
+<th>up / p</th><th>reinv</th><th>buys</th><th>sells</th>
 </tr></thead><tbody>{body}</tbody></table>
-<p class="note">Green marks the best cell in each column. <b>mean</b> is hostage
+<p class="note"><b>vs live</b> is the only column that compares two settings.
+Everything to its left is an aggregate over symbols AT one setting, and two of
+those cannot be subtracted: the symbol at the median of one column is a different
+symbol from the one at the median of another, because changing the threshold
+reorders the ranking. On this grid that mistake reads +5.51 in favour of a cell
+that is worse for 33 of 48 symbols.<br>Green marks the best cell in each column. <b>mean</b> is hostage
 to the largest symbol, <b>vote</b> gives each symbol one vote and is blind to
 size. <b>reinv</b> is the mechanism check: if it barely moves across the grid,
 the timeout is doing the work and this parameter only shifts timing.</p>
@@ -333,17 +375,23 @@ def _report(per_symbol, skipped, elapsed):
                    encoding="utf-8")
 
     print(f"\n{len(per_symbol)} symbols\n")
-    print(f"{'PERCENT_REINVEST':>17} {'mean':>8} {'median':>8} {'win':>6} "
-          f"{'vote':>5} {'worst':>8} {'reinv':>7} {'buys':>6} {'sells':>6}")
+    print("columns left of the bar are aggregates at one setting and must NOT be\n"
+          "subtracted from each other; vs-live is the paired comparison.\n")
+    print(f"{'PERCENT_REINVEST':>17} {'mean':>8} {'median':>8} {'win':>6} {'vote':>5} "
+          f"{'worst':>8} | {'vs live':>8} {'up':>6} {'p':>6} | "
+          f"{'reinv':>6} {'buys':>5} {'sells':>6}")
     for v in GRID:
         k = _key(v)
         if k not in rows:
             continue
         r = rows[k]
         star = "  <- live" if k == _key(config.PERCENT_REINVEST) else ""
+        pair = "     —  " if k == _key(config.PERCENT_REINVEST) else f"{r['pair']:+8.2f}"
+        pp   = "      " if k == _key(config.PERCENT_REINVEST) else f"{r['pair_p']:6.3f}"
         print(f"{_label(v):>17} {r['mean']:+8.1f} {r['median']:+8.1f} "
-              f"{r['win']:5.0f}% {r['vote']:5d} {r['worst']:+8.0f} "
-              f"{r['reinv']:7.1f} {r['buys']:6.0f} {r['sells']:6.1f}{star}")
+              f"{r['win']:5.0f}% {r['vote']:5d} {r['worst']:+8.0f} | {pair} "
+              f"{r['pair_up']:>6} {pp} | "
+              f"{r['reinv']:6.1f} {r['buys']:5.0f} {r['sells']:6.1f}{star}")
 
     by_mean = max(rows.items(), key=lambda kv: kv[1]["mean"])
     by_vote = max(rows.items(), key=lambda kv: kv[1]["vote"])
