@@ -311,6 +311,11 @@ way it leans.</span></div>
 <script>
 const DATA = {json.dumps(data)};
 const WS = {json.dumps(WINDOWS)}, QS = {json.dumps(QS)};
+// Cell keys are built in Python and shipped as strings. Letting JS join them with
+// w + '|' + q silently drops whole-valued q: Python writes "1000|1.0" and JS
+// stringifies 1.0 as "1", so those columns render blank. It cost q=0 and q=1 here
+// before anyone noticed.
+const QK = {json.dumps([str(q) for q in QS])};
 function render() {{
   const m = document.getElementById('metric').value;
   const g = DATA[m];
@@ -322,8 +327,8 @@ function render() {{
   h += '</tr></thead><tbody>';
   WS.forEach(function(w) {{
     h += "<tr><th style='text-align:right'>" + w + '</th>';
-    QS.forEach(function(q) {{
-      const v = g[w + '|' + q];
+    QS.forEach(function(q, j) {{
+      const v = g[w + '|' + QK[j]];
       if (v === null || v === undefined) {{
         h += "<td style='color:#475569'>&mdash;</td>"; return;
       }}
