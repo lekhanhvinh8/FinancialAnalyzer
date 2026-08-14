@@ -11,75 +11,52 @@ once. Fixed; the reinvest map is now read at its configured window.
 signal1 blocks ~61% of all sell-eligible days — more than the other two filters
 combined — so it looked like the obvious thing to tune. This maps the surface.
 
-HOW TO READ THIS, AND WHY THE GRID ALONE WILL MISLEAD YOU
+RE-SWEPT ON THE CURRENT BASIS — 0.228 SURVIVES
 
-  Difference PER SYMBOL, against the same symbol with the gate switched off
-  (min_signal1 = +inf). Then keep every symbol and report two things together:
-  the mean, and how concentrated it is. Neither half stands alone.
+  52 symbols, 340 cells, paired against the live cell (w=120, k=2.5). Nothing
+  beats it meaningfully. Five cells clear p<0.05 and their paired medians are
+  +1.35, +0.22, +0.11, +0.06, +0.01 — real by the sign test, worthless in points,
+  and all at w=50..70 where a block only postpones a sell rather than cancelling
+  it. With 340 cells about 17 would clear p<0.05 by chance anyway.
 
-      signal1, all 44 symbols:  +1039 gain / -402 loss = net +637
-                                mean +14.47, 23/36 improved, p=0.066
-      concentration:            VND alone is +277 of the +637
-                                20 of 44 symbols are untouched at any setting
-                                dropping the top 3 takes the mean to +2.6
+  The gate itself is still worth having, which the grid cannot show because it
+  contains no "off" cell. Measured directly: switching it off costs mean -21.06
+  and a net -1095 (+336 gained, -1431 lost), and even dropping the largest mover
+  leaves -7.58. 25 of 52 symbols are untouched at any setting, and the effect is
+  in the timing rather than the count — sells move only from 2.35 to 2.73 and
+  those 0.4 sells are worth 21 points.
 
-  The honest sentence needs both: "worth +637 net, but carried by ~8 symbols
-  while half are unaffected". No single statistic says that, so do not look for
-  one. In particular:
+  This replaces an earlier sweep that produced the same number on a worse basis:
+  44 symbols with z_dev on, and every cell moving the reinvest window along with
+  the sell window, so its "w=110-130, k=2-3" region could not be read as stated.
+
+READING THE RESULT: WHY THE GRID ALONE WILL MISLEAD YOU
+
+  Difference PER SYMBOL, always. Keep every symbol and report the mean beside how
+  concentrated it is; neither half stands alone. Two failure modes, both of which
+  caught us here:
 
   - median(A) - median(B) is not median(A - B). The first compares the middle
-    symbol of one run with a DIFFERENT symbol in the middle of the other. Only
-    the paired form answers "what does this filter do".
-  - Even paired, the median of this filter's effect is 0.00 at every cell in the
-    grid, including the best one, because 20 of 44 symbols sit at exactly zero
-    and the median lands among them. Median is blind to an effect carried by a
-    minority, which is precisely this one. The default score cannot rank this
-    filter; use the mean and vote grids, below.
-  - Do not trim the tails to make the mean behave. VND's +277 is a real result,
-    not noise. Trimming answers "is the effect broad?" and is a diagnostic only;
-    it is never the figure to report.
+    symbol of one run with a DIFFERENT symbol in the middle of the other, because
+    changing a parameter reorders the ranking.
+  - Half the symbols are untouched by this filter at any setting, so an aggregate
+    median lands among them and reads ~0 regardless of what happens in the tails
+    — and the tails are the whole effect.
 
-  Two grids can rank cells here, and they must be read together:
+  Do not trim the tails to make the mean behave either. A large single-symbol
+  contribution is a real result, not noise; trimming answers "is the effect
+  broad?" and is a diagnostic only.
 
-      mean   size, and who is paying for it   — carried by VND
-      vote   agreement, one vote per symbol   — blind to size
+  Two traps in the grid itself:
 
-  They disagree, and the disagreement is informative. Mean picks w=130/k=2.5
-  (+39); the vote picks w=10/k=-2.5 (331 of 339) — which is in the inert region,
-  because the filter helps ~8 symbols a great deal and costs many symbols a
-  little, and one-symbol-one-vote counts the many. The only region in the top 15%
-  of BOTH is w=110-130, k=2-3, and that is where SELL_MIN_SIGNAL1 comes from.
-
-  Two further traps in the grid itself:
-
-  - The flat green region at w=10-20 is flat because the gate is INERT there,
-    not because it is robust. Blocking share is held constant across windows by
+  - The flat green region at w=10-20 is flat because the gate is INERT there, not
+    because it is robust. Blocking share is held constant across windows by
     k/sqrt(w), but persistence is not: at w=10 a block lasts ~36 days on average,
     at w=100 it lasts ~293. A 10-day slope flips sign constantly, so a sell is
-    merely postponed and still happens. Going k=0 -> k=4 at w=10 (17x fewer days
-    blocked) changes the number of sells by 0.2. A plateau can mean "every value
-    works" or "no value does anything" — both render as smooth green.
-  - The cell with the best win rate (w=200/k=-1.5, 77%) is the most harmful one
-    in the grid, -11.24 points paired. Win rate is measured against the DCA arm,
-    not against the gate being off, so it stays high while the gate does damage.
-
-THE OTHER TWO SELL FILTERS ARE THE UNTUNED ONES
-
-  Same paired measurement, isolating each gate (44 symbols, diff vs DCA):
-
-      signal1 alone, vs no gates at all         mean +14.47   23/36   p=0.066
-      signal3 + z_dev, vs no gates at all       mean  +1.76   13/27   p=0.649
-      adding signal3 + z_dev on top of signal1  mean  -2.50   10/26   p=0.916
-
-  signal1 is the only one of the three carrying weight. signal3 and z_dev are
-  worth almost nothing alone and cost ~2.5 mean points layered on signal1, so
-  signal1 alone (+14.47) beats all three together (+11.97). z_dev is not
-  miscomputed (no look-ahead, verified three ways); it is not paying for itself
-  at SELL_MIN_ZDEV = 0.9. Neither has ever been swept.
-
-  Caveat on all of it: one period, one 44-symbol set, many things tried against
-  it. p=0.066 is a suggestion. The direction holds across mean and sign test;
-  the magnitude is good to its order and no further.
+    merely postponed and still happens. A plateau can mean "every value works" or
+    "no value does anything" — both render as smooth green.
+  - Win rate is measured against the DCA arm, not against the gate being off, so
+    it stays high while a setting does damage.
 
 WHY THE THRESHOLD IS SCALED BY THE WINDOW
 
