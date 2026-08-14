@@ -226,16 +226,23 @@ def eval_symbol(sym: str):
                         out[i] = float(v)
             return out
 
-        s3 = sig(1000, "signal3_sharpe")
-        zd = db.load_zdev(sym, 1000, config.SELL_ZDEV_WINDOW)
+        # A gate switched off in config is not loaded at all. Loading it anyway is
+        # not merely wasted work: its first index feeds start_idx below, so a
+        # disabled filter keeps charging its warmup. z_dev has been off since
+        # 73b7ce6 and this sweep was still paying its 700 bars — start 1699
+        # instead of 1000, six extra symbols dropped, and every cell judged on a
+        # shorter and more recent window than the other sweeps use.
+        # run_all fixed this in c4a7240; this file was missed.
+        s3 = sig(1000, "signal3_sharpe") if config.MIN_SIGNAL3 is not None else {}
         z = {}
-        if not zd.empty:
+        if config.SELL_MIN_ZDEV is not None:
+            zd = db.load_zdev(sym, 1000, config.SELL_ZDEV_WINDOW)
+            if zd.empty:
+                return sym, None, "no z_dev"
             for dt, v in zd["z_dev"].items():
                 i = d2i.get(pd.Timestamp(dt))
                 if i is not None and v is not None:
                     z[i] = float(v)
-        if config.SELL_MIN_ZDEV is not None and not z:
-            return sym, None, "no z_dev"
 
         # One start index for every cell. Derived with the LONGEST swept window so
         # the evaluated period cannot shift between cells — a cell judged on more
