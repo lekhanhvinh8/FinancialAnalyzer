@@ -294,10 +294,15 @@ body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
 <p class="k">{note}</p></body></html>""", encoding="utf-8")
 
 
-def build_html(rows, n_syms, skipped, elapsed):
+def build_html(rows, n_syms, skipped, elapsed, per_symbol=None):
     live = _key(config.PERCENT_REINVEST)
     best = {m: (max if m != "p" else min)(rows[k][m] for k in rows)
             for m in ("mean", "median", "win", "vote", "worst", "p")}
+
+    syms  = sorted(per_symbol or {})
+    keys  = [_key(v) for v in GRID if _key(v) in rows]
+    diffs = {k: [per_symbol[s][k][0] for s in syms] for k in keys} \
+            if syms else {}
 
     body = ""
     for v in GRID:
@@ -311,17 +316,14 @@ def build_html(rows, n_syms, skipped, elapsed):
             c = "#4ade80" if r[m] == best[m] else "#e2e8f0"
             return f"<td style='text-align:right;color:{c}'>{txt}</td>"
         body += (
-            f"<tr style='{hl}'><td><b>{_label(v)}</b>{mark}</td>"
+            f"<tr data-row='{k}' style='{hl}'>"
+            f"<td><b>{_label(v)}</b>{mark}</td>"
             + cell("mean", f"{r['mean']:+.1f}%") + cell("median", f"{r['median']:+.1f}%")
             + cell("win", f"{r['win']:.0f}%") + cell("vote", f"{r['vote']}")
             + cell("worst", f"{r['worst']:+.0f}%")
-            + ("<td style='border-left:2px solid #334155;text-align:right;"
-               "color:#64748b'>&mdash;</td><td></td>" if k == live else
-               f"<td style='border-left:2px solid #334155;text-align:right;"
-               f"color:{'#4ade80' if r['pair'] > 0 and r['pair_p'] < 0.05 else '#e2e8f0'}'>"
-               f"{r['pair']:+.2f}</td>"
-               f"<td style='text-align:right;color:#94a3b8'>{r['pair_up']} "
-               f"p={r['pair_p']:.3f}</td>")
+            + (f"<td data-vs='{k}' style='border-left:2px solid #334155;"
+               f"text-align:right'></td>"
+               f"<td data-vsmeta='{k}' style='text-align:right;color:#94a3b8'></td>")
             + f"<td style='text-align:right;color:#94a3b8'>{r['reinv']:.1f}</td>"
             + f"<td style='text-align:right;color:#94a3b8'>{r['buys']:.0f}</td>"
             + f"<td style='text-align:right;color:#94a3b8'>{r['sells']:.1f}</td></tr>")
@@ -351,18 +353,83 @@ This arm carries <b>94% of all capital deployed</b> (median over 52 symbols): a
 blocked buy goes into the reserve, and the reserve only leaves through here.</p>
 {skip_html}
 <table><thead><tr><th>PERCENT_REINVEST</th><th>mean</th><th>median</th><th>win</th>
-<th>vote</th><th>worst</th><th style='border-left:2px solid #334155'>vs live</th>
+<th>vote</th><th>worst</th><th style='border-left:2px solid #334155'>vs <span id='refLabel'>live</span></th>
 <th>up / p</th><th>reinv</th><th>buys</th><th>sells</th>
 </tr></thead><tbody>{body}</tbody></table>
-<p class="note"><b>vs live</b> is the only column that compares two settings.
-Everything to its left is an aggregate over symbols AT one setting, and two of
-those cannot be subtracted: the symbol at the median of one column is a different
-symbol from the one at the median of another, because changing the threshold
-reorders the ranking. On this grid that mistake reads +5.51 in favour of a cell
-that is worse for 33 of 48 symbols.<br>Green marks the best cell in each column. <b>mean</b> is hostage
+<p class="note"><b>Click any row to make it the reference</b> — the vs
+column recomputes against it from the per-symbol numbers. That is the only way to
+compare two settings: subtracting two vs values would be
+median(A&minus;ref)&nbsp;&minus;&nbsp;median(B&minus;ref), the same mistake one
+level up.<br>
+<b>median</b>, <b>win</b> and <b>worst</b> must never be subtracted between rows.
+The symbol at the median of one column is a different symbol from the one at the
+median of another, because changing the threshold reorders the ranking — on this
+grid that mistake reads +5.51 for a cell that is worse for 33 of 48 symbols.
+<b>mean</b> is the exception and may be subtracted: it is linear, so
+mean(A)&minus;mean(B) is exactly mean(A&minus;B). <b>vote</b> is already a
+pairwise round robin.<br>Green marks the best cell in each column. <b>mean</b> is hostage
 to the largest symbol, <b>vote</b> gives each symbol one vote and is blind to
 size. <b>reinv</b> is the mechanism check: if it barely moves across the grid,
 the timeout is doing the work and this parameter only shifts timing.</p>
+
+<script>
+// DIFFS[key] = that setting's per-symbol diff, symbols in one fixed order.
+// Shipped so the reference row can change in the browser. Subtracting two
+// already-computed vs values would be median(A-ref) - median(B-ref), which is a
+// difference of two medians again — the same mistake one level up. The only way
+// to compare two settings is to go back to the per-symbol numbers.
+const DIFFS = {json.dumps(diffs)};
+const KEYS  = {json.dumps(keys)};
+let   REF   = {json.dumps(live)};
+
+function med(a) {{
+  const s = [...a].sort((x, y) => x - y), m = s.length >> 1;
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}}
+function lchoose(n, k) {{
+  let r = 0;
+  for (let i = 1; i <= k; i++) r += Math.log(n - k + i) - Math.log(i);
+  return r;
+}}
+function signP(up, dec) {{
+  let c = 0;
+  for (let k = up; k <= dec; k++) c += Math.exp(lchoose(dec, k) - dec * Math.LN2);
+  return Math.min(1, c);
+}}
+
+function recompute() {{
+  const ref = DIFFS[REF];
+  if (!ref) return;
+  document.getElementById('refLabel').textContent =
+    REF === 'none' ? 'None' : REF + '%';
+  KEYS.forEach(function(k) {{
+    const cell = document.querySelector('td[data-vs="' + k + '"]');
+    const meta = document.querySelector('td[data-vsmeta="' + k + '"]');
+    if (!cell) return;
+    if (k === REF) {{
+      cell.innerHTML = '&mdash;'; cell.style.color = '#64748b';
+      meta.textContent = 'reference'; return;
+    }}
+    const d   = DIFFS[k].map((v, i) => v - ref[i]);
+    const up  = d.filter(x => x > 1e-9).length;
+    const dec = d.filter(x => Math.abs(x) > 1e-9).length;
+    const p   = dec ? signP(up, dec) : 1;
+    const m   = med(d);
+    cell.textContent = (m >= 0 ? '+' : '') + m.toFixed(2);
+    cell.style.color = (m > 0 && p < 0.05) ? '#4ade80'
+                     : (m < 0 && p > 0.95) ? '#f87171' : '#e2e8f0';
+    meta.textContent = up + '/' + dec + '  p=' + p.toFixed(3);
+  }});
+  document.querySelectorAll('tr[data-row]').forEach(function(tr) {{
+    tr.style.outline = tr.dataset.row === REF ? '2px solid #60a5fa' : '';
+  }});
+}}
+document.querySelectorAll('tr[data-row]').forEach(function(tr) {{
+  tr.style.cursor = 'pointer';
+  tr.addEventListener('click', function() {{ REF = tr.dataset.row; recompute(); }});
+}});
+recompute();
+</script>
 </body></html>"""
 
 
@@ -371,8 +438,8 @@ def _report(per_symbol, skipped, elapsed):
     if not per_symbol:
         print("every symbol was excluded"); return
     rows = aggregate(per_symbol)
-    OUT.write_text(build_html(rows, len(per_symbol), skipped, elapsed),
-                   encoding="utf-8")
+    OUT.write_text(build_html(rows, len(per_symbol), skipped, elapsed,
+                              per_symbol), encoding="utf-8")
 
     print(f"\n{len(per_symbol)} symbols\n")
     print("columns left of the bar are aggregates at one setting and must NOT be\n"
