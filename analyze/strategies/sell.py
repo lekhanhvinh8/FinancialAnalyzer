@@ -98,6 +98,12 @@ class SellTopOfMA1000Strategy(SellStrategy):
 class SellMedian1000Strategy(SellStrategy):
     percentSell: float = 0
     use_pe: bool = False
+    # Which median the price is measured against, as on the buy arm. The reinvest
+    # arm is still fixed at 1000, which is what keeps the backtest start index
+    # from moving when this drops below it.
+    # percentSell has to move with it: the price's distance from its own median
+    # widens with the window, p95 = 1.29 * w^0.698 (analyze/median1000/dispersion.py).
+    medianWindow: int = 1000
     # {row_index: signal3_sharpe} for 1000-day window — block sell when >= min_signal3 (stable/trending → hold)
     signal3_map: dict = field(default_factory=dict)
     min_signal3: float = 0.8
@@ -121,14 +127,15 @@ class SellMedian1000Strategy(SellStrategy):
             Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
 
     def check(self, index, close, pe, cal_range_close) -> bool:
-        if index <= 1000:
+        if index <= self.medianWindow:
             return False
         current = pe if self.use_pe else close
         if current is None:
             return False
-        if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
+        if (index not in cal_range_close
+                or self.medianWindow not in cal_range_close[index].rangeDayCloses):
             return False
-        median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
+        median = cal_range_close[index].rangeDayCloses[self.medianWindow].pct50(self.use_pe)
         if (current - median) / median * 100 <= self.percentSell:
             return False
         # Block sell when short-term momentum (linear regression slope) is still strong — let it run

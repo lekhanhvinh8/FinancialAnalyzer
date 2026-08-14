@@ -59,9 +59,10 @@ def process_symbol(symbol: str, run_dir: Path | None = None
         # 1000, the buy arm uses BUY_MEDIAN_WINDOW. Loading all ~1500 was the
         # slowest step in the run. The chart only forwards this to strategy.check(),
         # so it needs nothing more.
-        buy_w = getattr(config, "BUY_MEDIAN_WINDOW", 1000)
+        buy_w  = getattr(config, "BUY_MEDIAN_WINDOW", 1000)
+        sell_w = getattr(config, "SELL_MEDIAN_WINDOW", 1000)
         cal_range_close = db.load_range_stats(symbol, df,
-                                              range_days={1000, buy_w})
+                                              range_days={1000, buy_w, sell_w})
         if cal_range_close is None:
             return symbol, None, "no range_stats in DB", time.time() - t0
 
@@ -123,9 +124,9 @@ def process_symbol(symbol: str, run_dir: Path | None = None
         # Applied to BOTH arms. Moving only the treatment's start would hand the
         # interval arm extra years of compounding and invalidate the comparison.
         first_idx = {
-            # The sell and reinvest arms guard on index > 1000; the buy arm guards
-            # on its own window, so whichever is longer sets the floor.
-            "median1000":       max(1000, buy_w),
+            # The reinvest arm still guards on index > 1000; buy and sell each
+            # guard on their own window, so the longest of the three sets the floor.
+            "median1000":       max(1000, buy_w, sell_w),
             "signal1":          min(signal1_map)          if signal1_map          else None,
             "signal3":          min(signal3_map)          if signal3_map          else None,
             "reinvest_signal1": min(reinvest_signal1_map) if reinvest_signal1_map else None,

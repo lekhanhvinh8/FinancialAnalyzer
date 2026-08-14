@@ -56,7 +56,8 @@ def make_median_strategies(signal3_map: dict | None = None,
                            buy_window=_FROM_CONFIG,
                            reinvest_min_signal1=_FROM_CONFIG,
                            percent_reinvest=_FROM_CONFIG,
-                           percent_sell=_FROM_CONFIG):
+                           percent_sell=_FROM_CONFIG,
+                           sell_window=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
@@ -81,11 +82,13 @@ def make_median_strategies(signal3_map: dict | None = None,
     # PERCENT_BUY above PERCENT_SELL.
     pct_sell = (config.PERCENT_SELL
                 if percent_sell is _FROM_CONFIG else percent_sell)
+    sell_w = (getattr(config, "SELL_MEDIAN_WINDOW", 1000)
+              if sell_window is _FROM_CONFIG else sell_window)
     if pct_sell is None:
         sell = SellStrategy()
     else:
         sell = SellMedian1000Strategy(
-            percentSell=pct_sell, use_pe=config.USE_PE,
+            percentSell=pct_sell, use_pe=config.USE_PE, medianWindow=sell_w,
             # An empty map is how each gate is switched off; the strategy's own
             # `if self.signalX_map` guard then skips the comparison entirely, so
             # the threshold beside it is never read.

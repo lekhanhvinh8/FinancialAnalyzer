@@ -93,7 +93,18 @@ from analyze.median1000.factory import make_median_strategies, make_interval_str
 
 # Placed off the measured spread at w=1000, see the header. None last: it is the
 # only value that removes the arm rather than making it stricter.
-GRID = [-10, 0, 10, 20, 35, 50, 60, 75, 100, 130, 170, 220, 300, None]
+#
+# Step 5 through 40..110, which is where the surface actually moves — that band
+# spans roughly the 70th to 85th percentile of price-to-median distance, so five
+# points is a percentile or two. Coarser outside it: below 0 the arm sells almost
+# every day and the rows are degenerate, above 150 it has stopped selling and the
+# rows converge on None.
+#
+# 28 cells means about 1.4 of them clear p<0.05 by chance alone, so read the
+# contiguous region rather than the single best row.
+GRID = ([-20, -10, 0, 10, 20, 30]
+        + list(range(40, 111, 5))
+        + [120, 135, 150, 175, 200, 250, 300, None])
 
 OUT  = Path(__file__).parent / "sweep_percent_sell.html"
 RAW  = Path(__file__).parent / "sweep_percent_sell_raw.json"

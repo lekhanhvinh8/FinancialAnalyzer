@@ -21,14 +21,15 @@ interval arm, so every diff must come out at 0.00 — a cheap engine check.
 
 INTERVAL_MONEY = 8_000_000   # VND invested per interval
 
-# BuyMedian1000: which median the buy arm measures the price against. Sell and
-# reinvest are fixed at 1000 and do not follow this. Not a condition, so the None
-# convention does not apply — it is a size, like SELL_SIGNAL1_WINDOW.
+# BuyMedian1000: which median the buy arm measures the price against. The sell arm
+# has its own (SELL_MEDIAN_WINDOW below); reinvest is still fixed at 1000. Not a
+# condition, so the None convention does not apply — it is a size.
 # PERCENT_BUY below is not transferable across values of this: the price's
 # distance from its own median grows as p95 = 1.29 * w^0.698, so 60 blocks
 # nothing at w=50 and about a fifth of days at w=1000. See dispersion.py.
-# Keep it <= 1000 unless you mean to move the backtest start: the sell arm needs
-# 1000 bars of warmup either way, so anything below that is free.
+# Keep it <= 1000 unless you mean to move the backtest start. The reinvest arm
+# still needs 1000 bars of warmup, so anything at or below that is free — but
+# that floor disappears the day reinvest gets its own window too.
 # Swept 20..1000 against the threshold, 500 cells over 52 symbols. This barely
 # matters: taking the best threshold in each row, the mean spans 36.5 to 41.1
 # across a 50x change in window. The good region is w=500..1000 and 1000 is
@@ -46,7 +47,13 @@ BUY_MEDIAN_WINDOW = 1000
 # is the column 60 sits in. See sweep_buy_window.py.
 PERCENT_BUY      = 60
 
-# SellMedian1000: sell when price is this % above the 1000-day median
+# SellMedian1000: which median the sell arm measures the price against. The
+# reinvest arm is still fixed at 1000 and does not follow this — which is also
+# what keeps the backtest start index from moving when this drops below 1000.
+# PERCENT_SELL below is not transferable across values of this; see dispersion.py.
+SELL_MEDIAN_WINDOW = 1000
+
+# SellMedian1000: sell when price is this % above the SELL_MEDIAN_WINDOW median
 PERCENT_SELL     = 60
 
 # ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
