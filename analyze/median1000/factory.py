@@ -57,13 +57,15 @@ def make_median_strategies(signal3_map: dict | None = None,
                            reinvest_min_signal1=_FROM_CONFIG,
                            percent_reinvest=_FROM_CONFIG,
                            percent_sell=_FROM_CONFIG,
-                           sell_window=_FROM_CONFIG):
+                           sell_window=_FROM_CONFIG,
+                           reinvest_timeout_days=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
 
     min_signal1, percent_buy, buy_window, reinvest_min_signal1,
-    percent_reinvest and percent_sell override their config values — the sweeps vary one parameter
+    percent_reinvest, percent_sell, sell_window and reinvest_timeout_days
+    override their config values — the sweeps vary one parameter
     per cell. Passing None disables that one setting
     (per the convention above) while leaving config alone; omitting it uses
     config. buy_window is a size, not a condition, so None is not meaningful for
@@ -118,7 +120,9 @@ def make_median_strategies(signal3_map: dict | None = None,
                   if reinvest_min_signal1 is _FROM_CONFIG else reinvest_min_signal1)
         reinvest = ReInvestMedian1000Strategy(
             percentReinvest=pct_ri, use_pe=config.USE_PE,
-            timeoutDays=config.REINVEST_TIMEOUT_DAYS,
+            timeoutDays=(config.REINVEST_TIMEOUT_DAYS
+                         if reinvest_timeout_days is _FROM_CONFIG
+                         else reinvest_timeout_days),
             timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
             signal1_map=(reinvest_signal1_map or {}) if ri_min is not None else {},
             min_signal1=ri_min if ri_min is not None else 0.0,

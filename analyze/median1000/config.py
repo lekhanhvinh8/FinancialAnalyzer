@@ -92,9 +92,26 @@ PERCENT_REINVEST = 10
 # Timeout reinvest: if no reinvest has occurred X trading days after last sell,
 # release the reserve using a looser threshold, on the same scale as
 # PERCENT_REINVEST above (so -10 = only if 10%+ BELOW the median).
+#
+# Swept over 14 settings and 52 symbols (sweep_reinvest_timeout.py). Nothing beats
+# 400 and there is only one way to get it wrong: too short. At 20 days the arm
+# loses 17 paired points on 13/49 symbols, with releases at 27.3 and sells at 12.1
+# — constant redeployment means holding more shares, which triggers more selling.
+# From 190 days up the paired median is exactly 0.00 at every setting, and past
+# 1200 the rows are identical because the valve fires once and never again.
+#
+# Switching it off is indistinguishable from 400 too: 23/48 symbols, paired median
+# 0.00, p=0.667, with half the releases. Kept anyway — it is insurance for a
+# regime where the price condition stops firing, and it currently costs nothing.
+#
+# Note the aggregate median peaks exactly here at +20.0 with 15.8 and 12.1 either
+# side, which looks like a fine-tuned optimum and is not: paired, both neighbours
+# are 0.00.
 REINVEST_TIMEOUT_DAYS    = 400   # (0 = disabled)
 REINVEST_TIMEOUT_PERCENT = 999   # 999 is effectively no price condition at all:
-                                 # once the timeout is reached, reinvest regardless
+                                 # once the timeout is reached, reinvest regardless.
+                                 # Deliberately not swept — the intent is that the
+                                 # timeout alone decides, with no price test.
 
 USE_PE = False   # use P/E-adjusted median instead of price median
 
