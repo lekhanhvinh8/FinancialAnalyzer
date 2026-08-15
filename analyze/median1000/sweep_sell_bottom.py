@@ -19,13 +19,12 @@ WHY THE MEDIAN TEST IS OFF IN THE CELLS
   shipped config the bottom trigger is None, so PERCENT_SELL = None still means
   "never sell" there and the all-None engine check is unaffected.
 
-  Three reference points instead of one:
-
-      OFF          live — median at PERCENT_SELL, no bottom trigger. What a
-                   change has to beat, and what every paired figure is against.
-      never sell   neither trigger. The floor. Says what the sell arm is worth at
-                   all, which is the number the cells should be read beside.
-      cells        median off, bottom at the threshold.
+  The grid is then homogeneous — one parameter, twelve values plus None — and is
+  read the way sweep_percent_sell is read: the reference is a ROW, chosen in the
+  browser, defaulting to this parameter's own None. PERCENT_SELL is not a row and
+  is not the baseline for anything. It is printed once under the table as context,
+  because "is this trigger any good" and "is it better than the median one" are
+  different questions and only the first is what this grid answers.
 
 THE FIRST THING HERE THAT LOOSENS THE SELL ARM INSTEAD OF RESTRAINING IT
 
@@ -83,8 +82,8 @@ THE GRID
 COSTS NO WARMUP
 
   local_bottom comes out of the same range_stats row the median already does, so
-  every cell shares the start index run_all would use anyway and OFF is not
-  judged on different bars.
+  every cell shares the start index run_all would use anyway, so no row is judged
+  on more bars than another.
 
 Usage:
     python analyze/median1000/sweep_sell_bottom.py             # all symbols
@@ -113,15 +112,18 @@ from analyze.median1000.factory import (make_median_strategies,
 
 QS = [75, 100, 150, 200, 250, 300, 350, 400, 500, 600, 800, 1000]   # 12
 
-# Two references, because the swept cells replace the median trigger rather than
-# adding to it.
-#   OFF     live: median at PERCENT_SELL, no bottom trigger. The thing a change
-#           would have to beat.
-#   NOSELL  neither trigger. Not a candidate — it is the floor, and it says how
-#           much the sell arm is worth at all, which is the number every cell
-#           here should be read against.
-OFF_KEY    = "off"
-NOSELL_KEY = "nosell"
+# The reference is this parameter's own None, exactly as sweep_percent_sell pairs
+# against the live value of the parameter it sweeps. With the median trigger off
+# in every cell, None here means the arm never sells, so the grid is homogeneous:
+# one parameter, one of whose settings happens to be "no trigger at all".
+#
+# PERCENT_SELL is deliberately NOT the reference. Pairing the bottom trigger
+# against a median-based configuration measures which of two different price
+# tests is better, which is a different question from what this grid answers —
+# is this trigger any good, and at what value. The live median config is still
+# computed and printed, but as a footnote outside the grid, never as the baseline.
+NOSELL_KEY = "none"
+LIVE_KEY   = "live"      # context only, not part of the grid
 
 OUT  = Path(__file__).parent / "sweep_sell_bottom.html"
 RAW  = Path(__file__).parent / "sweep_sell_bottom_raw.json"
@@ -205,9 +207,8 @@ def eval_symbol(sym: str):
             return (round(r["allRatioGrowth"] - base, 4), r["totalBuys"],
                     r["totalSells"], r["totalReinvest"])
 
-        live_pct = config.PERCENT_SELL
-        out = {OFF_KEY:    cell(live_pct, None),   # live
-               NOSELL_KEY: cell(None, None)}       # floor
+        out = {NOSELL_KEY: cell(None, None),                  # this grid's None
+               LIVE_KEY:   cell(config.PERCENT_SELL, None)}   # context footnote
         # Median trigger OFF in every swept cell, so the bottom one is judged on
         # its own rather than as an increment on top of a condition that already
         # catches most of what there is to catch.
@@ -232,15 +233,17 @@ def aggregate(per_symbol: dict) -> dict:
     """
     {metric: {key: value}}.
 
-    paired  median per-symbol difference against OFF, which is also live here.
+    paired  median per-symbol difference against the None row. The HTML lets the
+            reader re-reference any row and recomputes this client-side from the
+            per-symbol numbers; this server-side copy is what the console prints.
             Never subtract two aggregate columns instead: changing the threshold
             reorders the symbols, so the symbol at the median of one column is
             not the symbol at the median of the other.
     pairp   sign-test p over decided symbols only.
-    nb      how many of the cell's two grid neighbours also beat OFF
+    nb      how many of the cell's two grid neighbours also beat None
             significantly. One dimension, so the most it can be is 2.
     """
-    keys = [OFF_KEY, NOSELL_KEY] + [_key(q) for q in QS]
+    keys = [NOSELL_KEY, LIVE_KEY] + [_key(q) for q in QS]
     syms = [s for s in per_symbol if all(k in per_symbol[s] for k in keys)]
     grids = {m: {} for m in ("mean", "median", "win", "worst", "vote",
                              "paired", "pairp", "nb", "buys", "sells", "reis")}
@@ -262,7 +265,7 @@ def aggregate(per_symbol: dict) -> dict:
         grids["sells"][k]  = st.mean([per_symbol[s][k][2] for s in syms])
         grids["reis"][k]   = st.mean([per_symbol[s][k][3] for s in syms])
 
-    base = m[:, keys.index(OFF_KEY)]
+    base = m[:, keys.index(NOSELL_KEY)]
     for i, k in enumerate(keys):
         d = m[:, i] - base
         up  = int((d > 1e-9).sum())
@@ -275,7 +278,7 @@ def aggregate(per_symbol: dict) -> dict:
     for j, q in enumerate(QS):
         nb = ([QS[j - 1]] if j > 0 else []) + ([QS[j + 1]] if j < len(QS) - 1 else [])
         grids["nb"][_key(q)] = sum(1 for x in nb if _key(x) in good)
-    grids["nb"][OFF_KEY] = grids["nb"][NOSELL_KEY] = 0
+    grids["nb"][NOSELL_KEY] = grids["nb"][LIVE_KEY] = 0
     return grids
 
 
@@ -314,72 +317,167 @@ body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
 <p class="k">{note}</p></body></html>""", encoding="utf-8")
 
 
-def build_html(grids, n_syms, skipped, elapsed):
-    off_sells = grids["sells"].get(OFF_KEY, float("nan"))
-    rows = ""
-    for k in [OFF_KEY, NOSELL_KEY] + [_key(q) for q in QS]:
-        p, pp = grids["paired"].get(k, 0.0), grids["pairp"].get(k, 1.0)
+def build_html(grids, per_symbol, n_syms, skipped, elapsed):
+    """
+    Same shape as sweep_percent_sell's report, and for the same reason: one
+    parameter, a homogeneous grid, and the reference chosen in the browser rather
+    than baked in.
+
+    PERCENT_SELL is not a row. This grid answers "is this trigger any good, and at
+    what value", which is a question about one parameter; putting a median-based
+    configuration in it would silently turn every comparison into "is the bottom
+    trigger better than the median one", a different question. It is printed once
+    below the table as context and takes no part in any figure.
+    """
+    syms = sorted(per_symbol)
+    keys = [NOSELL_KEY] + [_key(q) for q in QS]
+    # Per-symbol diffs in one fixed symbol order, shipped so the reference row can
+    # change client-side. Subtracting two already-computed vs values would be
+    # median(A-ref) - median(B-ref) — the same trap one level up — so the browser
+    # always goes back to these.
+    diffs = {k: [per_symbol[s][k][0] for s in syms] for k in keys}
+
+    def best(metric):
+        g = {k: v for k, v in (grids.get(metric) or {}).items() if k in keys}
+        return max(g, key=g.get) if g else None
+    bests = {m: best(m) for m in ("mean", "median", "win", "vote", "worst")}
+
+    body = ""
+    for k in keys:
+        label = ("<b>None</b> <span style='color:#64748b'>no trigger</span>"
+                 if k == NOSELL_KEY else k)
+        cells = ""
+        for m, fmt in (("mean", "{:+.1f}"), ("median", "{:+.1f}"), ("win", "{:.0f}%"),
+                       ("vote", "{:.0f}"), ("worst", "{:+.1f}")):
+            v = grids[m].get(k, float("nan"))
+            hi = " style='color:#4ade80;font-weight:600'" if bests.get(m) == k else ""
+            cells += "<td" + hi + ">" + fmt.format(v) + "</td>"
         sells = grids["sells"].get(k, float("nan"))
-        hit = (p > 0 and pp < 0.05 and k not in (OFF_KEY, NOSELL_KEY))
-        # A second trigger can "win" by churning; flag any cell that has more than
-        # doubled the trade count so it cannot be read as a clean improvement.
-        churn = sells > 2 * off_sells if off_sells == off_sells else False
-        rows += (
-            f"<tr style='background:{'rgba(34,197,94,0.12)' if hit else 'transparent'}'>"
-            f"<td style='text-align:left'>"
-            f"{'<b>OFF (live)</b>' if k == OFF_KEY else '<i>never sell</i>' if k == NOSELL_KEY else k}</td>"
-            f"<td style='color:{'#4ade80' if p >= 0 else '#f87171'}'>"
-            f"{'' if k == OFF_KEY else f'{p:+.2f}'}</td>"
-            f"<td style='color:{'#4ade80' if pp < 0.05 else '#94a3b8'}'>"
-            f"{'' if k == OFF_KEY else f'{pp:.3f}'}</td>"
-            f"<td>{grids['nb'].get(k, 0)}</td>"
-            f"<td>{grids['mean'].get(k, float('nan')):+.1f}</td>"
-            f"<td>{grids['median'].get(k, float('nan')):+.1f}</td>"
-            f"<td>{grids['vote'].get(k, 0)}</td>"
-            f"<td>{grids['worst'].get(k, float('nan')):+.1f}</td>"
-            f"<td style='color:{'#fbbf24' if churn else '#e2e8f0'};"
-            f"{'font-weight:600' if churn else ''}'>{sells:.2f}</td>"
-            f"<td>{grids['buys'].get(k, float('nan')):.0f}</td></tr>")
+        churn = " style='color:#fbbf24;font-weight:600'" if sells > 5 else ""
+        body += (
+            "<tr data-row='" + str(k) + "' style='cursor:pointer'>"
+            "<td style='text-align:left'>" + str(label) + "</td>" + cells
+            + "<td data-vs='" + str(k) + "' style='border-left:2px solid #334155'></td>"
+            + "<td data-vsmeta='" + str(k) + "' style='color:#64748b;font-size:11px'></td>"
+            + "<td>" + f"{grids['reis'].get(k, float('nan')):.1f}" + "</td>"
+            + "<td>" + f"{grids['buys'].get(k, float('nan')):.0f}" + "</td>"
+            + "<td" + churn + ">" + f"{sells:.2f}" + "</td></tr>")
 
     skip_html = ("<p class='note'>Skipped: "
                  + ", ".join(f"{s} ({w})" for s, w in sorted(skipped)) + "</p>"
                  ) if skipped else ""
+    lp  = getattr(config, "PERCENT_SELL", 75)
+    lm  = grids["mean"].get(LIVE_KEY, float("nan"))
+    lmd = grids["median"].get(LIVE_KEY, float("nan"))
+    lw  = grids["worst"].get(LIVE_KEY, float("nan"))
+    ls  = grids["sells"].get(LIVE_KEY, float("nan"))
 
-    return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
-<title>second sell trigger sweep</title><style>
+    head = f"""<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>PERCENT_SELL_BOTTOM sweep</title><style>
 body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:20px}}
 table{{border-collapse:collapse;font-size:13px;margin:12px 0}}
 th,td{{border:1px solid #1e293b;padding:5px 10px;text-align:center}}
 th{{background:#111c30;color:#94a3b8}}
+tr[data-row]:hover td{{background:rgba(255,255,255,0.04)}}
+tr.refrow td{{background:rgba(96,165,250,0.10)}}
 .note{{color:#94a3b8;font-size:13px;line-height:1.7;max-width:1000px}}
 code{{color:#e2e8f0}}
 </style></head><body>
-<h2>Second sell trigger &mdash; PERCENT_SELL_BOTTOM</h2>
-<p class="note">{n_syms} symbols, {len(QS)} thresholds plus OFF, {elapsed/60:.1f} min.
-Sells when the price is this far above the 1000-bar LOW, OR'd with the existing
-test against the median. OFF is both the reference and the live config, so every
-paired figure is against what runs today.<br>
-<b>This is the first change here that loosens the sell arm rather than
-restraining it.</b> Three filters have been tried and all three lost by paying the
-portfolio to rescue one or two symbols. The mirror-image failure to watch for is a
-cell that wins by trading constantly &mdash; the sells column turns
-<span style="color:#fbbf24">amber</span> once a cell more than doubles OFF's
-{off_sells:.2f} trades per symbol.<br>
-Scale note: the low is a floor, so distance to it is large and one-sided (median
-day sits +132% above it) while distance to the median is centred near +24%. A
-threshold that looks enormous beside PERCENT_SELL = {getattr(config, 'PERCENT_SELL', 75)}
+<h2>PERCENT_SELL_BOTTOM sweep</h2>
+<p class="note">{n_syms} symbols, {len(QS)} settings plus None, {elapsed/60:.1f} min.
+One parameter only — the gates and everything else stay at their configured
+values, and <b>the median trigger is switched off in every row</b>, so this
+measures the bottom trigger on its own and PERCENT_SELL never enters a figure.<br>
+The condition is <code>(price&nbsp;&minus;&nbsp;low)/low&nbsp;&times;&nbsp;100
+&gt; PERCENT_SELL_BOTTOM</code> against the 1000-bar low. Larger is
+<b>stricter</b> and sells less, the same direction as PERCENT_SELL.
+<code>None</code> is no trigger at all, which with the median one off means the
+arm never sells.<br>
+Scale note: the low is a floor, so distance to it is one-sided and large — the
+median day sits +132% above it. A number that looks enormous beside PERCENT_SELL
 is not necessarily loose.</p>
 {skip_html}
-<table><thead><tr>
-<th>threshold</th><th>paired vs OFF</th><th>sign-test p</th><th>nb (max 2)</th>
-<th>mean</th><th>median</th><th>cells beaten</th><th>worst symbol</th>
-<th>sells</th><th>buys</th>
-</tr></thead><tbody>{rows}</tbody></table>
-<p class="note">Green rows beat OFF with p&lt;0.05 and a positive paired median.
-With {len(QS)} cells about one reaches p&lt;0.05 by chance, so read <b>nb</b>: an
-isolated winner between two losers is noise, two agreeing neighbours is a
-plateau.</p>
+<table><thead><tr><th>PERCENT_SELL_BOTTOM</th><th>mean</th><th>median</th><th>win</th>
+<th>vote</th><th>worst</th><th style='border-left:2px solid #334155'>vs <span id='refLabel'>None</span></th>
+<th>up / p</th><th>reinv</th><th>buys</th><th>sells</th>
+</tr></thead><tbody>{body}</tbody></table>
+<p class="note"><b>Click any row to make it the reference</b> — the vs column
+recomputes against it from the per-symbol numbers. That is the only way to compare
+two settings: subtracting two vs values would be
+median(A&minus;ref)&nbsp;&minus;&nbsp;median(B&minus;ref), the same mistake one
+level up.<br>
+<b>median</b>, <b>win</b> and <b>worst</b> must never be subtracted between rows —
+the symbol at the median of one column is a different symbol from the one at the
+median of another. <b>mean</b> is the exception and may be subtracted: it is
+linear. <b>vote</b> is already a pairwise round robin.<br>
+<b>sells</b> turns <span style="color:#fbbf24">amber</span> past 5 per symbol. A
+second trigger can look good purely by trading constantly, so read it before the
+vs column.</p>
+<p class="note" style="border-top:1px solid #1e293b;padding-top:10px">
+<b>Context, not a row and not a baseline.</b> The live median condition
+(PERCENT_SELL = {lp}, no bottom trigger) scores mean {lm:+.1f}, median {lmd:+.1f},
+worst {lw:+.1f}, {ls:.2f} sells. Kept out of the grid on purpose: mixing it in
+would turn every comparison here into "which of two price tests is better", which
+is a different question from the one this grid asks.</p>
+"""
+
+    script = """
+<script>
+const DIFFS = __DIFFS__;
+const KEYS  = __KEYS__;
+const NONE_KEY = __NONE__;
+let   REF   = NONE_KEY;
+
+function med(a) {
+  const s = [...a].sort((x, y) => x - y), m = s.length >> 1;
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+function lchoose(n, k) {
+  let r = 0;
+  for (let i = 1; i <= k; i++) r += Math.log(n - k + i) - Math.log(i);
+  return r;
+}
+function signP(up, dec) {
+  let c = 0;
+  for (let k = up; k <= dec; k++) c += Math.exp(lchoose(dec, k) - dec * Math.LN2);
+  return Math.min(1, c);
+}
+function recompute() {
+  const ref = DIFFS[REF];
+  if (!ref) return;
+  document.getElementById('refLabel').textContent = REF === NONE_KEY ? 'None' : REF;
+  KEYS.forEach(function(k) {
+    const cell = document.querySelector('td[data-vs="' + k + '"]');
+    const meta = document.querySelector('td[data-vsmeta="' + k + '"]');
+    if (!cell) return;
+    if (k === REF) {
+      cell.innerHTML = '&mdash;'; cell.style.color = '#64748b';
+      meta.textContent = 'reference'; return;
+    }
+    const d   = DIFFS[k].map((v, i) => v - ref[i]);
+    const up  = d.filter(x => x > 1e-9).length;
+    const dec = d.filter(x => Math.abs(x) > 1e-9).length;
+    const p   = dec ? signP(up, dec) : 1;
+    const m   = med(d);
+    cell.textContent = (m >= 0 ? '+' : '') + m.toFixed(2);
+    cell.style.color = (m > 0 && p < 0.05) ? '#4ade80'
+                     : (m < 0 && p > 0.95) ? '#f87171' : '#e2e8f0';
+    meta.textContent = up + '/' + dec + '  p=' + p.toFixed(3);
+  });
+  document.querySelectorAll('tr[data-row]').forEach(function(tr) {
+    tr.classList.toggle('refrow', tr.dataset.row === REF);
+  });
+}
+document.querySelectorAll('tr[data-row]').forEach(function(tr) {
+  tr.addEventListener('click', function() { REF = tr.dataset.row; recompute(); });
+});
+recompute();
+</script>
 </body></html>"""
+    script = (script.replace("__DIFFS__", json.dumps(diffs))
+                    .replace("__KEYS__", json.dumps([str(k) for k in keys]))
+                    .replace("__NONE__", json.dumps(NOSELL_KEY)))
+    return head + script
 
 
 def _report(per_symbol, skipped, elapsed):
@@ -388,29 +486,36 @@ def _report(per_symbol, skipped, elapsed):
         print("every symbol was excluded"); return
     grids = aggregate(per_symbol)
     pr, pp, nb = grids["paired"], grids["pairp"], grids["nb"]
-    off_sells = grids["sells"][OFF_KEY]
+    if not grids["mean"]:
+        print("no symbol has every cell — was the raw file written by an older "
+              "version of this script? re-run the sweep."); return
 
-    print(f"\nOFF (= live)   mean {grids['mean'][OFF_KEY]:+.2f}  "
-          f"median {grids['median'][OFF_KEY]:+.2f}  "
-          f"sells {off_sells:.2f}  buys {grids['buys'][OFF_KEY]:.0f}")
+    print(f"\nreference   None, no trigger at all (the median trigger is off in "
+          f"every cell)\n            mean {grids['mean'][NOSELL_KEY]:+.2f}  "
+          f"median {grids['median'][NOSELL_KEY]:+.2f}  "
+          f"sells {grids['sells'][NOSELL_KEY]:.2f}")
+    print(f"\ncontext     live median condition, PERCENT_SELL="
+          f"{getattr(config, 'PERCENT_SELL', 75)}  <- NOT the baseline\n"
+          f"            mean {grids['mean'][LIVE_KEY]:+.2f}  "
+          f"median {grids['median'][LIVE_KEY]:+.2f}  "
+          f"sells {grids['sells'][LIVE_KEY]:.2f}")
 
     print(f"\n{'threshold':>10}{'paired':>9}{'p':>8}{'nb':>4}{'mean':>8}{'median':>8}"
-          f"{'vote':>6}{'worst':>9}{'sells':>7}{'x OFF':>7}")
+          f"{'vote':>6}{'worst':>9}{'sells':>7}")
     for q in QS:
         k = _key(q)
-        x = grids['sells'][k] / off_sells if off_sells else float("nan")
         print(f"{q:>10}{pr[k]:+9.2f}{pp[k]:8.3f}{nb[k]:4d}{grids['mean'][k]:8.1f}"
               f"{grids['median'][k]:8.1f}{grids['vote'][k]:6d}{grids['worst'][k]:9.1f}"
-              f"{grids['sells'][k]:7.2f}{x:7.1f}")
+              f"{grids['sells'][k]:7.2f}")
 
     good = sorted(((pr[_key(q)], q) for q in QS
                    if pr[_key(q)] > 0 and pp[_key(q)] < 0.05), reverse=True)
-    print(f"\ncells beating OFF with p<0.05: {len(good)}/{len(QS)}")
+    print(f"\ncells beating None with p<0.05: {len(good)}/{len(QS)}")
     for v, q in good:
-        x = grids['sells'][_key(q)] / off_sells if off_sells else float("nan")
+        sl = grids['sells'][_key(q)]
         print(f"  {q:>5}  paired {v:+.2f}  p {pp[_key(q)]:.3f}  nb {nb[_key(q)]}  "
-              f"sells {grids['sells'][_key(q)]:.2f} ({x:.1f}x OFF)"
-              f"{'   <-- CHURN' if x > 2 else ''}")
+              f"mean {grids['mean'][_key(q)]:+.1f}  sells {sl:.2f}"
+              f"{'   <-- CHURN' if sl > 5 else ''}")
     if good:
         solid = [q for _, q in good if nb[_key(q)] >= 2]
         print(f"  with both neighbours agreeing: {len(solid)}"
@@ -418,7 +523,8 @@ def _report(per_symbol, skipped, elapsed):
     print(f"  cells whose paired median is exactly 0.00: "
           f"{sum(1 for q in QS if abs(pr[_key(q)]) < 1e-9)}/{len(QS)}")
 
-    OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
+    OUT.write_text(build_html(grids, per_symbol, len(per_symbol),
+                              skipped, elapsed),
                    encoding="utf-8")
     print(f"\nreport -> {OUT}")
 
