@@ -16,11 +16,10 @@ import os
 import pandas as pd
 import database as db
 from analyze.runner import load_symbol_df, run_estimate
-from analyze.strategies.buy import BuyMedian1000Strategy, BuyIntervalStrategy
-from analyze.strategies.sell import SellMedian1000Strategy, SellStrategy
-from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStrategy
 from export.chart import save_backtest_chart
 from analyze.median1000 import config
+from analyze.median1000.factory import (make_median_strategies,
+                                        make_interval_strategies, build_pelog_map)
 
 CHARTS_DIR = Path(__file__).parent / "charts"
 SYMBOL     = sys.argv[1].upper() if len(sys.argv) > 1 else "VN30"
@@ -39,22 +38,27 @@ def _signal_map(symbol, df, window, col):
     return out
 
 
-def make_strategies(signal3_map=None, signal1_map=None, reinvest_signal1_map=None, zdev_map=None):
-    gate  = config.REINVEST_MIN_SIGNAL1 is not None
-    zgate = config.SELL_MIN_ZDEV is not None
-    return (
-        BuyMedian1000Strategy(percentBuy=config.PERCENT_BUY,           use_pe=config.USE_PE),
-        SellMedian1000Strategy(percentSell=config.PERCENT_SELL,         use_pe=config.USE_PE,
-                               signal3_map=signal3_map or {}, min_signal3=config.MIN_SIGNAL3,
-                               signal1_map=signal1_map or {}, min_signal1=config.SELL_MIN_SIGNAL1,
-                               zdev_map=(zdev_map or {}) if zgate else {},
-                               min_zdev=config.SELL_MIN_ZDEV or 0.0),
-        ReInvestMedian1000Strategy(percentReinvest=config.PERCENT_REINVEST, use_pe=config.USE_PE,
-                                   timeoutDays=config.REINVEST_TIMEOUT_DAYS,
-                                   timeoutPercent=config.REINVEST_TIMEOUT_PERCENT,
-                                   signal1_map=(reinvest_signal1_map or {}) if gate else {},
-                                   min_signal1=config.REINVEST_MIN_SIGNAL1 or 0.0),
-    )
+def make_strategies(signal3_map=None, signal1_map=None, reinvest_signal1_map=None,
+                    zdev_map=None, pelog_map=None):
+    """
+    Kept as a thin wrapper so existing callers and the __main__ block below do not
+    change, but the trio itself now comes from the factory.
+
+    It used to build its own, and had drifted: no churn guard on the buy or
+    reinvest arms (d2ffc39 added that and this copy never got it), no
+    BUY/SELL_MEDIAN_WINDOW, and none of SELL_MIN_PELOG, PERCENT_SELL_BOTTOM or
+    PERCENT_REINVEST_TOP. It also read the gate thresholds straight from config,
+    so a None there would have reached the strategy as a comparison against None
+    rather than switching the gate off.
+
+    Every one of those was invisible while the shipped config happened to line up
+    — the churn guard in particular can only fire once PERCENT_BUY exceeds
+    PERCENT_SELL, which it does not today. That is precisely the failure mode
+    factory.py's docstring describes: a rule written twice, agreeing until it
+    quietly does not.
+    """
+    return make_median_strategies(signal3_map, signal1_map,
+                                  reinvest_signal1_map, zdev_map, pelog_map)
 
 
 if __name__ == "__main__":
@@ -84,14 +88,25 @@ if __name__ == "__main__":
                 if idx is not None and z is not None:
                     zmap[idx] = float(z)
 
+    pmap = {}
+    if config.SELL_MIN_PELOG is not None:
+        pmap = build_pelog_map(SYMBOL, df, cal_range_close,
+                               getattr(config, "PE_MEDIAN_WINDOW", 500))
+        if not pmap:
+            print(f"ERROR: no usable P/E for {SYMBOL} at "
+                  f"window={getattr(config, 'PE_MEDIAN_WINDOW', 500)}")
+            sys.exit(1)
+
     # Start once every input is available — latest first-appearance wins.
     # See run_all.py for why. Both arms use the same index.
     first_idx = {
-        "median1000":       1000,
+        "median1000":       max(1000, getattr(config, "BUY_MEDIAN_WINDOW", 1000),
+                                getattr(config, "SELL_MEDIAN_WINDOW", 1000)),
         "signal1":          min(s1)    if s1    else None,
         "signal3":          min(s3)    if s3    else None,
         "reinvest_signal1": min(ri_s1) if ri_s1 else None,
         "zdev":             min(zmap)  if zmap  else None,
+        "pelog":            min(pmap)  if pmap  else None,
     }
     if config.SELL_MIN_ZDEV is not None and not zmap:
         print(f"ERROR: no z_dev for {SYMBOL} at stat_window={config.SELL_ZDEV_WINDOW}")
@@ -108,12 +123,12 @@ if __name__ == "__main__":
         print(f"  WARNING: below MIN_EVAL_BARS={config.MIN_EVAL_BARS} — run_all would "
               f"skip this symbol; treat the result as an empty sample")
 
-    buy, sell, reinvest = make_strategies(s3, s1, ri_s1, zmap)
+    buy, sell, reinvest = make_strategies(s3, s1, ri_s1, zmap, pmap)
     result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY, buy, sell, reinvest,
                           cal_range_close, start_index=start_idx)
 
-    cmp_result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY,
-                              BuyIntervalStrategy(), SellStrategy(), ReinvestStrategy(),
+    b0, s0, r0 = make_interval_strategies()
+    cmp_result = run_estimate(SYMBOL, df, config.INTERVAL_MONEY, b0, s0, r0,
                               cal_range_close, start_index=start_idx)
 
     out = CHARTS_DIR / f"{SYMBOL.lower()}_backtest.html"
