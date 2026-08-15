@@ -19,8 +19,14 @@ THE None CONVENTION
   arm with its neutral base class:
 
       PERCENT_BUY      = None  ->  BuyIntervalStrategy   buy every interval
-      PERCENT_SELL     = None  ->  SellStrategy          never sell
+      PERCENT_SELL     = None  ->  SellStrategy          never sell *
       PERCENT_REINVEST = None  ->  ReinvestStrategy      never reinvest
+
+      * only while PERCENT_SELL_BOTTOM is also None. The sell arm has two price
+        triggers OR'd together and each switches off on its own; the arm falls
+        back to the base class when both are off. In the shipped config the
+        bottom trigger is None, so PERCENT_SELL = None does mean "never sell"
+        and the engine check below still holds.
 
   Buy looks inverted next to the other two and is not: for the buy arm, doing
   nothing IS buying every interval, because the money has to go somewhere. For
@@ -113,7 +119,11 @@ def make_median_strategies(signal3_map: dict | None = None,
     # and the strategy tests it for None directly.
     pct_sell_bot = (getattr(config, "PERCENT_SELL_BOTTOM", None)
                     if percent_sell_bottom is _FROM_CONFIG else percent_sell_bottom)
-    if pct_sell is None:
+    # The arm has two price triggers and stops selling only when BOTH are off.
+    # PERCENT_SELL = None on its own now means "no median trigger", which is what
+    # lets sweep_sell_bottom judge the bottom trigger on its own instead of only
+    # as an increment on top of the median one.
+    if pct_sell is None and pct_sell_bot is None:
         sell = SellStrategy()
     else:
         sell = SellMedian1000Strategy(

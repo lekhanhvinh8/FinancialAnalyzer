@@ -1,9 +1,31 @@
 """
 Sweep the second sell trigger: PERCENT_SELL_BOTTOM.
 
-Sell when the price is this far above the SELL_MEDIAN_WINDOW LOW, OR'd with the
-existing test against the median. None switches it off and the arm is exactly
-what it is today, so OFF is both the reference cell and the live configuration.
+Sell when the price is this far above the SELL_MEDIAN_WINDOW LOW. In the strategy
+it is OR'd with the existing test against the median; in this sweep the median
+test is switched OFF in every cell, so the bottom trigger is judged on its own.
+
+WHY THE MEDIAN TEST IS OFF IN THE CELLS
+
+  Left on, the bottom trigger can only ever ADD sells to a condition that already
+  catches most of what there is to catch, and the sweep measures an increment
+  rather than the idea. Off, the two are a head-to-head: is distance-from-the-low
+  a better price test than distance-from-the-median?
+
+  That needed a change in the None convention. PERCENT_SELL = None used to mean
+  "replace the arm with SellStrategy and never sell", which would have made the
+  bottom threshold unreachable. The arm now has two price triggers, each switches
+  off independently, and only both being off falls back to the base class. In the
+  shipped config the bottom trigger is None, so PERCENT_SELL = None still means
+  "never sell" there and the all-None engine check is unaffected.
+
+  Three reference points instead of one:
+
+      OFF          live — median at PERCENT_SELL, no bottom trigger. What a
+                   change has to beat, and what every paired figure is against.
+      never sell   neither trigger. The floor. Says what the sell arm is worth at
+                   all, which is the number the cells should be read beside.
+      cells        median off, bottom at the threshold.
 
 THE FIRST THING HERE THAT LOOSENS THE SELL ARM INSTEAD OF RESTRAINING IT
 
@@ -91,8 +113,15 @@ from analyze.median1000.factory import (make_median_strategies,
 
 QS = [75, 100, 150, 200, 250, 300, 350, 400, 500, 600, 800, 1000]   # 12
 
-# The reference: no second trigger, which is what config has today.
-OFF_KEY = "off"
+# Two references, because the swept cells replace the median trigger rather than
+# adding to it.
+#   OFF     live: median at PERCENT_SELL, no bottom trigger. The thing a change
+#           would have to beat.
+#   NOSELL  neither trigger. Not a candidate — it is the floor, and it says how
+#           much the sell arm is worth at all, which is the number every cell
+#           here should be read against.
+OFF_KEY    = "off"
+NOSELL_KEY = "nosell"
 
 OUT  = Path(__file__).parent / "sweep_sell_bottom.html"
 RAW  = Path(__file__).parent / "sweep_sell_bottom_raw.json"
@@ -166,18 +195,24 @@ def eval_symbol(sym: str):
         base = run_estimate(sym, df, config.INTERVAL_MONEY, b0, s0, r0, crc,
                             start_index=start_idx)["allRatioGrowth"]
 
-        def cell(pct_bottom):
+        def cell(pct_sell, pct_bottom):
             buy, sell, rei = make_median_strategies(
                 signal3_map=s3, signal1_map=s1, reinvest_signal1_map=ri,
-                zdev_map=z, pelog_map=pl, percent_sell_bottom=pct_bottom)
+                zdev_map=z, pelog_map=pl,
+                percent_sell=pct_sell, percent_sell_bottom=pct_bottom)
             r = run_estimate(sym, df, config.INTERVAL_MONEY, buy, sell, rei, crc,
                              start_index=start_idx)
             return (round(r["allRatioGrowth"] - base, 4), r["totalBuys"],
                     r["totalSells"], r["totalReinvest"])
 
-        out = {OFF_KEY: cell(None)}
+        live_pct = config.PERCENT_SELL
+        out = {OFF_KEY:    cell(live_pct, None),   # live
+               NOSELL_KEY: cell(None, None)}       # floor
+        # Median trigger OFF in every swept cell, so the bottom one is judged on
+        # its own rather than as an increment on top of a condition that already
+        # catches most of what there is to catch.
         for q in QS:
-            out[_key(q)] = cell(q)
+            out[_key(q)] = cell(None, q)
         return sym, out, None
     except Exception as e:
         return sym, None, f"{type(e).__name__}: {e}"
@@ -205,7 +240,7 @@ def aggregate(per_symbol: dict) -> dict:
     nb      how many of the cell's two grid neighbours also beat OFF
             significantly. One dimension, so the most it can be is 2.
     """
-    keys = [OFF_KEY] + [_key(q) for q in QS]
+    keys = [OFF_KEY, NOSELL_KEY] + [_key(q) for q in QS]
     syms = [s for s in per_symbol if all(k in per_symbol[s] for k in keys)]
     grids = {m: {} for m in ("mean", "median", "win", "worst", "vote",
                              "paired", "pairp", "nb", "buys", "sells", "reis")}
@@ -240,7 +275,7 @@ def aggregate(per_symbol: dict) -> dict:
     for j, q in enumerate(QS):
         nb = ([QS[j - 1]] if j > 0 else []) + ([QS[j + 1]] if j < len(QS) - 1 else [])
         grids["nb"][_key(q)] = sum(1 for x in nb if _key(x) in good)
-    grids["nb"][OFF_KEY] = 0
+    grids["nb"][OFF_KEY] = grids["nb"][NOSELL_KEY] = 0
     return grids
 
 
@@ -282,16 +317,17 @@ body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
 def build_html(grids, n_syms, skipped, elapsed):
     off_sells = grids["sells"].get(OFF_KEY, float("nan"))
     rows = ""
-    for k in [OFF_KEY] + [_key(q) for q in QS]:
+    for k in [OFF_KEY, NOSELL_KEY] + [_key(q) for q in QS]:
         p, pp = grids["paired"].get(k, 0.0), grids["pairp"].get(k, 1.0)
         sells = grids["sells"].get(k, float("nan"))
-        hit = (p > 0 and pp < 0.05)
+        hit = (p > 0 and pp < 0.05 and k not in (OFF_KEY, NOSELL_KEY))
         # A second trigger can "win" by churning; flag any cell that has more than
         # doubled the trade count so it cannot be read as a clean improvement.
         churn = sells > 2 * off_sells if off_sells == off_sells else False
         rows += (
             f"<tr style='background:{'rgba(34,197,94,0.12)' if hit else 'transparent'}'>"
-            f"<td style='text-align:left'>{'<b>OFF</b>' if k == OFF_KEY else k}</td>"
+            f"<td style='text-align:left'>"
+            f"{'<b>OFF (live)</b>' if k == OFF_KEY else '<i>never sell</i>' if k == NOSELL_KEY else k}</td>"
             f"<td style='color:{'#4ade80' if p >= 0 else '#f87171'}'>"
             f"{'' if k == OFF_KEY else f'{p:+.2f}'}</td>"
             f"<td style='color:{'#4ade80' if pp < 0.05 else '#94a3b8'}'>"

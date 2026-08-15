@@ -129,7 +129,10 @@ class SellMedian1000Strategy(SellStrategy):
       oscillator per symbol, which no portfolio-wide threshold on a single signal
       can do.
     """
-    percentSell: float = 0
+    # None means this trigger never fires, NOT that the arm stops selling — the
+    # arm has two price triggers now and dies only when both are None, which
+    # factory.py decides. Lets a sweep isolate one trigger from the other.
+    percentSell: float | None = 0
     # Second price trigger, OR'd with percentSell: sell when the price is this far
     # above the window's LOW instead of above its median. None switches it off,
     # leaving the arm exactly as it was.
@@ -195,8 +198,11 @@ class SellMedian1000Strategy(SellStrategy):
                 or self.medianWindow not in cal_range_close[index].rangeDayCloses):
             return False
         rc = cal_range_close[index].rangeDayCloses[self.medianWindow]
-        median = rc.pct50(self.use_pe)
-        fired = (current - median) / median * 100 > self.percentSell
+        fired = False
+        if self.percentSell is not None:
+            median = rc.pct50(self.use_pe)
+            if median:
+                fired = (current - median) / median * 100 > self.percentSell
         # Second way to satisfy the PRICE test, not a bypass of the gates below:
         # how far the price has run from the window's LOW rather than from its
         # middle. A symbol can double off its floor while its median chases it up,
