@@ -198,16 +198,31 @@ SELL_MIN_SIGNAL1   = 0.228   # % per day, = k/sqrt(window) with k=2.5 at window 
 # comparison to the two momentum filters above: there a high reading means "trend
 # intact, hold", whereas a high z_dev is the reason to sell.
 # Set SELL_MIN_ZDEV = None to disable. Window is the z_dev stat_window to read.
-# UNTUNED — see MIN_SIGNAL3 above for the measurement covering both. The z_dev
-# computation is sound (no look-ahead, verified three ways); at 0.9 it is simply
-# not paying for itself. The window may be as much at fault as the threshold.
-SELL_ZDEV_WINDOW = 700    # stat_window in valuation_zdev (median_window is fixed at 1000)
-SELL_MIN_ZDEV    = None   # OFF. It cost mean -2.50 layered on signal1 (see above), and
-                          # its 700-bar warmup pushed the start index to 1699, which
-                          # skipped 12 of 57 symbols outright — a quarter of the universe
-                          # paid for a filter that was not earning anything. Set a float
-                          # to switch it back on; the threshold has never been swept, so
-                          # off is a measured default, not a verdict on the idea.
+#
+# OFF, and the honest reason is the warmup, not a performance number.
+#
+# A 700-bar stat window on top of the 1000-bar median put the backtest start at
+# 1699, and 12 of 57 symbols were skipped for it — six with no z_dev at that
+# window at all, six with too few bars left afterwards. A quarter of the universe
+# spent on one gate.
+#
+# THIS GATE HAS NEVER BEEN MEASURED ON ITS OWN. The -2.50 once written here was
+# signal3 AND z_dev together, layered on signal1 (44 symbols, old config):
+# signal1 alone +14.47, the pair alone +1.76, all three +11.97. That figure
+# cannot be attributed to z_dev, and the point is now sharp because signal3 alone
+# has since measured at +6.04 — so the pair's -2.50 says nothing about which of
+# them carried it. Nor can it be subtracted out; overlapping gates do not
+# compose additively.
+#
+# The cheap experiment nobody has run: isolate it at a SHORT stat_window, 100 or
+# 200, where the warmup costs 100-200 bars instead of 700 and almost no symbols
+# are lost. If it is still negative there the idea is dead; if it is positive
+# then 700 was the mistake rather than the gate.
+#
+# The computation itself is sound — no look-ahead, verified three ways.
+SELL_ZDEV_WINDOW = 700    # stat_window in valuation_zdev (median_window is fixed
+                          # at 1000). Only read when the gate below is on.
+SELL_MIN_ZDEV    = None
 
 # ReInvestMedian1000: require the slope to have turned up before redeploying the reserve.
 # Inverse polarity to the sell gate above: sell is BLOCKED while momentum is up, reinvest
@@ -217,19 +232,15 @@ SELL_MIN_ZDEV    = None   # OFF. It cost mean -2.50 layered on signal1 (see abov
 # (sweep_reinvest_signal1.py): not one beats switching the gate off, and the mean
 # falls monotonically as the gate gets stricter — at w=100, k=-4 scores 45.9 and
 # k=+4 scores 16.4. "Wait for momentum to turn before redeploying" costs 29 points
-# across the grid. Redeploying immediately is better; idle cash earns nothing,
-# and that outweighs entering a few months early.
+# across the grid. Redeploying immediately is better; idle cash earns nothing.
 #
-# The mechanism is worth knowing before anyone tries this idea again. Mean spans
-# 31 points across the grid while the reinvest COUNT spans 0.4 (3.1 to 3.5), so
-# the gate never changed how often the arm acts — only when. With ~3 reinvests per
-# symbol over ~11 years each one is a large allocation, and delaying it by months
-# swings a symbol by hundreds of points. Unlike the sell gate this one cannot
-# block anything outright: REINVEST_TIMEOUT_DAYS releases the reserve regardless.
+# Mean spans 31 points across that grid while the reinvest COUNT spans 0.4 (3.1 to
+# 3.5), so the gate never changed how often the arm acts — only when. It could
+# never block anything outright either: REINVEST_TIMEOUT_DAYS releases the reserve
+# regardless.
 #
-# Set a float to switch it back on. Note the direct comparison, off against the
-# old 0.05, is only +4.85 mean and 88% of that is STB alone (+0.61 without it),
-# 20/38 symbols improved, p=0.436. The reason to leave it off is the monotone
-# trend across 17 thresholds and every window, not that number.
+# Set a float to switch it back on. The direct off-against-old comparison is only
+# +4.85 mean and 88% of that is STB alone (+0.61 without it), 20/38 symbols,
+# p=0.436 — the monotone trend is the evidence, not that number.
 REINVEST_SIGNAL1_WINDOW = 100    # kept for when the gate is switched back on
 REINVEST_MIN_SIGNAL1    = None
