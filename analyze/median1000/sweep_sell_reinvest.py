@@ -81,6 +81,59 @@ READ THE DIAGONALS TOO
   paired median across the cells sharing a gap, which describes cells, not
   symbols, and carries no significance of its own.
 
+WHAT IT FOUND: THE HYPOTHESIS IS DEAD, AND IT DIED THE INTERESTING WAY
+
+  52 symbols, 70 cells, 4.6 min. The mechanism above is real and the sweep
+  confirms it — narrowing the dead zone does hand the re-entry back to the price
+  condition, exactly as described:
+
+      PERCENT_REINVEST    10 (live)    40     60     80
+      reinvests/symbol         3.96  4.71   7.15  16.63
+
+  The prediction about what that would be worth was wrong, and wrong in sign.
+  Collapsed along the diagonals, a NARROWER gap is worse and a wider one is
+  neutral to slightly better:
+
+      gap        15     30     45   65 (live)    80     85
+      paired  -4.63  -2.66  -2.51      -0.62  +0.03  +0.52
+
+  At sell=75 reinvest=60, the narrowest sensible cell, 15 symbols improve and 34
+  get worse, paired median -4.85. FPT and GMD improve enormously — +91 and +428 —
+  which is precisely what the diagnosis predicted, and they are two symbols out
+  of fifty-two. Against them: SHB -173, HPG -172, HCM -163, SSI -161, MBB -121.
+
+  So the dead zone is not a defect that had gone unnoticed. It is protecting the
+  portfolio, and FPT and GMD are what it costs.
+
+  This does not retract the diagnosis. The 400-bar timeout really is the only way
+  back into a compounder and really does buy higher than it sold. What is retracted
+  is that PERCENT_REINVEST is the lever: a global threshold that fixes those two
+  charges 34 other symbols for it. Anything that fixes it has to tell a compounder
+  apart from an oscillator, which is not a number either of these axes can hold.
+
+  THE ONE THING THAT DID WIN IS NOT ON THE REINVEST AXIS
+
+      sell  reinv  gap  paired      p  nb   up/down/unchanged
+        85     10   75   +1.89  0.000   2   29 / 8 / 15
+        80     10   70   +1.67  0.000   1   29 / 6 / 17
+        90     10   80   +0.93  0.004   1
+
+  All three sit at reinvest=10, i.e. unchanged. The reinvest axis contributes
+  nothing; what wins is selling even less often. Not adopted, on three counts:
+  no cell has more than 2 agreeing neighbours (with 70 cells about 3.5 reach
+  p<0.05 by chance, and there are exactly 3), the size is +1.89 median points
+  against a live mean of +52, and config.py records a 1D sweep finding that 85
+  and up was NOT significant.
+
+  That last one is not the contradiction it looks like: the 1D sweep paired
+  against 60 and this pairs against 75. Paired medians do not chain —
+  median(85-60) is not median(85-75) + median(75-60) — so "85 does not beat 60"
+  and "85 beats 75" can both hold. The same non-additivity that has been the
+  recurring trap here, in its transitive form.
+
+  Nothing rescues the worst symbol either: LPB stays at -90.68 in every cell, and
+  the "worst symbol" metric picks the live cell.
+
 Usage:
     python analyze/median1000/sweep_sell_reinvest.py             # all symbols
     python analyze/median1000/sweep_sell_reinvest.py FPT GMD     # a subset

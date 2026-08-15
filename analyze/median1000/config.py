@@ -72,6 +72,18 @@ SELL_MEDIAN_WINDOW = 1000
 # Mechanism: sells fall from 4.3 to 2.3 per symbol and the worst symbol improves
 # from -238 to -101. Three gates were bolted onto this arm to restrain selling,
 # and it turns out the price condition itself was the thing to loosen.
+#
+# UNRESOLVED, and left unresolved deliberately: the 2D sweep against
+# PERCENT_REINVEST found 85 beating 75 with a paired median of +1.89 and p=0.000,
+# 29 symbols up against 8 down. Not adopted — no cell there has more than 2
+# agreeing neighbours, 3 of 70 cells reach p<0.05 and about 3.5 would by chance,
+# and +1.89 is small beside a live mean of +52.
+#
+# It also looks like it contradicts the refined 1D grid above, and does not:
+# that one paired against 60, this one against 75, and paired medians do not
+# chain. median(85-60) is not median(85-75) + median(75-60), so 85 can fail
+# against 60 and win against 75 at the same time. Settling this needs a grid
+# paired against 75 with enough resolution for neighbours to agree or not.
 PERCENT_SELL     = 75
 
 # ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
@@ -87,6 +99,19 @@ PERCENT_SELL     = 75
 # capital deployed (median over 52 symbols), because a blocked buy goes into the
 # reserve and the reserve only leaves through here. Setting this to None costs 78
 # mean points.
+#
+# Re-tested JOINTLY with PERCENT_SELL (sweep_sell_reinvest.py), because the two
+# are coupled: the distance between them is a band the money cannot return
+# through, and 10 was chosen while PERCENT_SELL was still 60. Widening that band
+# to 65 turned out not to matter — 10 survives at the new sell level, and every
+# cell that beats live does so at reinvest=10 unchanged.
+#
+# The coupling is real but points the other way from what was expected. Raising
+# this closes the dead zone and hands re-entry back to the price condition, with
+# reinvests going 3.96 -> 7.15 -> 16.63 at 10, 60 and 80. That is worse, not
+# better: at reinvest=60, 15 symbols improve and 34 decline, paired median -4.85.
+# The band is protecting the portfolio. What it costs is FPT and GMD, which gain
+# +91 and +428 there and are the two worst long-history losses today.
 PERCENT_REINVEST = 10
 
 # Timeout reinvest: if no reinvest has occurred X trading days after last sell,

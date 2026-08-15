@@ -72,3 +72,24 @@ Still open:
   design new run_all -> only buy intervally, select best buy condition from all symbols, then sell -> reinvest if possible -> using buy/reinvest zone.
   using Earnings yield gap
   z_score may be used for trading
+
+=== DONE: sell x reinvest 2D sweep — hypothesis refuted ===
+
+FPT (-85) and GMD (-75) lose because the 400-bar reinvest timeout is their only
+way back in and it buys higher than it sold: 5 of their 7 re-entries fire at
+exactly 400 bars, at +20% to +53% above the sell price. The price condition
+cannot reach them — after a sell at +75% over the median, FPT took 538 to 1101
+bars to fall back within +10%.
+
+Swept PERCENT_SELL x PERCENT_REINVEST, 70 cells, 52 symbols. Narrowing that gap
+does work mechanically (reinvests 3.96 -> 7.15 -> 16.63) and is WORSE: at gap 15,
+15 symbols up against 34 down, paired median -4.85. FPT +91 and GMD +428, and
+they are 2 of 52. The dead zone is protecting the portfolio.
+
+Still open:
+  - Fixing FPT/GMD needs something that distinguishes a compounder from an
+    oscillator. Not a global threshold — no value of either axis helps them
+    without charging 34 other symbols.
+  - PERCENT_SELL 85 beats 75 paired (+1.89, p=0.000, 29 up / 8 down) but on
+    isolated cells, nb<=2 of 8. Needs a dedicated 1D grid paired against 75.
+  - LPB -90.68 unchanged in all 70 cells.
