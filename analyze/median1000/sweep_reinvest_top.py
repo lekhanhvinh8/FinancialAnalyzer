@@ -121,7 +121,7 @@ QS = ([-5, -10, -15]
 # in every cell, None here means the arm never sells, so the grid is homogeneous:
 # one parameter, one of whose settings happens to be "no trigger at all".
 #
-# PERCENT_SELL is deliberately NOT the reference. Pairing the bottom trigger
+# PERCENT_REINVEST is deliberately NOT the reference. Pairing the top trigger
 # against a median-based configuration measures which of two different price
 # tests is better, which is a different question from what this grid answers —
 # is this trigger any good, and at what value. The live median config is still
@@ -334,7 +334,7 @@ def build_html(grids, per_symbol, n_syms, skipped, elapsed):
     parameter, a homogeneous grid, and the reference chosen in the browser rather
     than baked in.
 
-    PERCENT_SELL is not a row. This grid answers "is this trigger any good, and at
+    PERCENT_REINVEST is not a row. This grid answers "is this trigger any good, and at
     what value", which is a question about one parameter; putting a median-based
     configuration in it would silently turn every comparison into "is the bottom
     trigger better than the median one", a different question. It is printed once
@@ -383,7 +383,7 @@ def build_html(grids, per_symbol, n_syms, skipped, elapsed):
     lm  = grids["mean"].get(LIVE_KEY, float("nan"))
     lmd = grids["median"].get(LIVE_KEY, float("nan"))
     lw  = grids["worst"].get(LIVE_KEY, float("nan"))
-    ls  = grids["sells"].get(LIVE_KEY, float("nan"))
+    ls  = grids["reis"].get(LIVE_KEY, float("nan"))
 
     head = f"""<!DOCTYPE html><html><head><meta charset="utf-8">
 <title>PERCENT_REINVEST_TOP sweep</title><style>
@@ -400,15 +400,17 @@ code{{color:#e2e8f0}}
 <p class="note">{n_syms} symbols, {len(QS)} settings plus None, {elapsed/60:.1f} min.
 One parameter only — the gates and everything else stay at their configured
 values, and <b>the median trigger is switched off in every row</b>, so this
-measures the bottom trigger on its own and PERCENT_SELL never enters a figure.<br>
-The condition is <code>(price&nbsp;&minus;&nbsp;low)/low&nbsp;&times;&nbsp;100
-&gt; PERCENT_REINVEST_TOP</code> against the 1000-bar low. Larger is
-<b>stricter</b> and sells less, the same direction as PERCENT_SELL.
-<code>None</code> is no trigger at all, which with the median one off means the
-arm never sells.<br>
-Scale note: the low is a floor, so distance to it is one-sided and large — the
-median day sits +132% above it. A number that looks enormous beside PERCENT_SELL
-is not necessarily loose.</p>
+measures the top trigger on its own and PERCENT_REINVEST never enters a figure.<br>
+The condition is <code>(price&nbsp;&minus;&nbsp;high)/high&nbsp;&times;&nbsp;100
+&le; PERCENT_REINVEST_TOP</code> against the 1000-bar high. The quantity is
+always &le; 0, so thresholds are negative and &minus;30 reads as &ldquo;at least
+30% off the high&rdquo;. <b>More</b> negative is stricter and redeploys less —
+the same direction as PERCENT_REINVEST, since both fire while dev is below the
+threshold.<br>
+<code>None</code> is no trigger at all; with the median one off that means the
+arm never redeploys, and it drops the 400-bar timeout with it because that lives
+on the same class. It is a low floor and every cell clears it easily — read the
+context line under the table, not the vs column alone.</p>
 {skip_html}
 <table><thead><tr><th>PERCENT_REINVEST_TOP</th><th>mean</th><th>median</th><th>win</th>
 <th>vote</th><th>worst</th><th style='border-left:2px solid #334155'>vs <span id='refLabel'>None</span></th>
@@ -428,8 +430,8 @@ against the live condition's 3.96. A second trigger can look good purely by
 redeploying constantly, so read it before the vs column.</p>
 <p class="note" style="border-top:1px solid #1e293b;padding-top:10px">
 <b>Context, not a row and not a baseline.</b> The live median-based condition
-(PERCENT_SELL = {lp}, no bottom trigger) scores mean {lm:+.1f}, median {lmd:+.1f},
-worst {lw:+.1f}, {ls:.2f} sells. Kept out of the grid on purpose: mixing it in
+(PERCENT_REINVEST = {lp}, no top trigger) scores mean {lm:+.1f}, median {lmd:+.1f},
+worst {lw:+.1f}, {ls:.2f} reinvests. Kept out of the grid on purpose: mixing it in
 would turn every comparison here into "which of two price tests is better", which
 is a different question from the one this grid asks.</p>
 """
@@ -509,7 +511,7 @@ def _report(per_symbol, skipped, elapsed):
           f"median {grids['median'][NOSELL_KEY]:+.2f}  "
           f"reinvests {grids['reis'][NOSELL_KEY]:.2f}")
     print(f"\ncontext     live median condition, PERCENT_REINVEST="
-          f"{getattr(config, 'PERCENT_SELL', 75)}  <- NOT the baseline\n"
+          f"{getattr(config, 'PERCENT_REINVEST', 10)}  <- NOT the baseline\n"
           f"            mean {grids['mean'][LIVE_KEY]:+.2f}  "
           f"median {grids['median'][LIVE_KEY]:+.2f}  "
           f"reinvests {grids['reis'][LIVE_KEY]:.2f}")
