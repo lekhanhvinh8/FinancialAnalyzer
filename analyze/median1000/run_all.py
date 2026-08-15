@@ -38,6 +38,31 @@ THE REPORT SPLITS LONG FROM SHORT HISTORY
   The Long and Short columns are DIFFERENT SYMBOLS, so nothing subtracts one from
   the other; there is no pairing available between two disjoint sets.
 
+SORTING AND FILTERING
+
+  Every column header sorts, Diff descending by default. Filter chips sit above
+  the table and combine as OR WITHIN A ROW, AND ACROSS ROWS — "Beat" plus "Lost"
+  means decided either way rather than a contradiction, and "Long" plus "Short"
+  is the whole universe. Only a genuine cross-row conflict empties the table, and
+  it says so when it does.
+
+  A filtered-out symbol leaves the table AND the summary, so the three columns
+  always describe what is on screen. The per-row checkbox is the individual
+  override: it drops one symbol from the summary while leaving it visible.
+
+  The chips that earn their place are the ones that isolate a finding the sorted
+  table cannot:
+
+    No real effect <1%   the strategy ran and changed nothing — 5 symbols, all
+                         short, which is most of what the short group's +1.06%
+                         median is made of
+    Never sold           6 symbols, and one of them (VN30) has full history, so
+                         this is not purely a short-history artifact
+    Median1000 in the red   absolute, not relative, and the two genuinely differ:
+                         NVL beats the interval arm by 8.67 points while being
+                         down 16.23% in its own right
+    Signal today         3 symbols say Sell right now; this is the row to act on
+
 Usage:
     python analyze/median1000/run_all.py                 # all symbols, all cores
     python analyze/median1000/run_all.py FPT STB         # a subset
@@ -378,13 +403,75 @@ def build_report(rows: list[dict], out_path: Path,
             f"<td style='text-align:center'><a href='{row['chart']}' target='_blank'>open</a></td>"
             f"</tr>\n"
         )
-        # "s" = sells, used by the activity row in the summary
+        # Everything the summary, the filters and the sort read. They work off
+        # this array rather than off the rendered cells, so a number is never
+        # parsed back out of the HTML it was formatted into.
         data_json.append({"sym": sym, "m": round(m, 4), "i": round(i, 4),
+                          "b": int(row["median_buys"]),
                           "s": int(row["median_sells"]),
+                          "r": int(row["median_reinvests"]),
+                          "nw": now_label,
                           "eb": int(row.get("eval_bars") or 0)})
 
     import json
     data_js = json.dumps(data_json)
+
+    # (group id, group label, [(chip id, chip label)]). The predicate for each
+    # chip id lives in PRED in the JS below; adding a filter means adding a line
+    # here and a line there.
+    #
+    # WITHIN a group the chips are OR'd, ACROSS groups they are AND'd. That is
+    # what makes the set combinable without producing accidental empties: "Beat"
+    # plus "Lost" reads as "decided either way", not as a contradiction, and
+    # "Long" plus "Short" is the whole universe rather than nothing. An empty
+    # group constrains nothing.
+    FILTERS = [
+        ("hist", "History", [
+            ("long",   f"Long &ge;{LONG_BARS:,}"),
+            ("short",  f"Short &lt;{LONG_BARS:,}")]),
+        ("out",  "Vs interval", [
+            ("win",    "Beat by &ge;1%"),
+            ("lose",   "Lost by &ge;1%"),
+            # Its own bucket rather than a slice of the two above: a symbol the
+            # strategy left alone is a different finding from one it handled and
+            # lost on, and the split showed six of them hiding in the short group.
+            ("flat",   "No real effect &lt;1%")]),
+        ("act",  "Activity", [
+            ("sold",   "Sold at least once"),
+            ("nosell", "Never sold")]),
+        ("sig",  "Signal today", [
+            ("buy",    "Buy"),
+            ("sell",   "Sell"),
+            ("rei",    "Reinvest"),
+            ("nosig",  "None")]),
+        # Not the same question as "Lost by >=1%", which is relative. NVL beat the
+        # interval arm by 8.67 points and is still down 16.23% in absolute terms.
+        ("abs",  "Absolute", [
+            ("red",    "Median1000 in the red")]),
+    ]
+    filter_html = "".join(
+        "<div style='display:flex;align-items:baseline;gap:8px;margin:4px 0'>"
+        f"<span style='color:#64748b;font-size:11px;min-width:86px'>{glabel}</span>"
+        "<div style='display:flex;flex-wrap:wrap;gap:6px'>"
+        + "".join(f"<button class='chip' data-grp='{gid}' data-f='{fid}'>{flabel}</button>"
+                  for fid, flabel in chips)
+        + "</div></div>"
+        for gid, glabel, chips in FILTERS
+    )
+    filter_html = (
+        "<div style='margin:10px 0;padding:10px 14px;background:#0f172a;"
+        "border:1px solid #1e293b;border-radius:8px;font-size:12px'>"
+        "<div style='display:flex;justify-content:space-between;align-items:center;"
+        "margin-bottom:8px'>"
+        "<span style='color:#94a3b8;font-weight:700'>Filters</span>"
+        "<span><span id='f-count' style='color:#64748b;margin-right:10px'></span>"
+        "<button id='f-clear' class='chip'>Clear all</button></span></div>"
+        f"{filter_html}"
+        "<div style='color:#475569;font-size:11px;margin-top:8px'>"
+        "Chips in the same row are OR'd, different rows are AND'd. Filtered-out "
+        "symbols leave the table and the summary; unchecking a visible row drops "
+        "it from the summary only.</div></div>"
+    )
 
     # (js key, row label, extra cell style). None is a horizontal rule. Every row
     # is rendered three times — All, Long, Short — so it is written once here and
@@ -441,7 +528,16 @@ def build_report(rows: list[dict], out_path: Path,
   td {{ padding: 6px 12px; border-bottom: 1px solid #1e293b; }}
   tr:hover td {{ background: rgba(255,255,255,0.04); }}
   tr.excluded td {{ opacity: 0.35; }}
+  tr.hidden {{ display: none; }}
   a {{ color: #60a5fa; }}
+  th[data-sort] {{ cursor: pointer; user-select: none; }}
+  th[data-sort]:hover {{ color: #e2e8f0; }}
+  th.sorted {{ color: #60a5fa; }}
+  .chip {{ background:#1e293b;color:#94a3b8;border:1px solid #334155;
+    border-radius:999px;padding:3px 10px;font-size:11px;font-family:inherit;
+    cursor:pointer; }}
+  .chip:hover {{ border-color:#475569;color:#e2e8f0; }}
+  .chip.on {{ background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600; }}
   #summary {{ margin-top:28px;background:#0f172a;border:1px solid #1e293b;
     border-radius:10px;padding:20px 24px;font-size:13px;line-height:2; }}
   #summary .s-title {{ font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:10px; }}
@@ -457,24 +553,32 @@ def build_report(rows: list[dict], out_path: Path,
 <p style="color:#64748b;font-size:12px">
   {len(rows)} symbols reported{skipped_note} &nbsp;|&nbsp;
   vs BuyInterval (no sell/reinvest), both arms starting at the same bar &nbsp;|&nbsp;
-  Sorted by Diff (Median1000 − Interval) descending. &nbsp;|&nbsp;
+  <span style="color:#94a3b8">Click a column header to sort</span> — Diff
+  (Median1000 − Interval) descending by default. &nbsp;|&nbsp;
   <span style="color:#fbbf24">Amber</span> eval bars = short history. &nbsp;|&nbsp;
   <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
 {config_html}
 {split_html}
+{filter_html}
 {skipped_html}
 <table>
 <thead><tr>
-  <th>Symbol</th>
-  <th>Median1000</th><th>BuyInterval</th><th>Diff</th>
-  <th>Buys</th><th>Sells</th><th>Reinvests</th>
-  <th>Eval bars</th><th>Signal now</th><th>Chart</th>
+  <th data-sort="sym" data-type="s">Symbol</th>
+  <th data-sort="m">Median1000</th><th data-sort="i">BuyInterval</th>
+  <th data-sort="d">Diff</th>
+  <th data-sort="b">Buys</th><th data-sort="s">Sells</th><th data-sort="r">Reinvests</th>
+  <th data-sort="eb">Eval bars</th><th data-sort="nw" data-type="s">Signal now</th>
+  <th>Chart</th>
 </tr></thead>
-<tbody>
+<tbody id="tbody">
 {rows_html}
 </tbody>
 </table>
+<p id="empty-note" style="display:none;color:#fbbf24;font-size:13px;padding:16px 0">
+  No symbol matches every filter group. Chips in the same row widen the set;
+  chips in different rows narrow it.
+</p>
 
 <div id="summary">
   <div class="s-title">Summary</div>
@@ -620,8 +724,84 @@ function statsFor(a) {{
   }};
 }}
 
+// ---------------------------------------------------------------- filtering
+// One predicate per chip id in the FILTERS list built on the Python side.
+const PRED = {{
+  long:   d => d.eb >= LONG_BARS,
+  short:  d => d.eb <  LONG_BARS,
+  win:    d => (d.m - d.i) >=  1,
+  lose:   d => (d.m - d.i) <= -1,
+  flat:   d => Math.abs(d.m - d.i) < 1,
+  sold:   d => d.s >  0,
+  nosell: d => d.s === 0,
+  // Substring, so a bar flagged "Buy + Reinvest" answers to both chips, which is
+  // what someone filtering for "Reinvest" means.
+  buy:    d => d.nw.indexOf('Buy')      >= 0,
+  sell:   d => d.nw.indexOf('Sell')     >= 0,
+  rei:    d => d.nw.indexOf('Reinvest') >= 0,
+  nosig:  d => d.nw.indexOf('Buy') < 0 && d.nw.indexOf('Sell') < 0
+                                       && d.nw.indexOf('Reinvest') < 0,
+  red:    d => d.m < 0,
+}};
+
+// group id -> Set of chip ids currently on.
+const filters = {{}};
+
+// OR inside a group, AND across groups. An empty group is not a constraint, so
+// the no-filter case falls out of this without a special branch.
+function passes(d) {{
+  for (const g in filters) {{
+    const on = filters[g];
+    if (on.size && ![...on].some(k => PRED[k](d))) return false;
+  }}
+  return true;
+}}
+
+function visible() {{
+  return ALL_DATA.filter(passes);
+}}
+
+function applyFilters() {{
+  const shown = new Set(visible().map(d => d.sym));
+  document.querySelectorAll('#tbody tr').forEach(tr => {{
+    tr.classList.toggle('hidden', !shown.has(tr.dataset.sym));
+  }});
+  document.getElementById('f-count').textContent =
+    'showing ' + shown.size + ' of ' + ALL_DATA.length;
+  document.getElementById('empty-note').style.display = shown.size ? 'none' : 'block';
+  updateSummary();
+}}
+
+// ------------------------------------------------------------------ sorting
+let sortKey = 'd', sortDir = -1;   // matches the server-side order: Diff, desc
+
+function sortValue(d, k) {{
+  return k === 'd' ? d.m - d.i : d[k];
+}}
+
+function applySort() {{
+  const by = {{}};
+  ALL_DATA.forEach(d => by[d.sym] = d);
+  const tbody = document.getElementById('tbody');
+  [...tbody.querySelectorAll('tr')]
+    .sort((ra, rb) => {{
+      const a = sortValue(by[ra.dataset.sym], sortKey);
+      const b = sortValue(by[rb.dataset.sym], sortKey);
+      return sortDir * (typeof a === 'string' ? a.localeCompare(b) : a - b);
+    }})
+    // appendChild on an existing node moves it, so this reorders in place.
+    .forEach(tr => tbody.appendChild(tr));
+
+  document.querySelectorAll('th[data-sort]').forEach(th => {{
+    const on = th.dataset.sort === sortKey;
+    th.classList.toggle('sorted', on);
+    th.textContent = th.textContent.replace(/ [▲▼]$/, '') + (on ? (sortDir > 0 ? ' ▲' : ' ▼') : '');
+  }});
+}}
+
+// ------------------------------------------------------------------ summary
 function updateSummary() {{
-  const active = ALL_DATA.filter(d => !excluded.has(d.sym));
+  const active = visible().filter(d => !excluded.has(d.sym));
   const groups = {{
     all:   active,
     long:  active.filter(d => (d.eb || 0) >= LONG_BARS),
@@ -650,7 +830,35 @@ document.querySelectorAll('.sym-toggle').forEach(cb => {{
   }});
 }});
 
-updateSummary();
+document.querySelectorAll('.chip[data-f]').forEach(btn => {{
+  btn.addEventListener('click', () => {{
+    const g = btn.dataset.grp, f = btn.dataset.f;
+    (filters[g] ||= new Set());
+    if (filters[g].has(f)) {{ filters[g].delete(f); btn.classList.remove('on'); }}
+    else                   {{ filters[g].add(f);    btn.classList.add('on'); }}
+    applyFilters();
+  }});
+}});
+
+document.getElementById('f-clear').addEventListener('click', () => {{
+  for (const g in filters) filters[g].clear();
+  document.querySelectorAll('.chip.on').forEach(b => b.classList.remove('on'));
+  applyFilters();
+}});
+
+document.querySelectorAll('th[data-sort]').forEach(th => {{
+  th.addEventListener('click', () => {{
+    const k = th.dataset.sort;
+    // Re-clicking the active column flips it; a new column starts descending for
+    // numbers and ascending for names, which is the useful direction each time.
+    if (k === sortKey) sortDir = -sortDir;
+    else {{ sortKey = k; sortDir = th.dataset.type === 's' ? 1 : -1; }}
+    applySort();
+  }});
+}});
+
+applySort();
+applyFilters();
 </script>
 </body>
 </html>"""
