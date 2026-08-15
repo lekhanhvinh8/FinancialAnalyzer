@@ -38,6 +38,19 @@ THE REPORT SPLITS LONG FROM SHORT HISTORY
   The Long and Short columns are DIFFERENT SYMBOLS, so nothing subtracts one from
   the other; there is no pairing available between two disjoint sets.
 
+WHERE THE PRICE SITS IN ITS OWN RANGE
+
+  Four columns show the latest close against its 1000-bar top, bottom, median and
+  mean, as percentages. Fixed at 1000 rather than following BUY/SELL_MEDIAN_WINDOW
+  on purpose: they describe the symbol for a reader, they are not an input to any
+  decision, and they should not move when a strategy parameter does.
+
+  vs Top is <= 0 and vs Bottom >= 0 by construction, so only their magnitude says
+  anything and they render grey. vs Median and vs Mean carry a sign and are
+  coloured by it, red above. vs Median is worth more attention than the other
+  three — it is the exact quantity PERCENT_SELL and PERCENT_BUY are compared
+  against, so a row at +75 or above is one the sell arm is looking at right now.
+
 SORTING AND FILTERING
 
   Every column header sorts, Diff descending by default. Filter chips sit above
@@ -258,6 +271,27 @@ def process_symbol(symbol: str, run_dir: Path | None = None
                 return False
         now_flags = (_chk(buy1), _chk(sell1), _chk(ri1))
 
+        # Where the latest price sits inside its own 1000-bar range, as a percent
+        # of each reference. Hard-wired to 1000 rather than following
+        # BUY/SELL_MEDIAN_WINDOW: this is a description of the symbol for the
+        # reader, not an input to any decision, so it should not move when a
+        # strategy parameter does.
+        #
+        # vs_top is <= 0 and vs_bottom >= 0 by construction, so only their size
+        # carries information. vs_median and vs_mean carry a sign, and vs_median
+        # is exactly the quantity PERCENT_SELL and PERCENT_BUY are compared
+        # against — a row at +75 or above is one the sell arm is looking at.
+        rng = {}
+        rc = (cal_range_close[last].rangeDayCloses.get(1000)
+              if last in cal_range_close else None)
+        if rc is not None:
+            for name, ref in (("top", rc.top(config.USE_PE)),
+                              ("bottom", rc.bottom(config.USE_PE)),
+                              ("median", rc.pct50(config.USE_PE)),
+                              ("mean", rc.avg(config.USE_PE))):
+                rng[f"vs_{name}_%"] = (round((close_last - ref) / ref * 100, 2)
+                                       if ref else None)
+
         mg = float(round(r1["allRatioGrowth"], 2))
         ig = float(round(r2["allRatioGrowth"], 2))
         return symbol, {
@@ -270,6 +304,7 @@ def process_symbol(symbol: str, run_dir: Path | None = None
             "chart":             chart_path.name,
             "now_flags":         now_flags,
             "eval_bars":         eval_bars,
+            **rng,
         }, None, time.time() - t0
 
     except Exception:
@@ -388,6 +423,25 @@ def build_report(rows: list[dict], out_path: Path,
         f"{split_note}</div>"
     )
 
+    # Where the latest price sits in its 1000-bar range. vs_top and vs_bottom have
+    # a fixed sign so only magnitude means anything and they stay grey; vs_median
+    # and vs_mean are coloured by sign, red for above — vs_median is the exact
+    # quantity PERCENT_SELL is compared against.
+    RNG_COLS = [("vs_top_%", False), ("vs_bottom_%", False),
+                ("vs_median_%", True), ("vs_mean_%", True)]
+
+    def rng_cells(row) -> str:
+        out = ""
+        for key, signed in RNG_COLS:
+            v = row.get(key)
+            if v is None or v != v:
+                out += "<td style='text-align:right;color:#334155'>—</td>"
+                continue
+            c = ("#f87171" if v > 0 else "#4ade80") if signed else "#94a3b8"
+            out += (f"<td style='text-align:right;color:{c}'>"
+                    f"{'+' if v > 0 else ''}{v:.1f}%</td>")
+        return out
+
     rows_html = ""
     data_json  = []
     for _, row in df.iterrows():
@@ -416,7 +470,8 @@ def build_report(rows: list[dict], out_path: Path,
             f"<td style='text-align:right'>{int(row['median_sells'])}</td>"
             f"<td style='text-align:right'>{int(row['median_reinvests'])}</td>"
             f"<td style='text-align:right;color:{eb_color}'>{eb:,}</td>"
-            f"<td style='text-align:center;color:{now_color};font-weight:600'>{now_label}</td>"
+            + rng_cells(row)
+            + f"<td style='text-align:center;color:{now_color};font-weight:600'>{now_label}</td>"
             f"<td style='text-align:center'><a href='{row['chart']}' target='_blank'>open</a></td>"
             f"</tr>\n"
         )
@@ -428,7 +483,9 @@ def build_report(rows: list[dict], out_path: Path,
                           "s": int(row["median_sells"]),
                           "r": int(row["median_reinvests"]),
                           "nw": now_label,
-                          "eb": int(row.get("eval_bars") or 0)})
+                          "eb": int(row.get("eval_bars") or 0),
+                          "vt": row.get("vs_top_%"), "vb": row.get("vs_bottom_%"),
+                          "vd": row.get("vs_median_%"), "vm": row.get("vs_mean_%")})
 
     import json
     data_js = json.dumps(data_json)
@@ -573,6 +630,7 @@ def build_report(rows: list[dict], out_path: Path,
   <span style="color:#94a3b8">Click a column header to sort</span> — Diff
   (Median1000 − Interval) descending by default. &nbsp;|&nbsp;
   <span style="color:#fbbf24">Amber</span> eval bars = short history. &nbsp;|&nbsp;
+  vs Top / Bottom / Median / Mean = latest price against its own 1000-bar range. &nbsp;|&nbsp;
   <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
 {config_html}
@@ -585,7 +643,10 @@ def build_report(rows: list[dict], out_path: Path,
   <th data-sort="m">Median1000</th><th data-sort="i">BuyInterval</th>
   <th data-sort="d">Diff</th>
   <th data-sort="b">Buys</th><th data-sort="s">Sells</th><th data-sort="r">Reinvests</th>
-  <th data-sort="eb">Eval bars</th><th data-sort="nw" data-type="s">Signal now</th>
+  <th data-sort="eb">Eval bars</th>
+  <th data-sort="vt">vs Top</th><th data-sort="vb">vs Bottom</th>
+  <th data-sort="vd">vs Median</th><th data-sort="vm">vs Mean</th>
+  <th data-sort="nw" data-type="s">Signal now</th>
   <th>Chart</th>
 </tr></thead>
 <tbody id="tbody">
@@ -793,7 +854,12 @@ function applyFilters() {{
 let sortKey = 'd', sortDir = -1;   // matches the server-side order: Diff, desc
 
 function sortValue(d, k) {{
-  return k === 'd' ? d.m - d.i : d[k];
+  if (k === 'd') return d.m - d.i;
+  const v = d[k];
+  // A symbol with no range row sorts last either way rather than throwing off
+  // the comparator with a null.
+  if (v === null || v === undefined) return sortDir > 0 ? Infinity : -Infinity;
+  return v;
 }}
 
 function applySort() {{
