@@ -439,6 +439,18 @@ def build_report(rows: list[dict], out_path: Path,
     # quantity PERCENT_SELL is compared against, so amber marks the rows the sell
     # arm is looking at right now. Read it beside Signal now.
     RNG_COLS = ["vs_top_%", "vs_bottom_%", "vs_median_%", "vs_mean_%"]
+
+    def _num(v):
+        """NaN -> None for the JS payload.
+
+        rows goes through pd.DataFrame, which fills a key some symbols lack with
+        NaN rather than None, and json.dumps writes that as the bare literal NaN.
+        That parses fine as JavaScript and then poisons the sort comparator, which
+        only guards null and undefined — NaN compares false against everything and
+        the ordering comes out inconsistent. Rendering was never affected; the
+        cell test is `v != v`, which does catch NaN.
+        """
+        return None if v is None or v != v else float(v)
     sell_at = getattr(config, "PERCENT_SELL", None)
 
     def rng_cells(row) -> str:
@@ -497,8 +509,10 @@ def build_report(rows: list[dict], out_path: Path,
                           "r": int(row["median_reinvests"]),
                           "nw": now_label,
                           "eb": int(row.get("eval_bars") or 0),
-                          "vt": row.get("vs_top_%"), "vb": row.get("vs_bottom_%"),
-                          "vd": row.get("vs_median_%"), "vm": row.get("vs_mean_%")})
+                          "vt": _num(row.get("vs_top_%")),
+                          "vb": _num(row.get("vs_bottom_%")),
+                          "vd": _num(row.get("vs_median_%")),
+                          "vm": _num(row.get("vs_mean_%"))})
 
     import json
     data_js = json.dumps(data_json)
@@ -872,7 +886,8 @@ function sortValue(d, k) {{
   const v = d[k];
   // A symbol with no range row sorts last either way rather than throwing off
   // the comparator with a null.
-  if (v === null || v === undefined) return sortDir > 0 ? Infinity : -Infinity;
+  if (v === null || v === undefined || Number.isNaN(v))
+    return sortDir > 0 ? Infinity : -Infinity;
   return v;
 }}
 
