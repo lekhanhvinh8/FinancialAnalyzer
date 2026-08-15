@@ -505,10 +505,21 @@ const ALL_DATA = {data_js};
 const LONG_BARS = {LONG_BARS};
 const excluded = new Set();
 
+// Linear interpolation between the two neighbouring order statistics — the numpy
+// and R type-7 default. median() is defined in terms of it so that the two rows
+// of this table that both report a middle value cannot disagree: with an even
+// number of symbols the old floor() quantile picked the LOWER of the two middle
+// symbols, so "Diff spread p50" read +19.98% next to a "Median per-symbol diff"
+// of +20.14% on the same 52 numbers.
+function quantile(sorted, f) {{
+  if (!sorted.length) return NaN;
+  const pos = f * (sorted.length - 1);
+  const lo = Math.floor(pos), hi = Math.ceil(pos);
+  return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+}}
+
 function median(arr) {{
-  const s = [...arr].sort((a,b) => a-b);
-  const m = Math.floor(s.length/2);
-  return s.length % 2 ? s[m] : (s[m-1]+s[m])/2;
+  return quantile([...arr].sort((a,b) => a-b), 0.5);
 }}
 
 function fmt(v) {{
@@ -553,7 +564,7 @@ function statsFor(a) {{
   const ebs  = a.map(d => d.eb || 0).filter(v => v > 0).sort((x,y)=>x-y);
   const wArr = dec.filter(v=>v>0), lArr = dec.filter(v=>v<0);
   const avg  = arr => arr.length ? arr.reduce((x,y)=>x+y,0)/arr.length : 0;
-  const q    = f => diffs[Math.min(diffs.length-1, Math.max(0, Math.floor(f*(diffs.length-1))))];
+  const q    = f => quantile(diffs, f);   // diffs is already sorted ascending
   const totW = wArr.reduce((x,y)=>x+y,0);
   const sortedW = wArr.slice().sort((x,y)=>y-x);
   const top1 = totW ? 100*sortedW[0]/totW : 0;
