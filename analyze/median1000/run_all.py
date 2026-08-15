@@ -45,11 +45,17 @@ WHERE THE PRICE SITS IN ITS OWN RANGE
   on purpose: they describe the symbol for a reader, they are not an input to any
   decision, and they should not move when a strategy parameter does.
 
-  vs Top is <= 0 and vs Bottom >= 0 by construction, so only their magnitude says
-  anything and they render grey. vs Median and vs Mean carry a sign and are
-  coloured by it, red above. vs Median is worth more attention than the other
-  three — it is the exact quantity PERCENT_SELL and PERCENT_BUY are compared
-  against, so a row at +75 or above is one the sell arm is looking at right now.
+  All four render neutral. Colouring them by sign was the first attempt and it was
+  wrong twice over: it contradicts the Diff column two cells to the left, where
+  green is positive, and it implies a verdict these columns do not carry — a price
+  above its median is not bad news, it is the condition the sell arm exists to act
+  on. vs Top is <= 0 and vs Bottom >= 0 by construction anyway, so their sign
+  never carried information to colour.
+
+  One highlight survives because it is tied to a real threshold rather than to a
+  sign: vs Median is the exact quantity PERCENT_SELL is compared against, so a row
+  at or past it turns amber. That is the sell arm's own condition, and it should
+  agree with Signal now.
 
 SORTING AND FILTERING
 
@@ -423,22 +429,29 @@ def build_report(rows: list[dict], out_path: Path,
         f"{split_note}</div>"
     )
 
-    # Where the latest price sits in its 1000-bar range. vs_top and vs_bottom have
-    # a fixed sign so only magnitude means anything and they stay grey; vs_median
-    # and vs_mean are coloured by sign, red for above — vs_median is the exact
-    # quantity PERCENT_SELL is compared against.
-    RNG_COLS = [("vs_top_%", False), ("vs_bottom_%", False),
-                ("vs_median_%", True), ("vs_mean_%", True)]
+    # Where the latest price sits in its 1000-bar range. All four stay neutral:
+    # they describe a symbol, they do not score it, and colouring them by sign
+    # would both contradict the Diff column two cells to the left (green there is
+    # positive) and imply a judgement they do not carry — a price above its median
+    # is not bad news, it is the condition the sell arm is built to act on.
+    #
+    # The one highlight that means something is exactly that: vs Median is the
+    # quantity PERCENT_SELL is compared against, so amber marks the rows the sell
+    # arm is looking at right now. Read it beside Signal now.
+    RNG_COLS = ["vs_top_%", "vs_bottom_%", "vs_median_%", "vs_mean_%"]
+    sell_at = getattr(config, "PERCENT_SELL", None)
 
     def rng_cells(row) -> str:
         out = ""
-        for key, signed in RNG_COLS:
+        for key in RNG_COLS:
             v = row.get(key)
             if v is None or v != v:
-                out += "<td style='text-align:right;color:#334155'>—</td>"
+                out += "<td style='text-align:right;color:#334155'>&mdash;</td>"
                 continue
-            c = ("#f87171" if v > 0 else "#4ade80") if signed else "#94a3b8"
-            out += (f"<td style='text-align:right;color:{c}'>"
+            hot = (key == "vs_median_%" and sell_at is not None and v >= sell_at)
+            c = "#fbbf24" if hot else "#94a3b8"
+            out += (f"<td style='text-align:right;color:{c}"
+                    f"{';font-weight:600' if hot else ''}'>"
                     f"{'+' if v > 0 else ''}{v:.1f}%</td>")
         return out
 
@@ -630,7 +643,8 @@ def build_report(rows: list[dict], out_path: Path,
   <span style="color:#94a3b8">Click a column header to sort</span> — Diff
   (Median1000 − Interval) descending by default. &nbsp;|&nbsp;
   <span style="color:#fbbf24">Amber</span> eval bars = short history. &nbsp;|&nbsp;
-  vs Top / Bottom / Median / Mean = latest price against its own 1000-bar range. &nbsp;|&nbsp;
+  vs Top / Bottom / Median / Mean = latest price against its own 1000-bar range;
+  <span style="color:#fbbf24">amber</span> vs Median = at or past PERCENT_SELL. &nbsp;|&nbsp;
   <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
 {config_html}
