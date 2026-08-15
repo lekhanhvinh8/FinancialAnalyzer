@@ -78,7 +78,26 @@ class ReInvestPartialStrategy(ReinvestStrategy):
 
 @dataclass
 class ReInvestMedian1000Strategy(ReinvestStrategy):
-    percentReinvest: float = 0
+    """
+    Redeploy the reserve when the price is attractive. Two price triggers, OR'd,
+    plus a timeout valve that ignores both.
+    """
+    # None means this trigger never fires, NOT that the arm stops reinvesting —
+    # the arm has two price triggers and falls back to the base class only when
+    # both are None, which factory.py decides. Lets a sweep isolate one from the
+    # other.
+    percentReinvest: float | None = 0
+    # Second price trigger, OR'd with percentReinvest: reinvest once the price has
+    # fallen this far from the window HIGH rather than come back to its median.
+    # Same comparison direction as percentReinvest — reinvest while dev is BELOW
+    # the threshold — but measured against the top, where dev is always <= 0, so
+    # the threshold is negative. -30 reads as "at least 30% off the high".
+    #
+    # What it catches that the median cannot: the fall away from a spike, while
+    # the price is still above its own median. That is exactly the state FPT and
+    # GMD sit in after a sell, where the median condition never reopens and the
+    # 400-bar timeout ends up buying back higher than it sold.
+    percentReinvestTop: float | None = None
     use_pe: bool = False
     timeoutDays: int = 0        # 0 = disabled
     timeoutPercent: float = 0   # threshold used after timeout (same scale as percentReinvest)
@@ -129,9 +148,23 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return False
         if index not in cal_range_close or 1000 not in cal_range_close[index].rangeDayCloses:
             return False
-        median = cal_range_close[index].rangeDayCloses[1000].pct50(self.use_pe)
-        if (current - median) / median * 100 >= self.percentReinvest:
+        rc = cal_range_close[index].rangeDayCloses[1000]
+
+        fired = False
+        if self.percentReinvest is not None:
+            median = rc.pct50(self.use_pe)
+            if median:
+                fired = (current - median) / median * 100 < self.percentReinvest
+        # Second way to satisfy the PRICE test, not a bypass of the guards below.
+        # Both of them answer "should we redeploy at all", which does not depend
+        # on which condition noticed the opportunity.
+        if not fired and self.percentReinvestTop is not None:
+            top = rc.top(self.use_pe)
+            if top:
+                fired = (current - top) / top * 100 <= self.percentReinvestTop
+        if not fired:
             return False
+
         if self.sell_strategy is not None and self.sell_strategy.check(
                 index, close, pe, cal_range_close):
             return False

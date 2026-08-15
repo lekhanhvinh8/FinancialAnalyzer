@@ -34,11 +34,12 @@ THE None CONVENTION
   three arms, not in the convention — and these three base classes are exactly
   the comparison arm run_all already measures against.
 
-  PERCENT_SELL_BOTTOM is a primary condition too, but a SECOND one rather than
-  the only one: it is OR'd with PERCENT_SELL, so None removes the extra trigger
-  and leaves the arm intact instead of replacing it. It takes no map, so the
-  empty-map idiom the filters use does not apply and the strategy tests it for
-  None itself.
+  PERCENT_SELL_BOTTOM and PERCENT_REINVEST_TOP are primary conditions too, but
+  SECOND ones rather than the only one: each is OR'd with the arm's first price
+  test, so None removes the extra trigger and leaves the arm intact instead of
+  replacing it. Neither takes a map, so the empty-map idiom the filters use does
+  not apply and the strategy tests them for None itself. An arm falls back to its
+  base class only when BOTH of its price triggers are None.
 
   Setting all three PERCENT_* to None therefore turns the median1000 arm into
   the interval arm, and every symbol's diff must come out at 0.00. That is a
@@ -76,6 +77,7 @@ def make_median_strategies(signal3_map: dict | None = None,
                            buy_window=_FROM_CONFIG,
                            reinvest_min_signal1=_FROM_CONFIG,
                            percent_reinvest=_FROM_CONFIG,
+                           percent_reinvest_top=_FROM_CONFIG,
                            percent_sell=_FROM_CONFIG,
                            percent_sell_bottom=_FROM_CONFIG,
                            sell_window=_FROM_CONFIG,
@@ -153,13 +155,20 @@ def make_median_strategies(signal3_map: dict | None = None,
 
     pct_ri = (config.PERCENT_REINVEST
               if percent_reinvest is _FROM_CONFIG else percent_reinvest)
-    if pct_ri is None:
+    # Second primary condition, same shape as PERCENT_SELL_BOTTOM on the sell arm:
+    # no map, only a threshold, and the strategy tests it for None itself. The arm
+    # falls back to the base class only when BOTH price triggers are off — which
+    # also drops the timeout valve with it, since that lives on the same class.
+    pct_ri_top = (getattr(config, "PERCENT_REINVEST_TOP", None)
+                  if percent_reinvest_top is _FROM_CONFIG else percent_reinvest_top)
+    if pct_ri is None and pct_ri_top is None:
         reinvest = ReinvestStrategy()
     else:
         ri_min = (config.REINVEST_MIN_SIGNAL1
                   if reinvest_min_signal1 is _FROM_CONFIG else reinvest_min_signal1)
         reinvest = ReInvestMedian1000Strategy(
-            percentReinvest=pct_ri, use_pe=config.USE_PE,
+            percentReinvest=pct_ri, percentReinvestTop=pct_ri_top,
+            use_pe=config.USE_PE,
             timeoutDays=(config.REINVEST_TIMEOUT_DAYS
                          if reinvest_timeout_days is _FROM_CONFIG
                          else reinvest_timeout_days),

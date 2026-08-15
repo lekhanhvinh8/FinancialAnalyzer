@@ -159,6 +159,55 @@ PERCENT_SELL_BOTTOM = None
 # +91 and +428 there and are the two worst long-history losses today.
 PERCENT_REINVEST = 10
 
+# ReInvestMedian1000: a SECOND way to satisfy the reinvest price test, OR'd with
+# PERCENT_REINVEST — redeploy once the price has fallen this far from the
+# 1000-bar HIGH, rather than waiting for it to come back to its median.
+#
+# Same comparison direction as PERCENT_REINVEST (reinvest while dev is BELOW the
+# threshold), but measured against the top, where dev is always <= 0. So the
+# threshold is negative: -30 reads as "at least 30% off the high". None switches
+# it off and the arm behaves exactly as before.
+#
+# WHY IT MIGHT WORK WHERE WIDENING PERCENT_REINVEST DID NOT
+#
+# The dead zone is the real problem: after a sell at +75% over the median the
+# price has to fall 65 points before the money may return, and on a compounder it
+# never does, so the 400-bar timeout buys back higher than it sold. Widening
+# PERCENT_REINVEST was the obvious fix and it lost — 15 symbols up against 34 down
+# — because it lets money back in UNCONDITIONALLY, on symbols whose price simply
+# stayed high. A drawdown condition is selective: it only opens after a real fall
+# from the peak.
+#
+# Measured on the seven FPT and GMD re-entries, bars until each condition first
+# allows a buy-back (the timeout fires at 400):
+#
+#     sell            dev vs top   median<=10   top<=-30   top<=-40
+#     FPT 2015-11-03      0.0%        1101        1101       2583
+#     FPT 2018-01-29     -2.9%         538         538       2020
+#     FPT 2022-01-19    -11.7%        1022         204       1026
+#     FPT 2025-04-18    -27.7%         215         112        219
+#     GMD 2017-03-07      0.0%         332         286        726
+#     GMD 2021-06-17      0.0%         950         355        951
+#     GMD 2023-02-03     -8.9%         543         542        544
+#
+# At -30, four of the seven re-entries happen on the price condition instead of
+# the clock, and much sooner — 204 bars instead of 1022, 355 instead of 950. The
+# three it does not help are the ones that sold AT the high (dev vs top 0.0%),
+# where the top keeps chasing the price and the gap never opens.
+#
+# -40 is useless and -10 or -20 are far too loose: the existing condition already
+# fires on 35.7% of days, and -10 would add 42 points on top of that. The usable
+# band is roughly -25 to -35, where it adds 8.6% of days for the median symbol.
+#
+# THE RISK, AND IT IS MEASURABLE. By construction the days this adds are days the
+# price is still >= 10% above its own median — it buys into a fall that has not
+# finished being expensive. Whether the drawdown condition is selective enough to
+# beat the unconditional widening that already failed is exactly what the sweep
+# has to answer.
+#
+# Costs no warmup — local_top is on the same range_stats row as the median.
+PERCENT_REINVEST_TOP = None
+
 # Timeout reinvest: if no reinvest has occurred X trading days after last sell,
 # release the reserve using a looser threshold, on the same scale as
 # PERCENT_REINVEST above (so -10 = only if 10%+ BELOW the median).
