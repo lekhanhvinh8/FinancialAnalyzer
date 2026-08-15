@@ -206,20 +206,28 @@ SELL_MIN_SIGNAL1   = 0.228   # % per day, = k/sqrt(window) with k=2.5 at window 
 # window at all, six with too few bars left afterwards. A quarter of the universe
 # spent on one gate.
 #
-# THIS GATE HAS NEVER BEEN MEASURED ON ITS OWN. The -2.50 once written here was
-# signal3 AND z_dev together, layered on signal1 (44 symbols, old config):
-# signal1 alone +14.47, the pair alone +1.76, all three +11.97. That figure
-# cannot be attributed to z_dev, and the point is now sharp because signal3 alone
-# has since measured at +6.04 — so the pair's -2.50 says nothing about which of
-# them carried it. Nor can it be subtracted out; overlapping gates do not
-# compose additively.
+# Now measured on its own, which it never had been (sweep_zdev.py). The -2.50
+# once written here was signal3 AND z_dev together, and signal3 alone has since
+# measured at +6.04, so that figure said nothing about this gate.
 #
-# The cheap experiment nobody has run: isolate it at a SHORT stat_window, 100 or
-# 200, where the warmup costs 100-200 bars instead of 700 and almost no symbols
-# are lost. If it is still negative there the idea is dead; if it is positive
-# then 700 was the mistake rather than the gate.
+# 66 cells, stat windows 50..400 where the warmup is affordable, thresholds
+# -2.5..+2.5, every cell paired against the gate being off. NOT ONE beats it, and
+# 62 of the 66 have a paired median of exactly 0.00 — the gate does nothing for
+# the typical symbol at almost any setting. The single cell reaching p<0.05
+# (w=100, -1.5) moves 5 of 50 symbols by a mean of +1.84; with 66 cells about 3
+# would reach p<0.05 by chance.
 #
-# The computation itself is sound — no look-ahead, verified three ways.
+# The strict end does have an effect and it is the wrong one: at min_zdev >= 2 it
+# blocks most sells, 1.92 down to 0.58 per symbol, and the mean falls to between
+# -20 and -30.
+#
+# So the gate stays off for a measured reason now, not an inherited one. Its
+# original cost stands too: a 700-bar stat window put the backtest start at 1699
+# and took 12 of 57 symbols.
+#
+# The computation itself is sound — no look-ahead, verified three ways — and
+# z_dev is the one quantity in dispersion.py needing no reparameterisation, being
+# a z-score: p95 = 2.218 * w^0.009, R^2 = 0.27, flat across stat windows.
 SELL_ZDEV_WINDOW = 700    # stat_window in valuation_zdev (median_window is fixed
                           # at 1000). Only read when the gate below is on.
 SELL_MIN_ZDEV    = None

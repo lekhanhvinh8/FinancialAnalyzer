@@ -40,6 +40,10 @@ QUANTITIES
   slope  signal1_slope from trend_signals — the one already parameterised, kept
          so the 3.991 * w^-0.494 claim can be re-derived.
   sharpe signal3_sharpe from trend_signals, for MIN_SIGNAL3.
+  zdev   z_dev from valuation_zdev, for SELL_MIN_ZDEV. Expected to be scale-free
+         by construction — it is a z-score — so the interesting question is
+         whether that holds at short stat windows, where sigma is estimated from
+         few observations and the tails may be fatter than a unit normal's.
 
 RESULTS SO FAR
 
@@ -77,7 +81,33 @@ RESULTS SO FAR
          which is what a 3-symbol sample buys you. Re-run in full if the constant
          ever matters; the universe is 59 symbols now, not 45.
 
-  sharpe not measured. Needed before MIN_SIGNAL3 can be swept sensibly.
+  sharpe p95 = 124.600 * w^-0.654   R2 = 0.9971
+         python analyze/median1000/dispersion.py sharpe
+
+         Narrows fast, the same direction as slope but steeper. At w=1000 the
+         distribution is p5 -0.339, p25 +0.077, p50 +0.423, p75 +0.759,
+         p95 +1.360, which is where MIN_SIGNAL3's grid was placed and puts the
+         live 1.1 between p75 and p95 — blocking about 11% of sell-eligible days.
+         MIN_SIGNAL3 is swept at that one window only, so it needs no
+         reparameterisation today; the exponent is the reason a window parameter
+         must come with one the day the window is swept.
+
+  zdev   p95 = 2.218 * w^0.009      R2 = 0.27
+         w in 50..700
+         python analyze/median1000/dispersion.py zdev
+
+         The one scale-free quantity of the four, which is what a z-score should
+         be, and worth having confirmed rather than assumed: an exponent of +0.009
+         is a flat line, and the R2 is low only because there is no trend left to
+         explain. Percentiles hold steady across every window:
+
+             p5     p25     p50     p75     p95
+             -2.30  -1.18   -0.15   +1.05   +2.31
+
+         Two departures from a unit normal, both mattering when placing a grid:
+         it is WIDER (+-2.3 rather than +-1.64) and its centre sits slightly
+         below zero. So SELL_MIN_ZDEV is directly comparable across stat windows
+         and sweep_zdev.py sweeps the raw threshold — no k/sqrt(w), no q.
 
   A NOTE ON "NO LOOK-AHEAD"
 
@@ -118,6 +148,7 @@ QUANTITIES = {
     "dev":    ("range_stats",   "median",          True),
     "slope":  ("trend_signals", "signal1_slope",   False),
     "sharpe": ("trend_signals", "signal3_sharpe",  False),
+    "zdev":   ("valuation_zdev", "z_dev",           False),
 }
 
 
@@ -131,7 +162,16 @@ def _values(sym: str, quantity: str, windows: list) -> dict:
     holder = ",".join("?" * len(windows))
     con = sqlite3.connect("file:stock_data.db?mode=ro", uri=True)
     try:
-        if table == "range_stats":
+        if table == "valuation_zdev":
+            # min_periods is held equal to stat_window by the writer, so the pair
+            # is redundant but both are in the key.
+            rows = con.execute(
+                f"SELECT stat_window, date, {column} FROM valuation_zdev "
+                f"WHERE symbol=? AND median_window=1000 "
+                f"AND stat_window IN ({holder}) AND stat_window = min_periods "
+                f"AND {column} IS NOT NULL",
+                (sym, *windows)).fetchall()
+        elif table == "range_stats":
             rows = con.execute(
                 f"SELECT range_days, date, {column} FROM range_stats "
                 f"WHERE symbol=? AND range_days IN ({holder}) AND {column} IS NOT NULL",
