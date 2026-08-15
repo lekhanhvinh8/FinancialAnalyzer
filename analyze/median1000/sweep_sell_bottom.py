@@ -59,10 +59,28 @@ THE GRID
       14      70     132     227     488     986      price vs 1000-bar low
      -26       0      24      60     172     386      price vs 1000-bar median
 
-  The two are on completely different scales — the low is a floor, so the
-  distance to it is large and one-sided, while the median sits in the middle. A
-  threshold that reads as huge next to PERCENT_SELL = 75 is not necessarily
-  loose here.
+  The two are on completely different scales — the low is a floor, so the price
+  can never be under it and the distance is one-sided and large, while the median
+  sits in the middle. The same percentile is a different number in each:
+
+      percentile     5%    25%    50%    75%    90%    95%    99%
+      vs median     -26      0     24     60    117    172    386
+      vs low         14     70    132    227    364    488    986
+      ratio           -      -   5.5x   3.8x   3.1x   2.8x   2.6x
+
+  So this grid deliberately does NOT reuse PERCENT_SELL's numbers, and reusing
+  them would waste it. Applied to distance-from-the-low, PERCENT_SELL's grid runs
+  -20 to 300, which here means:
+
+      -20  sells on 100.0% of days      0  sells on 99.4%
+       75  72.7%                      150  43.7%
+      300  15.2%  -- still busy, and that is the TOP of that grid
+
+  Its whole lower half would be a single degenerate cell repeated, and its top
+  would stop before reaching the quiet end where the parameter switches itself
+  off. What is matched is the coverage, not the digits: PERCENT_SELL's grid spans
+  the 8th to 98th percentile of its own quantity, this one the 16th to 97th of
+  its own.
 
   Where the grid is dense is set by where the arm's behaviour actually changes,
   measured as sells per symbol:
