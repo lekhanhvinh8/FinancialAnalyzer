@@ -134,12 +134,31 @@ MIN_EVAL_BARS = 500
 # aggregation drops them, so the decision stays reversible without a re-run.
 EXCLUDE_SYMBOLS = ["VIX", "VIC"]
 
-# SellMedian1000: block sell when 1000-day Sharpe (signal3) is above this — stable/trending regime → hold
-# UNTUNED, AND COSTING MONEY. Paired over 44 symbols against no sell gate at all,
-# signal3 and z_dev together are worth mean +1.76 (13/27 symbols, p=0.649); layered
-# on top of signal1 they cost mean -2.50 (10/26, p=0.916). signal1 alone (+14.47)
-# beats all three together (+11.97). The two were only ever measured jointly, so
-# which of them does the damage is unknown. Sweep them before trusting either.
+# SellMedian1000: block sell when 1000-day Sharpe (signal3) is above this —
+# stable/trending regime, so let it run. Higher blocks fewer days and sells MORE,
+# the same polarity as the signal1 sell gate.
+#
+# Swept at last: 16 settings, 52 symbols (sweep_min_signal3.py). Nothing beats
+# 1.1 and it is the mean peak (+52.4). The old figure of -2.50 was signal3 and
+# z_dev measured together, and z_dev has been off since 73b7ce6, so it never said
+# anything about this gate alone.
+#
+# The shape matters more than the value. Below +0.45 the gate is destructive: it
+# blocks nearly every day, the arm stops selling entirely (0.0 sells) and the
+# paired loss reaches -16.1. From +0.45 to +1.1 the surface is flat — paired 0.00
+# throughout — so the exact value inside that band is not doing work. Above +1.1
+# the tail gives way: the worst symbol goes from -91 to -225.
+#
+# Keeping the gate is worth about 6 mean points. Off, the net is -314 (+148
+# gained, -462 lost) and even without the largest mover it is -3.39. Concentrated
+# as usual: 34 of 52 symbols are untouched. What it mainly does is protect LPB,
+# which runs -91 with the gate and -225 without; HPG -141 and FPT -102 also
+# depend on it, while GMD gains +126 from its removal.
+#
+# No k/sqrt(w) normalisation: the gate always reads window 1000, so one scale
+# throughout. Adding MIN_SIGNAL3_WINDOW would change that — Sharpe narrows sharply
+# with the window, p95 = 124.6 * w^-0.654 (dispersion.py) — so normalise before
+# ever sweeping the window.
 MIN_SIGNAL3 = 1.1
 
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold

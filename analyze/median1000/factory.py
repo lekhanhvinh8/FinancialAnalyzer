@@ -58,7 +58,8 @@ def make_median_strategies(signal3_map: dict | None = None,
                            percent_reinvest=_FROM_CONFIG,
                            percent_sell=_FROM_CONFIG,
                            sell_window=_FROM_CONFIG,
-                           reinvest_timeout_days=_FROM_CONFIG):
+                           reinvest_timeout_days=_FROM_CONFIG,
+                           min_signal3=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
@@ -72,6 +73,7 @@ def make_median_strategies(signal3_map: dict | None = None,
     it and it is simply passed through.
     """
     s1_min = config.SELL_MIN_SIGNAL1 if min_signal1 is _FROM_CONFIG else min_signal1
+    s3_min = config.MIN_SIGNAL3 if min_signal3 is _FROM_CONFIG else min_signal3
     pct_buy = config.PERCENT_BUY if percent_buy is _FROM_CONFIG else percent_buy
     buy_w = (getattr(config, "BUY_MEDIAN_WINDOW", 1000)
              if buy_window is _FROM_CONFIG else buy_window)
@@ -94,8 +96,8 @@ def make_median_strategies(signal3_map: dict | None = None,
             # An empty map is how each gate is switched off; the strategy's own
             # `if self.signalX_map` guard then skips the comparison entirely, so
             # the threshold beside it is never read.
-            signal3_map=(signal3_map or {}) if config.MIN_SIGNAL3 is not None else {},
-            min_signal3=config.MIN_SIGNAL3 if config.MIN_SIGNAL3 is not None else 0.0,
+            signal3_map=(signal3_map or {}) if s3_min is not None else {},
+            min_signal3=s3_min if s3_min is not None else 0.0,
             signal1_map=(signal1_map or {}) if s1_min is not None else {},
             min_signal1=s1_min if s1_min is not None else 0.0,
             zdev_map=(zdev_map or {}) if config.SELL_MIN_ZDEV is not None else {},
