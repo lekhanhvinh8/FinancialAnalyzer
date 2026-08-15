@@ -366,7 +366,7 @@ def save_raw(per_symbol, skipped, elapsed):
             # Positional layout of every cell tuple. Two orders grew up across these
             # sweeps and they differ only by position, so a reader that assumes the
             # wrong one reports buys as reinvests and says nothing.
-            "fields": ["diff", "reinvests", "buys", "sells"],
+            "fields": ["diff", "buys", "sells", "reinvests"],
             "sells": SELLS, "reis": REIS, "live": list(LIVE),
                  "elapsed": elapsed,
                  "config": {c: getattr(config, c) for c in dir(config)

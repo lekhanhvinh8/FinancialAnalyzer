@@ -291,7 +291,12 @@ def aggregate(per_symbol: dict) -> dict:
 
 def save_raw(per_symbol, skipped, elapsed):
     RAW.write_text(json.dumps({
-        "meta": {"windows": WINDOWS, "qs": QS, "elapsed": elapsed,
+        "meta": {
+            # Positional layout of every cell tuple. Read off the return
+            # statement in eval_symbol, never assumed: the two orders across
+            # these sweeps differ only by position, so a wrong declaration
+            # makes a reader report buys as reinvests and say nothing.
+            "fields": ["diff", "buys", "sells"],"windows": WINDOWS, "qs": QS, "elapsed": elapsed,
                  "config": {c: getattr(config, c) for c in dir(config)
                             if c.isupper() and not c.startswith("_")}},
         "skipped": skipped, "results": per_symbol,
