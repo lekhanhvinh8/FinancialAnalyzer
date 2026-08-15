@@ -119,6 +119,22 @@ class SellMedian1000Strategy(SellStrategy):
     # business grew into it — not a dislocation, so do not sell.
     zdev_map: dict = field(default_factory=dict)
     min_zdev: float = 1.3
+    # {row_index: ln(P/E / its own rolling median)} — block sell when <= min_pelog.
+    # Same polarity as z_dev, and the same intent z_dev's comment claims: do not
+    # sell a price that is only high because the business grew into it. The
+    # difference is that this one can actually see earnings, where z_dev is
+    # computed from price alone.
+    #
+    # The caller is responsible for what goes in the map. Two kinds of gap, and
+    # only one of them belongs here:
+    #   - before the P/E median has PE_MEDIAN_WINDOW observations behind it the
+    #     value is a median of almost nothing (range_stats applies no
+    #     min_periods), so those rows must be left OUT by the caller
+    #   - a row missing because the company was loss-making for a trailing year
+    #     has no P/E at all, and is simply absent — the gate then stands aside,
+    #     which is right: a company losing money has no "grew into it" defence
+    pelog_map: dict = field(default_factory=dict)
+    min_pelog: float = 0.0
 
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
@@ -152,5 +168,11 @@ class SellMedian1000Strategy(SellStrategy):
         if self.zdev_map:
             z = self.zdev_map.get(index)
             if z is not None and z <= self.min_zdev:
+                return False
+        # Same missing-row rule as z_dev above: absent means the gate stands
+        # aside, never that it blocks.
+        if self.pelog_map:
+            v = self.pelog_map.get(index)
+            if v is not None and v <= self.min_pelog:
                 return False
         return True

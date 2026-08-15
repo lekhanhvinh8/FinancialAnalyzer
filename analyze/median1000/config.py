@@ -140,6 +140,72 @@ REINVEST_TIMEOUT_PERCENT = 999   # 999 is effectively no price condition at all:
 
 USE_PE = False   # use P/E-adjusted median instead of price median
 
+# SellMedian1000: block the sell while the P/E is NOT stretched, measured as
+# ln(P/E / its own PE_MEDIAN_WINDOW median). Blocks when that is <= the threshold,
+# so a HIGHER value blocks MORE — the same polarity as SELL_MIN_ZDEV and the
+# opposite of the two momentum gates. None switches it off.
+#
+# WHY IT EXISTS. The price condition cannot tell "expensive" from "the business
+# grew into the price", and on a compounder that costs real money. FPT is 85.03
+# points behind buying at every interval, on four sells where the price was 77%
+# to 125% above its median while the P/E was barely above its own:
+#
+#     sell date     price vs median    P/E vs median    ln(P/E/median)
+#     2015-11-03         +77.5%            +63.6%           0.492
+#     2018-01-29         +82.0%             +7.4%           0.071
+#     2022-01-19        +125.3%            +65.7%           0.505
+#     2025-04-18         +77.7%             +1.7%           0.017
+#
+# So a threshold of 0.51 blocks all four; 0.07 blocks the two where earnings had
+# fully caught up. Over FPT's whole history the price condition fires on 926 days
+# and the P/E one on 217.
+#
+# NOT YET SWEPT — the figures above are FPT and GMD, which are the two symbols the
+# problem was diagnosed on, so they prove nothing about the other 50. The same
+# shape of argument was refuted last week: the PERCENT_SELL x PERCENT_REINVEST
+# sweep improved FPT by +91 and GMD by +428 and still lost, 15 symbols up against
+# 34 down. Treat this as off until sweep_pelog.py says otherwise.
+SELL_MIN_PELOG = None
+
+# Which median the P/E is measured against. NOT tied to BUY/SELL_MEDIAN_WINDOW:
+# the two norms answer separate questions about separate series, and matching them
+# for symmetry turned out to cost more than the symmetry is worth.
+#
+# SELL_MIN_PELOG does not transfer across this. p95 = 0.094 * w^0.360, so the
+# spread runs 0.681 at w=250 and 1.114 at w=1000 (dispersion.py pelog).
+#
+# The gate needs a FULL window of P/E observations before its median means
+# anything — range_stats builds these with min_periods=1, so it happily reports a
+# median of one observation, and on the first day a symbol has P/E the median IS
+# that day's P/E, making ln(P/E/median) exactly 0.000. A gate reading "perfectly
+# normal" when it knows nothing is worse than one reading nothing at all. 31 of
+# the 59 symbols have P/E starting later than their price, so this is 13,312 rows.
+#
+#     window   symbols   median eval bars   cost vs off
+#       off       54          2,816              -
+#       250       54          2,638            178
+#       500       53          2,556            260
+#      1000       52          2,149            667
+#
+# Picked 500 over 1000 on evidence, not taste. A longer window does not make the
+# case stronger, only more expensive: to block all four of FPT's sells needs a
+# threshold at the 79th percentile of the distribution at w=500 and the 90th at
+# w=1000, while w=1000 also costs two symbols and a quarter of the evaluated bars.
+#
+#     FPT sell      w=250   w=500   w=750  w=1000
+#     2015-11-03     0.175   0.181   0.241   0.492
+#     2018-01-29    -0.078   0.021   0.049   0.071
+#     2022-01-19    -0.115   0.262   0.448   0.505
+#     2025-04-18    -0.304  -0.077   0.032   0.017
+#     blocks all 4   0.175   0.262   0.448   0.505
+#
+# Picked 500 over 250 on one substantive argument: a valuation anchor should be
+# slow. At 250 the median re-rates within a year, so a stock that stays expensive
+# for a year becomes "normal"; at 500 that takes two. 250 is cheaper (no symbol
+# lost, 178 bars) and is the fallback if the cost ever bites. Provisional either
+# way — this deserves to be a sweep axis once the threshold has been swept alone.
+PE_MEDIAN_WINDOW = 500
+
 # Minimum bars a symbol must have AFTER the start index (see run_all.py) to be
 # reported. Not total history — the existing len(df) < 1010 check covers that.
 # Below this there is too little post-warmup data for the result to mean anything:

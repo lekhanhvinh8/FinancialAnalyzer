@@ -83,7 +83,8 @@ from analyze.runner import load_symbol_df, run_estimate
 from export.chart import save_backtest_chart
 from progress import RunAllProgress
 from analyze.median1000 import config
-from analyze.median1000.factory import make_median_strategies, make_interval_strategies
+from analyze.median1000.factory import (make_median_strategies,
+                                        make_interval_strategies, build_pelog_map)
 
 CHARTS_DIR = Path(__file__).parent / "charts"
 
@@ -115,8 +116,13 @@ def process_symbol(symbol: str, run_dir: Path | None = None
         # so it needs nothing more.
         buy_w  = getattr(config, "BUY_MEDIAN_WINDOW", 1000)
         sell_w = getattr(config, "SELL_MEDIAN_WINDOW", 1000)
-        cal_range_close = db.load_range_stats(symbol, df,
-                                              range_days={1000, buy_w, sell_w})
+        # The P/E median comes out of range_stats too, so its window has to be
+        # requested here or build_pelog_map finds nothing to read.
+        pe_w   = getattr(config, "PE_MEDIAN_WINDOW", 500)
+        windows = {1000, buy_w, sell_w}
+        if config.SELL_MIN_PELOG is not None:
+            windows.add(pe_w)
+        cal_range_close = db.load_range_stats(symbol, df, range_days=windows)
         if cal_range_close is None:
             return symbol, None, "no range_stats in DB", time.time() - t0
 
@@ -169,6 +175,15 @@ def process_symbol(symbol: str, run_dir: Path | None = None
                 if idx is not None and z is not None:
                     zdev_map[idx] = float(z)
 
+        # ln(P/E / its own median) for the sell gate. build_pelog_map owns the
+        # warmup rule — see factory.py; it is not "skip the first pe_w rows".
+        pelog_map: dict = {}
+        if config.SELL_MIN_PELOG is not None:
+            pelog_map = build_pelog_map(symbol, df, cal_range_close, pe_w)
+            if not pelog_map:
+                return (symbol, None,
+                        f"no usable P/E at window={pe_w}", time.time() - t0)
+
         # Start once EVERY input the strategies read is available — the latest
         # first-appearance wins. Before that point the early period would be running
         # a different strategy than the later one, because whichever inputs are still
@@ -185,6 +200,7 @@ def process_symbol(symbol: str, run_dir: Path | None = None
             "signal3":          min(signal3_map)          if signal3_map          else None,
             "reinvest_signal1": min(reinvest_signal1_map) if reinvest_signal1_map else None,
             "zdev":             min(zdev_map)             if zdev_map             else None,
+            "pelog":            min(pelog_map)            if pelog_map            else None,
         }
         if config.SELL_MIN_ZDEV is not None and not zdev_map:
             return (symbol, None,
@@ -200,7 +216,8 @@ def process_symbol(symbol: str, run_dir: Path | None = None
             return symbol, None, msg, time.time() - t0
 
         buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map,
-                                                  reinvest_signal1_map, zdev_map)
+                                                  reinvest_signal1_map, zdev_map,
+                                                  pelog_map)
         r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1,
                           cal_range_close, start_index=start_idx)
 

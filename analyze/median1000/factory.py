@@ -7,7 +7,8 @@ THE None CONVENTION
   None, and None always means the same thing: that condition is not applied.
   What "not applied" does depends on which of the two kinds it is.
 
-  Filters — MIN_SIGNAL3, SELL_MIN_SIGNAL1, SELL_MIN_ZDEV, REINVEST_MIN_SIGNAL1.
+  Filters — MIN_SIGNAL3, SELL_MIN_SIGNAL1, SELL_MIN_ZDEV, SELL_MIN_PELOG,
+  REINVEST_MIN_SIGNAL1.
   These only ever block an action that the primary condition already wants to
   take. None removes the restriction, so the arm acts MORE often. Implemented by
   handing the strategy an empty map, which is what its `if self.signalX_map`
@@ -37,6 +38,12 @@ THE None CONVENTION
   applied the gate afterwards.
 """
 
+import math
+
+import numpy as np
+import pandas as pd
+
+import database as db
 from analyze.strategies.buy import BuyMedian1000Strategy, BuyIntervalStrategy
 from analyze.strategies.sell import SellMedian1000Strategy, SellStrategy
 from analyze.strategies.reinvest import ReInvestMedian1000Strategy, ReinvestStrategy
@@ -51,6 +58,7 @@ def make_median_strategies(signal3_map: dict | None = None,
                            signal1_map: dict | None = None,
                            reinvest_signal1_map: dict | None = None,
                            zdev_map: dict | None = None,
+                           pelog_map: dict | None = None,
                            min_signal1=_FROM_CONFIG,
                            percent_buy=_FROM_CONFIG,
                            buy_window=_FROM_CONFIG,
@@ -60,14 +68,15 @@ def make_median_strategies(signal3_map: dict | None = None,
                            sell_window=_FROM_CONFIG,
                            reinvest_timeout_days=_FROM_CONFIG,
                            min_signal3=_FROM_CONFIG,
-                           min_zdev=_FROM_CONFIG):
+                           min_zdev=_FROM_CONFIG,
+                           min_pelog=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
 
     min_signal1, percent_buy, buy_window, reinvest_min_signal1,
-    percent_reinvest, percent_sell, sell_window and reinvest_timeout_days
-    override their config values — the sweeps vary one parameter
+    percent_reinvest, percent_sell, sell_window, reinvest_timeout_days,
+    min_signal3, min_zdev and min_pelog override their config values — the sweeps vary one parameter
     per cell. Passing None disables that one setting
     (per the convention above) while leaving config alone; omitting it uses
     config. buy_window is a size, not a condition, so None is not meaningful for
@@ -76,6 +85,8 @@ def make_median_strategies(signal3_map: dict | None = None,
     s1_min = config.SELL_MIN_SIGNAL1 if min_signal1 is _FROM_CONFIG else min_signal1
     s3_min = config.MIN_SIGNAL3 if min_signal3 is _FROM_CONFIG else min_signal3
     z_min  = config.SELL_MIN_ZDEV if min_zdev is _FROM_CONFIG else min_zdev
+    pl_min = (getattr(config, "SELL_MIN_PELOG", None)
+              if min_pelog is _FROM_CONFIG else min_pelog)
     pct_buy = config.PERCENT_BUY if percent_buy is _FROM_CONFIG else percent_buy
     buy_w = (getattr(config, "BUY_MEDIAN_WINDOW", 1000)
              if buy_window is _FROM_CONFIG else buy_window)
@@ -104,6 +115,8 @@ def make_median_strategies(signal3_map: dict | None = None,
             min_signal1=s1_min if s1_min is not None else 0.0,
             zdev_map=(zdev_map or {}) if z_min is not None else {},
             min_zdev=z_min if z_min is not None else 0.0,
+            pelog_map=(pelog_map or {}) if pl_min is not None else {},
+            min_pelog=pl_min if pl_min is not None else 0.0,
         )
 
     # A no-op SellStrategy never fires, so there is nothing to stand down for.
@@ -139,3 +152,80 @@ def make_median_strategies(signal3_map: dict | None = None,
 def make_interval_strategies():
     """The neutral arm: buy every interval, never sell, never reinvest."""
     return BuyIntervalStrategy(), SellStrategy(), ReinvestStrategy()
+
+
+def build_pelog_map(symbol, df, cal_range_close, window: int | None = None) -> dict:
+    """
+    {row_index: ln(P/E / its own `window`-row median)} for SELL_MIN_PELOG.
+
+    Lives here rather than in run_all or a sweep because the warmup rule below is
+    not obvious and must be identical everywhere. This module's docstring records
+    what happens when a shared rule gets written twice.
+
+    cal_range_close must already carry `window` — load_range_stats has to be
+    called with it in range_days, or every row is skipped.
+
+    THE WARMUP RULE, AND WHY IT IS NOT JUST "SKIP THE FIRST `window` ROWS"
+
+      range_calc builds these medians with rolling(window, min_periods=1), so
+      pe_median is populated from the very first row a symbol has a P/E. On that
+      row the median of one observation IS that observation, and ln(P/E/median)
+      comes out at exactly 0.000 — the gate reads "P/E is precisely normal" while
+      knowing nothing at all. That is worse than reading nothing, because nothing
+      makes the gate stand aside. 31 of 59 symbols have P/E starting later than
+      their price, which is 13,312 such rows.
+
+      Counting rows is not enough either. The window is a row window, not an
+      observation window, and 16 symbols have holes in the middle of their P/E —
+      up to 559 consecutive days for KDH — because a company with a non-positive
+      trailing-year profit gets no P/E row at all. So the test is on the number of
+      REAL observations inside the trailing window, and it must be the full
+      `window` of them: a partly-filled window is effectively a shorter one, and
+      the spread of this quantity depends on the window (p95 = 0.094 * w^0.360),
+      so a threshold would silently mean something stricter there.
+
+    AND THE ROW'S OWN P/E HAS TO BE REAL, NOT CARRIED FORWARD
+
+      runner.load_symbol_df forward-fills pe_ratio, and syncs/range_stats does the
+      same before building pe_median, so the two agree — but a loss period has no
+      P/E rows at all and the ffill carries the last pre-loss value across it, up
+      to 559 days for KDH. Both sides of the ratio then hold the same frozen
+      number, ln(P/E/median) drifts to 0, and the gate reports "perfectly normal"
+      and BLOCKS the sell for the whole year the company was losing money. That is
+      backwards, so rows without a real observation are dropped and the gate stands
+      aside there instead.
+
+    Rows that fail either test are simply absent. The strategy treats a missing
+    row as "gate stands aside", which is right for all of them: no median worth
+    trusting, or no earnings to have grown into the price.
+    """
+    window = window or getattr(config, "PE_MEDIAN_WINDOW", 500)
+    if df is None or "pe_ratio" not in df.columns or not cal_range_close:
+        return {}
+
+    pe = pd.to_numeric(df["pe_ratio"], errors="coerce").to_numpy(dtype=float)
+    # Real observations only — see above. The raw table has a row per trading day
+    # the trailing-year profit was positive, and nothing on the days it was not.
+    raw = db.load_pe_ratios(symbol)
+    real_dates = set(raw.index) if not raw.empty else set()
+    is_real = np.array([pd.Timestamp(t) in real_dates for t in df["time"]], dtype=bool)
+    have = np.isfinite(pe) & (pe > 0) & is_real
+    if not have.any():
+        return {}
+    # Prefix sums so the count inside any trailing window is one subtraction.
+    filled = np.concatenate(([0], np.cumsum(have)))
+
+    out: dict = {}
+    for i in range(len(pe)):
+        if not have[i]:
+            continue
+        lo = i - window + 1
+        if lo < 0 or filled[i + 1] - filled[lo] < window:
+            continue
+        ic = cal_range_close.get(i)
+        if ic is None or window not in ic.rangeDayCloses:
+            continue
+        med = ic.rangeDayCloses[window].pct50(True)
+        if med and med > 0:
+            out[i] = math.log(pe[i] / med)
+    return out

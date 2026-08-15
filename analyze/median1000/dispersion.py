@@ -109,6 +109,30 @@ RESULTS SO FAR
          below zero. So SELL_MIN_ZDEV is directly comparable across stat windows
          and sweep_zdev.py sweeps the raw threshold — no k/sqrt(w), no q.
 
+  pelog  p95 = 0.094 * w^0.360     R2 = 0.9895
+         59 symbols, w in 250..1000, 171,277 observations per window
+         python analyze/median1000/dispersion.py pelog --windows=250,500,750,1000
+
+         Spread GROWS with the window, the same direction as dev and for the same
+         reason: a longer median lags a rising series further. So SELL_MIN_PELOG
+         is not transferable across PE_MEDIAN_WINDOW — the exponent is smaller
+         than dev's 0.698, but 250 to 1000 still moves p95 from 0.681 to 1.114.
+
+             window     p5      p25     p50     p75     p95
+                250  -0.586  -0.145   0.000   0.156   0.681
+                500  -0.774  -0.188   0.012   0.231   0.910
+               1000  -0.824  -0.196   0.018   0.286   1.114
+
+         The exponent is near nothing round (+0.360, and sqrt(w) would be +0.5),
+         so there is no principled k/w^a to reparameterise with. Fix the window
+         and sweep the raw threshold; if the window is ever swept too, the grid
+         has to be placed off this table row by row rather than normalised.
+
+         The median sits at ~0, which says the typical day has a P/E at its own
+         norm, and the distribution is strongly right-skewed: p95 is +1.114 while
+         p5 is only -0.824, and the far tail runs past +4 on a symbol coming out
+         of a loss year.
+
   A NOTE ON "NO LOOK-AHEAD"
 
   sweep_sell_signal1's docstring calls k/sqrt(w) "arithmetic on the window, not a
@@ -130,6 +154,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+import math
 import sqlite3
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -144,11 +169,17 @@ DEFAULT_WINDOWS = [50, 100, 150, 250, 400, 600, 800, 1000]
 PCTS = [5, 25, 50, 75, 95]
 
 QUANTITIES = {
-    # name -> (source table, column, needs the price series)
-    "dev":    ("range_stats",   "median",          True),
-    "slope":  ("trend_signals", "signal1_slope",   False),
-    "sharpe": ("trend_signals", "signal3_sharpe",  False),
-    "zdev":   ("valuation_zdev", "z_dev",           False),
+    # name -> (source table, column, second series needed: "price", "pe" or None)
+    "dev":    ("range_stats",    "median",          "price"),
+    "slope":  ("trend_signals",  "signal1_slope",   None),
+    "sharpe": ("trend_signals",  "signal3_sharpe",  None),
+    "zdev":   ("valuation_zdev", "z_dev",           None),
+    # ln(P/E / its own rolling median). The same shape as dev, in logs and on
+    # earnings rather than price. Log because P/E is multiplicative and its right
+    # tail is enormous — a loss quarter sends it past 600 — while the log form
+    # keeps the grid compact. It changes no firing decision: ln is monotonic, so
+    # a threshold in logs and its percentage equivalent select identical days.
+    "pelog":  ("range_stats",    "pe_median",       "pe"),
 }
 
 
@@ -158,7 +189,7 @@ def _values(sym: str, quantity: str, windows: list) -> dict:
     every window, because range_stats is ~273M rows and a query per window
     turns minutes into an hour.
     """
-    table, column, needs_price = QUANTITIES[quantity]
+    table, column, needs = QUANTITIES[quantity]
     holder = ",".join("?" * len(windows))
     con = sqlite3.connect("file:stock_data.db?mode=ro", uri=True)
     try:
@@ -186,19 +217,37 @@ def _values(sym: str, quantity: str, windows: list) -> dict:
     if not rows:
         return {}
 
-    if needs_price:
+    other: dict = {}
+    if needs == "price":
         df = load_symbol_df(sym)
-        price = {str(pd.Timestamp(t).date()): float(c) * 1000
+        other = {str(pd.Timestamp(t).date()): float(c) * 1000
                  for t, c in zip(df["time"], df["close"])}
+    elif needs == "pe":
+        # Forward-filled onto trading days the same way runner.load_symbol_df does,
+        # so the numerator here is the value the strategy would actually see.
+        df = load_symbol_df(sym)
+        if "pe_ratio" not in df.columns:
+            return {}
+        other = {str(pd.Timestamp(t).date()): float(c)
+                 for t, c in zip(df["time"], df["pe_ratio"]) if c == c}
 
     out: dict = {}
     for w, date, v in rows:
-        if needs_price:
-            p = price.get(date)
-            # dev is only defined where both the price and a non-zero median exist
+        if needs:
+            p = other.get(date)
+            # Only defined where both series exist and the denominator is non-zero
             if p is None or not v:
                 continue
-            v = (p - v) / v * 100.0
+            # pelog is a log ratio, dev a percentage. Both are "how far from its
+            # own median", and both are undefined without a positive denominator;
+            # a P/E can go negative through the writer's ttm<=0 skip only by
+            # absence, never by sign, so a non-positive value here means bad data.
+            if needs == "pe":
+                if p <= 0 or v <= 0:
+                    continue
+                v = math.log(p / v)
+            else:
+                v = (p - v) / v * 100.0
         out.setdefault(w, []).append(v)
     return {w: np.asarray(a, dtype=float) for w, a in out.items()}
 
