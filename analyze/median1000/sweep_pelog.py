@@ -75,6 +75,45 @@ EVERY CELL SHARES ONE START INDEX
   the comparison meaningless, so OFF pays the same warmup it is being compared
   against. This is the mistake that invalidated a whole sweep in 9c81db9.
 
+WHAT IT FOUND: THE GATE WORKS ON THE SYMBOLS IT WAS BUILT FOR AND LOSES ANYWAY
+
+  52 symbols, 16 thresholds plus OFF, 4.2 min. Reference is the gate off: mean
+  +36.03, median +20.14, 2.10 sells per symbol.
+
+  Not one threshold beats it, and 13 of the 16 have a paired median of exactly
+  0.00. The strict end is the only place with a large effect and it is the wrong
+  one — sells fall from 2.10 to 0.27 and the mean from 36.0 to 7.8.
+
+  What makes this one worth reading rather than filing is that the mechanism is
+  not in doubt. At a threshold of 0.30 it does exactly what it was built to do:
+
+      FPT   -85.0 -> +3.2      its four sells go to zero
+      LPB   +116               the worst symbol in the run, untouched by anything
+      DPM   +108               else ever tried, including all 70 cells of
+      GMD    +96               sweep_sell_reinvest
+      CTG    +93
+
+  And the same cell costs more than it earns: 19 symbols up, 21 down, paired
+  median 0.00, with HPG -340, VND -197, SHB -138. FPT's rescue is itself the
+  warning — it comes from taking its sell count from 4 to 0.
+
+  THE THIRD TIME THE SAME THING HAPPENED
+
+      attempt                              FPT / GMD        portfolio
+      SELL_MIN_ZDEV                            -            0 of 66 cells
+      PERCENT_SELL x PERCENT_REINVEST      +91 / +428       15 up, 34 down
+      SELL_MIN_PELOG                       +88 /  +96       19 up, 21 down
+
+  Three unrelated mechanisms, one result. Restraining the sell arm rescues the
+  few symbols it misfires on and charges the many it works on. The finding is not
+  about P/E; it is that the sell arm is net positive across the portfolio and
+  every attempt so far has paid the majority to save the minority.
+
+  This does not say the FPT problem is imaginary — it is measured and it is 85
+  points. It says the fix cannot be a portfolio-wide threshold, because no such
+  threshold can tell a compounder from an oscillator. See sell.py, where this is
+  recorded for whoever considers a fourth gate.
+
 Usage:
     python analyze/median1000/sweep_pelog.py             # all symbols
     python analyze/median1000/sweep_pelog.py FPT GMD     # a subset

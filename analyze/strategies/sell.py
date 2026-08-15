@@ -96,6 +96,39 @@ class SellTopOfMA1000Strategy(SellStrategy):
 
 @dataclass
 class SellMedian1000Strategy(SellStrategy):
+    """
+    Sell when the price is percentSell above its own median, unless one of the
+    gates below says otherwise.
+
+    BEFORE ADDING A FOURTH GATE, READ THIS
+
+      Three independent attempts to restrain this arm have now been measured on
+      the full universe, and all three failed the same way:
+
+          attempt                              FPT / GMD        portfolio
+          SELL_MIN_ZDEV                            -            0 of 66 cells
+          PERCENT_SELL x PERCENT_REINVEST      +91 / +428       15 up, 34 down
+          SELL_MIN_PELOG                       +88 /  +96       19 up, 21 down
+
+      Each was built from a real, measured failure — FPT loses 85 points to
+      buying at every interval because this arm sells a compounder and the
+      400-bar reinvest timeout buys it back higher. Each fixed exactly that, some
+      of them spectacularly: the P/E gate moves LPB by +116, and LPB is the worst
+      symbol in the run and had not shifted for anything else. And each still
+      lost, because the same restraint that saves those symbols costs HPG -340,
+      VND -197, SHB -138.
+
+      The pattern is not about any of the three signals. This arm is net positive
+      across the portfolio; anything that quiets it pays the majority to rescue
+      the minority. A tell to watch for: a candidate gate that looks like it works
+      usually turns out to have driven the sell count toward zero on the symbols
+      it "fixed" — the P/E gate took FPT from four sells to none.
+
+      So a fourth gate of this shape is not worth building. What the evidence
+      actually asks for is something that separates a compounder from an
+      oscillator per symbol, which no portfolio-wide threshold on a single signal
+      can do.
+    """
     percentSell: float = 0
     use_pe: bool = False
     # Which median the price is measured against, as on the buy arm. The reinvest

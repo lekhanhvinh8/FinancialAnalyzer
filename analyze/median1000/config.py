@@ -160,11 +160,26 @@ USE_PE = False   # use P/E-adjusted median instead of price median
 # fully caught up. Over FPT's whole history the price condition fires on 926 days
 # and the P/E one on 217.
 #
-# NOT YET SWEPT — the figures above are FPT and GMD, which are the two symbols the
-# problem was diagnosed on, so they prove nothing about the other 50. The same
-# shape of argument was refuted last week: the PERCENT_SELL x PERCENT_REINVEST
-# sweep improved FPT by +91 and GMD by +428 and still lost, 15 symbols up against
-# 34 down. Treat this as off until sweep_pelog.py says otherwise.
+# SWEPT, AND IT LOSES. 52 symbols, 16 thresholds against the gate being off
+# (sweep_pelog.py). Not one beats it, and 13 of the 16 have a paired median of
+# exactly 0.00.
+#
+# The mechanism is not in doubt — at a threshold of 0.30 it does precisely what it
+# was built to do, and to more than the two symbols it was built from: FPT -85.0
+# to +3.2, LPB +116, DPM +108, GMD +96, CTG +93. LPB is the worst symbol in the
+# run and nothing else had ever moved it.
+#
+# It loses on the bill. 19 symbols up and 21 down, and the damage is both larger
+# and more concentrated than the gain: HPG -340 alone is 36% of it, then VND -197
+# and SHB -138. Total +833 against -945, net -112.
+#
+# Two things in that make it clear the gate is not selective, only quiet. FPT's
+# rescue comes from taking its sell count from 4 to 0. And VND loses 197 points
+# with its sell count UNCHANGED at 1 — the gate blocked the right day and the sell
+# landed on a worse one, so it delays sells as well as preventing them.
+#
+# Left off. See sell.py before considering a fourth gate of this shape: this is
+# the third such attempt and all three failed the same way.
 SELL_MIN_PELOG = None
 
 # Which median the P/E is measured against. NOT tied to BUY/SELL_MEDIAN_WINDOW:

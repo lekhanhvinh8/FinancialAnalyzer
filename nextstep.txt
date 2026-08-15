@@ -95,4 +95,37 @@ Still open:
   - LPB -90.68 unchanged in all 70 cells.
 
 defaultly show top of 1000 -> %. Bottom of 1000 -> %, percent compare to median, mean to report all.
-Add the Or to sell strategy, that sell when sastify the current > localBottom a %.
+Add the Or to sell strategy, that sell when sastify the current > localBottom a %. -> sweep it.
+
+=== DONE: P/E sell gate (SELL_MIN_PELOG) — swept, refuted ===
+
+Blocks a sell while ln(P/E / its own 500-bar median) is below a threshold, i.e.
+while the P/E is not stretched. 52 symbols, 16 thresholds vs off. 0/16 beat off,
+13/16 have a paired median of exactly 0.00.
+
+The mechanism works and is not the problem. At 0.30: FPT -85.0 -> +3.2, LPB +116,
+DPM +108, GMD +96, CTG +93. LPB had never moved for anything before. But 19 up
+against 21 down, and the losses are bigger and more concentrated: HPG -340 (36%
+of all damage), VND -197, SHB -138. +833 against -945, net -112.
+
+Not selective, just quiet: FPT's fix is its sell count going 4 -> 0, and VND
+loses 197 with its sell count unchanged at 1, meaning the gate delayed the sell
+onto a worse day rather than preventing it.
+
+THIRD attempt at the same thing, all three refuted the same way:
+  SELL_MIN_ZDEV                     0 of 66 cells
+  PERCENT_SELL x PERCENT_REINVEST   FPT +91, GMD +428  -> 15 up, 34 down
+  SELL_MIN_PELOG                    FPT +88, GMD  +96  -> 19 up, 21 down
+
+Recorded in sell.py for whoever considers a fourth. The sell arm is net positive
+across the portfolio; restraining it pays the majority to rescue the minority.
+
+Still open:
+  - The FPT problem is real and unfixed: 85 points, and the 400-bar reinvest
+    timeout buying back higher than it sold. What the evidence asks for is
+    something that separates a compounder from an oscillator PER SYMBOL. No
+    portfolio-wide threshold on one signal can do that.
+  - The z-score form of pelog is measured and untried (uniform across symbols:
+    every symbol fires 1.5%-8.4% at a common threshold, against 17 near-zero for
+    the level form). Cheap to try, but it answers "unusual lately" rather than
+    "expensive", and z-scores have not worked in this repo.
