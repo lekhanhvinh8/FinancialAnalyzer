@@ -130,6 +130,16 @@ class SellMedian1000Strategy(SellStrategy):
       can do.
     """
     percentSell: float = 0
+    # Second price trigger, OR'd with percentSell: sell when the price is this far
+    # above the window's LOW instead of above its median. None switches it off,
+    # leaving the arm exactly as it was.
+    #
+    # Unlike every gate on this class this one makes the arm act MORE, not less,
+    # so it is a primary condition rather than a filter — see factory.py, where
+    # the two kinds are distinguished. Worth trying precisely because the three
+    # attempts to restrain this arm all lost: if quieting it costs, the question
+    # still open is whether loosening it pays.
+    percentSellBottom: float | None = None
     use_pe: bool = False
     # Which median the price is measured against, as on the buy arm. The reinvest
     # arm is still fixed at 1000, which is what keeps the backtest start index
@@ -184,8 +194,23 @@ class SellMedian1000Strategy(SellStrategy):
         if (index not in cal_range_close
                 or self.medianWindow not in cal_range_close[index].rangeDayCloses):
             return False
-        median = cal_range_close[index].rangeDayCloses[self.medianWindow].pct50(self.use_pe)
-        if (current - median) / median * 100 <= self.percentSell:
+        rc = cal_range_close[index].rangeDayCloses[self.medianWindow]
+        median = rc.pct50(self.use_pe)
+        fired = (current - median) / median * 100 > self.percentSell
+        # Second way to satisfy the PRICE test, not a bypass of the gates below:
+        # how far the price has run from the window's LOW rather than from its
+        # middle. A symbol can double off its floor while its median chases it up,
+        # leaving the median test quiet the whole way.
+        #
+        # Everything after this point still applies. The gates answer "should we
+        # sell at all", which does not depend on which of the two conditions
+        # noticed the move — letting the new one skip them would not be a second
+        # trigger, it would be a hole.
+        if not fired and self.percentSellBottom is not None:
+            bottom = rc.bottom(self.use_pe)
+            if bottom:
+                fired = (current - bottom) / bottom * 100 > self.percentSellBottom
+        if not fired:
             return False
         # Block sell when short-term momentum (linear regression slope) is still strong — let it run
         if self.signal1_map and self.signal1_map.get(index, 0.0) >= self.min_signal1:

@@ -86,6 +86,29 @@ SELL_MEDIAN_WINDOW = 1000
 # paired against 75 with enough resolution for neighbours to agree or not.
 PERCENT_SELL     = 75
 
+# SellMedian1000: a SECOND way to satisfy the price test, OR'd with PERCENT_SELL —
+# sell when the price is this far above the SELL_MEDIAN_WINDOW LOW rather than
+# above its median. None switches it off and the arm behaves exactly as before.
+#
+# Not a filter. Every other knob bolted onto this arm restrains it; this one makes
+# it act more often, so it is a primary condition and None means "no second
+# trigger" rather than "no restriction".
+#
+# The reason to try it is the reason the filters failed. Three separate attempts
+# to quiet this arm — SELL_MIN_ZDEV, PERCENT_SELL x PERCENT_REINVEST, and
+# SELL_MIN_PELOG — each fixed the symbol they were built for and each lost across
+# the portfolio, because the arm is net positive and restraining it pays the
+# majority to rescue the minority. The question none of them asked is the
+# opposite one.
+#
+# What it can catch that the median cannot: a symbol that doubles off its floor
+# while the median chases the price up, so the distance to the median never opens
+# and the arm stays quiet the whole way.
+#
+# Costs no warmup — local_bottom comes from the same range_stats row the median
+# already does.
+PERCENT_SELL_BOTTOM = None
+
 # ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
 # Same sign as PERCENT_BUY, not "below the median": 10 means "up to 10% ABOVE it".
 # Swept over 14 settings and 52 symbols (sweep_percent_reinvest.py). 10 is the

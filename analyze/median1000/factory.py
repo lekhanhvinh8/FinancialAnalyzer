@@ -28,6 +28,12 @@ THE None CONVENTION
   three arms, not in the convention — and these three base classes are exactly
   the comparison arm run_all already measures against.
 
+  PERCENT_SELL_BOTTOM is a primary condition too, but a SECOND one rather than
+  the only one: it is OR'd with PERCENT_SELL, so None removes the extra trigger
+  and leaves the arm intact instead of replacing it. It takes no map, so the
+  empty-map idiom the filters use does not apply and the strategy tests it for
+  None itself.
+
   Setting all three PERCENT_* to None therefore turns the median1000 arm into
   the interval arm, and every symbol's diff must come out at 0.00. That is a
   cheap end-to-end check on the engine, available at any time.
@@ -65,6 +71,7 @@ def make_median_strategies(signal3_map: dict | None = None,
                            reinvest_min_signal1=_FROM_CONFIG,
                            percent_reinvest=_FROM_CONFIG,
                            percent_sell=_FROM_CONFIG,
+                           percent_sell_bottom=_FROM_CONFIG,
                            sell_window=_FROM_CONFIG,
                            reinvest_timeout_days=_FROM_CONFIG,
                            min_signal3=_FROM_CONFIG,
@@ -101,11 +108,17 @@ def make_median_strategies(signal3_map: dict | None = None,
                 if percent_sell is _FROM_CONFIG else percent_sell)
     sell_w = (getattr(config, "SELL_MEDIAN_WINDOW", 1000)
               if sell_window is _FROM_CONFIG else sell_window)
+    # A second primary condition, so None means "no second trigger". It cannot use
+    # the empty-map idiom the filters share — there is no map, only a threshold —
+    # and the strategy tests it for None directly.
+    pct_sell_bot = (getattr(config, "PERCENT_SELL_BOTTOM", None)
+                    if percent_sell_bottom is _FROM_CONFIG else percent_sell_bottom)
     if pct_sell is None:
         sell = SellStrategy()
     else:
         sell = SellMedian1000Strategy(
-            percentSell=pct_sell, use_pe=config.USE_PE, medianWindow=sell_w,
+            percentSell=pct_sell, percentSellBottom=pct_sell_bot,
+            use_pe=config.USE_PE, medianWindow=sell_w,
             # An empty map is how each gate is switched off; the strategy's own
             # `if self.signalX_map` guard then skips the comparison entirely, so
             # the threshold beside it is never read.
