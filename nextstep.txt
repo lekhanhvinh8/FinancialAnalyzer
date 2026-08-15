@@ -129,3 +129,33 @@ Still open:
     every symbol fires 1.5%-8.4% at a common threshold, against 17 near-zero for
     the level form). Cheap to try, but it answers "unusual lately" rather than
     "expensive", and z-scores have not worked in this repo.
+
+
+=== DONE: PERCENT_SELL_BOTTOM — a second sell trigger, swept on its own ===
+
+Sell when the price is X% above the 1000-bar LOW, OR'd with the existing test
+against the median. Swept with the MEDIAN TRIGGER OFF in every cell so
+PERCENT_SELL took no part, referenced against this parameter's own None, the way
+sweep_percent_sell references the live value of the parameter it sweeps.
+
+First thing on this arm that works at all: 3 of 18 thresholds beat "no trigger"
+at p<0.05, and 225 is the only cell across five sweeps of this arm with both
+neighbours agreeing. Mean goes +5.17 -> +51.4 at best.
+
+Still the weaker price test. Within a point of the median condition on mean but
+four-fold below it on median (+4.3 vs +20.14), so it keeps up only through VND
++424 and HPG +349 while the typical symbol does worse. And it makes the worst
+symbol far worse at every threshold: LPB is +84.1 with no trigger, -90.7 under
+the median condition, -257.6 at bottom 225.
+
+Left at None.
+
+Still open:
+  - The OR of both, which is what the arm actually implements. A 2D
+    PERCENT_SELL x PERCENT_SELL_BOTTOM grid. Expect less than the +424s suggest:
+    the bottom trigger worsens the worst symbol at every threshold, so an OR
+    inherits that unless the bottom threshold is high enough to fire rarely.
+  - The sell arm has now been pushed in three directions and none moved it:
+    restrained (zdev, pelog, sell x reinvest), loosened (a second trigger), and
+    replaced (bottom instead of median). PERCENT_SELL = 75 against the 1000-bar
+    median is the best price test found.

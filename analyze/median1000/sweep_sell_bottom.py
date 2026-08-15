@@ -103,6 +103,54 @@ COSTS NO WARMUP
   every cell shares the start index run_all would use anyway, so no row is judged
   on more bars than another.
 
+WHAT IT FOUND: A REAL SIGNAL, AND STILL THE WEAKER OF THE TWO
+
+  52 symbols, 18 thresholds plus None. Reference is None — no trigger at all,
+  which with the median trigger off in every cell means the arm never sells:
+  mean +5.17, median +3.06, worst -29.1.
+
+  Three cells beat it with p<0.05, which no previous sweep on this arm managed:
+
+      threshold   vs None      p   nb    mean   median    worst   sells
+            200    +7.82   0.002    1   +28.5     +9.0   -260.3    6.06
+            225    +3.32   0.003    2   +34.8     +5.3   -257.6    5.19
+            250    +1.30   0.019    1   +39.2     +5.2   -254.6    3.87
+
+  225 is the only cell in five sweeps of this arm with BOTH neighbours agreeing,
+  and the trigger lifts the mean from +5.17 to +51.4 at its best. Distance from
+  the window low is a genuine sell signal, not noise.
+
+  IT IS STILL WORSE THAN THE MEDIAN CONDITION, ON THREE COUNTS
+
+      condition            mean   median    worst   sells
+      median 75 (live)   +52.38   +20.14    -90.7    2.35
+      bottom 350         +51.44    +4.27   -243.2    1.50
+      bottom 225         +34.80    +5.30   -257.6    5.19
+
+  1. The evidence is CONCENTRATED, not broad. The two are within a point on mean
+     and four-fold apart on median, so the bottom trigger keeps up only through a
+     few large winners — VND +424, HPG +349, SHB +257 at 225 — while the typical
+     symbol does far worse. sweep_percent_sell's case was the opposite: four
+     consecutive settings clearing the sign test, 29 to 35 of ~45 symbols
+     improving.
+
+  2. Isolated cells, not a plateau. Three of eighteen, and about one of eighteen
+     reaches p<0.05 by chance. Only 225 has two agreeing neighbours; the median
+     condition has a contiguous band.
+
+  3. It creates a tail disaster the median condition does not. Worst symbol runs
+     -230 to -280 at every useful threshold against -90.7 live. LPB is the case:
+     +84.1 with no trigger, -90.7 under the median condition, -257.6 at bottom
+     225. Two of the three winning cells also churn, at 5.19 and 6.06 sells per
+     symbol against 2.35.
+
+  Left off. The open question this does not answer is the OR of both, which is
+  what the strategy actually implements — median for the typical symbol and the
+  tail, bottom to catch the VND and HPG cases the median misses. Expect less than
+  the +424s suggest: the bottom trigger worsens the worst symbol at every
+  threshold, so an OR inherits that unless its threshold is high enough to fire
+  rarely.
+
 Usage:
     python analyze/median1000/sweep_sell_bottom.py             # all symbols
     python analyze/median1000/sweep_sell_bottom.py FPT GMD     # a subset

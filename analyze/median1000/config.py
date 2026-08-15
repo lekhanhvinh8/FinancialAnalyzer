@@ -107,6 +107,28 @@ PERCENT_SELL     = 75
 #
 # Costs no warmup — local_bottom comes from the same range_stats row the median
 # already does.
+#
+# SWEPT ON ITS OWN, with the median trigger off so PERCENT_SELL took no part
+# (sweep_sell_bottom.py). It is a real signal: 3 of 18 thresholds beat having no
+# trigger at all with p<0.05, and at its best it lifts the mean from +5.17 to
+# +51.4. That is more than the four previous attempts on this arm managed between
+# them, and 225 is the only cell in any of them with both neighbours agreeing.
+#
+# It is still the weaker of the two price tests, on three counts:
+#
+#     condition            mean   median    worst   sells
+#     median 75 (live)   +52.38   +20.14    -90.7    2.35
+#     bottom 350         +51.44    +4.27   -243.2    1.50
+#
+#   - within a point on mean, four-fold apart on median: the bottom trigger keeps
+#     up only through a few large winners (VND +424, HPG +349) while the typical
+#     symbol does much worse
+#   - three isolated cells out of eighteen, where about one reaches p<0.05 by
+#     chance, against a contiguous four-setting band for PERCENT_SELL
+#   - it creates a tail disaster the median condition does not. LPB: +84.1 with no
+#     trigger, -90.7 under the median condition, -257.6 at bottom 225
+#
+# Untested and still open: the OR of both, which is what the arm implements.
 PERCENT_SELL_BOTTOM = None
 
 # ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
