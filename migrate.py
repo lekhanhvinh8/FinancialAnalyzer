@@ -105,7 +105,7 @@ def migrate():
             n = con.execute(f"""
                 INSERT OR IGNORE INTO pe_ratios
                     (symbol, date, pe_ratio, total_market_cap, total_ttm_profit, member_count)
-                SELECT '{idx}', date, pe_ratio, total_market_cap, total_ttm_profit, member_count
+                SELECT '{idx.upper()}', date, pe_ratio, total_market_cap, total_ttm_profit, member_count
                 FROM pe_{idx}
             """).rowcount
             print(f"  pe_ratios ({idx}): {n} inserted")

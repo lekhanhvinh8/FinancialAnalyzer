@@ -26,9 +26,11 @@ import database as db
 
 import functools
 _PE_LOADERS = {
-    "vn30":      functools.partial(db.load_pe_ratios, "vn30"),
-    "vndiamond": functools.partial(db.load_pe_ratios, "vndiamond"),
-    "vnfinlead": functools.partial(db.load_pe_ratios, "vnfinlead"),
+    # Key is the internal index id (lowercase); the bound symbol is how it is
+    # stored, which is uppercase like every other table. See calculate.py.
+    "vn30":      functools.partial(db.load_pe_ratios, "VN30"),
+    "vndiamond": functools.partial(db.load_pe_ratios, "VNDIAMOND"),
+    "vnfinlead": functools.partial(db.load_pe_ratios, "VNFINLEAD"),
 }
 
 _INDEX_LABELS = {

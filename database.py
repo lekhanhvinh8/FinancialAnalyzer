@@ -404,17 +404,14 @@ def load_pe_ratios(
     Returns DataFrame indexed by date with columns:
         pe_ratio, total_market_cap, total_ttm_profit, member_count
 
-    Index symbols are stored in pe_ratios as lowercase; this function
-    resolves the correct key automatically from the symbols table.
+    Symbols are stored uppercase, indices included — the same spelling as
+    daily_prices, symbols, trend_signals and range_stats. Indices were once
+    written lowercase here, so this used to look symbol_type up in `symbols` and
+    lowercase the key. That cost a query per call and failed silently for any
+    index whose symbol_type was not set.
     """
-    with _conn() as con:
-        row = con.execute(
-            "SELECT symbol_type FROM symbols WHERE symbol = ?", (symbol,)
-        ).fetchone()
-    pe_key = symbol.lower() if (row and row[0] == "index") else symbol
-
     clauses = ["symbol = ?"]
-    params: list = [pe_key]
+    params: list = [symbol]
     if start:
         clauses.append("date >= ?")
         params.append(start)

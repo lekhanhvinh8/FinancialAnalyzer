@@ -29,16 +29,23 @@ _MEMBER_LOADERS = {
     "vnfinlead": functools.partial(db.load_index_members, "vnfinlead"),
 }
 
+# The dict KEY is the internal index id, lowercase like index_members.index_symbol.
+# The bound argument is the SYMBOL as stored, which is uppercase — pe_ratios holds
+# stocks and indices in one column and every other table (daily_prices, symbols,
+# trend_signals, range_stats) spells that column uppercase. Indices used to be
+# written lowercase here, which made pe_ratios the only table where the same
+# entity had two spellings, and silently dropped all three from any query that
+# joined on symbol without normalising.
 _PE_SAVERS = {
-    "vn30":      functools.partial(db.save_pe_ratios, "vn30"),
-    "vndiamond": functools.partial(db.save_pe_ratios, "vndiamond"),
-    "vnfinlead": functools.partial(db.save_pe_ratios, "vnfinlead"),
+    "vn30":      functools.partial(db.save_pe_ratios, "VN30"),
+    "vndiamond": functools.partial(db.save_pe_ratios, "VNDIAMOND"),
+    "vnfinlead": functools.partial(db.save_pe_ratios, "VNFINLEAD"),
 }
 
 _PE_LOADERS = {
-    "vn30":      functools.partial(db.load_pe_ratios, "vn30"),
-    "vndiamond": functools.partial(db.load_pe_ratios, "vndiamond"),
-    "vnfinlead": functools.partial(db.load_pe_ratios, "vnfinlead"),
+    "vn30":      functools.partial(db.load_pe_ratios, "VN30"),
+    "vndiamond": functools.partial(db.load_pe_ratios, "VNDIAMOND"),
+    "vnfinlead": functools.partial(db.load_pe_ratios, "VNFINLEAD"),
 }
 
 

@@ -43,7 +43,9 @@ def _sync_index_pe(index: str, start: str | None) -> None:
         print(f"  [{index.upper()}] no valid P/E rows")
         return
     print(f"  [{index.upper()}] {len(valid)} dates, current {valid.iloc[-1]['pe_ratio']:.2f}x")
-    db.save_pe_ratios(index, pe_df)
+    # Uppercase: pe_ratios.symbol is the same column concept as daily_prices.symbol
+    # and must spell an index the same way. `index` is the lowercase internal id.
+    db.save_pe_ratios(index.upper(), pe_df)
 
 
 def _sync_stock_pe(sym: str, start: str | None) -> None:
