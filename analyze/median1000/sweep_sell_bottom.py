@@ -64,20 +64,20 @@ THE GRID
   threshold that reads as huge next to PERCENT_SELL = 75 is not necessarily
   loose here.
 
-  What matters is how many days the new condition fires on that the old one does
-  not, which is the count of sells it ADDS:
+  Where the grid is dense is set by where the arm's behaviour actually changes,
+  measured as sells per symbol:
 
-      threshold    median symbol    worst symbol    symbols >5%    never fires
-           75           57.2%           99.7%            56              0
-          150           25.6%           78.4%            48              5
-          200           12.3%           78.4%            41             10
-          300            2.8%           39.6%            24             24
-          400            0.0%           35.7%            10             34
-          600            0.0%           21.1%             3             52
+      threshold     50    75   100   150   200   250   300   350   400   500   600
+      sells       21.4  14.1  12.6   8.8   6.1   3.9   2.8   1.5   1.1   0.5   0.2
 
-  So the usable band is roughly 150 to 600. The grid spans it and both edges: 75
-  is kept as the degenerate anchor where the arm sells almost daily, and 1000 as
-  the one where it has effectively switched itself off again.
+  So 150 to 400 is where it goes from churning to quiet, and that is where the
+  step is 25. Below it, four coarse points to show the collapse; above it, 450 and
+  500 plus one near-inert anchor at 600, by which point 52 of 58 symbols never
+  trigger it at all.
+
+  An earlier grid ran to 1000. Those cells were dead weight — at 800 and 1000 the
+  arm sells 0.08 and 0.02 times per symbol, which is the None row with extra
+  steps.
 
 COSTS NO WARMUP
 
@@ -110,7 +110,13 @@ from analyze.median1000 import config
 from analyze.median1000.factory import (make_median_strategies,
                                         make_interval_strategies, build_pelog_map)
 
-QS = [75, 100, 150, 200, 250, 300, 350, 400, 500, 600, 800, 1000]   # 12
+# Coarse at the edges, dense through the middle, one near-inert anchor at the top
+# — the same shape sweep_percent_sell uses, and dense over the same thing: the
+# stretch where the sell count falls from many to few. Here that is 150 to 400,
+# where sells run 8.8 down to 1.1 per symbol.
+QS = ([50, 75, 100, 125]
+      + list(range(150, 401, 25))
+      + [450, 500, 600])                                            # 18
 
 # The reference is this parameter's own None, exactly as sweep_percent_sell pairs
 # against the live value of the parameter it sweeps. With the median trigger off
@@ -135,7 +141,7 @@ def _key(q):
 
 
 def eval_symbol(sym: str):
-    """Returns (sym, {key: (diff, buys, sells, reinvests)}, note)."""
+    """Returns (sym, {key: (diff, reinvests, buys, sells)}, note)."""
     try:
         df = load_symbol_df(sym)
         if len(df) < 1010:
@@ -204,8 +210,10 @@ def eval_symbol(sym: str):
                 percent_sell=pct_sell, percent_sell_bottom=pct_bottom)
             r = run_estimate(sym, df, config.INTERVAL_MONEY, buy, sell, rei, crc,
                              start_index=start_idx)
-            return (round(r["allRatioGrowth"] - base, 4), r["totalBuys"],
-                    r["totalSells"], r["totalReinvest"])
+            # (diff, reinvests, buys, sells) — the order sweep_percent_sell,
+            # sweep_percent_reinvest and sweep_min_signal3 all use.
+            return (round(r["allRatioGrowth"] - base, 4), r["totalReinvest"],
+                    r["totalBuys"], r["totalSells"])
 
         out = {NOSELL_KEY: cell(None, None),                  # this grid's None
                LIVE_KEY:   cell(config.PERCENT_SELL, None)}   # context footnote
@@ -261,9 +269,9 @@ def aggregate(per_symbol: dict) -> dict:
         grids["median"][k] = st.median(vals)
         grids["win"][k]    = 100 * sum(1 for v in vals if v > 0) / len(vals)
         grids["worst"][k]  = vals[0]
-        grids["buys"][k]   = st.mean([per_symbol[s][k][1] for s in syms])
-        grids["sells"][k]  = st.mean([per_symbol[s][k][2] for s in syms])
-        grids["reis"][k]   = st.mean([per_symbol[s][k][3] for s in syms])
+        grids["reis"][k]   = st.mean([per_symbol[s][k][1] for s in syms])
+        grids["buys"][k]   = st.mean([per_symbol[s][k][2] for s in syms])
+        grids["sells"][k]  = st.mean([per_symbol[s][k][3] for s in syms])
 
     base = m[:, keys.index(NOSELL_KEY)]
     for i, k in enumerate(keys):
@@ -284,7 +292,12 @@ def aggregate(per_symbol: dict) -> dict:
 
 def save_raw(per_symbol, skipped, elapsed):
     RAW.write_text(json.dumps({
-        "meta": {"qs": QS, "elapsed": elapsed,
+        "meta": {
+            # Positional layout of every cell tuple. Two orders grew up across these
+            # sweeps and they differ only by position, so a reader that assumes the
+            # wrong one reports buys as reinvests and says nothing.
+            "fields": ["diff", "reinvests", "buys", "sells"],
+            "qs": QS, "elapsed": elapsed,
                  "config": {c: getattr(config, c) for c in dir(config)
                             if c.isupper() and not c.startswith("_")}},
         "skipped": skipped, "results": per_symbol,

@@ -155,7 +155,7 @@ def _key(q):
 
 
 def eval_symbol(sym: str):
-    """Returns (sym, {key: (diff, buys, sells, reinvests)}, note)."""
+    """Returns (sym, {key: (diff, reinvests, buys, sells)}, note)."""
     try:
         df = load_symbol_df(sym)
         if len(df) < 1010:
@@ -221,8 +221,10 @@ def eval_symbol(sym: str):
                 zdev_map=z, pelog_map=pelog, min_pelog=min_pelog)
             r = run_estimate(sym, df, config.INTERVAL_MONEY, buy, sell, rei, crc,
                              start_index=start_idx)
-            return (round(r["allRatioGrowth"] - base, 4), r["totalBuys"],
-                    r["totalSells"], r["totalReinvest"])
+            # (diff, reinvests, buys, sells) — the order sweep_percent_sell,
+            # sweep_percent_reinvest and sweep_min_signal3 all use.
+            return (round(r["allRatioGrowth"] - base, 4), r["totalReinvest"],
+                    r["totalBuys"], r["totalSells"])
 
         out = {OFF_KEY: cell(None)}
         for q in QS:
@@ -272,9 +274,9 @@ def aggregate(per_symbol: dict) -> dict:
         grids["median"][k] = st.median(vals)
         grids["win"][k]    = 100 * sum(1 for v in vals if v > 0) / len(vals)
         grids["worst"][k]  = vals[0]
-        grids["buys"][k]   = st.mean([per_symbol[s][k][1] for s in syms])
-        grids["sells"][k]  = st.mean([per_symbol[s][k][2] for s in syms])
-        grids["reis"][k]   = st.mean([per_symbol[s][k][3] for s in syms])
+        grids["reis"][k]   = st.mean([per_symbol[s][k][1] for s in syms])
+        grids["buys"][k]   = st.mean([per_symbol[s][k][2] for s in syms])
+        grids["sells"][k]  = st.mean([per_symbol[s][k][3] for s in syms])
 
     base = m[:, keys.index(OFF_KEY)]
     for i, k in enumerate(keys):
@@ -295,7 +297,12 @@ def aggregate(per_symbol: dict) -> dict:
 
 def save_raw(per_symbol, skipped, elapsed):
     RAW.write_text(json.dumps({
-        "meta": {"qs": QS, "pe_window": getattr(config, "PE_MEDIAN_WINDOW", 500),
+        "meta": {
+            # Positional layout of every cell tuple. Two orders grew up across these
+            # sweeps and they differ only by position, so a reader that assumes the
+            # wrong one reports buys as reinvests and says nothing.
+            "fields": ["diff", "reinvests", "buys", "sells"],
+            "qs": QS, "pe_window": getattr(config, "PE_MEDIAN_WINDOW", 500),
                  "elapsed": elapsed,
                  "config": {c: getattr(config, c) for c in dir(config)
                             if c.isupper() and not c.startswith("_")}},

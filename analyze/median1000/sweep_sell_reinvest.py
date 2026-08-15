@@ -362,7 +362,12 @@ def gap_table(grids: dict) -> list:
 
 def save_raw(per_symbol, skipped, elapsed):
     RAW.write_text(json.dumps({
-        "meta": {"sells": SELLS, "reis": REIS, "live": list(LIVE),
+        "meta": {
+            # Positional layout of every cell tuple. Two orders grew up across these
+            # sweeps and they differ only by position, so a reader that assumes the
+            # wrong one reports buys as reinvests and says nothing.
+            "fields": ["diff", "reinvests", "buys", "sells"],
+            "sells": SELLS, "reis": REIS, "live": list(LIVE),
                  "elapsed": elapsed,
                  "config": {c: getattr(config, c) for c in dir(config)
                             if c.isupper() and not c.startswith("_")}},

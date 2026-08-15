@@ -374,6 +374,11 @@ def save_raw(per_symbol: dict, skipped: list, path: Path, elapsed: float = 0.0):
     """JSON keys must be strings, so (window, k) is encoded as 'window|k'."""
     path.write_text(json.dumps({
         "meta": {
+            # Positional layout of every cell tuple. Two orders grew up across these
+            # sweeps and they differ only by position, so a reader that assumes the
+            # wrong one reports buys as reinvests and says nothing.
+            "fields": ["diff", "buys", "sells"],
+            
             "windows": WINDOWS, "ks": KS, "elapsed": elapsed,
             "config": {c: getattr(config, c) for c in dir(config)
                        if c.isupper() and not c.startswith("_")},
