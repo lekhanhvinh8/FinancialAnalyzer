@@ -83,6 +83,58 @@ COSTS NO WARMUP
 
   local_top is on the same range_stats row the median already reads.
 
+WHAT IT FOUND: THE BEST AGGREGATE OF ANY REINVEST SETTING, AND STILL A TIE
+
+  52 symbols, 20 thresholds. Four points to read it against:
+
+      no reinvest at all, timeout included   mean -27.91  median  -0.47
+      None: no top trigger, median inert,
+            timeout still on   (reference)   mean +24.75  median  +8.50
+      best cell, top at -50                  mean +55.79  median +22.04
+      live: PERCENT_REINVEST = 10            mean +52.38  median +20.14
+
+  Against the reference, 1 of 20 cells clears p<0.05 and 9 have a paired median of
+  exactly 0.00. The one that clears it, -50, does so with a paired median of +0.15
+  and no agreeing neighbours.
+
+  Against live, -50 is 21 symbols up and 22 down, paired median +0.00, p=0.620. A
+  coin flip. Its aggregate lead comes from three symbols — VND +430, HPG +265,
+  HAG +240 — while the typical symbol does not move.
+
+  A ROUND ROBIN SETTLES IT
+
+  Pooling all 35 reinvest configurations from this sweep and sweep_percent_reinvest
+  — legitimate because both now run at PERCENT_SELL = 75, and the shared cell
+  agrees to 0.0000 on all 52 symbols — and counting how many opponents each beats
+  with a positive paired median at p<0.05:
+
+      RI=10 (live)     23 wins    mean 52.38   median 20.14   worst  -90.7
+      TOP=-50          21 wins    mean 55.79   median 22.04   worst -121.6
+      RI=20            19 wins    mean 48.65   median 14.73
+      TOP=-40          17 wins    mean 46.88   median 14.27
+
+  Live wins the round robin. 23 of the 34 others lose to it significantly. Exactly
+  one beats it — RI=5, by a paired median of +0.01 at p=0.040, on a mean seven
+  points BELOW live. That is a sign test detecting a hundredth of a point, not an
+  improvement.
+
+  One thing does separate the two families: every TOP cell has a worst symbol
+  around -121 while nearly every RI cell sits at -155.7. The drawdown trigger has
+  a consistently better tail. It is the only one of the four new parameters that
+  improves anything without a compensating disaster, and still not enough to
+  change a setting on.
+
+  THE FIRST RUN OF THIS SWEEP WAS WRONG AND THE MISTAKE IS WORTH KEEPING
+
+  It reported 17 of 20 cells beating the reference with 15 of them having both
+  neighbours agree. That reference was built by handing the factory None for both
+  price triggers, which falls back to the base class — and the base class has no
+  timeout. So the reference lost the 400-bar valve as well as the trigger, while
+  every cell kept it. The bare-None floor scored -27.91 against +44.8 for a cell
+  at -70 where the top trigger fires almost never: 72 of those points were the
+  clock. Isolating a parameter means everything else stays, including the parts
+  that live on the same object.
+
 Usage:
     python analyze/median1000/sweep_reinvest_top.py             # all symbols
     python analyze/median1000/sweep_reinvest_top.py FPT GMD     # a subset
@@ -126,8 +178,24 @@ QS = ([-5, -10, -15]
 # tests is better, which is a different question from what this grid answers —
 # is this trigger any good, and at what value. The live median config is still
 # computed and printed, but as a footnote outside the grid, never as the baseline.
-NOSELL_KEY = "none"
-LIVE_KEY   = "live"      # context only, not part of the grid
+# The reference has to isolate the swept parameter, which means everything else
+# stays exactly as it is. Handing the factory None for both price triggers does
+# NOT do that: it falls back to the base class, which drops the 400-bar timeout
+# too, and the timeout is not part of this parameter.
+#
+# That mistake inflated the first run of this sweep enormously. The bare-None
+# reference scored a mean of -27.91 while a cell at -70, where the top trigger
+# fires almost never, scored +44.8 — so 72 of those points were the timeout, and
+# 17 of 20 cells "beat the reference" mostly by having a clock.
+#
+# So the reference makes the median trigger INERT rather than absent: -999 means
+# "redeploy while the price is 999% below its median", which never happens, and
+# the object keeps its timeout. Same sentinel idea as REINVEST_TIMEOUT_PERCENT=999
+# on the other side.
+INERT = -999
+NOSELL_KEY = "none"      # no top trigger, median inert, timeout still on
+NOTHING_KEY = "nothing"  # context: no reinvest at all, timeout included
+LIVE_KEY   = "live"      # context: the median-based condition as configured
 
 OUT  = Path(__file__).parent / "sweep_reinvest_top.html"
 RAW  = Path(__file__).parent / "sweep_reinvest_top_raw.json"
@@ -213,13 +281,14 @@ def eval_symbol(sym: str):
             return (round(r["allRatioGrowth"] - base, 4), r["totalReinvest"],
                     r["totalBuys"], r["totalSells"])
 
-        out = {NOSELL_KEY: cell(None, None),                  # this grid's None
-               LIVE_KEY:   cell(config.PERCENT_REINVEST, None)}   # context footnote
+        out = {NOSELL_KEY:  cell(INERT, None),                  # this grid's None
+               NOTHING_KEY: cell(None, None),                   # context: floor
+               LIVE_KEY:    cell(config.PERCENT_REINVEST, None)}  # context: live
         # Median trigger OFF in every swept cell, so the top one is judged on its
         # own rather than as an increment on a condition that already fires on
         # 35.7% of days.
         for q in QS:
-            out[_key(q)] = cell(None, q)
+            out[_key(q)] = cell(INERT, q)
         return sym, out, None
     except Exception as e:
         return sym, None, f"{type(e).__name__}: {e}"
@@ -249,7 +318,7 @@ def aggregate(per_symbol: dict) -> dict:
     nb      how many of the cell's two grid neighbours also beat None
             significantly. One dimension, so the most it can be is 2.
     """
-    keys = [NOSELL_KEY, LIVE_KEY] + [_key(q) for q in QS]
+    keys = [NOSELL_KEY, NOTHING_KEY, LIVE_KEY] + [_key(q) for q in QS]
     syms = [s for s in per_symbol if all(k in per_symbol[s] for k in keys)]
     grids = {m: {} for m in ("mean", "median", "win", "worst", "vote",
                              "paired", "pairp", "nb", "buys", "sells", "reis")}
@@ -284,7 +353,7 @@ def aggregate(per_symbol: dict) -> dict:
     for j, q in enumerate(QS):
         nb = ([QS[j - 1]] if j > 0 else []) + ([QS[j + 1]] if j < len(QS) - 1 else [])
         grids["nb"][_key(q)] = sum(1 for x in nb if _key(x) in good)
-    grids["nb"][NOSELL_KEY] = grids["nb"][LIVE_KEY] = 0
+    grids["nb"][NOSELL_KEY] = grids["nb"][LIVE_KEY] = grids["nb"][NOTHING_KEY] = 0
     return grids
 
 
@@ -505,12 +574,15 @@ def _report(per_symbol, skipped, elapsed):
         print("no symbol has every cell — was the raw file written by an older "
               "version of this script? re-run the sweep."); return
 
-    print(f"\nreference   None, no trigger at all — with the median trigger off "
-          f"this also drops\n            the 400-bar timeout, which lives on the "
-          f"same class\n            mean {grids['mean'][NOSELL_KEY]:+.2f}  "
+    print(f"\nreference   None — no top trigger, median inert, timeout still on\n"
+          f"            mean {grids['mean'][NOSELL_KEY]:+.2f}  "
           f"median {grids['median'][NOSELL_KEY]:+.2f}  "
           f"reinvests {grids['reis'][NOSELL_KEY]:.2f}")
-    print(f"\ncontext     live median condition, PERCENT_REINVEST="
+    print(f"\ncontext     no reinvest at all, timeout included   "
+          f"mean {grids['mean'][NOTHING_KEY]:+.2f}  "
+          f"median {grids['median'][NOTHING_KEY]:+.2f}  "
+          f"reinvests {grids['reis'][NOTHING_KEY]:.2f}")
+    print(f"context     live median-based condition, PERCENT_REINVEST="
           f"{getattr(config, 'PERCENT_REINVEST', 10)}  <- NOT the baseline\n"
           f"            mean {grids['mean'][LIVE_KEY]:+.2f}  "
           f"median {grids['median'][LIVE_KEY]:+.2f}  "

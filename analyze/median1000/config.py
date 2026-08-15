@@ -145,6 +145,11 @@ PERCENT_SELL_BOTTOM = None
 # reserve and the reserve only leaves through here. Setting this to None costs 78
 # mean points.
 #
+# Re-swept at PERCENT_SELL = 75 (the first sweep ran at 60) and 10 still wins. A
+# round robin over all 35 reinvest configurations from this sweep and
+# sweep_reinvest_top puts it first on 23 head-to-head wins, with 23 of the other
+# 34 losing to it significantly.
+#
 # Re-tested JOINTLY with PERCENT_SELL (sweep_sell_reinvest.py), because the two
 # are coupled: the distance between them is a band the money cannot return
 # through, and 10 was chosen while PERCENT_SELL was still 60. Widening that band
@@ -206,6 +211,24 @@ PERCENT_REINVEST = 10
 # has to answer.
 #
 # Costs no warmup — local_top is on the same range_stats row as the median.
+#
+# SWEPT, AND IT TIES. 20 thresholds against a reference that keeps the timeout and
+# only drops this trigger. 1 of 20 clears p<0.05 and 9 have a paired median of
+# exactly 0.00. Against live it is 21 symbols up and 22 down, paired median +0.00,
+# p=0.620.
+#
+# It has the best aggregate of any reinvest setting measured — mean 55.79 and
+# median 22.04 at -50, against live's 52.38 and 20.14 — but that lead is three
+# symbols wide: VND +430, HPG +265, HAG +240, with the typical symbol unmoved.
+#
+# A round robin over all 35 reinvest configurations from both sweeps puts live
+# first on 23 wins and -50 second on 21. Exactly one setting beats live at p<0.05
+# and it does so by +0.01 of a point.
+#
+# Worth remembering rather than deleting: every TOP cell has a worst symbol near
+# -121 where nearly every PERCENT_REINVEST cell sits at -155.7. The drawdown
+# trigger has a better tail than the level one. It is the only one of the four new
+# parameters that improves something without a compensating disaster.
 PERCENT_REINVEST_TOP = None
 
 # Timeout reinvest: if no reinvest has occurred X trading days after last sell,

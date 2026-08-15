@@ -159,3 +159,38 @@ Still open:
     restrained (zdev, pelog, sell x reinvest), loosened (a second trigger), and
     replaced (bottom instead of median). PERCENT_SELL = 75 against the 1000-bar
     median is the best price test found.
+
+
+=== DONE: PERCENT_REINVEST_TOP — redeploy on a drawdown from the high ===
+
+Second reinvest trigger, OR'd with the median one. Swept with the median trigger
+inert so PERCENT_REINVEST took no part. Reference keeps the 400-bar timeout and
+drops only this trigger.
+
+Result: a tie. 1 of 20 cells clears p<0.05 against the reference, 9 have a paired
+median of exactly 0.00. Against live: 21 up, 22 down, paired +0.00, p=0.620.
+
+It does have the best aggregate of any reinvest setting measured — mean 55.79,
+median 22.04 at -50, against live's 52.38 and 20.14 — but the lead is three
+symbols wide (VND +430, HPG +265, HAG +240).
+
+Round robin over all 35 reinvest configurations from both sweeps, legitimate
+because both now run at PERCENT_SELL=75 and the shared cell agrees to 0.0000:
+live wins on 23, TOP=-50 second on 21. Exactly one setting beats live at p<0.05,
+by +0.01 of a point.
+
+Also re-ran sweep_percent_reinvest at the current config — its first run was at
+PERCENT_SELL=60, which made its numbers incomparable with anything newer. 10 still
+wins.
+
+Worth keeping: every TOP cell has a worst symbol near -121 where nearly every
+PERCENT_REINVEST cell sits at -155.7. The drawdown trigger has the better tail.
+
+Still open:
+  - The OR of both, which is what the arm implements: median 10 for the typical
+    symbol, top -50 for VND/HPG/HAG. The two are good on different symbols, which
+    is the one configuration nothing has measured.
+  - sweep_reinvest_top's report cannot show its own most important number. The
+    paired comparison against PERCENT_REINVEST is not in it — live is a footnote,
+    not a clickable row, and the other PERCENT_REINVEST values are in a different
+    file. Every figure quoted above came from an ad-hoc script over two raw files.
