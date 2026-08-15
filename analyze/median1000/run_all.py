@@ -9,6 +9,35 @@ Outputs (in analyze/median1000/charts/):
 Symbols are processed in parallel, one process each — the work is CPU-bound
 inside run_estimate and every symbol is independent.
 
+THE REPORT SPLITS LONG FROM SHORT HISTORY
+
+  Every figure in the summary is shown three times: All, Long and Short, split
+  at config.LONG_HISTORY_BARS. The single blended column that used to be there
+  was averaging two things that do not belong in one average — a symbol with
+  2816 evaluated bars spans several market regimes, one with 682 spans one, and
+  the short ones nearly all span the SAME one, so they are close to a single
+  reading rather than sixteen.
+
+  On the 52-symbol run the two groups say different things:
+
+      group   n    median diff   sign test    net diff, and excluding its best
+      long    36      +37.27%    28/36  p=0.0006    +2707  ->  +2162 excl. VND
+      short   16       +1.06%    12/16  p=0.0384      +16  ->    -23 excl. VPB
+
+  The blended +20.14% describes neither. The short group is the more useful half
+  of the split: its direction is real (12 of 16 improve, p=0.038) but its size is
+  not — a median of +1.06%, and its entire net comes from one symbol.
+
+  The split also separates two different shapes of outcome, which no aggregate
+  over both could show. Avg win against avg loss is 3.20x in the long group
+  (+106% against -33%) and 0.38x in the short one (+12% against -30%). So on
+  short history the strategy wins more often than it loses and still barely
+  breaks even, because the few losses are far larger than the many wins. That is
+  a warning about a newly listed symbol, not about the strategy.
+
+  The Long and Short columns are DIFFERENT SYMBOLS, so nothing subtracts one from
+  the other; there is no pairing available between two disjoint sets.
+
 Usage:
     python analyze/median1000/run_all.py                 # all symbols, all cores
     python analyze/median1000/run_all.py FPT STB         # a subset
@@ -271,7 +300,51 @@ def build_report(rows: list[dict], out_path: Path,
             f"gap:2px 18px'>{items}</div></div>"
         )
 
-    max_eb = max((int(r.get("eval_bars") or 0) for r in rows), default=0)
+    # The long/short split. Everything below reports the two groups side by side
+    # instead of averaging over both, because they are not comparable evidence:
+    # a symbol evaluated on 682 bars saw one market period and one listed in 2014
+    # saw four. See config.LONG_HISTORY_BARS.
+    LONG_BARS = getattr(config, "LONG_HISTORY_BARS", 2000)
+    ebs_all = sorted(int(r.get("eval_bars") or 0) for r in rows)
+    max_eb  = ebs_all[-1] if ebs_all else 0
+    n_long  = sum(1 for e in ebs_all if e >= LONG_BARS)
+    n_short = len(ebs_all) - n_long
+
+    # Is the threshold sitting in a gap, or cutting through a cluster? A split is
+    # only meaningful if the universe is actually bimodal there, and that stops
+    # being true the moment the universe changes. So the report checks its own
+    # boundary rather than asserting one measured months ago.
+    below = max((e for e in ebs_all if e <  LONG_BARS), default=None)
+    above = min((e for e in ebs_all if e >= LONG_BARS), default=None)
+    if below is None or above is None:
+        split_note = ("<span style='color:#fbbf24'>every symbol falls on one side "
+                      "— the split says nothing about this run</span>")
+    else:
+        gap = above - below
+        # Compare against the widest gap inside either group: the boundary is only
+        # a real seam if it is wider than the ones it is choosing not to cut on.
+        inner = max((b - a for a, b in zip(ebs_all, ebs_all[1:])
+                     if not (a < LONG_BARS <= b)), default=0)
+        if gap > inner:
+            split_note = (f"<span style='color:#94a3b8'>splits a gap of {gap:,} bars "
+                          f"({below:,} &rarr; {above:,}), wider than any gap inside "
+                          f"either group ({inner:,})</span>")
+        else:
+            split_note = (f"<span style='color:#fbbf24'>cuts a gap of only {gap:,} bars "
+                          f"({below:,} &rarr; {above:,}) while a gap of {inner:,} sits "
+                          f"inside a group — the universe is no longer bimodal here, "
+                          f"so re-read config.LONG_HISTORY_BARS</span>")
+
+    split_html = (
+        "<div style='margin:10px 0;padding:10px 14px;background:#0f172a;"
+        "border:1px solid #1e293b;border-radius:8px;font-size:12px'>"
+        "<span style='color:#94a3b8;font-weight:700'>History split</span> "
+        f"<span style='color:#64748b'>at {LONG_BARS:,} evaluated bars &mdash;</span> "
+        f"<span style='color:#e2e8f0;font-weight:600'>{n_long} long</span> "
+        f"<span style='color:#64748b'>/</span> "
+        f"<span style='color:#fbbf24;font-weight:600'>{n_short} short</span>. "
+        f"{split_note}</div>"
+    )
 
     rows_html = ""
     data_json  = []
@@ -282,10 +355,11 @@ def build_report(rows: list[dict], out_path: Path,
         diff_color = "#4ade80" if diff >= 0 else "#f87171"
         diff_sign  = "+" if diff >= 0 else ""
         sym = row["symbol"]
-        # Amber a row whose evaluated window is under half the longest one — the
-        # rows are not equally weighted evidence and the table should show it.
+        # Amber a short-history row, on the same threshold the summary splits on
+        # so the table and the summary cannot disagree about which group a symbol
+        # is in.
         eb = int(row.get("eval_bars") or 0)
-        eb_color = "#fbbf24" if (max_eb and eb < max_eb / 2) else "#64748b"
+        eb_color = "#fbbf24" if eb < LONG_BARS else "#64748b"
         now_color, now_label = NOW_COMBO.get(
             tuple(row.get("now_flags") or (False, False, False)), ("#64748b", "?"))
         rows_html += (
@@ -312,6 +386,47 @@ def build_report(rows: list[dict], out_path: Path,
     import json
     data_js = json.dumps(data_json)
 
+    # (js key, row label, extra cell style). None is a horizontal rule. Every row
+    # is rendered three times — All, Long, Short — so it is written once here and
+    # the JS fills the cells by data-cell / data-grp.
+    SUM_ROWS = [
+        ("n",      "Symbols compared",                      "font-weight:600"),
+        ("mw",     "Median1000 wins",                       "color:#4ade80;font-weight:600"),
+        ("iw",     "BuyInterval wins",                      "color:#f87171;font-weight:600"),
+        ("dr",     "Draws",                                 "color:#94a3b8"),
+        None,
+        ("mdiff",  "<b>Median per-symbol diff</b><br>"
+                   "<span style='color:#475569;font-size:11px'>median of the "
+                   "per-symbol diffs, not the difference of the two medians "
+                   "below</span>",                          ""),
+        ("sign",   "Win rate (sign test)",                  ""),
+        ("eb",     "Evaluated bars<br><span style='color:#475569;font-size:11px'>"
+                   "median (min / max)</span>",             ""),
+        None,
+        ("avg",    "Avg growth — Median1000 / Interval",    ""),
+        ("med",    "Median growth — Median1000 / Interval", ""),
+        ("wl",     "Avg win / avg loss",                    ""),
+        ("quart",  "Diff spread — p25 / p50 / p75",         ""),
+        ("conc",   "Gains concentration — top 1 / top 3",   ""),
+        ("net",    "Net diff — all / excluding best",       ""),
+        ("act",    "Activity — avg sells, never sold",      ""),
+        None,
+        ("mbest",  "Best Median1000",                       "color:#4ade80"),
+        ("ibest",  "Best BuyInterval",                      "color:#4ade80"),
+        ("mworst", "Worst Median1000",                      "color:#f87171"),
+    ]
+    sum_rows_html = ""
+    for item in SUM_ROWS:
+        if item is None:
+            sum_rows_html += ("<tr><td colspan='4'>"
+                              "<hr style='border-color:#1e293b;margin:6px 0'></td></tr>\n")
+            continue
+        key, label, style = item
+        cells = "".join(
+            f"<td data-cell='{key}' data-grp='{g}' style='{style}'></td>"
+            for g in ("all", "long", "short"))
+        sum_rows_html += f"<tr><td>{label}</td>{cells}</tr>\n"
+
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -331,7 +446,10 @@ def build_report(rows: list[dict], out_path: Path,
     border-radius:10px;padding:20px 24px;font-size:13px;line-height:2; }}
   #summary .s-title {{ font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:10px; }}
   #summary table {{ font-size:13px; }}
+  #summary td {{ vertical-align:top;padding:5px 12px 5px 0;line-height:1.5; }}
   #summary td:first-child {{ color:#64748b;padding-right:24px; }}
+  #summary th {{ background:#111827;color:#94a3b8;font-size:12px;
+    padding:6px 12px 6px 0;text-align:left;border-bottom:1px solid #1e293b; }}
 </style>
 </head>
 <body>
@@ -340,9 +458,11 @@ def build_report(rows: list[dict], out_path: Path,
   {len(rows)} symbols reported{skipped_note} &nbsp;|&nbsp;
   vs BuyInterval (no sell/reinvest), both arms starting at the same bar &nbsp;|&nbsp;
   Sorted by Diff (Median1000 − Interval) descending. &nbsp;|&nbsp;
+  <span style="color:#fbbf24">Amber</span> eval bars = short history. &nbsp;|&nbsp;
   <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
 {config_html}
+{split_html}
 {skipped_html}
 <table>
 <thead><tr>
@@ -359,32 +479,30 @@ def build_report(rows: list[dict], out_path: Path,
 <div id="summary">
   <div class="s-title">Summary</div>
   <table style="border-collapse:collapse;width:100%">
-    <tr><td>Symbols compared</td><td id="s-n" style="font-weight:600"></td></tr>
-    <tr><td>Median1000 wins</td><td id="s-mw" style="color:#4ade80;font-weight:600"></td></tr>
-    <tr><td>BuyInterval wins</td><td id="s-iw" style="color:#f87171;font-weight:600"></td></tr>
-    <tr><td>Draws</td><td id="s-dr" style="color:#94a3b8"></td></tr>
-    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
-    <tr><td><b>Median per-symbol diff</b></td><td id="s-mdiff"></td></tr>
-    <tr><td>Win rate (sign test)</td><td id="s-sign"></td></tr>
-    <tr><td>Evaluated bars — median (min / max)</td><td id="s-eb"></td></tr>
-    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
-    <tr><td>Avg growth — Median1000 / Interval</td><td id="s-avg"></td></tr>
-    <tr><td>Median growth — Median1000 / Interval</td><td id="s-med"></td></tr>
-    <tr><td>Avg win / avg loss</td><td id="s-wl"></td></tr>
-    <tr><td>Diff spread — p25 / p50 / p75</td><td id="s-quart"></td></tr>
-    <tr><td>Gains concentration — top 1 / top 3</td><td id="s-conc"></td></tr>
-    <tr><td>Net diff — all / excluding best</td><td id="s-net"></td></tr>
-    <tr><td>Activity — avg sells, never sold</td><td id="s-act"></td></tr>
-    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
-    <tr><td colspan="2"><hr style="border-color:#1e293b;margin:6px 0"></td></tr>
-    <tr><td>Best Median1000</td><td id="s-mbest" style="color:#4ade80"></td></tr>
-    <tr><td>Best BuyInterval</td><td id="s-ibest" style="color:#4ade80"></td></tr>
-    <tr><td>Worst Median1000</td><td id="s-mworst" style="color:#f87171"></td></tr>
+    <colgroup><col style="width:28%"><col style="width:24%">
+              <col style="width:24%"><col style="width:24%"></colgroup>
+    <thead><tr>
+      <th style="position:static;background:transparent;padding-left:0"></th>
+      <th style="position:static">All</th>
+      <th style="position:static">Long &ge;{LONG_BARS:,} bars</th>
+      <th style="position:static;color:#fbbf24">Short &lt;{LONG_BARS:,} bars</th>
+    </tr></thead>
+    <tbody>
+{sum_rows_html}
+    </tbody>
   </table>
+  <div style="color:#475569;font-size:11px;margin-top:12px;line-height:1.6">
+    The Long and Short columns are <b>different symbols</b>, so the gap between
+    them is not a paired comparison and no cell here subtracts one from the
+    other. Read each column on its own; the split exists because a short symbol
+    was measured over one market period while a long one spans several, and
+    averaging the two hides that. Unchecking a row updates all three columns.
+  </div>
 </div>
 
 <script>
 const ALL_DATA = {data_js};
+const LONG_BARS = {LONG_BARS};
 const excluded = new Set();
 
 function median(arr) {{
@@ -397,49 +515,31 @@ function fmt(v) {{
   return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
 }}
 
-function updateSummary() {{
-  const active = ALL_DATA.filter(d => !excluded.has(d.sym));
-  if (!active.length) return;
-  const n  = active.length;
-  const ms = active.map(d => d.m);
-  const is_ = active.map(d => d.i);
-  const mw = active.filter(d => d.m > d.i).length;
-  const iw = active.filter(d => d.i > d.m).length;
-  const dr = n - mw - iw;
-  const mAvg = ms.reduce((a,b)=>a+b,0)/n;
-  const iAvg = is_.reduce((a,b)=>a+b,0)/n;
-  const mMed = median(ms);
-  const iMed = median(is_);
+// Every figure in the summary, computed over whichever subset it is handed, and
+// returned as ready-to-insert HTML keyed by the data-cell names in the table.
+// One function rather than three copies: the All / Long / Short columns must be
+// the same arithmetic on different symbols, and the only way to guarantee that
+// is for there to be one piece of arithmetic.
+function statsFor(a) {{
+  if (!a.length) return null;
+  const n  = a.length;
+  const ms = a.map(d => d.m);
+  const is_ = a.map(d => d.i);
+  const mw = a.filter(d => d.m > d.i).length;
+  const iw = a.filter(d => d.i > d.m).length;
+  const mAvg = ms.reduce((x,y)=>x+y,0)/n;
+  const iAvg = is_.reduce((x,y)=>x+y,0)/n;
   const diff = mAvg - iAvg;
-  const diffColor = diff >= 0 ? '#4ade80' : '#f87171';
 
-  const mBest = active.reduce((a,b) => b.m > a.m ? b : a);
-  const iBest = active.reduce((a,b) => b.i > a.i ? b : a);
-  const mWorst = active.reduce((a,b) => b.m < a.m ? b : a);
-
-  document.getElementById('s-n').textContent = n;
-  document.getElementById('s-mw').innerHTML = mw + ' <span style="color:#64748b;font-weight:400">(' + Math.round(mw/n*100) + '%)</span>';
-  document.getElementById('s-iw').innerHTML = iw + ' <span style="color:#64748b;font-weight:400">(' + Math.round(iw/n*100) + '%)</span>';
-  document.getElementById('s-dr').textContent = dr;
-  document.getElementById('s-avg').innerHTML =
-    '<span style="color:#60a5fa">' + mAvg.toFixed(2) + '%</span> &nbsp;/&nbsp; ' +
-    '<span style="color:#94a3b8">' + iAvg.toFixed(2) + '%</span> &nbsp;' +
-    '<span style="color:' + diffColor + ';font-weight:600">(' + fmt(diff) + ')</span>';
-  document.getElementById('s-med').innerHTML =
-    '<span style="color:#60a5fa">' + mMed.toFixed(2) + '%</span> &nbsp;/&nbsp; ' +
-    '<span style="color:#94a3b8">' + iMed.toFixed(2) + '%</span>';
   // Median of the per-symbol differences, NOT median(m) - median(i). The two are
   // not the same: the symbol at the middle of one distribution is not the symbol
   // at the middle of the other, so a difference of medians describes no actual
   // symbol. On the 45-symbol run they read +1.42% and +8.42% respectively.
-  const diffs  = active.map(d => d.m - d.i).sort((a,b)=>a-b);
-  const mdiff  = median(diffs);
-  document.getElementById('s-mdiff').innerHTML =
-    '<span style="color:' + (mdiff>=0?'#4ade80':'#f87171') + ';font-weight:700">' + fmt(mdiff) + '</span>' +
-    ' <span style="color:#64748b;font-weight:400">(median of the per-symbol diffs, not the difference of the two medians below)</span>';
+  const diffs = a.map(d => d.m - d.i).sort((x,y)=>x-y);
+  const mdiff = median(diffs);
 
   // Sign test over decided symbols only; exact draws carry no directional info.
-  const dec = diffs.filter(v => Math.abs(v) > 1e-9);
+  const dec  = diffs.filter(v => Math.abs(v) > 1e-9);
   const wins = dec.filter(v => v > 0).length;
   let p = 1;
   if (dec.length) {{
@@ -449,56 +549,84 @@ function updateSummary() {{
       c += Math.exp(lg(dec.length) - lg(k) - lg(dec.length - k) - dec.length * Math.LN2);
     p = c;
   }}
-  document.getElementById('s-sign').innerHTML =
-    wins + '/' + dec.length + ' <span style="color:#64748b">(' +
-    (dec.length ? Math.round(100*wins/dec.length) : 0) + '%)</span> &nbsp; ' +
-    '<span style="color:' + (p<0.05?'#4ade80':'#94a3b8') + '">p = ' + p.toFixed(4) + '</span>';
 
-  const ebs = active.map(d => d.eb || 0).filter(v => v > 0).sort((a,b)=>a-b);
-  document.getElementById('s-eb').innerHTML = ebs.length
-    ? median(ebs).toFixed(0) + ' <span style="color:#64748b">(min ' + ebs[0] +
-      ' / max ' + ebs[ebs.length-1] + ')</span>' +
-      (ebs[0] < ebs[ebs.length-1]/2
-        ? ' <span style="color:#fbbf24">— shortest is under half the longest</span>' : '')
-    : '—';
-
+  const ebs  = a.map(d => d.eb || 0).filter(v => v > 0).sort((x,y)=>x-y);
   const wArr = dec.filter(v=>v>0), lArr = dec.filter(v=>v<0);
-  const avg = a => a.length ? a.reduce((x,y)=>x+y,0)/a.length : 0;
-  document.getElementById('s-wl').innerHTML =
-    '<span style="color:#4ade80">' + fmt(avg(wArr)) + '</span> &nbsp;/&nbsp; ' +
-    '<span style="color:#f87171">' + fmt(avg(lArr)) + '</span>' +
-    (lArr.length ? ' <span style="color:#64748b">(' + Math.abs(avg(wArr)/avg(lArr)).toFixed(2) + 'x)</span>' : '');
-
-  const q = f => diffs[Math.min(diffs.length-1, Math.max(0, Math.floor(f*(diffs.length-1))))];
-  document.getElementById('s-quart').innerHTML =
-    '<span style="color:#94a3b8">' + fmt(q(0.25)) + ' &nbsp;/&nbsp; ' + fmt(q(0.50)) +
-    ' &nbsp;/&nbsp; ' + fmt(q(0.75)) + '</span>';
-
-  const totW = wArr.reduce((a,b)=>a+b,0);
-  const sortedW = wArr.slice().sort((a,b)=>b-a);
+  const avg  = arr => arr.length ? arr.reduce((x,y)=>x+y,0)/arr.length : 0;
+  const q    = f => diffs[Math.min(diffs.length-1, Math.max(0, Math.floor(f*(diffs.length-1))))];
+  const totW = wArr.reduce((x,y)=>x+y,0);
+  const sortedW = wArr.slice().sort((x,y)=>y-x);
   const top1 = totW ? 100*sortedW[0]/totW : 0;
-  const top3 = totW ? 100*sortedW.slice(0,3).reduce((a,b)=>a+b,0)/totW : 0;
-  document.getElementById('s-conc').innerHTML =
-    '<span style="color:' + (top1>25?'#fbbf24':'#94a3b8') + '">' + top1.toFixed(0) + '%</span>' +
-    ' &nbsp;/&nbsp; <span style="color:' + (top3>50?'#fbbf24':'#94a3b8') + '">' + top3.toFixed(0) + '%</span>' +
-    ' <span style="color:#64748b">of total gains</span>';
+  const top3 = totW ? 100*sortedW.slice(0,3).reduce((x,y)=>x+y,0)/totW : 0;
+  const netAll  = diffs.reduce((x,y)=>x+y,0);
+  const bestSym = a.reduce((x,y) => (y.m-y.i) > (x.m-x.i) ? y : x);
+  const mBest   = a.reduce((x,y) => y.m > x.m ? y : x);
+  const iBest   = a.reduce((x,y) => y.i > x.i ? y : x);
+  const mWorst  = a.reduce((x,y) => y.m < x.m ? y : x);
+  const noSell  = a.filter(d => d.s === 0).length;
+  const flat    = a.filter(d => Math.abs(d.m - d.i) < 1e-9).length;
+  const grey    = t => '<span style="color:#64748b">' + t + '</span>';
 
-  const netAll  = diffs.reduce((a,b)=>a+b,0);
-  const bestSym = active.reduce((a,b) => (b.m-b.i) > (a.m-a.i) ? b : a);
-  document.getElementById('s-net').innerHTML =
-    fmt(netAll) + ' &nbsp;-> &nbsp;' + fmt(netAll - (bestSym.m - bestSym.i)) +
-    ' <span style="color:#64748b">(excl. ' + bestSym.sym + ')</span>';
+  return {{
+    n:  String(n),
+    mw: mw + ' ' + grey('(' + Math.round(mw/n*100) + '%)'),
+    iw: iw + ' ' + grey('(' + Math.round(iw/n*100) + '%)'),
+    dr: String(n - mw - iw),
+    mdiff: '<span style="color:' + (mdiff>=0?'#4ade80':'#f87171') +
+           ';font-weight:700;font-size:15px">' + fmt(mdiff) + '</span>',
+    sign: wins + '/' + dec.length + ' ' +
+          grey('(' + (dec.length ? Math.round(100*wins/dec.length) : 0) + '%)') + '<br>' +
+          '<span style="color:' + (p<0.05?'#4ade80':'#94a3b8') + '">p = ' + p.toFixed(4) + '</span>',
+    // Just the range. There is no "too wide" flag here on purpose: a group always
+    // spans some range, and whether the boundary is in the right place is a
+    // question about the GAP between the groups, which the History split line
+    // above the table answers.
+    eb: ebs.length
+      ? median(ebs).toFixed(0) + ' ' + grey('(' + ebs[0] + ' / ' + ebs[ebs.length-1] + ')')
+      : '—',
+    avg: '<span style="color:#60a5fa">' + mAvg.toFixed(2) + '%</span> / ' +
+         '<span style="color:#94a3b8">' + iAvg.toFixed(2) + '%</span><br>' +
+         '<span style="color:' + (diff>=0?'#4ade80':'#f87171') + ';font-weight:600">' +
+         fmt(diff) + '</span>',
+    med: '<span style="color:#60a5fa">' + median(ms).toFixed(2) + '%</span> / ' +
+         '<span style="color:#94a3b8">' + median(is_).toFixed(2) + '%</span>',
+    wl: '<span style="color:#4ade80">' + fmt(avg(wArr)) + '</span> / ' +
+        '<span style="color:#f87171">' + fmt(avg(lArr)) + '</span>' +
+        (lArr.length ? ' ' + grey('(' + Math.abs(avg(wArr)/avg(lArr)).toFixed(2) + 'x)') : ''),
+    quart: '<span style="color:#94a3b8">' + fmt(q(0.25)) + ' / ' + fmt(q(0.50)) +
+           ' / ' + fmt(q(0.75)) + '</span>',
+    conc: '<span style="color:' + (top1>25?'#fbbf24':'#94a3b8') + '">' + top1.toFixed(0) + '%</span>' +
+          ' / <span style="color:' + (top3>50?'#fbbf24':'#94a3b8') + '">' + top3.toFixed(0) + '%</span>',
+    net: fmt(netAll) + '<br>' + grey(fmt(netAll - (bestSym.m - bestSym.i)) +
+         ' excl. ' + bestSym.sym),
+    act: (a.reduce((x,y)=>x+y.s,0)/n).toFixed(1) + ' sells<br>' +
+         '<span style="color:' + (noSell > n/4 ? '#fbbf24' : '#94a3b8') + '">' +
+         noSell + '/' + n + ' never sold</span>' +
+         (flat ? ' ' + grey('(' + flat + ' flat)') : ''),
+    mbest:  '<b>' + mBest.sym  + '</b> ' + mBest.m.toFixed(2)  + '%',
+    ibest:  '<b>' + iBest.sym  + '</b> ' + iBest.i.toFixed(2)  + '%',
+    mworst: '<b>' + mWorst.sym + '</b> ' + mWorst.m.toFixed(2) + '%',
+  }};
+}}
 
-  const noSell = active.filter(d => d.s === 0).length;
-  const flat   = active.filter(d => Math.abs(d.m - d.i) < 1e-9).length;
-  document.getElementById('s-act').innerHTML =
-    (active.reduce((a,b)=>a+b.s,0)/n).toFixed(1) + ' sells &nbsp;|&nbsp; ' +
-    '<span style="color:' + (noSell > n/4 ? '#fbbf24' : '#94a3b8') + '">' + noSell + '/' + n +
-    ' never sold</span>' + (flat ? ' <span style="color:#64748b">(' + flat + ' identical to interval)</span>' : '');
-
-  document.getElementById('s-mbest').innerHTML = '<b>' + mBest.sym + '</b> &nbsp;' + mBest.m.toFixed(2) + '%';
-  document.getElementById('s-ibest').innerHTML = '<b>' + iBest.sym + '</b> &nbsp;' + iBest.i.toFixed(2) + '%';
-  document.getElementById('s-mworst').innerHTML = '<b>' + mWorst.sym + '</b> &nbsp;' + mWorst.m.toFixed(2) + '%';
+function updateSummary() {{
+  const active = ALL_DATA.filter(d => !excluded.has(d.sym));
+  const groups = {{
+    all:   active,
+    long:  active.filter(d => (d.eb || 0) >= LONG_BARS),
+    short: active.filter(d => (d.eb || 0) <  LONG_BARS),
+  }};
+  for (const g in groups) {{
+    // A group can be empty — one symbol, or every row on one side unchecked —
+    // and an empty group has no median, no best and no worst. Blank the column
+    // rather than let a reduce() on [] throw and leave the page half rendered.
+    const s = statsFor(groups[g]);
+    document.querySelectorAll('[data-grp="' + g + '"]').forEach(td => {{
+      const k = td.dataset.cell;
+      td.innerHTML = (s && s[k] !== undefined) ? s[k]
+                   : '<span style="color:#334155">—</span>';
+    }});
+  }}
 }}
 
 document.querySelectorAll('.sym-toggle').forEach(cb => {{

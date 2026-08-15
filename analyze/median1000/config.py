@@ -123,6 +123,23 @@ USE_PE = False   # use P/E-adjusted median instead of price median
 # 0 disables the guard.
 MIN_EVAL_BARS = 500
 
+# Where report_all.html splits its summary into long-history and short-history
+# symbols. A reporting boundary, not a strategy parameter — nothing in the
+# backtest reads it.
+#
+# The two groups are not comparable evidence and averaging over both hides it:
+# on the 52-symbol run the long group's median per-symbol diff was +31.3 and the
+# short group's +9.2. Worse, the short symbols nearly all start in the same year,
+# so they are 16 readings of one market period rather than 16 independent ones.
+#
+# 2000 is not a round number chosen for neatness — the universe is genuinely
+# bimodal and this sits in the gap. Sorted evaluated bars run 682..1420, then
+# jump to 2021..2816. That 601-bar gap is four times the largest gap inside
+# either group, so the boundary is insensitive to where in it you put the line.
+# The report says which gap the threshold landed in and warns if it ever stops
+# being a gap; re-read it after the universe changes.
+LONG_HISTORY_BARS = 2000
+
 # Symbols kept out of every aggregate. Not a data-quality guard like the one
 # above — these are excluded by judgement, so the reason belongs here in writing.
 #   VIX — has been ~30% of total gains in every run; the mean diff largely

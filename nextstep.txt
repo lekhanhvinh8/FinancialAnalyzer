@@ -59,9 +59,11 @@ Still open:
   - MIN_SIGNAL3 has never been swept and has never been measured on its own —
     the -2.50 figure was signal3 and z_dev together, and z_dev is off now.
     Needs dispersion.py sharpe first, which has not been run.
-  - report_all mixes symbols with 2813 evaluated bars and ones with 679. Median
-    diff is +31.3 for the 36 long ones against +9.2 for the 16 short ones; the
-    report should split them rather than average over both.
+  - DONE: report_all now splits long from short history at
+    config.LONG_HISTORY_BARS = 2000, which sits in a real 601-bar gap in the
+    universe (1420 -> 2021). Long 36 / short 16. Median diff +37.27 against
+    +1.06; the short group's entire net is one symbol (VPB) and its avg win /
+    avg loss is 0.38x against the long group's 3.20x.
 
 
   sweep percent reinvest
