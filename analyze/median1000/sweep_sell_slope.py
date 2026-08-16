@@ -100,20 +100,47 @@ WHAT IT FOUND — 54 symbols, 77 cells, run of 2026-08-16
 
   Read alone this says tighten the gate hard — the opposite of the hypothesis, and
   worth +57 at PERCENT_SELL = 60. But every one of those cells medians to 0.00, so
-  the mean is a handful of symbols and nothing else. 85|None is the clearest case
-  in the run: paired median +3.49, paired mean -43.71.
+  the mean is a handful of symbols and nothing else.
+
+  EVERY FIGURE BELOW EXCLUDES VIX AND VIC
+
+    RAW keeps all 54 symbols so the exclusion can be changed by re-scoring, and
+    the first reading of this file forgot to apply it. VIX alone moves -574 points
+    between two cells, which is enough to flip the sign of any mean in the table:
+    85|0.228 reads mean -1.44 over 54 symbols and +6.68 over the configured 52.
+    The medians barely move, which is exactly why the paired median is the metric
+    this project scores on — but never quote a mean off the raw file.
 
   WHAT THE RUN DID CONFIRM, AND IT IS NOT ABOUT THE GATE
 
-      85|0.228   median +1.89   mean -1.44   30/39   p=0.0005
+      cell         paired median   paired mean   up/dec       p
+      80|0.228         +1.67          +3.67       29/35    0.0001
+      85|0.228         +1.89          +6.68       29/37    0.0004
+      90|0.228         +0.93          +5.87       27/37    0.0038
 
-  That is PERCENT_SELL moved to 85 with the gate untouched, and it is the
-  strongest p in the table. sweep_percent_sell scored 85 at +1.87 on a different
-  grid and a different run; this reproduces it at +1.89. Cells with a higher
-  median exist (85|0.365 and 85|None both +3.49) but they are worse on p and their
-  means are -23 and -44, so they win the ranking by moving a few symbols a long
-  way. 85|0.228 is the only cell that is good on the median, near-neutral on the
-  mean, and strongest on the sign test at once.
+  PERCENT_SELL moved, gate untouched, and the three form a contiguous band rather
+  than one lucky cell. sweep_percent_sell scored 85 at +1.87 on a different grid
+  and a different run; this reproduces it at +1.89.
+
+  Cells with a higher median exist — 85|0.25 at +3.92, 85|0.365 and 85|None both
+  at +3.78 — but the two loose ones carry paired means of -9.16 and -7.84, so they
+  buy their median by moving a few symbols a long way in the wrong direction.
+  85|0.25 is positive on both and is the one cell of the three worth a second look.
+
+  WHAT ADOPTING 85 COSTS, STATED PLAINLY
+
+      cell       mean    p25   median    p75    worst   losers   sells
+      75|0.228   52.38   0.04   20.14   56.54   -90.68     12     2.35
+      85|0.228   59.06   0.04   14.09   75.04   -90.68     12     1.77
+
+  The aggregate median FALLS by 6 while 29 of 37 decided symbols individually
+  improve. Both are true and they are not in conflict: median(A) - median(B) is
+  not median(A - B), and the paired figure is the one that answers "does this help
+  each symbol". What actually happens to the distribution is that the top half
+  stretches (p75 +18.5) while the middle sags; p25, the worst symbol and the count
+  of losing symbols are all unchanged. Expect report_all's headline median to look
+  worse after this change, and expect that to be the shape moving rather than a
+  regression. The arm also acts less: 2.35 sells per symbol down to 1.77.
 
   Sell counts corroborate diag_sell_gates: at PERCENT_SELL = 75 the mean sells per
   symbol runs 1.56 at slope 0.0 to 2.73 with the gate off. Removing the largest
