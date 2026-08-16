@@ -75,6 +75,51 @@ THE GRID
   mistake with the reinvest timeout and 72 points of an apparent gain turned out
   to be the clock.
 
+WHAT IT FOUND — 54 symbols, 77 cells, run of 2026-08-16
+
+  The hypothesis is not supported, and the grid answers it more flatly than a
+  wrong-direction result would have.
+
+  Holding PERCENT_SELL fixed and moving only the gate, the paired median is
+  EXACTLY 0.00 in 70 of the 70 comparisons. Not small — zero. Six of the seven
+  rows are flat end to end, and no row's best cell beats its own live-slope cell
+  at p<0.05. The single cell that clears 0.05 (60|0.183, p=0.049) is one of 70,
+  and 3.5 are expected by chance.
+
+  So there is no interaction to find, for the reason that there is no slope effect
+  to interact with: at every price threshold from 60 to 90, moving the gate
+  anywhere from off to 0.365 leaves the median symbol where it was.
+
+  THE MEAN SAYS THE OPPOSITE, LOUDLY, AND IS WRONG TO LISTEN TO
+
+      within-row mean vs the row's own 0.228 cell
+      sell   None      0.1     0.15     0.25    0.365
+        60  -25.66   +57.11   +56.46    -8.81   -22.82
+        75  -56.95   +13.14   +15.03   -10.28   -29.28
+        85  -42.27    +3.85    +7.69    -8.59   -21.93
+
+  Read alone this says tighten the gate hard — the opposite of the hypothesis, and
+  worth +57 at PERCENT_SELL = 60. But every one of those cells medians to 0.00, so
+  the mean is a handful of symbols and nothing else. 85|None is the clearest case
+  in the run: paired median +3.49, paired mean -43.71.
+
+  WHAT THE RUN DID CONFIRM, AND IT IS NOT ABOUT THE GATE
+
+      85|0.228   median +1.89   mean -1.44   30/39   p=0.0005
+
+  That is PERCENT_SELL moved to 85 with the gate untouched, and it is the
+  strongest p in the table. sweep_percent_sell scored 85 at +1.87 on a different
+  grid and a different run; this reproduces it at +1.89. Cells with a higher
+  median exist (85|0.365 and 85|None both +3.49) but they are worse on p and their
+  means are -23 and -44, so they win the ranking by moving a few symbols a long
+  way. 85|0.228 is the only cell that is good on the median, near-neutral on the
+  mean, and strongest on the sign test at once.
+
+  Sell counts corroborate diag_sell_gates: at PERCENT_SELL = 75 the mean sells per
+  symbol runs 1.56 at slope 0.0 to 2.73 with the gate off. Removing the largest
+  gate in the chain buys 1.2 extra sells per symbol over fifteen years, because
+  re-entry and not the gate is what governs how often there is anything to sell.
+
 Usage:
     python analyze/median1000/sweep_sell_slope.py             # all symbols
     python analyze/median1000/sweep_sell_slope.py FPT GMD     # a subset
@@ -324,7 +369,7 @@ def interaction(per_symbol: dict) -> list:
         dec = up + dn
         p = (sum(math.comb(dec, j) for j in range(up, dec + 1)) / 2 ** dec
              if dec else 1.0)
-        return st.median(d), up, dn, p
+        return st.median(d), up, dn, p, st.mean(d)
 
     live_k     = _key(*LIVE)
     live_slope = LIVE[1]
@@ -339,10 +384,23 @@ def interaction(per_symbol: dict) -> list:
             continue
         # Ranked on the paired median against this row's own live-slope cell, which
         # is the only comparison that isolates the gate at this price threshold.
+        #
+        # The tie-break is not cosmetic. Moving this gate leaves most symbols
+        # untouched, so the paired median lands on exactly 0.00 in most cells — on
+        # the first full run, in 70 of 70. Ranking on the median alone then makes
+        # max() return whichever candidate comes first in SLOPES, and it reported
+        # "best slope = None" in every row, which reads as a finding and is nothing
+        # but list order. up - dn is what still discriminates inside a dead zone:
+        # it is the sign test's own statistic, and it does not collapse when half
+        # the sample is unmoved.
         scored = [(r, *med_of_diff(_key(ps, r), row_live)) for r in cands]
-        best_r, g, up, dn, p = max(scored, key=lambda t: t[1])
+        best_r, g, up, dn, p, mn = max(scored, key=lambda t: (t[1], t[2] - t[3]))
+        # A row where every candidate medians to 0.00 has no best cell at all, and
+        # saying so is the honest output. Reported rather than hidden behind the
+        # tie-break above, which only picks the least bad of a flat row.
+        flat = all(abs(t[1]) < 1e-9 for t in scored)
         row_vs_live = med_of_diff(row_live, live_k)[0]
-        out.append((ps, best_r, g, up, dn, p, row_vs_live))
+        out.append((ps, best_r, g, up, dn, p, row_vs_live, mn, flat))
     return out
 
 
@@ -419,15 +477,19 @@ def build_html(grids, per_symbol, n_syms, skipped, elapsed):
                  f"<td style='color:#4ade80'>{bv:+.2f}{unit}</td></tr>")
 
     inter = interaction(per_symbol)
+    # Built outside the f-string below: it carries both quote characters, and an
+    # f-string cannot reuse its own delimiter inside the braces.
+    FLAT_TAG = "&nbsp;<span style='color:#f87171'>flat</span>"
     # Read the best-slope column down the table: one repeated value means the two
     # parameters are separable, a drift means they are not.
     grows = "".join(
-        f"<tr><td>{ps}</td><td><b>{br}</b></td>"
+        f"<tr><td>{ps}</td><td><b>{br}</b>"
+        f"{FLAT_TAG if flat else ''}</td>"
         f"<td style='color:{'#4ade80' if g > 0 and p < 0.05 else '#f87171' if g < 0 else '#e2e8f0'}"
         f";font-weight:600'>{g:+.2f}</td>"
         f"<td style='color:#64748b'>{up}/{up+dn}  p={p:.3f}</td>"
         f"<td style='color:#94a3b8'>{rl:+.2f}</td></tr>"
-        for ps, br, g, up, dn, p, rl in inter)
+        for ps, br, g, up, dn, p, rl, mn, flat in inter)
     n_picks = len({r[1] for r in inter})
 
     skip_html = ("<p class='note'>Skipped: "
@@ -594,15 +656,20 @@ def _report(per_symbol, skipped, elapsed):
     print("\ndoes the best slope threshold depend on PERCENT_SELL?")
     print(f"{'sell':>6}{'best slope':>12}{'gain vs row live':>18}{'up/dec':>9}"
           f"{'p':>8}{'row live vs grid live':>23}")
-    for ps, br, g, up, dn, pv, rl in inter:
+    for ps, br, g, up, dn, pv, rl, mn, flat in inter:
         print(f"{ps:>6}{str(br):>12}{g:>+18.2f}{f'{up}/{up+dn}':>9}{pv:>8.3f}"
-              f"{rl:>+23.2f}")
+              f"{rl:>+23.2f}{'   FLAT (every slope medians to 0.00)' if flat else ''}")
     picks = {r[1] for r in inter}
     print(f"\n  distinct best-slope values across the {len(inter)} rows: "
           f"{len(picks)} — {sorted(picks, key=lambda v: (v is not None, v))}")
     print("  one value everywhere means the two parameters are separable and the "
           "1D sweep already answered this;\n  a drift with PERCENT_SELL is the "
           "interaction this sweep was built to find.")
+    nflat = sum(1 for r in inter if r[8])
+    if nflat:
+        print(f"  {nflat}/{len(inter)} rows are FLAT — no slope setting moves the "
+              f"median symbol at that price threshold,\n  so 'best slope' there is "
+              f"only the least bad of a tie and must not be read as a preference.")
     sig = [r for r in inter if r[2] > 1e-9 and r[5] < 0.05]
     print(f"  rows whose best beats their own live-slope cell at p<0.05: "
           f"{len(sig)}/{len(inter)}")
