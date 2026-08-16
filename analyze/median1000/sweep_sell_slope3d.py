@@ -98,6 +98,67 @@ WARMUP IS FREE ON THE WINDOW AXIS
   reinvest_top is the reminder of what happens otherwise: 72 points of an apparent
   gain turned out to be a start index that had moved.
 
+WHAT IT FOUND — 52 symbols, 864 cells, run of 2026-08-16
+
+  201 cells beat live on the sign test at p<0.05 against 43 expected by chance,
+  and 88 of those have 13 or more of their 26 neighbours agreeing. So unlike the
+  two flat 2D faces there is something here. It is not what the sweep was built
+  to look for.
+
+  THE WINDOW AXIS IS NOT IT
+
+    The 88 solid cells spread across every window on the ladder — 10:10, 20:19,
+    30:18, 50:12, 70:8, 100:6, 140:10, 200:5. A lag effect would cluster. This
+    does not, so the third axis earned its run by ruling itself out.
+
+  THE GATE IS NOT IT EITHER
+
+    Holding the price threshold and taking the BEST of all 96 gate settings in
+    each panel, measured against that panel's own near-live gate cell:
+
+        sell 80   +0.34  p=0.068      sell 90   +0.03  p=0.082
+        sell 85   +1.15  p=0.048      sell 100  +0.00  p=0.025
+
+    Best of 96 reaching p=0.048 is not a finding. And the k axis only rules out
+    the tight end: no solid cell sits below k=1.0, all 88 are at 1.5 to 4.0, which
+    says do not tighten the gate rather than loosen it.
+
+  IT IS PERCENT_SELL, FOR THE THIRD INDEPENDENT TIME
+
+    Panel by panel at a fixed near-live gate (w=100, k=2.5 -> 0.250), so only the
+    price threshold moves and nothing is selected:
+
+        30  -7.92 p=0.80    60  -7.85 p=0.99    85  +3.92 p=0.014
+        40  -1.67 p=0.66    70  -0.42 p=0.98    90  +0.96 p=0.040
+        50  -6.64 p=0.88    80  +0.99 p=0.019   100 +0.00 p=0.50
+
+    85 is the peak, and 85|100|2.5 also improves the tail: worst -90.7 -> -86.2
+    and losing symbols 12 -> 11. sweep_percent_sell scored 85 at +1.87 and
+    sweep_sell_slope at +1.89; the figures differ because the reference gate here
+    is 0.250 rather than 0.228, the direction does not.
+
+  ONE GENUINELY NEW LEAD, IN THE REGION THAT WAS ADDED ON A HUNCH
+
+    PERCENT_SELL = 30 is the deep-overlap panel — sell zone inside the buy zone,
+    churn guard live — and nobody had ever measured it. 30|140|0.0 is the only
+    configuration in this study that improves the shape of the distribution rather
+    than stretching its top half:
+
+        cell           mean   p25    med   p75    worst  losers  sells
+        LIVE 75        52.4   0.0   20.0  53.8    -90.7    12     2.35
+        85|100|2.5     50.8   0.1   12.0  64.0    -86.2    11     1.77
+        30|140|0.0     68.3   3.3   24.8  70.3   -156.7    10     4.56
+
+    Median UP, p25 up, losers down, mean up, and 4.56 sells per symbol against
+    2.35 — the only cell that escapes the dead zone by making the arm act twice as
+    often. Paired +10.54, 34/50, p=0.0077, though selected from 12 k values so
+    call it p~0.09 after correction. The cost is the tail: worst symbol -90.7 to
+    -156.7.
+
+    That is a lead for a dedicated sweep of the overlap regime, not something to
+    adopt off this grid. It is a different mechanism and it is being read off the
+    edge of a study built for something else.
+
 Usage:
     python analyze/median1000/sweep_sell_slope3d.py             # all symbols
     python analyze/median1000/sweep_sell_slope3d.py FPT GMD     # a subset
