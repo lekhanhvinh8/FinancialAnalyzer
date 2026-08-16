@@ -66,8 +66,21 @@ SORTING AND FILTERING
   it says so when it does.
 
   A filtered-out symbol leaves the table AND the summary, so the three columns
-  always describe what is on screen. The per-row checkbox is the individual
+  always describe what is on screen. Two summary rows are there specifically to be
+  read after filtering: Signal today counts the symbols flagged Buy / Sell /
+  Reinvest / None out of the filtered set, and Total actions sums the buys, sells
+  and reinvests over the whole evaluated history of that set. The first three
+  Signal counts overlap — one bar can carry two flags — so they need not sum to
+  the total, and the row says so when they do not. The per-row checkbox is the individual
   override: it drops one symbol from the summary while leaving it visible.
+
+  Every chip carries how many symbols it matches ON ITS OWN, out of the run total
+  shown in the panel header. Fixed, not conditional on the other chips: a
+  conditional count reads 0 almost everywhere once two groups are active, and the
+  sizes worth knowing before you click — 30 in VN30, 6 never sold — would be the
+  first thing lost. What is on screen right now is the live count on the right.
+  The numbers within a row need not sum to the total and need not be disjoint: a
+  symbol signalling Buy and Reinvest on the same bar is counted under both.
 
   The chips that earn their place are the ones that isolate a finding the sorted
   table cannot:
@@ -81,6 +94,16 @@ SORTING AND FILTERING
                          NVL beats the interval arm by 8.67 points while being
                          down 16.23% in its own right
     Signal today         3 symbols say Sell right now; this is the row to act on
+    Index                one chip per seeded index, from index_members, plus
+                         Outside for a symbol in none of them. CURRENT composition
+                         only — the point is "of the baskets buyable today, where
+                         does the strategy work", so a symbol admitted to VN30 last
+                         year carries its whole history into the VN30 chip. That is
+                         survivorship by construction and it is the intended
+                         reading; a point-in-time membership backtest is a
+                         different question and this filter does not answer it.
+                         Outside is not the same as clearing the group: with every
+                         index chip on, Outside is still hidden.
 
 Usage:
     python analyze/median1000/run_all.py                 # all symbols, all cores
@@ -467,6 +490,30 @@ def build_report(rows: list[dict], out_path: Path,
                     f"{'+' if v > 0 else ''}{v:.1f}%</td>")
         return out
 
+    # Index membership, CURRENT composition only: a row whose date_removed is null.
+    #
+    # The historical table would let a symbol be filtered into VN30 for a stretch it
+    # is no longer in, which is the honest thing for a point-in-time backtest but
+    # not what this filter is for. The question here is "of the baskets I can buy
+    # TODAY, how does the strategy do", so the membership is read as of now and the
+    # whole score is attributed to it, warts and all. A symbol added to VN30 last
+    # year still carries its full 2014-onwards result into the VN30 chip.
+    #
+    # Discovered rather than hardcoded, so seeding a fourth index gives it a chip
+    # without touching this file.
+    index_of: dict[str, list[str]] = {}
+    index_names: list[str] = []
+    for ix in db.list_index_names():
+        mem = db.load_index_members(ix)
+        if mem.empty:
+            continue
+        cur = mem[mem["date_removed"].isna()]["symbol"].astype(str).str.upper()
+        if cur.empty:
+            continue
+        index_names.append(ix)
+        for s in cur:
+            index_of.setdefault(s, []).append(ix)
+
     rows_html = ""
     data_json  = []
     for _, row in df.iterrows():
@@ -508,11 +555,24 @@ def build_report(rows: list[dict], out_path: Path,
                           "s": int(row["median_sells"]),
                           "r": int(row["median_reinvests"]),
                           "nw": now_label,
+                          # The three raw flags beside the label. The Signal chips
+                          # used to test the label for a substring, which quietly
+                          # failed on the one combo whose label names none of them:
+                          # (buy, sell, reinvest) all true renders as "All", so such
+                          # a symbol answered no to Buy, Sell AND Reinvest and was
+                          # counted under None. Unreachable today — the churn guard
+                          # inside buy.check() stands the buy arm down on a bar the
+                          # sell fires, so nothing can be both — but the chips now
+                          # read the flags, which cannot be wrong whatever the
+                          # labels become.
+                          "nf": [int(bool(x)) for x in
+                                 (row.get("now_flags") or (False, False, False))],
                           "eb": int(row.get("eval_bars") or 0),
                           "vt": _num(row.get("vs_top_%")),
                           "vb": _num(row.get("vs_bottom_%")),
                           "vd": _num(row.get("vs_median_%")),
-                          "vm": _num(row.get("vs_mean_%"))})
+                          "vm": _num(row.get("vs_mean_%")),
+                          "ix": index_of.get(sym, [])})
 
     import json
     data_js = json.dumps(data_json)
@@ -550,11 +610,35 @@ def build_report(rows: list[dict], out_path: Path,
         ("abs",  "Absolute", [
             ("red",    "Median1000 in the red")]),
     ]
+    # One chip per seeded index, plus "Outside": a symbol in none of them. Outside
+    # is not the complement of "no chip selected" — with every index chip on it
+    # would still be hidden, and it is the only way to ask what the strategy does
+    # away from the large caps. The index price series themselves (VN30 the row)
+    # land in Outside, since an index is not a member of itself.
+    IX_LABEL = {"vn30": "VN30", "vndiamond": "VNDiamond", "vnfinlead": "VNFinLead"}
+    # Drop an index none of the scored symbols belongs to — a chip that can only
+    # ever empty the table is noise. This is the one count Python needs; the counts
+    # ON the chips are done in JS, see chipCounts().
+    index_names = [ix for ix in index_names
+                   if any(ix in d["ix"] for d in data_json)]
+    if index_names:
+        FILTERS.append(("ix", "Index",
+                        [(f"ix:{ix}", IX_LABEL.get(ix, ix.upper()))
+                         for ix in index_names]
+                        + [("ix:none", "Outside")]))
+    ix_pred_js = "".join(
+        f"  'ix:{ix}': d => d.ix.indexOf('{ix}') >= 0,\n" for ix in index_names
+    ) + ("  'ix:none': d => d.ix.length === 0,\n" if index_names else "")
+
     filter_html = "".join(
         "<div style='display:flex;align-items:baseline;gap:8px;margin:4px 0'>"
         f"<span style='color:#64748b;font-size:11px;min-width:86px'>{glabel}</span>"
         "<div style='display:flex;flex-wrap:wrap;gap:6px'>"
-        + "".join(f"<button class='chip' data-grp='{gid}' data-f='{fid}'>{flabel}</button>"
+        # The count span is filled in by chipCounts() from the chip's own
+        # predicate. Writing it here would mean stating each rule twice, in two
+        # languages, and the two would agree right up until one of them changed.
+        + "".join(f"<button class='chip' data-grp='{gid}' data-f='{fid}'>{flabel}"
+                  f"<span class='n'></span></button>"
                   for fid, flabel in chips)
         + "</div></div>"
         for gid, glabel, chips in FILTERS
@@ -564,14 +648,22 @@ def build_report(rows: list[dict], out_path: Path,
         "border:1px solid #1e293b;border-radius:8px;font-size:12px'>"
         "<div style='display:flex;justify-content:space-between;align-items:center;"
         "margin-bottom:8px'>"
-        "<span style='color:#94a3b8;font-weight:700'>Filters</span>"
+        "<span style='color:#94a3b8;font-weight:700'>Filters "
+        f"<span style='color:#475569;font-weight:400'>&mdash; {len(data_json)} "
+        "symbols</span></span>"
         "<span><span id='f-count' style='color:#64748b;margin-right:10px'></span>"
         "<button id='f-clear' class='chip'>Clear all</button></span></div>"
         f"{filter_html}"
         "<div style='color:#475569;font-size:11px;margin-top:8px'>"
         "Chips in the same row are OR'd, different rows are AND'd. Filtered-out "
         "symbols leave the table and the summary; unchecking a visible row drops "
-        "it from the summary only.</div></div>"
+        "it from the summary only.<br>"
+        "The number on a chip is how many of all "
+        f"{len(data_json)} symbols it matches on its own &mdash; it is fixed, not "
+        "a count of what survives the other chips, so the numbers stay comparable "
+        "and never all collapse to the same value as you narrow the selection. The "
+        "live count of what is showing is on the right of this box."
+        "</div></div>"
     )
 
     # (js key, row label, extra cell style). None is a horizontal rule. Every row
@@ -597,6 +689,11 @@ def build_report(rows: list[dict], out_path: Path,
         ("quart",  "Diff spread — p25 / p50 / p75",         ""),
         ("conc",   "Gains concentration — top 1 / top 3",   ""),
         ("net",    "Net diff — all / excluding best",       ""),
+        ("sig",    "Signal today<br><span style='color:#475569;font-size:11px'>"
+                   "symbols flagged, out of the filtered set</span>", ""),
+        ("tot",    "Total actions — buys / sells / reinvests<br>"
+                   "<span style='color:#475569;font-size:11px'>summed over every "
+                   "bar, not today</span>",                  ""),
         ("act",    "Activity — avg sells, never sold",      ""),
         None,
         ("mbest",  "Best Median1000",                       "color:#4ade80"),
@@ -639,6 +736,12 @@ def build_report(rows: list[dict], out_path: Path,
     cursor:pointer; }}
   .chip:hover {{ border-color:#475569;color:#e2e8f0; }}
   .chip.on {{ background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600; }}
+  /* Dimmer than the label so the chip still reads as its name first. */
+  .chip .n {{ color:#64748b;margin-left:6px;font-weight:400; }}
+  .chip.on .n {{ color:#bfdbfe; }}
+  /* A chip that matches nothing stays clickable — it is a finding that the set is
+     empty — but it should not look like an option worth trying. */
+  .chip.empty {{ opacity:0.45; }}
   #summary {{ margin-top:28px;background:#0f172a;border:1px solid #1e293b;
     border-radius:10px;padding:20px 24px;font-size:13px;line-height:2; }}
   #summary .s-title {{ font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:10px; }}
@@ -785,6 +888,17 @@ function statsFor(a) {{
   const iBest   = a.reduce((x,y) => y.i > x.i ? y : x);
   const mWorst  = a.reduce((x,y) => y.m < x.m ? y : x);
   const noSell  = a.filter(d => d.s === 0).length;
+  // Today's signal, counted over whatever survived the filters. Buy, Sell and
+  // Reinvest are NOT mutually exclusive — a bar can carry two — so they need not
+  // sum to n and None is computed as "no flag set" rather than as the remainder.
+  const nBuy  = a.filter(d => d.nf[0]).length;
+  const nSell = a.filter(d => d.nf[1]).length;
+  const nRei  = a.filter(d => d.nf[2]).length;
+  const nNone = a.filter(d => !d.nf[0] && !d.nf[1] && !d.nf[2]).length;
+  // Same colours the Signal now column and the chart's condition zones use.
+  const sigPart = (label, k, col) =>
+    '<span style="color:' + (k ? col : '#475569') + (k ? ';font-weight:600' : '') +
+    '">' + label + ' ' + k + '</span>';
   const flat    = a.filter(d => Math.abs(d.m - d.i) < 1e-9).length;
   const grey    = t => '<span style="color:#64748b">' + t + '</span>';
 
@@ -820,6 +934,20 @@ function statsFor(a) {{
           ' / <span style="color:' + (top3>50?'#fbbf24':'#94a3b8') + '">' + top3.toFixed(0) + '%</span>',
     net: fmt(netAll) + '<br>' + grey(fmt(netAll - (bestSym.m - bestSym.i)) +
          ' excl. ' + bestSym.sym),
+    sig: sigPart('Buy', nBuy, '#22c55e') + ' / ' +
+         sigPart('Sell', nSell, '#ef4444') + ' / ' +
+         sigPart('Reinvest', nRei, '#f97316') + ' / ' +
+         sigPart('None', nNone, '#94a3b8') + '<br>' +
+         grey('of ' + n + ' symbols' +
+              (nBuy + nSell + nRei > n - nNone
+                 ? ' — a bar can carry two, so these overlap' : '')),
+    // Totals over the whole evaluated history, not today. Right below the signal
+    // row on purpose: one line says what the arms are saying now, the next says
+    // how much they ever did, and reading them together is how you tell a quiet
+    // filter selection from a quiet strategy.
+    tot: '<span style="color:#22c55e">' + a.reduce((x,y)=>x+y.b,0) + '</span> / ' +
+         '<span style="color:#ef4444">' + a.reduce((x,y)=>x+y.s,0) + '</span> / ' +
+         '<span style="color:#f97316">' + a.reduce((x,y)=>x+y.r,0) + '</span>',
     act: (a.reduce((x,y)=>x+y.s,0)/n).toFixed(1) + ' sells<br>' +
          '<span style="color:' + (noSell > n/4 ? '#fbbf24' : '#94a3b8') + '">' +
          noSell + '/' + n + ' never sold</span>' +
@@ -840,15 +968,36 @@ const PRED = {{
   flat:   d => Math.abs(d.m - d.i) < 1,
   sold:   d => d.s >  0,
   nosell: d => d.s === 0,
-  // Substring, so a bar flagged "Buy + Reinvest" answers to both chips, which is
-  // what someone filtering for "Reinvest" means.
-  buy:    d => d.nw.indexOf('Buy')      >= 0,
-  sell:   d => d.nw.indexOf('Sell')     >= 0,
-  rei:    d => d.nw.indexOf('Reinvest') >= 0,
-  nosig:  d => d.nw.indexOf('Buy') < 0 && d.nw.indexOf('Sell') < 0
-                                       && d.nw.indexOf('Reinvest') < 0,
+  // Read off the flags, not off the rendered label — a bar flagged "Buy +
+  // Reinvest" answers to both chips because both flags are set, and no label
+  // wording can change that. See the nf comment on the Python side.
+  buy:    d => !!d.nf[0],
+  sell:   d => !!d.nf[1],
+  rei:    d => !!d.nf[2],
+  nosig:  d => !d.nf[0] && !d.nf[1] && !d.nf[2],
   red:    d => d.m < 0,
-}};
+  // Index chips are generated from whatever index_members holds, so their
+  // predicates are generated with them rather than written out here.
+{ix_pred_js}}};
+
+// How many symbols each chip matches ON ITS OWN, out of the whole run. Computed
+// from the chip's own predicate, so the number cannot drift from what clicking it
+// does — the label and the filter are the same rule read twice by the same code.
+//
+// Deliberately NOT recomputed as other chips are clicked. A conditional count is a
+// different and much less useful statement: with two groups active most chips
+// would read 0 or the same small number, and the sizes you actually want when
+// deciding what to click next — 30 in VN30, 6 never sold — would be gone. What is
+// on screen right now is in #f-count instead.
+function chipCounts() {{
+  document.querySelectorAll('.chip[data-f]').forEach(btn => {{
+    const p = PRED[btn.dataset.f];
+    if (!p) return;
+    const n = ALL_DATA.filter(p).length;
+    btn.querySelector('.n').textContent = n;
+    btn.classList.toggle('empty', n === 0);
+  }});
+}}
 
 // group id -> Set of chip ids currently on.
 const filters = {{}};
@@ -969,6 +1118,7 @@ document.querySelectorAll('th[data-sort]').forEach(th => {{
   }});
 }});
 
+chipCounts();
 applySort();
 applyFilters();
 </script>

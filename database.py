@@ -310,6 +310,19 @@ def save_index_members(
     return {"saved": len(to_save), "skipped": skipped}
 
 
+def list_index_names() -> list[str]:
+    """
+    The indices that actually have membership rows, read from index_members rather
+    than from the symbols registry: an index can have a price series without anyone
+    having seeded its composition, and only the seeded ones can be filtered on.
+    """
+    with _conn() as con:
+        rows = con.execute(
+            "SELECT DISTINCT index_symbol FROM index_members ORDER BY index_symbol"
+        ).fetchall()
+    return [r[0] for r in rows]
+
+
 def load_index_members(index_symbol: str, as_of: str | None = None) -> pd.DataFrame:
     """
     Load index members. Returns DataFrame with columns (symbol, date_added, date_removed).
