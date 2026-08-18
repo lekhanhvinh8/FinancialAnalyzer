@@ -66,6 +66,50 @@ WHAT IT FOUND: 60 SELLS TOO EAGERLY, 65-80 IS BETTER
   The mean is still one-symbol business (HPG is +425 at 75; removing it takes the
   mean negative), so quote the median and the count, not the mean.
 
+RE-RUN AFTER THE 2026-08-18 PRICE REPAIR — THE REGION SURVIVED INTACT
+
+  Nine symbols had their whole price history rewritten that day (VHM was stored
+  at 2.001x the source, MBB 1.202x, SSI 1.251x, and six more). Every number
+  above was measured before that, so the sweep was re-run against the repaired
+  data to see what still stood.
+
+  Nothing moved. Recomputing both runs' raw files the same way, paired against
+  the same "60" column:
+
+      value    before                 after
+        65     35/45  +1.92  0.000    35/45  +1.90  0.000
+        70     33/47  +3.21  0.004    33/47  +3.21  0.004
+        75     33/47  +6.26  0.004    33/47  +6.25  0.004
+        80     31/47  +9.09  0.020    31/47  +8.98  0.020
+        85     30/47  +3.48  0.039    30/47  +3.42  0.039
+
+  Not one cell changed how many symbols improved, and no p moved in three
+  decimals. The reason is worth keeping, because it says which results a data
+  repair can and cannot invalidate: the vs-live column is a difference between
+  two settings for the SAME symbol, and the error shifted every setting of a
+  symbol by the same amount, so it cancels. VHM shifted -160.0093 at 60 and
+  -160.0093 at 75 — identical to four decimals — leaving its paired delta at
+  +0.1292 in both runs.
+
+  It cancels because the error was near enough a uniform rescale, and the arm
+  reads (price - median)/median, which a rescale leaves alone. What DID move is
+  anything measured against buy-and-hold: VHM's report_all diff went from
+  +132.37 to -36.28, since buy-and-hold is start-to-end and the break was
+  suppressing it. So a paired sweep survives an error of this shape; an
+  aggregate against buy-and-hold does not, and an error that changed the SHAPE
+  of a series would not cancel in either.
+
+  Live is 75 now, so the vs-live column re-based there and points at 80-85:
+  +1.63 (29/35, p=0.000) and +1.84 (29/37, p=0.000). Still significant, an
+  order of magnitude smaller than the +6.26 that moved it from 60 to 75. Read
+  that as the top of the region, not as a reason to move again.
+
+  The footer still reads "best mean: 55", as it did before the repair. It is
+  the aggregate trap this file's aggregate() warns about, and it is worth
+  spelling out once: going 75 -> 55 helps 20 symbols by +104 on average and
+  hurts 28 by -46, netting +804 — of which HCM alone is +1003. Take HCM out and
+  the net is -199. The paired median is -1.56 at p=0.903.
+
 Usage:
     python analyze/median1000/sweep_percent_sell.py             # all symbols
     python analyze/median1000/sweep_percent_sell.py FPT STB     # a subset

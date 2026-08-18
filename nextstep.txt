@@ -198,3 +198,49 @@ Still open:
 
 
 filter by index in report: VN30, VNFinload, All,...
+
+
+=== DONE: 2026-08-18 price repair — every number before this date was measured on a broken series ===
+
+Nine symbols were stored on a pre-adjustment price scale. The source back-adjusts
+its whole history on a bonus issue or stock dividend; sync_prices only ever
+appended new dates and protected the rows it already had, so the series kept the
+old scale and broke by a constant factor at the ex-date.
+
+    VHM 2.001x  SSI 1.251x  MBB 1.202x  SAB 1.069x  BID 1.068x
+    DPM 1.068x  PLX 1.036x  MWG 1.016x  BSR 1.011x (unnoticed since 2020)
+
+VHM's break was a fake -49.9% crash on 2026-07-31, which is what surfaced it.
+
+Fixed in e12842d (detect it at sync time), 4bf26c9 (the same problem one layer
+down, when a late balance sheet restates the share count), b8d31b6 (an index
+aggregate built from 8 of 30 members, and an audit that only looked at a window).
+scripts/audit_data.py checks prices and shares against the source and pe_ratios
+against price x shares, and repairs what it finds with --fix. Both audits ran
+clean afterwards, source-side included.
+
+WHAT IT CHANGED
+
+    run_all, 52 symbols     before      after
+    median diff             +20.14%     +16.16%
+    mean diff               +52.38%     +47.18%
+    net                     +2724       +2454
+    improved                40/52       38/52
+
+The edge shrank by about a fifth and survived. VHM is most of it: +132.37 ->
+-36.28, because its buy-and-hold doubled once the fake crash was gone. Its
+strategy return did not move (196.95 -> 197.00) — the arm reads distance from a
+rolling median, which a rescale leaves alone.
+
+PERCENT_SELL was re-swept and did not move at all: the 65-85 region holds cell
+for cell, no p changed in three decimals. The reasoning, and why it does not
+carry to every result, is in sweep_percent_sell.py's docstring.
+
+Still open:
+  - The other sweeps were not re-run. Same argument should hold for any of them
+    quoting the vs-live column, since a per-symbol constant cancels out of a
+    paired difference. It does NOT hold for anything quoted against buy-and-hold,
+    and no sweep here was checked for that.
+  - LPB +17.56, STB -17.28 and ACB +7.67 moved in run_all without being in the
+    repaired nine. Two new bars (08-17, 08-18) flipping a late trade would
+    explain it, but 17 points off two bars is a lot to assume.
