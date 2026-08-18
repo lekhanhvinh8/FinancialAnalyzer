@@ -140,16 +140,24 @@ def main():
         print(f"{'[FORCE] ' if force else ''}Stocks ({len(stocks)}) — {', '.join(sorted(steps - {'outputs'}))}")
         print(f"{'='*55}")
 
+    # Symbols whose price history the source re-adjusted under us. Their
+    # price-derived caches cannot resume from a stored date — the dates they
+    # already hold are on the old scale — so those steps run as if forced.
+    readjusted: set[str] = set()
+
     for sym in stocks:
         if "prices" in steps:
             t0 = time.time()
             p.begin("prices", sym, sym)
             try:
                 last_date = None if force else db.load_latest_price_date(sym)
-                sync_prices(symbols=[sym], start=last_date, override=force)
-                p.end("prices", sym, sym, time.time() - t0)
+                readjusted.update(sync_prices(symbols=[sym], start=last_date, override=force))
+                note = "re-adjusted — rebuilding derived data" if sym in readjusted else ""
+                p.end("prices", sym, sym, time.time() - t0, note=note)
             except Exception as e:
                 p.end("prices", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        sym_force = force or sym in readjusted
 
         if "shares" in steps:
             t0 = time.time()
@@ -179,8 +187,8 @@ def main():
             t0 = time.time()
             p.begin("pe", sym, sym)
             try:
-                from_date = None if force else db.load_latest_pe_date(sym)
-                sync_pe(symbols=[sym], from_date=from_date, override=force)
+                from_date = None if sym_force else db.load_latest_pe_date(sym)
+                sync_pe(symbols=[sym], from_date=from_date, override=sym_force)
                 p.end("pe", sym, sym, time.time() - t0)
             except Exception as e:
                 p.end("pe", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
@@ -189,8 +197,8 @@ def main():
             t0 = time.time()
             p.begin("range-stats", sym, sym)
             try:
-                range_start = None if force else db.load_latest_range_stats_date(sym)
-                sync_range_stats(symbols=[sym], start=range_start, override=force, max_workers=workers)
+                range_start = None if sym_force else db.load_latest_range_stats_date(sym)
+                sync_range_stats(symbols=[sym], start=range_start, override=sym_force, max_workers=workers)
                 p.end("range-stats", sym, sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
@@ -199,14 +207,14 @@ def main():
             t0 = time.time()
             p.begin("trend-signals", sym, sym)
             try:
-                ts_start = None if force else db.load_latest_trend_signals_date(sym, trend_window)
+                ts_start = None if sym_force else db.load_latest_trend_signals_date(sym, trend_window)
                 sync_trend_signals(
                     symbols=[sym],
                     start=ts_start,
                     window_step=trend_window,
                     step_days=trend_step,
                     max_lookback=trend_lookback,
-                    override=force,
+                    override=sym_force,
                 )
                 p.end("trend-signals", sym, sym, time.time() - t0)
             except Exception as e:
@@ -236,10 +244,13 @@ def main():
             p.begin("prices", index, index_sym)
             try:
                 last_date = None if force else db.load_latest_price_date(index_sym)
-                sync_prices(index=index, start=last_date, override=force)
-                p.end("prices", index, index_sym, time.time() - t0)
+                readjusted.update(sync_prices(index=index, start=last_date, override=force))
+                note = "re-adjusted — rebuilding derived data" if index_sym in readjusted else ""
+                p.end("prices", index, index_sym, time.time() - t0, note=note)
             except Exception as e:
                 p.end("prices", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
+
+        idx_force = force or index_sym in readjusted
 
         if "pe" in steps:
             t0 = time.time()
@@ -248,8 +259,8 @@ def main():
                 # index_sym, not index: pe_ratios stores the uppercase symbol.
                 # Passing the lowercase id returns None and silently forces a
                 # full recompute on every sync.
-                from_date = None if force else db.load_latest_pe_date(index_sym)
-                sync_pe(index=index, from_date=from_date, override=force)
+                from_date = None if idx_force else db.load_latest_pe_date(index_sym)
+                sync_pe(index=index, from_date=from_date, override=idx_force)
                 p.end("pe", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("pe", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
@@ -258,8 +269,8 @@ def main():
             t0 = time.time()
             p.begin("range-stats", index, index_sym)
             try:
-                range_start = None if force else db.load_latest_range_stats_date(index.upper())
-                sync_range_stats(index=index, start=range_start, override=force, max_workers=workers)
+                range_start = None if idx_force else db.load_latest_range_stats_date(index.upper())
+                sync_range_stats(index=index, start=range_start, override=idx_force, max_workers=workers)
                 p.end("range-stats", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("range-stats", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
@@ -268,14 +279,14 @@ def main():
             t0 = time.time()
             p.begin("trend-signals", index, index_sym)
             try:
-                ts_start = None if force else db.load_latest_trend_signals_date(index_sym, trend_window)
+                ts_start = None if idx_force else db.load_latest_trend_signals_date(index_sym, trend_window)
                 sync_trend_signals(
                     index=index,
                     start=ts_start,
                     window_step=trend_window,
                     step_days=trend_step,
                     max_lookback=trend_lookback,
-                    override=force,
+                    override=idx_force,
                 )
                 p.end("trend-signals", index, index_sym, time.time() - t0)
             except Exception as e:
