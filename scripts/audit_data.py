@@ -31,6 +31,14 @@ from datetime import date as _date
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# This runs for tens of minutes and prints as it goes. Redirected to a file
+# Python would block-buffer it, so the log stays empty until the run ends —
+# exactly when it stops being useful to watch.
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+except AttributeError:
+    pass
+
 import database as db
 import calculate
 from sources import vnstock
@@ -44,6 +52,7 @@ _DERIVED_TOL = 0.001
 
 _SLEEP   = 5
 _INDICES = ["vn30", "vndiamond", "vnfinlead"]
+
 
 
 # ── Checks ────────────────────────────────────────────────────────────────────
@@ -117,8 +126,8 @@ def check_derived(sym):
 
 def check_index(index):
     """
-    Recompute the aggregate for its latest stored date and see whether it still
-    lands on the stored value.
+    Recompute the aggregate and return the earliest date it no longer lands on
+    the stored value, with the worst disagreement found.
 
     Summing the stored member rows would be cheaper and wrong: the aggregate
     takes point-in-time membership and drops any member whose TTM profit is
@@ -130,19 +139,34 @@ def check_index(index):
     if agg.empty:
         return None
 
-    date  = agg.index.max()
-    day   = date.date().isoformat()
-    fresh = calculate.calc_pe_history(index=index, start=day, emit_members=False)
-    fresh = fresh[fresh["date"] == day]
-    if fresh.empty or fresh.iloc[0]["total_market_cap"] is None:
+    fresh = calculate.calc_pe_history(index=index, emit_members=False)
+    if fresh.empty:
         return None
+    now = {r["date"]: r["total_market_cap"] for _, r in fresh.iterrows()}
 
-    now    = float(fresh.iloc[0]["total_market_cap"])
-    stored = float(agg.loc[date, "total_market_cap"])
-    if now <= 0 or stored <= 0:
-        return None
-    rel = abs(stored / now - 1)
-    return (day, rel) if rel > _DERIVED_TOL else None
+    # The whole series, not a recent window. A member whose prices were
+    # re-adjusted moves its index across every date it was ever in, and a
+    # window that has already been repaired hides exactly that: the tail agrees
+    # while all the history behind it is still wrong. Recomputing is the only
+    # way to know an aggregate is right, so the check costs what the repair
+    # costs — which is why this is the audit and not something sync does.
+    worst, earliest = 0.0, None
+    for ts, row in agg.iterrows():
+        day = ts.date().isoformat()
+        stored = row["total_market_cap"]
+        if day not in now or stored != stored or stored <= 0:
+            continue
+        fresh_mcap = now[day]
+        if fresh_mcap is None or fresh_mcap != fresh_mcap or fresh_mcap <= 0:
+            # We hold an aggregate for a date that no longer earns one.
+            rel = 1.0
+        else:
+            rel = abs(stored / float(fresh_mcap) - 1)
+        if rel > _DERIVED_TOL:
+            earliest = earliest or day
+            worst    = max(worst, rel)
+
+    return (earliest, worst) if earliest else None
 
 
 # ── Repair ────────────────────────────────────────────────────────────────────
@@ -253,12 +277,12 @@ def main():
         full    = any(findings[s].get("price") for s in hit)
         since   = min((findings[s]["since"] for s in hit
                        if findings[s].get("since")), default=None)
-        own     = check_index(index)
+        own = check_index(index)
         if full or since or own:
-            index_hits[index] = True if full else (since or own[0])
+            index_hits[index] = True if full else _earliest(since, own[0] if own else None)
             detail = ("member prices re-adjusted" if full else
-                      f"member data restated from {since}" if since else
-                      f"aggregate off by {own[1]:.2%} at {own[0]}")
+                      f"aggregate off by up to {own[1]:.2%} from {own[0]}" if own else
+                      f"member data restated from {since}")
             print(f"  index {index.upper():10s} {detail}")
 
     print(f"\n{'='*60}")

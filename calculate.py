@@ -230,7 +230,16 @@ def calc_pe_history(
                     "total_ttm_profit":  ttm,
                 })
 
-        if count == 0 or total_profit == 0:
+        # all_dates is the union over members, so a sync that left some symbols
+        # a few days ahead of the rest produces dates only they can answer for.
+        # An aggregate over that handful is not the index: repairing nine
+        # symbols once put VN30 at 6.03x off 8 of its 30 members. Genuine
+        # coverage gaps are nowhere near that thin — the sparsest honest date on
+        # record is 17 of 30, back in 2012 — so half the membership is a floor
+        # no real date reaches.
+        enough = count > 0 and count * 2 >= len(members)
+
+        if not enough or total_profit == 0:
             pe = None
         else:
             pe = total_mcap / total_profit
@@ -238,8 +247,8 @@ def calc_pe_history(
         records.append({
             "date":             date_str,
             "pe_ratio":         pe,
-            "total_market_cap": total_mcap if count > 0 else None,
-            "total_ttm_profit": total_profit if count > 0 else None,
+            "total_market_cap": total_mcap if enough else None,
+            "total_ttm_profit": total_profit if enough else None,
             "member_count":     count,
         })
 
