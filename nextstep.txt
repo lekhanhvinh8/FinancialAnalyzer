@@ -236,11 +236,20 @@ PERCENT_SELL was re-swept and did not move at all: the 65-85 region holds cell
 for cell, no p changed in three decimals. The reasoning, and why it does not
 carry to every result, is in sweep_percent_sell.py's docstring.
 
+The three symbols that moved without being repaired were the two new bars and
+nothing else. Trade counts are identical across the two runs, and for LPB and
+STB the strategy return did not change by a single basis point — both were in
+cash on 08-14 and stayed there, so only buy-and-hold took the price move. The
+arithmetic closes exactly: LPB held 3.8333x, the price fell 4.58%, and 3.8333 x
+0.9542 = 3.6577, which is the +265.77% the report shows. Seventeen points off
+two bars is not a lot when the multiple is 3.8x and the horizon is twelve years.
+
+HPG runs the other way — the price fell 1.18% and its diff fell too, because the
+strategy lost more than buy-and-hold (-8.23 against -3.12). It ends up holding
+more than buy-and-hold does, which is what reinvestment is for.
+
 Still open:
   - The other sweeps were not re-run. Same argument should hold for any of them
     quoting the vs-live column, since a per-symbol constant cancels out of a
     paired difference. It does NOT hold for anything quoted against buy-and-hold,
     and no sweep here was checked for that.
-  - LPB +17.56, STB -17.28 and ACB +7.67 moved in run_all without being in the
-    repaired nine. Two new bars (08-17, 08-18) flipping a late trade would
-    explain it, but 17 points off two bars is a lot to assume.
