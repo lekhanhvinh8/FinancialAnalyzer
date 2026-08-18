@@ -238,8 +238,11 @@ def main():
             t0 = time.time()
             p.begin("zdev", sym, sym)
             try:
-                # Always a full recompute — see syncs/zdev.py for why there is no
-                # incremental mode, and why override defaults to True.
+                # No flag to pass: zdev fingerprints the close series itself and
+                # picks its own path — skip when nothing moved, resume from the
+                # last synced date when dates were only appended, rebuild when
+                # history was revised. sym_force would be redundant, since the
+                # revision it reacts to is what the fingerprint already sees.
                 sync_zdev(symbols=[sym])
                 p.end("zdev", sym, sym, time.time() - t0)
             except Exception as e:
