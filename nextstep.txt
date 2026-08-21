@@ -215,7 +215,7 @@ VHM's break was a fake -49.9% crash on 2026-07-31, which is what surfaced it.
 Fixed in e12842d (detect it at sync time), 4bf26c9 (the same problem one layer
 down, when a late balance sheet restates the share count), b8d31b6 (an index
 aggregate built from 8 of 30 members, and an audit that only looked at a window).
-scripts/audit_data.py checks prices and shares against the source and pe_ratios
+syncs/audit_data.py checks prices and shares against the source and pe_ratios
 against price x shares, and repairs what it finds with --fix. Both audits ran
 clean afterwards, source-side included.
 
@@ -253,3 +253,122 @@ Still open:
     quoting the vs-live column, since a per-symbol constant cancels out of a
     paired difference. It does NOT hold for anything quoted against buy-and-hold,
     and no sweep here was checked for that.
+
+=== DONE: portfolio/ — a second investment method, one wallet over the basket ===
+
+single/ asks "does this rule beat buy-and-hold on FPT", once per symbol, with a
+separate wallet each time. portfolio/ asks "given one monthly contribution and the
+whole basket to choose from, where should it go". That is not a loop over the
+first question, because the money is shared and the symbols compete for it.
+
+Buy only. The sell and reinvest arms exist, run every day, and decline — their
+rule is NeverRule, a real rule rather than a special case, so switching one on is
+a config change.
+
+THE DECISION THAT HAS NO PER-SYMBOL EQUIVALENT
+
+  A per-symbol strategy fuses three things because with one candidate they are
+  one thing: eligibility is the whole decision and the size is "whatever cash
+  there is". With a shared wallet they come apart:
+
+      rules.py       who is eligible today
+      scoring.py     in what order they deserve the money
+      allocator.py   how much each one gets
+
+  The middle one is new. It did not exist before and it is where the interesting
+  design questions live — rank by discount to median, by drawdown, by momentum?
+
+INDEPENDENT OF single/, ON PURPOSE
+
+  Nothing in portfolio/ imports anything from single/. Two earlier drafts did —
+  first by adding score() methods to the strategy classes, then by calling
+  make_median_strategies() — and both were wrong for the same reason: they made
+  an experiment in the new method able to disturb results in the old one, which
+  carries years of measured findings.
+
+  What IS shared is the database, and only the database. Prices, P/E and rolling
+  statistics are facts about the market, not part of any evaluation method; a
+  second definition of them is how two halves of a project start disagreeing
+  about reality.
+
+FIRST RESULTS
+
+    4 symbols (FPT HPG STB VNM)     49 symbols
+    plan      217.38%               144.87%
+    DCA       188.60%               132.68%
+    diff      +28.77%               +12.20%
+
+  The gap between the two columns is the finding, not either number. With
+  TOP_K=None the contribution is split equally over every candidate, and the buy
+  condition admits most of the universe on an ordinary day — so the ranking is
+  inert and the method approximates buying everything. TOP_K is the first thing
+  to sweep, and SCORER only means anything once TOP_K is set.
+
+TWO BUGS FOUND WHILE BUILDING IT
+
+  1. GHOST TRADES. The first run reported 2,973 buys on four symbols over 136
+     months; 462 of FPT's 542 were 2.26e-313 VND. 8,000,000 / 3 is not exact in
+     binary, the residue left the wallet marginally above zero, and the next day
+     the allocator split the residue and the engine booked another trade. No
+     return was affected — the final value did not move by one dong when it was
+     fixed, which is what confirmed the diagnosis — but the trade counts were
+     wrong and a cost model would have charged brokerage on every ghost.
+     engine.CASH_EPSILON = 1 VND. The baseline never showed it: 8,000,000 / 4 is
+     exact.
+
+  2. THE WARMUP BOUNDARY. range_stats is built with min_periods=1, so row 0 holds
+     the median of one observation and only row `window - 1` has a full window
+     behind it. single/ requires index > window, which is two bars late; the
+     first draft here used index >= window, one bar late. Neither is right and
+     the error is silent — it moves the first purchase to a different day at a
+     different price and every number downstream shifts with no indication why.
+     portfolio/ now starts at window - 1.
+
+  Also worth recording: prices are REAL VND here. range_stats stores price * 1000
+  and single/ multiplies its closes to match; the factor cancels out of every
+  return, so nothing there was ever wrong, but it makes reported share counts a
+  thousandth of the truth. Verified over FPT's 3,818 rows that the two scalings
+  agree on every single buy decision, max difference 1.4e-14.
+
+Still open:
+  - TOP_K x SCORER sweep. One axis, not two: the scorer is inert without a cutoff.
+  - Loading dominates — 296s for 49 symbols against 0.4s for the backtest. A sweep
+    must load once and iterate cells over one Market, which also means
+    parallelising over CELLS rather than symbols, the opposite of run_all.py.
+  - No chart. export/chart.py is single-symbol; a portfolio wants an equity curve,
+    allocation over time and per-symbol contribution.
+  - Costs are zero — no brokerage, no 0.1% sell tax, no lot size, no settlement.
+    Same as single/ so the two stay comparable, but a portfolio trades far more
+    often, so every return here is an upper bound.
+  - Survivorship. UNIVERSE="all" is the symbols worth collecting TODAY. Naming an
+    index is not a fix. Point-in-time membership is, and the data is not there:
+    index_members has 5 join dates for vn30 and no departures for vnfinlead.
+  - When a rule here starts reading a signal with its own start date, the warmup
+    rule in data.py has to grow up. It is deliberately just max(window) - 1 today
+    because there are no signals.
+
+
+=== DONE: repo reorganised into three concerns ===
+
+    database.py, progress.py, export/     shared
+    syncs/                                data pipeline
+    single/                               method 1, one wallet per symbol (was analyze/)
+    portfolio/                            method 2, one wallet over the basket
+
+  Moved into syncs/: collectors/, sources/, seeds/, calculate.py, migrate.py,
+  scripts/audit_data.py, scripts/probe_*.py (now syncs/probes/). scripts/ is gone.
+
+  sync.py stays at the root, so `python sync.py` is unchanged. The data folder is
+  syncs/ rather than sync/ deliberately: a sync/ package beside a sync.py module
+  shadows it on import, which fails in a confusing way.
+
+  VERIFIED: run_all on FPT/HPG/STB gives 155.4/241.3, 591.2/162.6, 453.6/348.1 —
+  identical before and after. All 31 modules import; sync.py and audit_data.py
+  both start.
+
+  Note one coupling that survived: syncs/range_stats.py and syncs/zdev.py import
+  from single/range_calc.py and single/zdev_calc.py. Those are data computation,
+  not strategy, and belong in syncs/ — zdev_calc.py could move today (numpy and
+  pandas only), range_calc.py cannot, because it returns RangeDaysClose and
+  IndexCloses from single/models.py. Left alone: a reorganisation should move
+  things, not redesign dependencies.

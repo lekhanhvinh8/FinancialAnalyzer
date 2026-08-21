@@ -8,37 +8,74 @@ Aggregate P/E calculator for Vietnamese stock indices (VN30, VN Diamond, VN Fin 
 
 ## Project Structure
 
+Three concerns, three places. The split is the important thing about this layout:
+the two INVESTMENT METHODS are independent of each other, and both read the same
+data rather than each keeping its own idea of what a price was.
+
 ```
-database.py          SQLite storage layer (all reads/writes, no override logic)
-syncs/calculate.py         Aggregate P/E calculation engine
+database.py          SQLite storage layer — the one definition of market facts
+progress.py          live HTML progress renderers (used by sync and by single/)
+export/              Plotly charts and Excel snapshots
+sync.py              orchestrator — syncs everything to today
 
-syncs/sources/
-  vnstock.py         Prices + shares (via vnstock library)
-  cafef.py           Net profit (via CafeF API)
+syncs/               DATA PIPELINE — fills and checks the database
+  prices.py          daily close prices
+  shares.py          quarterly outstanding shares
+  profit.py          quarterly net profit (CafeF)
+  pe.py              aggregate P/E, recalculated from the DB
+  range_stats.py     rolling window statistics cache
+  trend_signals.py   rolling trend classification
+  zdev.py            valuation z-scores
+  calculate.py       aggregate P/E calculation engine
+  migrate.py         schema migrations
+  audit_data.py      checks stored data against the source, repairs with --fix
+  sources/           vnstock (prices, shares), cafef (net profit)
+  seeds/             index membership history (static snapshots)
+  collectors/        first-time bulk collection
+  probes/            one-off source investigation scripts
 
-syncs/seeds/               Index membership history (static snapshots)
-  vn30.py
-  vndiamond.py
-  vnfinlead.py
+single/              METHOD 1 — one wallet per symbol
+  engine.py          the per-symbol backtest loop
+  models.py          InvestmentTracker and friends
+  strategies/        buy / sell / reinvest conditions
+  median1000/        the tuned configuration, its runners and ~20 sweeps
+  range_calc.py      rolling statistics builder (used by syncs/range_stats.py)
+  zdev_calc.py       z_dev builder (used by syncs/zdev.py)
 
-syncs/               One sync function per table
-  prices.py          sync_prices   — daily close prices
-  shares.py          sync_shares   — quarterly outstanding shares
-  profit.py          sync_profit   — quarterly net profit (CafeF)
-  pe.py              sync_pe       — aggregate P/E (recalculated from DB)
-  range_stats.py     sync_range_stats — rolling range stats cache
+portfolio/           METHOD 2 — one wallet, the whole basket
+  rules.py           who is eligible today
+  scoring.py         in what order they deserve the money
+  allocator.py       how much each one gets
+  strategy.py        Plan — the three arms plus the allocator
+  engine.py          the daily loop over a shared calendar
+  market.py          one calendar across many symbols
+  data.py            reads the database into this package's own shapes
+  run.py             CLI
+```
 
-syncs/collectors/          Legacy initial-collection scripts (still usable for first-time load)
-  engine.py
-  vn30.py / vndiamond.py / vnfinlead.py
+### How the two methods relate
 
-export/
-  chart.py           Plotly HTML charts
-  excel.py           Excel snapshots
+`single/` asks "does this rule beat buy-and-hold on FPT", once per symbol, with a
+separate wallet each time. `portfolio/` asks "given one monthly contribution and
+the whole basket to choose from, where should it go" — which is not a loop over
+the first question, because the money is shared and the symbols compete for it.
 
-single/             Analyzer tool (interactive P/E range analysis)
+They share the database and nothing else. `portfolio/` imports nothing from
+`single/`, so an experiment in one cannot move a result in the other.
 
-sync.py              Orchestrator — syncs everything to today
+One coupling runs the other way and is worth knowing about: `syncs/range_stats.py`
+and `syncs/zdev.py` import their maths from `single/range_calc.py` and
+`single/zdev_calc.py`. Those two modules are data computation rather than
+strategy and belong in `syncs/`; `range_calc.py` cannot move yet because it
+returns objects defined in `single/models.py`.
+
+### Running a backtest
+
+```bash
+python single/median1000/run_one.py FPT      # one symbol, one wallet
+python single/median1000/run_all.py          # every symbol, a wallet each
+python -m portfolio.run                      # one wallet, the whole basket
+python -m portfolio.run --top-k=5
 ```
 
 ---
