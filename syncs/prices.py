@@ -4,7 +4,7 @@ import time
 from datetime import date as _date
 
 import database as db
-from sources import vnstock
+from syncs.sources import vnstock
 from ._helpers import PRICE_START, call_with_retry, resolve_symbols, fill_merge, is_price_current
 
 _PRICE_COLS = ["close"]

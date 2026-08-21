@@ -27,7 +27,7 @@ import database as db
 import functools
 _PE_LOADERS = {
     # Key is the internal index id (lowercase); the bound symbol is how it is
-    # stored, which is uppercase like every other table. See calculate.py.
+    # stored, which is uppercase like every other table. See syncs/calculate.py.
     "vn30":      functools.partial(db.load_pe_ratios, "VN30"),
     "vndiamond": functools.partial(db.load_pe_ratios, "VNDIAMOND"),
     "vnfinlead": functools.partial(db.load_pe_ratios, "VNFINLEAD"),

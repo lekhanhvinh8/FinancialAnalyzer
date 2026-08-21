@@ -1,7 +1,7 @@
 """Sync (recalculate) P/E ratios for indices and individual stocks."""
 
 import database as db
-import calculate
+from syncs import calculate
 from ._helpers import resolve_symbols
 
 _KNOWN_INDICES = {"vn30", "vndiamond", "vnfinlead"}

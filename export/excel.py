@@ -21,7 +21,7 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
 import database as db
-from calculate import _quarter_end
+from syncs.calculate import _quarter_end
 
 _INDEX_LABELS = {
     "vn30":      "VN30",

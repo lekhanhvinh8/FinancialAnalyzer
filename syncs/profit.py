@@ -3,7 +3,7 @@
 import time
 
 import database as db
-from sources import cafef
+from syncs.sources import cafef
 from ._helpers import call_with_retry, resolve_stocks, fill_merge, is_profit_current
 
 RAW_DIR   = "data/raw/cafef"

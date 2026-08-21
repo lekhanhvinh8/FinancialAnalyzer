@@ -3,8 +3,8 @@
 import time
 
 import database as db
-from calculate import _quarter_end  # same convention P/E gans shares by — see _restated_from
-from sources import vnstock
+from syncs.calculate import _quarter_end  # same convention P/E gans shares by — see _restated_from
+from syncs.sources import vnstock
 from ._helpers import call_with_retry, resolve_stocks, fill_merge, is_shares_current
 
 _SHARES_COLS = ["shares"]

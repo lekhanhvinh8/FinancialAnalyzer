@@ -10,13 +10,13 @@ Aggregate P/E calculator for Vietnamese stock indices (VN30, VN Diamond, VN Fin 
 
 ```
 database.py          SQLite storage layer (all reads/writes, no override logic)
-calculate.py         Aggregate P/E calculation engine
+syncs/calculate.py         Aggregate P/E calculation engine
 
-sources/
+syncs/sources/
   vnstock.py         Prices + shares (via vnstock library)
   cafef.py           Net profit (via CafeF API)
 
-seeds/               Index membership history (static snapshots)
+syncs/seeds/               Index membership history (static snapshots)
   vn30.py
   vndiamond.py
   vnfinlead.py
@@ -28,7 +28,7 @@ syncs/               One sync function per table
   pe.py              sync_pe       — aggregate P/E (recalculated from DB)
   range_stats.py     sync_range_stats — rolling range stats cache
 
-collectors/          Legacy initial-collection scripts (still usable for first-time load)
+syncs/collectors/          Legacy initial-collection scripts (still usable for first-time load)
   engine.py
   vn30.py / vndiamond.py / vnfinlead.py
 
@@ -36,7 +36,7 @@ export/
   chart.py           Plotly HTML charts
   excel.py           Excel snapshots
 
-analyze/             Analyzer tool (interactive P/E range analysis)
+single/             Analyzer tool (interactive P/E range analysis)
 
 sync.py              Orchestrator — syncs everything to today
 ```
@@ -47,14 +47,14 @@ sync.py              Orchestrator — syncs everything to today
 
 ```bash
 # 1. Seed index membership into DB
-python seeds/vn30.py
-python seeds/vndiamond.py
-python seeds/vnfinlead.py
+python syncs/seeds/vn30.py
+python syncs/seeds/vndiamond.py
+python syncs/seeds/vnfinlead.py
 
 # 2. Collect all historical data (slow — ~15s per symbol via vnstock)
-python collectors/vn30.py
-python collectors/vndiamond.py
-python collectors/vnfinlead.py
+python syncs/collectors/vn30.py
+python syncs/collectors/vndiamond.py
+python syncs/collectors/vnfinlead.py
 ```
 
 After first-time setup, use `sync.py` for all future updates.
@@ -148,7 +148,7 @@ To generate outputs individually (without re-syncing data):
 python export/chart.py vn30
 python export/excel.py vn30
 python export/excel.py vn30 2026-07-01   # specific as-of date
-python calculate.py                       # recalculate P/E only
+python syncs/calculate.py                       # recalculate P/E only
 ```
 
 Charts → `charts/<index>_valuation.html` (git-ignored)
@@ -161,7 +161,7 @@ Excel  → `exports/<index>_pe_<date>.xlsx` (git-ignored)
 When HOSE announces a rebalancing, add a new snapshot to the relevant seed file:
 
 ```python
-# seeds/vn30.py — add at the bottom of VN30_SNAPSHOTS
+# syncs/seeds/vn30.py — add at the bottom of VN30_SNAPSHOTS
 "2026-08-01": [
     "ACB", "BID", ...  # full list of 30 stocks after rebalance
 ],
@@ -170,7 +170,7 @@ When HOSE announces a rebalancing, add a new snapshot to the relevant seed file:
 Then re-run the seed and sync:
 
 ```bash
-python seeds/vn30.py
+python syncs/seeds/vn30.py
 python sync.py vn30
 ```
 
@@ -183,7 +183,7 @@ python sync.py vn30
 | Prices (daily) | vnstock (VCI) | Free tier |
 | Shares outstanding | vnstock (VCI) | Latest 4 quarters only — older dates backfilled |
 | Net profit (quarterly) | CafeF API | `apiweb.cafef.vn` — no login required |
-| Index membership | Manual (HOSE announcements) | Stored in `seeds/` |
+| Index membership | Manual (HOSE announcements) | Stored in `syncs/seeds/` |
 
 Raw CafeF JSON responses are cached in `data/raw/cafef/` for auditing.
 

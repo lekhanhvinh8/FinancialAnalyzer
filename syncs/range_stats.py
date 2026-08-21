@@ -1,7 +1,7 @@
 """Sync (rebuild) the cal_range_close cache for index symbols."""
 
 import database as db
-from analyze.range_calc import build_cal_range_close
+from single.range_calc import build_cal_range_close
 from ._helpers import resolve_symbols, is_range_stats_current
 
 
