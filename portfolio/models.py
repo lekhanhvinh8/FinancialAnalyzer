@@ -21,15 +21,29 @@ THE RESERVE HOLDS CASH AND NOTHING ELSE
   that is what lets an expensive holding be turned into a cheap one, which is the
   move no single-symbol method can make.
 
-COST BASIS: TWO NUMBERS, NOT ONE
+COST BASIS: TWO NUMBERS, AND WHICH ONE THE RETURN IS MEASURED AGAINST
 
-    contributed   every dong ever put into this symbol, never reduced by a sale
-    basis         the cost of what is held right now
+    basis           the ORIGINAL outside capital behind this holding
+    basis_current   what was actually paid for the shares held right now
 
-  They agree until the first sale and diverge after it. Keeping both is what
-  makes it possible to say whether a position is up on the money currently at
-  risk or up on everything ever committed to it — different questions, and a
-  strategy that sells and re-enters answers them differently.
+  They agree until the first sale and diverge after it, and the difference is
+  the whole point.
+
+  Sell FPT for 40m that was bought with 18m of outside money, then put all 40m
+  into STB. STB now costs 40m — that is basis_current, and it is the right
+  number for "how is this position doing against what I paid for it". But only
+  18m ever came out of the investor's pocket; the other 22m is profit being
+  recycled. Measuring the final return against 40m would count the same gain
+  twice, once as profit already earned and again as capital at risk.
+
+  So basis travels with the money: it leaves a position on a sale, waits in
+  reserve_basis, and comes back proportionally on the reinvest. Because it is
+  reduced on the way out, summing it can never double-count, which is exactly
+  what an "every dong ever put in, never reduced" field cannot promise.
+
+  This mirrors totalCapital / totalCurrentCapital in single/models.py. The two
+  methods are independent, but the accounting question is the same one and it
+  has the same answer.
 """
 
 from dataclasses import dataclass, field
@@ -45,7 +59,7 @@ class Trade:
     price: float            # VND per share
     amount: float           # VND moved
     shares: float           # shares moved
-    basis: float = 0.0      # cost basis moved (sells and reinvests)
+    basis: float = 0.0      # ORIGINAL capital moved (see Position.basis)
 
 
 @dataclass
@@ -53,8 +67,14 @@ class Position:
     """One symbol's holding."""
     symbol: str
     shares: float = 0.0
-    contributed: float = 0.0
+    # The original outside capital behind what is held. Follows the money: out on
+    # a sale, into reserve_basis, back on a reinvest. Never counts a dong twice,
+    # which is why the final return is measured against this one.
     basis: float = 0.0
+    # What was actually paid for the shares held right now. On a reinvest this
+    # takes the full cash deployed, profit included, so it answers "how is this
+    # position doing against what I paid" and NOT "what did I put in".
+    basis_current: float = 0.0
 
     # Per-symbol clocks, not portfolio-wide. Every rule that would read them asks
     # "how long since we last touched THIS name", which a shared clock answers
@@ -123,12 +143,14 @@ class Wallet:
     # ── Aggregates ────────────────────────────────────────────────────────────
 
     @property
-    def contributed(self) -> float:
-        return sum(p.contributed for p in self.positions.values())
+    def basis(self) -> float:
+        """Original outside capital across every position. Safe to sum: it is
+        reduced on a sale, so nothing is counted twice."""
+        return sum(p.basis for p in self.positions.values())
 
     @property
-    def basis(self) -> float:
-        return sum(p.basis for p in self.positions.values())
+    def basis_current(self) -> float:
+        return sum(p.basis_current for p in self.positions.values())
 
     def holdings_value(self, prices: dict) -> float:
         """

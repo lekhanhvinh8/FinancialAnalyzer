@@ -330,6 +330,28 @@ TWO BUGS FOUND WHILE BUILDING IT
   thousandth of the truth. Verified over FPT's 3,818 rows that the two scalings
   agree on every single buy decision, max difference 1.4e-14.
 
+  3. THE COST BASIS WAS THE WRONG ONE. Position carried `contributed` — "every
+     dong ever put into this symbol, never reduced by a sale" — and summarise
+     added it to reserve_basis to get the capital invested. After a sale the same
+     money sits in both, so the total was overstated by whatever was waiting in
+     the reserve. Buy 10m, sell for 20m: invested reads 20m and the return reads
+     0%.
+
+     single/models.py already had the answer and it was not copied: totalCapital
+     is the original capital and DECREASES on a sale, while totalCurrentCapital
+     is what the current holding cost. Position now carries the same pair as
+     basis / basis_current. basis follows the money — out on a sale, into
+     reserve_basis, back proportionally on a reinvest — so summing it cannot
+     double-count, and it is what the reported return is measured against.
+
+     Sell 18m of original capital for 40m and put all 40m into another name:
+     basis 18m, basis_current 40m. The recycled 22m of profit is not capital the
+     investor put in, and counting it as such would report the same gain twice.
+
+     No published number changes: with the sell arm off, basis and basis_current
+     are equal everywhere and the reserve is always empty. Verified — the
+     four-symbol run is 217.38% / 188.60% before and after.
+
 Still open:
   - TOP_K x SCORER sweep. One axis, not two: the scorer is inert without a cutoff.
   - Loading dominates — 296s for 49 symbols against 0.4s for the backtest. A sweep

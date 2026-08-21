@@ -89,10 +89,12 @@ def execute_buy(wallet: Wallet, symbol: str, amount: float, index: int,
     shares = amount / price
     wallet.contribution -= amount
 
+    # Fresh outside money, so both numbers take the same amount. They only ever
+    # diverge once a sale has put profit into the reserve.
     pos = wallet.position(symbol)
     pos.shares += shares
-    pos.contributed += amount
     pos.basis += amount
+    pos.basis_current += amount
     pos.last_buy_index = index
     pos.trades.append(Trade("buy", symbol, date, index, price, amount, shares,
                             basis=amount))
@@ -115,12 +117,16 @@ def execute_sell(wallet: Wallet, symbol: str, amount: float, index: int,
         return False
     amount = min(amount, value)
 
+    # Everything leaves in the same proportion as value, so the average cost per
+    # share of what remains is unchanged by a partial sale.
     ratio = amount / value
     shares = pos.shares * ratio
     basis = pos.basis * ratio
+    basis_current = pos.basis_current * ratio
 
     pos.shares -= shares
     pos.basis -= basis
+    pos.basis_current -= basis_current
     pos.last_sell_index = index
 
     # Cash only — the reserve carries no share count. See models.py.
@@ -140,6 +146,16 @@ def execute_reinvest(wallet: Wallet, symbol: str, amount: float, index: int,
 
     # Basis leaves the pool in proportion to value, so the reserve's remaining
     # basis keeps describing the cash still in it.
+    # THE ONE PLACE THE TWO BASIS NUMBERS PART COMPANY.
+    #
+    # `basis` takes only the ORIGINAL capital riding along with this cash, so the
+    # profit being recycled is not re-counted as money the investor put in.
+    # `basis_current` takes the full amount, because that is genuinely what these
+    # shares cost today.
+    #
+    # Sell 18m of original capital for 40m and put all 40m into another name:
+    # basis 18m, basis_current 40m. Measuring the final return against 40m would
+    # count the 22m gain twice.
     basis = amount * wallet.reserve_basis / wallet.reserve if wallet.reserve else amount
     wallet.reserve -= amount
     wallet.reserve_basis -= basis
@@ -147,7 +163,8 @@ def execute_reinvest(wallet: Wallet, symbol: str, amount: float, index: int,
     shares = amount / price
     pos = wallet.position(symbol)
     pos.shares += shares
-    pos.basis += amount
+    pos.basis += basis
+    pos.basis_current += amount
     pos.last_reinvest_index = index
     pos.trades.append(Trade("reinvest", symbol, date, index, price, amount,
                             shares, basis=basis))
@@ -258,9 +275,20 @@ def summarise(wallet: Wallet, market) -> dict:
     prices = market.final_prices()
     holdings_value = wallet.holdings_value(prices)
 
-    invested = wallet.contributed + wallet.reserve_basis + wallet.contribution
+    # ORIGINAL capital only. wallet.basis is reduced whenever a position is sold
+    # and the same amount lands in reserve_basis, so the three terms partition
+    # the money rather than overlapping — every dong is in exactly one of them:
+    # invested in something, waiting in the reserve, or not yet deployed.
+    invested = wallet.basis + wallet.reserve_basis + wallet.contribution
     final = holdings_value + wallet.reserve + wallet.contribution
     growth = (final - invested) / (invested or 1) * 100
+
+    # The other question: how are the CURRENT holdings doing against what was
+    # actually paid for them. Differs from `growth` only once a sale has recycled
+    # profit into a new position, and it is not the number to judge the strategy
+    # by — see models.py.
+    growth_current = ((holdings_value - wallet.basis_current)
+                      / (wallet.basis_current or 1) * 100)
 
     holdings = {
         p.symbol: {
@@ -268,8 +296,8 @@ def summarise(wallet: Wallet, market) -> dict:
             "value": p.shares * prices[p.symbol],
             "weight_%": (p.shares * prices[p.symbol] / holdings_value * 100
                          if holdings_value else 0.0),
-            "contributed": p.contributed,
             "basis": p.basis,
+            "basis_current": p.basis_current,
             "buys": p.count("buy"),
             "sells": p.count("sell"),
             "reinvests": p.count("reinvest"),
@@ -284,6 +312,9 @@ def summarise(wallet: Wallet, market) -> dict:
         "invested": invested,
         "final": final,
         "growth_%": growth,
+        "growth_current_%": growth_current,
+        "basis": wallet.basis,
+        "basis_current": wallet.basis_current,
         "holdings_value": holdings_value,
         "reserve": wallet.reserve,
         "idle_cash": wallet.contribution,
