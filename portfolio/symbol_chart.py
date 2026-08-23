@@ -1,105 +1,181 @@
 """
-One Plotly chart per symbol, matching single/median1000's backtest chart.
+One Plotly chart per symbol, built to match single/median1000's backtest chart.
 
-WHY IT COPIES THAT CHART RATHER THAN INVENTING ITS OWN
+WHY IT COPIES THAT CHART
 
-  The two methods are independent as code and must stay that way, but the person
-  reading them is the same person. A chart here that showed a different set of
-  reference lines, or the same lines in different colours, would cost that
-  person a second legend to learn for no gain — and worse, would make the two
-  charts hard to compare side by side when the obvious question is "did the two
-  methods buy this name at the same times".
+  The two methods are independent code and must stay that way, but the person
+  reading them is one person, and the obvious question when looking at both is
+  "did they buy this name at the same times". That question is only answerable
+  if the two pictures are the same picture. A different axis arrangement or a
+  different palette would cost a second legend to learn and make the comparison
+  by eye impossible.
 
-  So the price panel carries the same references single's does, at the same
-  window, in the same colours and dash styles, and the trade markers use the
-  same shapes:
+  So the structure is taken from the reference chart rather than designed:
 
-      Price 25th  (1000d)   green,  dotted      rgba(46,160,67,0.9)
-      Price Median(1000d)   blue,   dotted      rgba(100,100,200,0.9)
-      Price 75th  (1000d)   red,    dotted      rgba(220,53,69,0.9)
-      Price Mean  (1000d)   grey,   dashed
-      Buy                   green   triangle-up
-      Sell                  red     triangle-down
-      Reinvest              orange  diamond
+      y1, LEFT, LOG      P/E: static quantile bands, rolling 25/50/75, mean,
+                         and the P/E line itself
+      y2, RIGHT, LINEAR  Price: rolling 25/50/75, mean, and the price line
+      y3, hidden strip   trade markers, at a fixed height near the bottom
 
-WHAT IS HERE THAT SINGLE'S CHART DOES NOT HAVE
+  Colours and dash styles are copied exactly — the rolling quartiles are green /
+  blue-violet / red dotted at width 1, both means are purple dotted at width
+  1.5, the P/E line is #1f77b4 at 1.8. Marker shapes are single's too: green
+  triangle-up for a buy, red triangle-down for a sell, orange diamond for a
+  reinvest.
 
-  The threshold line: median x (1 + BUY_MAX_PREMIUM/100), the exact quantity the
-  buy rule compares the price against. single's chart draws the references and
-  leaves the condition implicit; drawing it makes the markers checkable by eye —
-  they should appear where the price is under that line and stop where it is
-  not. If they do not, the chart is showing a bug rather than a strategy.
+TWO DELIBERATE DEPARTURES
 
-  It moves when the config does, which is the point: change BUY_MAX_PREMIUM and
-  the boundary in the chart moves with the buying.
+  1. THE PRICE LINE IS COLOURED BY THIS METHOD'S OWN CONDITION.
 
-WHAT IS DELIBERATELY LEFT OUT
+     single colours it by P/E zone, because a P/E zone is what its chart is
+     about. This method's rule reads price against its own median and never
+     looks at P/E, so colouring by P/E here would draw a decision the strategy
+     does not make. The segments are the buy condition instead:
 
-  The P/E panel, its percentile bands, and the price line coloured by P/E zone.
-  All of that describes a decision made on P/E, and this method's rule reads
-  price only (USE_PE is False). Drawing it would imply the strategy looks at
-  something it does not. It belongs here the day a rule reads P/E, and the data
-  is already loaded for it.
+         slate   before warmup — no decision was possible
+         green   the rule would buy
+         grey    the rule would not
+
+     That makes the chart self-checking. Markers must fall on green and nowhere
+     else; if one sits on grey, the chart has found a bug.
+
+  2. THE THRESHOLD LINE IS DRAWN.
+
+     median x (1 + BUY_MAX_PREMIUM/100), the exact quantity the rule compares
+     against. single draws its references and leaves the condition implicit.
+     Drawing it means the boundary moves visibly when the config changes.
+
+  P/E stays on the left axis even though no rule reads it, because it is half of
+  what the reference chart shows and dropping it would not be the same chart.
 """
 
 from pathlib import Path
 
 import plotly.graph_objects as go
 
+# Copied from single/median1000's backtest chart — see the module docstring.
+_QUARTILE_COLORS = {
+    "p25":    "rgba(46,160,67,0.9)",
+    "median": "rgba(100,100,200,0.9)",
+    "p75":    "rgba(220,53,69,0.9)",
+}
+_MEAN_COLOR = "rgba(150,0,200,0.8)"
+_PE_LINE = "#1f77b4"
 
-# Identical to single/median1000's backtest chart. See the module docstring.
 _EVENT_STYLE = {
     "buy":      ("Mua",        "rgba(34,197,94,0.75)",  "#15803d", "triangle-up",   9),
     "sell":     ("Bán",        "rgba(239,68,68,0.75)",  "#991b1b", "triangle-down", 9),
     "reinvest": ("Tái đầu tư", "rgba(249,115,22,0.75)", "#c2410c", "diamond",       8),
 }
 
-_PCT_LINES = [
-    ("p25",    "Giá 25th ({w}d)",   "rgba(46,160,67,0.9)"),
-    ("median", "Giá Median ({w}d)", "rgba(100,100,200,0.9)"),
-    ("p75",    "Giá 75th ({w}d)",   "rgba(220,53,69,0.9)"),
+# Price-line segments. Same idea as single's P/E zones, different question —
+# see the module docstring.
+_STATE_STYLE = [
+    ("warmup", "Chưa đánh giá", "#475569"),
+    ("buy",    "Đủ điều kiện mua", "#2ca02c"),
+    ("no",     "Không đủ điều kiện", "#a0aec0"),
 ]
+
+
+def _segments(states, values, want):
+    """
+    `values` where `states` equals `want`, None elsewhere.
+
+    A point adjacent to a matching one is kept rather than nulled, so
+    consecutive segments of different colours join instead of leaving a one-bar
+    gap at every boundary.
+    """
+    n = len(values)
+    out = []
+    for i in range(n):
+        if states[i] == want:
+            out.append(values[i])
+        else:
+            near = (i > 0 and states[i - 1] == want) or (i < n - 1 and states[i + 1] == want)
+            out.append(values[i] if near else None)
+    return out
 
 
 def build_symbol_chart(symbol: str, series, position, window: int,
                        max_premium: float, out_dir: Path) -> Path:
-    """Write out_dir/<symbol>.html and return the path."""
-    lo = series.warmup
     n = len(series)
-    dates = series.dates[lo:n]
-    prices = [series.close(i) for i in range(lo, n)]
+    lo = series.warmup
+    # Full history, so the warmup stretch is visible as its own colour rather
+    # than simply absent — "we could not decide here" and "we decided not to"
+    # are different facts and the chart should not merge them.
+    dates = series.dates
+    prices = [series.close(i) for i in range(n)]
+    pes = [series.pe(i) for i in range(n)]
+
+    medians = [series.median(window, i) if i >= lo else None for i in range(n)]
+    limits = [(m * (1 + max_premium / 100) if m else None) for m in medians]
+
+    states = []
+    for i in range(n):
+        if i < lo or medians[i] is None:
+            states.append("warmup")
+        else:
+            states.append("buy" if prices[i] < limits[i] else "no")
 
     fig = go.Figure()
 
-    # Rolling quartiles, dotted, in single's colours.
-    for attr, tmpl, color in _PCT_LINES:
+    # ── y1: P/E ──────────────────────────────────────────────────────────────
+    has_pe = any(v is not None for v in pes)
+    if has_pe:
+        for attr, label in (("pe_p25", "P/E 25th ({w}d)"),
+                            ("pe_median", "P/E Median ({w}d)"),
+                            ("pe_p75", "P/E 75th ({w}d)")):
+            key = attr.split("_", 1)[1]
+            fig.add_trace(go.Scatter(
+                x=dates,
+                y=[series.pe_stat(attr, window, i) if i >= lo else None
+                   for i in range(n)],
+                mode="lines", name=label.format(w=window), yaxis="y",
+                line=dict(color=_QUARTILE_COLORS[key], width=1, dash="dot"),
+                hovertemplate=label.format(w=window) + ": %{y:.2f}x<extra></extra>"))
+        fig.add_trace(go.Scatter(
+            x=dates,
+            y=[series.pe_stat("pe_mean", window, i) if i >= lo else None
+               for i in range(n)],
+            mode="lines", name=f"P/E Mean ({window}d)", yaxis="y",
+            line=dict(color=_MEAN_COLOR, width=1.5, dash="dot"),
+            hovertemplate=f"P/E Mean ({window}d)" + ": %{y:.2f}x<extra></extra>"))
+        fig.add_trace(go.Scatter(
+            x=dates, y=pes, mode="lines", name=f"{symbol} P/E", yaxis="y",
+            line=dict(color=_PE_LINE, width=1.8),
+            hovertemplate="P/E: %{y:.2f}x<extra></extra>"))
+
+    # ── y2: price ────────────────────────────────────────────────────────────
+    for attr, label in (("p25", "Giá 25th ({w}d)"),
+                        ("median", "Giá Median ({w}d)"),
+                        ("p75", "Giá 75th ({w}d)")):
         getter = getattr(series, attr)
         fig.add_trace(go.Scatter(
-            x=dates, y=[getter(window, i) for i in range(lo, n)],
-            mode="lines", name=tmpl.format(w=window),
-            line=dict(color=color, width=1, dash="dot"),
-            hovertemplate=tmpl.format(w=window) + ": %{y:,.0f}<extra></extra>"))
-
+            x=dates, y=[getter(window, i) if i >= lo else None for i in range(n)],
+            mode="lines", name=label.format(w=window), yaxis="y2",
+            line=dict(color=_QUARTILE_COLORS[attr], width=1, dash="dot"),
+            hovertemplate=label.format(w=window) + ": %{y:,.0f}<extra></extra>"))
     fig.add_trace(go.Scatter(
-        x=dates, y=[series.mean(window, i) for i in range(lo, n)],
-        mode="lines", name=f"Giá Mean ({window}d)",
-        line=dict(color="rgba(120,120,120,0.85)", width=1.2, dash="dash"),
-        hovertemplate=f"Mean ({window}d)" + ": %{y:,.0f}<extra></extra>"))
-
-    # The buy condition itself. Not in single's chart — see the module docstring.
+        x=dates, y=[series.mean(window, i) if i >= lo else None for i in range(n)],
+        mode="lines", name=f"Giá Mean ({window}d)", yaxis="y2",
+        line=dict(color=_MEAN_COLOR, width=1.5, dash="dot"),
+        hovertemplate=f"Giá Mean ({window}d)" + ": %{y:,.0f}<extra></extra>"))
     fig.add_trace(go.Scatter(
-        x=dates,
-        y=[(m * (1 + max_premium / 100) if (m := series.median(window, i)) else None)
-           for i in range(lo, n)],
-        mode="lines", name=f"Ngưỡng mua (median {max_premium:+g}%)",
-        line=dict(color="rgba(37,99,235,0.35)", width=1.4),
+        x=dates, y=limits, mode="lines", yaxis="y2",
+        name=f"Ngưỡng mua (median {max_premium:+g}%)",
+        line=dict(color="rgba(37,99,235,0.45)", width=1.4),
         hovertemplate="Ngưỡng: %{y:,.0f}<extra></extra>"))
 
-    fig.add_trace(go.Scatter(
-        x=dates, y=prices, mode="lines", name=f"{symbol} — giá",
-        line=dict(color="#1f77b4", width=1.8),
-        hovertemplate="Giá: %{y:,.0f}<extra></extra>"))
+    for key, label, color in _STATE_STYLE:
+        if key not in states:
+            continue
+        fig.add_trace(go.Scatter(
+            x=dates, y=_segments(states, prices, key), mode="lines",
+            name=label, yaxis="y2", connectgaps=False,
+            line=dict(color=color, width=1.5),
+            hovertemplate="Giá: %{y:,.0f}<extra></extra>"))
 
+    # ── y3: trade markers ────────────────────────────────────────────────────
     by_kind: dict = {}
     for t in (position.trades if position else []):
         by_kind.setdefault(t.kind, []).append(t)
@@ -110,58 +186,62 @@ def build_symbol_chart(symbol: str, series, position, window: int,
             continue
         label, fill, border, marker, size = _EVENT_STYLE[kind]
         fig.add_trace(go.Scatter(
-            x=[t.date for t in trades], y=[t.price for t in trades],
-            mode="markers", name=f"{label} ({len(trades)})",
+            x=[t.date for t in trades], y=[0.75] * len(trades),
+            mode="markers", name=f"{label} ({len(trades)})", yaxis="y3",
             marker=dict(color=fill, size=size, symbol=marker,
                         line=dict(color=border, width=1)),
-            customdata=[[t.amount, t.shares] for t in trades],
+            customdata=[[t.price, t.amount, t.shares] for t in trades],
             hovertemplate=(f"<b>{label}</b>  %{{x|%Y-%m-%d}}<br>"
-                           "Giá: %{y:,.0f}<br>Tiền: %{customdata[0]:,.0f}<br>"
-                           "Cổ phiếu: %{customdata[1]:,.1f}<extra></extra>")))
+                           "Giá: %{customdata[0]:,.0f}<br>"
+                           "Tiền: %{customdata[1]:,.0f}<br>"
+                           "Cổ phiếu: %{customdata[2]:,.1f}<extra></extra>")))
 
-    n_buy, n_sell = len(by_kind.get("buy", [])), len(by_kind.get("sell", []))
-    n_rei = len(by_kind.get("reinvest", []))
-    sub = f"{n_buy} lệnh mua"
-    if n_sell:
-        sub += f" · {n_sell} lệnh bán"
-    if n_rei:
-        sub += f" · {n_rei} tái đầu tư"
+    n_buy, n_sell = len(by_kind.get("buy", [])), len(by_kind.get("reinvest", []))
+    sub = f"{len(by_kind.get('buy', []))} lệnh mua"
+    if by_kind.get("sell"):
+        sub += f" · {len(by_kind['sell'])} lệnh bán"
+    if by_kind.get("reinvest"):
+        sub += f" · {len(by_kind['reinvest'])} tái đầu tư"
     if position and position.shares > 0:
-        sub += (f" · đang giữ {position.shares:,.0f} cp · vốn gốc "
-                f"{position.basis:,.0f}đ · giá trị {position.shares * prices[-1]:,.0f}đ")
+        sub += (f" · giữ {position.shares:,.0f} cp · vốn gốc {position.basis:,.0f}đ"
+                f" · giá trị {position.shares * prices[-1]:,.0f}đ")
 
+    span = f"{str(dates[0])[:4]} — {str(dates[-1])[:4]}"
     fig.update_layout(
-        # The subtitle is a second line inside the title, so a horizontal legend
-        # at the usual y=1.02 lands on top of it.
-        title=dict(text=f"<b>{symbol}</b><br><span style='font-size:13px;color:#64748b'>"
-                        f"{sub}</span>", x=0.01, xanchor="left", y=0.97,
-                   yanchor="top"),
+        title=dict(text=f"{symbol} — Giá & P/E  <sup>{span}</sup><br>"
+                        f"<span style='font-size:12.5px;color:#64748b'>{sub}</span>",
+                   font=dict(size=18), x=0.01, xanchor="left"),
         hovermode="x unified",
         plot_bgcolor="white", paper_bgcolor="white",
-        font=dict(family="IBM Plex Sans, system-ui, sans-serif", size=13),
-        legend=dict(orientation="h", yanchor="bottom", y=1.01, x=0,
-                    font=dict(size=11.5)),
-        margin=dict(l=74, r=24, t=150, b=48),
-        xaxis=dict(showgrid=True, gridcolor="#eef2f7",
-                   rangeslider=dict(visible=True, thickness=0.06)),
-        yaxis=dict(showgrid=True, gridcolor="#eef2f7", tickformat=",.0f",
-                   title="VND"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0,
+                    font=dict(size=11)),
+        margin=dict(l=60, r=80, t=150, b=60),
+        xaxis=dict(title=dict(text="Date"), showgrid=True,
+                   gridcolor="rgba(200,200,200,0.3)", hoverformat="%Y-%m-%d"),
+        yaxis=dict(title=dict(text="P/E (x, log)"), type="log", showgrid=True,
+                   gridcolor="rgba(200,200,200,0.3)", side="left"),
+        yaxis2=dict(title=dict(text=f"{symbol} (VND)"), overlaying="y",
+                    side="right", showgrid=False, tickformat=","),
+        # The marker strip. Fixed 0..1 with the axis hidden, so markers sit on
+        # one line near the bottom regardless of price scale — the reference
+        # chart's arrangement, and the reason a marker's y carries no meaning.
+        yaxis3=dict(overlaying="y", side="left", range=[0, 6], visible=False,
+                    fixedrange=True),
     )
 
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{symbol.lower()}.html"
     fig.write_html(str(path), include_plotlyjs="cdn", full_html=True,
-                   config={"displaylogo": False})
+                   config={"responsive": True, "displaylogo": False})
     return path
 
 
 def build_all(result, market, config, out_dir: Path) -> dict:
     """
-    One chart per symbol the portfolio actually traded. Returns {symbol: filename}.
+    One chart per symbol the portfolio traded. Returns {symbol: filename}.
 
-    Symbols never bought are skipped: a chart with no markers says nothing the
-    report's table does not, and building all of them would be most of the cost
-    for none of the information.
+    Symbols never bought are skipped: a chart with no markers adds nothing to
+    the report's table.
     """
     wallet = result["wallet"]
     out = {}

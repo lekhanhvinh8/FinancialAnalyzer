@@ -69,6 +69,13 @@ class WindowStats:
     # worse than no chart.
     p25: np.ndarray = None
     p75: np.ndarray = None
+    # P/E counterparts. Also chart-only while USE_PE is False, and loaded for the
+    # same reason: the reference chart shows a P/E panel and a chart that dropped
+    # it would not be the same chart.
+    pe_p25: np.ndarray = None
+    pe_median: np.ndarray = None
+    pe_p75: np.ndarray = None
+    pe_mean: np.ndarray = None
 
     def _at(self, arr: np.ndarray, i: int):
         if i < 0 or i >= len(arr):
@@ -131,6 +138,11 @@ class SymbolSeries:
     def p75(self, window: int, i: int):
         s = self.stats.get(window)
         return None if s is None else s._at(s.p75, i)
+
+    def pe_stat(self, name: str, window: int, i: int):
+        """One of pe_p25 / pe_median / pe_p75 / pe_mean."""
+        s = self.stats.get(window)
+        return None if s is None else s._at(getattr(s, name), i)
 
     def reference(self, kind: str, window: int, i: int):
         """One of 'median' / 'top' / 'bottom' / 'mean', chosen by name."""
@@ -241,7 +253,7 @@ def _load_window_stats(symbol: str, windows: list, date_to_row: dict,
     """
     placeholders = ",".join("?" * len(windows))
     sql = (f"SELECT range_days, date, median, local_top, local_bottom, local_avg, "
-           f"p25, p75 "
+           f"p25, p75, pe_p25, pe_median, pe_p75, pe_avg "
            f"FROM range_stats "
            f"WHERE symbol = ? AND direction = 'back' AND range_days IN ({placeholders})")
 
@@ -255,12 +267,16 @@ def _load_window_stats(symbol: str, windows: list, date_to_row: dict,
             mean=np.full(n_rows, np.nan),
             p25=np.full(n_rows, np.nan),
             p75=np.full(n_rows, np.nan),
+            pe_p25=np.full(n_rows, np.nan),
+            pe_median=np.full(n_rows, np.nan),
+            pe_p75=np.full(n_rows, np.nan),
+            pe_mean=np.full(n_rows, np.nan),
         )
 
     seen = set()
     with sqlite3.connect(DB_PATH) as con:
-        for rd, date, median, top, bottom, mean, p25, p75 in con.execute(
-                sql, (symbol, *windows)):
+        for (rd, date, median, top, bottom, mean, p25, p75,
+             pe25, pemed, pe75, peavg) in con.execute(sql, (symbol, *windows)):
             i = date_to_row.get(date)
             if i is None:
                 continue
@@ -273,6 +289,16 @@ def _load_window_stats(symbol: str, windows: list, date_to_row: dict,
                 ws.p25[i] = p25 / _STATS_SCALE
             if p75 is not None:
                 ws.p75[i] = p75 / _STATS_SCALE
+            # P/E is a ratio, not a price — it is NOT stored at the x1000 scale
+            # and must not be divided.
+            if pe25 is not None:
+                ws.pe_p25[i] = pe25
+            if pemed is not None:
+                ws.pe_median[i] = pemed
+            if pe75 is not None:
+                ws.pe_p75[i] = pe75
+            if peavg is not None:
+                ws.pe_mean[i] = peavg
             seen.add(rd)
 
     return {w: ws for w, ws in out.items() if w in seen}
