@@ -129,3 +129,75 @@ class DrawdownScorer(Scorer):
 
     def describe(self) -> str:
         return f"deepest drawdown vs top[{self.window}]"
+
+
+@dataclass
+class CapRankScorer(Scorer):
+    """
+    Rank by size within the day's universe: 0 for the smallest symbol trading,
+    1 for the largest.
+
+    largest_first=False flips it, which is worth having because the two
+    directions are genuinely different bets — large is the benchmark's own tilt,
+    small is where an equal-weighted basket gets its edge over a
+    capitalisation-weighted index.
+
+    Already a percentile, so it needs no normalising to sit beside another
+    scorer in a blend. That is not true of PremiumScorer, whose units are
+    percent-away-from-median; see BlendScorer.
+    """
+    largest_first: bool = True
+
+    def __call__(self, series, index: int) -> float:
+        r = series.cap_rank(index)
+        if r is None:
+            # Neither favoured nor punished. The filter, not the ranking, is
+            # where a missing value should have consequences.
+            return 0.5
+        return r if self.largest_first else 1.0 - r
+
+    def windows(self) -> set:
+        return set()
+
+    def describe(self) -> str:
+        return "largest cap" if self.largest_first else "smallest cap"
+
+
+@dataclass
+class BlendScorer(Scorer):
+    """
+    Several scorers combined by weight.
+
+    WHY THIS CANNOT BE A PLAIN WEIGHTED SUM
+
+      The parts are in incompatible units. CapRankScorer returns a percentile in
+      0..1; PremiumScorer returns a percentage away from a median, which on this
+      universe spans roughly -70 to +10. Adding them with weights would let the
+      premium term swamp the cap term by two orders of magnitude, and the weight
+      would be describing the units rather than the intent.
+
+      So the blend is over RANKS WITHIN THE DAY'S CANDIDATE LIST, not over raw
+      values: each part scores every candidate, the candidates are ranked by that
+      part, the ranks are scaled to 0..1, and those are averaged by weight. A
+      weight of 0.5/0.5 then means what it looks like.
+
+      That comparison needs the whole list, which a scorer never sees — so
+      engine.rank() does the work. This class carries the parts and the weights
+      and is never called directly; __call__ exists only to fail loudly if it is.
+    """
+    parts: list          # [(scorer, weight), ...]
+
+    def __call__(self, series, index: int) -> float:
+        raise NotImplementedError(
+            "BlendScorer is resolved in engine.rank(), which is the only place "
+            "that can see the whole candidate list. It must not be called per "
+            "symbol.")
+
+    def windows(self) -> set:
+        out = set()
+        for sc, _w in self.parts:
+            out |= sc.windows()
+        return out
+
+    def describe(self) -> str:
+        return " + ".join(f"{w:g}x {sc.describe()}" for sc, w in self.parts)

@@ -99,6 +99,11 @@ class SymbolSeries:
     dates: list                       # pd.Timestamp per row
     closes: np.ndarray                # VND
     pes: np.ndarray                   # NaN where the symbol had no P/E
+    caps: np.ndarray = None           # market capitalisation in VND, NaN where unknown
+    # Cross-sectional percentile of `caps` among the symbols trading that day,
+    # 0 = smallest, 1 = largest. NOT computed here — one symbol cannot see the
+    # others. Market fills it after every symbol is loaded; see market.py.
+    cap_pct: np.ndarray = None
     stats: dict = field(default_factory=dict)   # window -> WindowStats
     row_of: dict = field(default_factory=dict)  # pd.Timestamp -> row index
     warmup: int = 0                   # first row any condition may be evaluated on
@@ -113,6 +118,27 @@ class SymbolSeries:
 
     def pe(self, i: int):
         v = self.pes[i]
+        return None if v != v else float(v)
+
+    def cap(self, i: int):
+        if self.caps is None:
+            return None
+        v = self.caps[i]
+        return None if v != v else float(v)
+
+    def cap_rank(self, i: int):
+        """
+        Where this symbol's size ranked among the day's universe, 0..1.
+
+        Relative and not absolute on purpose: the median market cap in this
+        database runs about 10 trillion VND in 2015 and 50 trillion in 2026, so
+        a fixed threshold would be measuring the calendar rather than the
+        company. A percentile means the same thing in both years, and the
+        universe always has candidates at every level.
+        """
+        if self.cap_pct is None:
+            return None
+        v = self.cap_pct[i]
         return None if v != v else float(v)
 
     def median(self, window: int, i: int):
@@ -199,12 +225,17 @@ def load_symbol(symbol: str, windows, min_rows: int = 0
 
     pes = _load_pes(symbol)
     df = prices.merge(pes, on="date", how="left")
+    caps = _load_caps(symbol)
+    df = df.merge(caps, on="date", how="left")
     # Forward-filled because a P/E is only recomputed when a new quarterly report
     # lands; between reports the last one is still the best available reading.
     # A stretch with no P/E at all — a company loss-making over a trailing year —
     # stays NaN before the first report and is carried afterwards, which is a
     # known wart of the shared pipeline rather than something invented here.
     df["pe_ratio"] = df["pe_ratio"].ffill()
+    # Market cap comes from the same daily table as P/E and has the same gaps;
+    # carried forward for the same reason.
+    df["market_cap"] = df["market_cap"].ffill()
 
     dates = [pd.Timestamp(d) for d in df["date"]]
     series = SymbolSeries(
@@ -212,6 +243,7 @@ def load_symbol(symbol: str, windows, min_rows: int = 0
         dates=dates,
         closes=df["close"].to_numpy(dtype=float),
         pes=df["pe_ratio"].to_numpy(dtype=float),
+        caps=df["market_cap"].to_numpy(dtype=float),
         row_of={d: i for i, d in enumerate(dates)},
         warmup=max(windows) - 1,
     )
@@ -234,6 +266,23 @@ def _load_prices(symbol: str) -> pd.DataFrame:
         return pd.read_sql(
             "SELECT date, close FROM daily_prices WHERE symbol = ? ORDER BY date",
             con, params=(symbol,))
+
+
+def _load_caps(symbol: str) -> pd.DataFrame:
+    """
+    Daily market capitalisation, price x shares, already computed by the shared
+    pipeline and stored beside the P/E it was needed for.
+
+    Inherits that pipeline's quarter-end stamping of the share count, so a
+    change in shares is visible from the quarter end rather than from its
+    announcement. Much milder than the same issue on earnings — a share count
+    moves slowly and is announced ahead of time, where a profit figure is a
+    surprise — but it is the same mechanism and worth knowing about.
+    """
+    with sqlite3.connect(DB_PATH) as con:
+        return pd.read_sql(
+            "SELECT date, total_market_cap AS market_cap FROM pe_ratios "
+            "WHERE symbol = ? ORDER BY date", con, params=(symbol,))
 
 
 def _load_pes(symbol: str) -> pd.DataFrame:

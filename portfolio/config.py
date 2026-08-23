@@ -108,6 +108,55 @@ BUY_REFERENCE = "median"     # 'median' | 'mean' | 'top' | 'bottom'
 # everything perfectly normal.
 USE_PE = False
 
+# ── Market capitalisation ─────────────────────────────────────────────────────
+
+# Keep only symbols in the top (1 - CAP_MIN_RANK) of the day's universe by market
+# capitalisation. None switches the filter off.
+#
+# RELATIVE, NEVER ABSOLUTE. The median market cap in this database runs about 10
+# trillion VND in 2015 and 50 trillion in 2026, so a fixed threshold would admit
+# almost nobody early and almost everybody late — it would be measuring the
+# calendar. market.py ranks the universe fresh every day.
+#
+# THE STRONGEST RESULT MEASURED HERE SO FAR. Sweeping it at K=5 with the shipped
+# scorer:
+#
+#     min_rank   keeps   growth        min_rank   keeps   growth
+#       0.30      70%    131.79%         0.50      50%    163.60%
+#       0.35      65%    141.80%         0.55      45%    154.71%
+#       0.40      60%    153.25%         0.60      40%    108.69%
+#       0.45      55%    164.31%         0.70      30%     83.51%
+#
+# +25 points over no filter (138.77%), on a smooth unimodal curve rather than a
+# single lucky cell, and robust to the allocator: at 0.50 the result is 160.7 to
+# 163.6 across K = 3, 5, 8, 10 and None. The gain is the filter's, not an
+# interaction.
+#
+# 0.5 rather than the peak at 0.45 — they are within half a point of each other
+# and the rounder number is not pretending to a precision this has not earned.
+#
+# BOTH ENDS ARE BAD, which is the interesting part. Below 0.40 the small caps
+# drag; above 0.55 it collapses, and it should — filtering to the very largest
+# converges on the benchmark, and the benchmark returns 95.75%.
+CAP_MIN_RANK = 0.5
+
+# Weight of market-cap rank in the buy SCORE, blended with the price scorer over
+# same-day ranks (see scoring.BlendScorer). 0 switches the blend off entirely.
+#
+# MEASURED AND REJECTED. Across every filter level, adding cap to the score made
+# things worse, monotonically:
+#
+#     filter        w=0     w=.25    w=.5    w=.75    w=1
+#     none        138.8%   136.0%   129.1%  133.2%  129.5%
+#     top 65%     141.8%   139.1%   134.7%  133.9%  133.5%
+#     top 50%     163.6%   160.4%   156.9%  152.6%  153.0%
+#
+# So size decides WHO IS ELIGIBLE and nothing else; among the eligible, ordering
+# by size is worse than ordering by cheapness. The blend machinery is kept
+# because it is the only way to combine scorers whose units do not compare, and
+# the next scorer worth trying will need it.
+CAP_WEIGHT = 0.0
+
 # ── Ranking and sizing ────────────────────────────────────────────────────────
 
 # How candidates are ORDERED before TOP_K cuts the list. See scoring.py.

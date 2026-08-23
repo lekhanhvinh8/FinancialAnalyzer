@@ -182,7 +182,9 @@ def rank(market, day, rule, scorer, symbols) -> list:
     symbols sit the same distance from their references. Without the tie-break
     the order would follow dict iteration.
     """
-    out = []
+    parts = getattr(scorer, "parts", None)
+
+    out, admitted = [], []
     for symbol in symbols:
         bar = day.bars.get(symbol)
         if bar is None:
@@ -190,8 +192,29 @@ def rank(market, day, rule, scorer, symbols) -> list:
         series = market[symbol]
         if not rule.applies(series, bar.index):
             continue
+        admitted.append((symbol, bar, series))
         out.append(Candidate(symbol=symbol, index=bar.index, price=bar.price,
-                             score=float(scorer(series, bar.index))))
+                             score=0.0 if parts else float(scorer(series, bar.index))))
+
+    # A BlendScorer combines parts whose units do not compare, so it is resolved
+    # HERE rather than per symbol: each part ranks the day's candidates, the
+    # ranks are scaled to 0..1, and those are averaged by weight. rank() is the
+    # only place the whole list exists. See scoring.BlendScorer.
+    if parts and len(out) > 1:
+        total_w = sum(w for _sc, w in parts) or 1.0
+        blended = [0.0] * len(out)
+        for sub, weight in parts:
+            vals = [float(sub(series, bar.index)) for _sym, bar, series in admitted]
+            order = sorted(range(len(vals)), key=lambda i: vals[i])
+            last = len(vals) - 1
+            pct = [0.0] * len(vals)
+            for pos, i in enumerate(order):
+                pct[i] = pos / last
+            for i in range(len(out)):
+                blended[i] += weight / total_w * pct[i]
+        for c, v in zip(out, blended):
+            c.score = v
+
     out.sort(key=lambda c: (-c.score, c.symbol))
     return out
 

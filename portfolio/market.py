@@ -67,6 +67,46 @@ class Market:
             # and including it would only add empty iterations before the start.
             dates.update(d for d, i in s.row_of.items() if i >= s.warmup)
         self.calendar: list = sorted(dates)
+        self._rank_caps()
+
+    def _rank_caps(self):
+        """
+        Fill each  symbol's cap_pct: where its market cap stood among the symbols
+        trading that day, 0 = smallest, 1 = largest.
+
+        THIS IS THE ONE CROSS-SECTIONAL COMPUTATION IN THE PACKAGE.
+
+        A Rule sees one symbol and cannot know how big the others are, so a
+        relative size test has nowhere to live inside the rule interface. Rather
+        than widen that interface — every rule would then have to be handed the
+        universe it does not need — the comparison is done once here, while the
+        whole universe is in hand, and the answer is written back into each
+        symbol as a plain per-row array. Rules stay per-symbol and read
+        series.cap_rank(i) like any other statistic.
+
+        Recomputed per DAY rather than once, because membership changes: a
+        symbol listing in 2018 shifts everyone else's rank from that day on.
+        """
+        import numpy as np
+
+        for s in self.series.values():
+            s.cap_pct = np.full(len(s.closes), np.nan)
+
+        for date in self.calendar:
+            todays = []
+            for sym, s in self.series.items():
+                i = s.row_of.get(date)
+                if i is None:
+                    continue
+                c = s.cap(i)
+                if c is not None and c > 0:
+                    todays.append((c, sym, i))
+            if len(todays) < 2:
+                continue
+            todays.sort()
+            last = len(todays) - 1
+            for pos, (_c, sym, i) in enumerate(todays):
+                self.series[sym].cap_pct[i] = pos / last
 
     @classmethod
     def load(cls, symbols, windows, min_rows: int = 0, on_symbol=None) -> "Market":

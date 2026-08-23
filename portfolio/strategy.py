@@ -17,9 +17,9 @@ WHY THE ALLOCATOR IS SHARED AND THE SCORERS ARE NOT
 from dataclasses import dataclass, field
 
 from .allocator import EqualSplitAllocator
-from .rules import (AllOf, NeverRule, Not, PremiumBelowRule, Rule,
-                    SymbolIn)
-from .scoring import NullScorer, PremiumScorer, Scorer
+from .rules import (AllOf, CapRankAboveRule, NeverRule, Not,
+                    PremiumBelowRule, Rule, SymbolIn)
+from .scoring import BlendScorer, CapRankScorer, NullScorer, PremiumScorer, Scorer
 
 
 @dataclass
@@ -90,6 +90,12 @@ def build_plan(config) -> Plan:
     # also be admitted as an ordinary candidate: the plan would then hold the
     # index alongside its own constituents, and would be partly holding the very
     # thing it is measured against.
+    # Size decides eligibility, not order — see config.CAP_WEIGHT for the
+    # measurement that settled which.
+    cap_min = getattr(config, "CAP_MIN_RANK", None)
+    if cap_min is not None:
+        buy_rule = AllOf([buy_rule, CapRankAboveRule(cap_min)])
+
     benchmark = getattr(config, "BENCHMARK", None)
     if benchmark:
         buy_rule = AllOf([Not(SymbolIn({benchmark})), buy_rule])
@@ -100,7 +106,7 @@ def build_plan(config) -> Plan:
         fallback_symbol=(benchmark
                          if getattr(config, "FALLBACK_TO_BENCHMARK", False)
                          else None),
-        buy_scorer=scorer(config.BUY_WINDOW, config.BUY_REFERENCE, cheapest_first=True),
+        buy_scorer=_buy_scorer(config, scorer),
         # Both arms stay off; their scorers are irrelevant until a rule admits
         # anything, and a NullScorer says that plainly.
         sell_rule=NeverRule(),
@@ -146,6 +152,15 @@ def build_baseline(config) -> Plan:
         buy_rule=AlwaysRule(),
         allocator=EqualSplitAllocator(top_k=None, min_ticket=0),
     )
+
+
+def _buy_scorer(config, factory):
+    """The price scorer, optionally blended with market-cap rank."""
+    price = factory(config.BUY_WINDOW, config.BUY_REFERENCE, cheapest_first=True)
+    w = getattr(config, "CAP_WEIGHT", 0.0) or 0.0
+    if w <= 0:
+        return price
+    return BlendScorer([(price, 1.0 - w), (CapRankScorer(True), w)])
 
 
 def _scorer(config):

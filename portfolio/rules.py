@@ -170,6 +170,39 @@ class PremiumAboveRule(Rule):
 
 
 @dataclass
+class CapRankAboveRule(Rule):
+    """
+    Keep a symbol only if it is in the top (1 - min_rank) of the day's universe
+    by market capitalisation.
+
+    RELATIVE, NOT ABSOLUTE, and that is the whole point. The median market cap
+    in this database runs about 10 trillion VND in 2015 and 50 trillion in 2026,
+    so a fixed threshold would admit almost nobody early and almost everybody
+    late — it would be measuring the calendar. A percentile means the same thing
+    in both years and leaves the universe populated throughout.
+
+    min_rank = 0.5 keeps the larger half of whatever is trading that day. The
+    ranking itself is computed once in market.py, where the whole universe is
+    visible; a rule sees one symbol and could not work it out.
+
+    A symbol with no market cap is DECLINED rather than admitted. The data comes
+    from the same table as P/E and has the same gaps, and admitting on missing
+    data would quietly turn the filter off exactly where it is least informed.
+    """
+    min_rank: float = 0.5
+
+    def applies(self, series, index: int) -> bool:
+        r = series.cap_rank(index)
+        return r is not None and r >= self.min_rank
+
+    def windows(self) -> set:
+        return set()
+
+    def describe(self) -> str:
+        return f"market cap in top {(1 - self.min_rank) * 100:.0f}% of the day"
+
+
+@dataclass
 class SymbolIn(Rule):
     """
     Admit a symbol purely by name.
