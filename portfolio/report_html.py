@@ -128,13 +128,16 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
     invested = result["invested"]
     growth, base_growth = result["growth_%"], baseline["growth_%"]
 
-    # Attribution. profit = value - basis per position, and those sum to the
-    # portfolio's profit, so `share` sums to `growth`. See the module docstring.
+    # Attribution over the WHOLE universe, not just what is held. profit =
+    # value - basis per position and those sum to the portfolio's profit, so
+    # `share` sums to `growth`; a never-bought symbol contributes 0 and changes
+    # no total. See the module docstring.
     rows = []
-    for sym, h in result["holdings"].items():
+    for sym, h in result.get("universe", {}).items():
         profit = h["value"] - h["basis"]
         rows.append({
             "symbol": sym,
+            "state": h["state"],
             "basis": h["basis"],
             "value": h["value"],
             "profit": profit,
@@ -144,24 +147,37 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
             "buys": h["buys"],
             "sells": h["sells"],
         })
+    # Never-bought rows sort to 0 and land between the winners and the losers,
+    # which is where they belong: they neither helped nor hurt.
     rows.sort(key=lambda r: -r["share"])
 
+    _STATE = {"held":   ("Đang giữ",      "st-held"),
+              "closed": ("Đã bán hết",    "st-closed"),
+              "never":  ("Chưa từng mua", "st-never")}
     body = ""
     for r in rows:
-        sign = "pos" if r["profit"] >= 0 else "neg"
+        sign = "pos" if r["profit"] > 0 else ("neg" if r["profit"] < 0 else "")
+        label, cls = _STATE.get(r["state"], (r["state"], ""))
+        # A never-bought row has nothing to report, and printing 0 for every
+        # figure would read as a position worth nothing rather than as no
+        # position. Em dashes say which.
+        dash = r["state"] == "never"
+
+        def cell(value, fmt, klass=""):
+            return f'<td class="n {klass}">{"—" if dash else format(value, fmt)}</td>'
+
         body += (
-            f'<tr data-sym="{escape(r["symbol"])}">'
+            f'<tr data-sym="{escape(r["symbol"])}" data-state="{r["state"]}">'
             f'<td class="sym">{escape(r["symbol"])}</td>'
-            f'<td class="n">{r["basis"]:,.0f}</td>'
-            f'<td class="n">{r["value"]:,.0f}</td>'
-            f'<td class="n {sign}">{r["profit"]:+,.0f}</td>'
-            f'<td class="n {sign}">{r["return_%"]:+.1f}%</td>'
-            f'<td class="n {sign}">{r["share"]:+.2f}</td>'
-            f'<td class="n">{r["weight_%"]:.2f}%</td>'
-            f'<td class="n">{r["buys"]}</td><td class="n">{r["sells"]}</td></tr>\n')
+            f'<td><span class="pill {cls}">{label}</span></td>'
+            + cell(r["basis"], ",.0f") + cell(r["value"], ",.0f")
+            + cell(r["profit"], "+,.0f", sign) + cell(r["return_%"], "+.1f", sign)
+            + cell(r["share"], "+.2f", sign) + cell(r["weight_%"], ".2f")
+            + f'<td class="n">{r["buys"]}</td><td class="n">{r["sells"]}</td></tr>\n')
 
     winners = [r for r in rows if r["profit"] > 0]
     losers = [r for r in rows if r["profit"] < 0]
+    never = [r for r in rows if r["state"] == "never"]
     top3 = sum(r["share"] for r in rows[:3])
 
     def kv(label, a, b=None, cls=""):
@@ -212,6 +228,7 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
         plan_name=escape(plan.name), base_name=escape(baseline_plan.name),
         n_win=len(winners), n_lose=len(losers), n_all=len(rows),
         top3=f"{top3:+.2f}", growth=f"{growth:.2f}", skipped=skipped,
+        n_never=len(never),
         charts=json.dumps(charts or {}, separators=(",", ":")),
     )
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -276,6 +293,17 @@ details.skip{{margin-top:12px;font-size:13px;color:var(--ink2)}}
 details.skip summary{{cursor:pointer;color:var(--ink3)}}
 details.skip ul{{margin:8px 0 0;padding-left:20px}}
 tbody tr{{cursor:pointer}}
+.pill{{font-size:11px;font-family:"IBM Plex Mono",monospace;padding:2px 7px;
+  border-radius:3px;white-space:nowrap}}
+.st-held{{color:var(--pos);background:color-mix(in srgb,var(--pos) 14%,transparent)}}
+.st-closed{{color:var(--paid);background:color-mix(in srgb,var(--paid) 16%,transparent)}}
+.st-never{{color:var(--ink3);background:var(--surface2)}}
+.chips{{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:10px 0 12px}}
+.chip{{font-size:12.5px;font-family:inherit;padding:4px 11px;border-radius:14px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink2);cursor:pointer}}
+.chip:hover{{border-color:var(--accent);color:var(--accent)}}
+.chip.on{{background:var(--accent);border-color:var(--accent);color:#fff}}
+.count{{font-size:12px;color:var(--ink3)}}
 tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent)}}
 .hint{{color:var(--ink3);font-size:12.5px;margin:8px 0 0}}
 </style></head><body><div class="wrap">
@@ -310,9 +338,17 @@ tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent
   <p class="note">Cột <b>Đóng góp</b> là lợi nhuận của mã đó tính theo phần trăm
   <em>tổng vốn đã nạp</em>. Cộng cả cột lại bằng đúng {growth}% ở bảng trên —
   đây là phân rã chính xác, không phải xấp xỉ.
-  {n_win} mã lãi, {n_lose} mã lỗ trên {n_all} mã. Ba mã đầu chiếm {top3} điểm.</p>
+  {n_win} mã lãi, {n_lose} mã lỗ, {n_never} mã luật chưa bao giờ chấp nhận —
+  trên {n_all} mã trong rổ. Ba mã đầu chiếm {top3} điểm.</p>
+  <div class="chips">
+    <button class="chip on" data-f="all">Tất cả</button>
+    <button class="chip" data-f="held">Đang giữ</button>
+    <button class="chip" data-f="closed">Đã bán hết</button>
+    <button class="chip" data-f="never">Chưa từng mua</button>
+    <span class="count" id="chipCount"></span>
+  </div>
   <div class="scroll"><table id="tbl"><thead><tr>
-    <th data-t="s">Mã</th><th class="n">Vốn gốc</th><th class="n">Giá trị</th>
+    <th data-t="s">Mã</th><th data-t="s">Trạng thái</th><th class="n">Vốn gốc</th><th class="n">Giá trị</th>
     <th class="n">Lãi/lỗ</th><th class="n">Suất sinh lời</th><th class="n">Đóng góp (điểm)</th>
     <th class="n">Tỷ trọng</th><th class="n">Mua</th><th class="n">Bán</th>
   </tr></thead><tbody>{rows}</tbody></table></div>
@@ -322,6 +358,25 @@ tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent
 </div>
 <script>
 var CHARTS = {charts};
+
+function applyFilter(f){{
+  var shown = 0;
+  document.querySelectorAll('#tbl tbody tr').forEach(function(tr){{
+    var ok = (f === 'all') || (tr.dataset.state === f);
+    tr.style.display = ok ? '' : 'none';
+    if (ok) shown++;
+  }});
+  document.getElementById('chipCount').textContent =
+    shown + '/' + document.querySelectorAll('#tbl tbody tr').length + ' mã';
+}}
+document.querySelectorAll('.chip').forEach(function(c){{
+  c.addEventListener('click', function(){{
+    document.querySelectorAll('.chip').forEach(function(o){{ o.classList.remove('on'); }});
+    c.classList.add('on');
+    applyFilter(c.dataset.f);
+  }});
+}});
+applyFilter('all');
 
 document.querySelectorAll('#tbl tbody tr').forEach(function(tr){{
   var f = CHARTS[tr.dataset.sym];

@@ -340,8 +340,38 @@ def summarise(wallet: Wallet, market) -> dict:
                         key=lambda q: -q.shares * prices[q.symbol])
     }
 
+    # Every symbol the run could have bought, whether it did or not. `holdings`
+    # above is open positions only, which is what a "top holdings" list wants;
+    # this is what a report wants, because a symbol the rule NEVER admitted in
+    # eleven years is a finding, and one that is simply absent from the table
+    # cannot be told apart from one that was never in the universe.
+    #
+    # state: held / closed / never. Rows that were never bought carry zeros, so
+    # they change no total — the contribution column still sums to growth_%.
+    universe = {}
+    for symbol in market.symbols:
+        p = wallet.positions.get(symbol)
+        if p is None or not p.trades:
+            state = "never"
+            shares = basis = basis_cur = value = 0.0
+            buys = sells = reinvests = 0
+        else:
+            shares = p.shares
+            basis, basis_cur = p.basis, p.basis_current
+            value = shares * prices[symbol]
+            buys, sells = p.count("buy"), p.count("sell")
+            reinvests = p.count("reinvest")
+            state = "held" if shares > 0 else "closed"
+        universe[symbol] = {
+            "state": state, "shares": shares, "basis": basis,
+            "basis_current": basis_cur, "value": value,
+            "weight_%": (value / holdings_value * 100) if holdings_value else 0.0,
+            "buys": buys, "sells": sells, "reinvests": reinvests,
+        }
+
     return {
         "wallet": wallet,
+        "universe": universe,
         "months": wallet.months,
         "invested": invested,
         "final": final,
