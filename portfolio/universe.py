@@ -10,9 +10,14 @@ import sqlite3
 from database import DB_PATH
 
 
-def resolve(spec, exclude=()) -> list:
+def resolve(spec, exclude=(), extra=()) -> list:
     """
     `spec` is "all", an index name, or an explicit list of symbols.
+
+    `extra` is appended AFTER the exclusion filter — it is for instruments the
+    portfolio must be able to trade without their being ordinary candidates,
+    i.e. the benchmark index. Filtering it out here would leave the plan with
+    nothing to fall back to and the baseline with nothing to buy.
     """
     excluded = {s.upper() for s in exclude}
 
@@ -23,7 +28,12 @@ def resolve(spec, exclude=()) -> list:
     else:
         symbols = _index_members(str(spec).lower())
 
-    return [s for s in symbols if s not in excluded]
+    out = [s for s in symbols if s not in excluded]
+    for e in extra:
+        e = str(e).upper()
+        if e not in out:
+            out.append(e)
+    return out
 
 
 def _all_stocks() -> list:

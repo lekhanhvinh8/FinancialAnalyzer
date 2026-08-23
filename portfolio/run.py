@@ -47,13 +47,18 @@ def main(argv) -> int:
 
     print(plan.describe())
     print(f"  leftover  : {config.LEFTOVER}")
+    print(f"  fallback  : {plan.fallback_symbol or chr(45)}")
+    print(f"  benchmark : {baseline.name}")
     if plan.allocator.top_k is None:
         print("  NOTE      : top_k is None, so the ranking is inert - "
               "every candidate gets the same money")
     print()
 
-    universe = resolve(config.UNIVERSE, config.EXCLUDE)
-    print(f"Universe: {len(universe)} symbols")
+    benchmark = getattr(config, "BENCHMARK", None)
+    universe = resolve(config.UNIVERSE, config.EXCLUDE,
+                       extra=[benchmark] if benchmark else [])
+    print(f"Universe: {len(universe)} symbols"
+          + (f"  (gom ca benchmark {benchmark})" if benchmark else ""))
 
     t0 = time.time()
 

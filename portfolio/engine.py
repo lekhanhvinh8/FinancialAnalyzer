@@ -50,7 +50,7 @@ COSTS ARE ZERO
   and until then every return here is an upper bound.
 """
 
-from .models import Trade, Wallet
+from .models import Candidate, Trade, Wallet
 
 
 # Cash below this is numerically zero, in VND.
@@ -182,8 +182,6 @@ def rank(market, day, rule, scorer, symbols) -> list:
     symbols sit the same distance from their references. Without the tie-break
     the order would follow dict iteration.
     """
-    from .models import Candidate
-
     out = []
     for symbol in symbols:
         bar = day.bars.get(symbol)
@@ -255,6 +253,14 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
         # 5. Buy with this month's cash.
         if wallet.contribution >= CASH_EPSILON:
             candidates = rank(market, day, plan.buy_rule, plan.buy_scorer, day.bars)
+            # Nobody qualified: put the money in the fallback instead of letting
+            # it sit. See Plan.fallback_symbol — this is what keeps a strict rule
+            # from silently becoming a bet on holding cash.
+            if not candidates and plan.fallback_symbol:
+                bar = day.bars.get(plan.fallback_symbol)
+                if bar is not None:
+                    candidates = [Candidate(symbol=bar.symbol, index=bar.index,
+                                            price=bar.price, score=0.0)]
             for cand, amount in plan.allocator.allocate(wallet.contribution,
                                                         candidates):
                 execute_buy(wallet, cand.symbol, amount, cand.index,

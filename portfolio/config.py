@@ -31,11 +31,31 @@ PLAN_NAME = "premium-below-median, equal split"
 # index_members table has 5 distinct join dates for vn30 and no departures at all
 # for vnfinlead. Until that is filled in, every number this package produces is
 # an upper bound, and should be quoted as one.
-UNIVERSE = "all"
+UNIVERSE = "vn30"
 
 # Never held. Kept separate from the universe rule so a data problem with one
 # symbol does not force a change of universe.
 EXCLUDE = ["VIX", "VIC"]
+
+# The index this plan is measured against, and the instrument it falls back to.
+#
+# It is loaded into the Market alongside the members, so it is genuinely
+# tradable, but strategy.py excludes it from the plan's own candidates — holding
+# the index next to its constituents would mean partly holding the benchmark.
+#
+# None turns both behaviours off: the baseline becomes equal-weight DCA across
+# the members, and there is no fallback.
+BENCHMARK = "VN30"
+
+# When the buy rule admits nobody on a day money is available, buy BENCHMARK
+# instead of letting the cash wait.
+#
+# This is what keeps the comparison about SELECTION. A strict rule with no
+# fallback is two bets at once — which stocks, and whether to be in the market at
+# all — and a result then cannot say which of the two produced it. With the
+# fallback the plan is invested on exactly the bars the benchmark is, so the
+# difference is attributable to the choosing.
+FALLBACK_TO_BENCHMARK = True
 
 # A symbol needs at least this many rows before it is worth including at all,
 # counted before warmup. 0 leaves it to the warmup requirement alone.

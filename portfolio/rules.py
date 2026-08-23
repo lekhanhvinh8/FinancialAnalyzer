@@ -170,6 +170,43 @@ class PremiumAboveRule(Rule):
 
 
 @dataclass
+class SymbolIn(Rule):
+    """
+    Admit a symbol purely by name.
+
+    The only rule here that asks WHICH symbol rather than what its price is
+    doing, and it exists because a portfolio can hold instruments that are not
+    candidates in the same sense as the rest.
+
+    Two uses, both in strategy.py:
+
+      - the benchmark buys the index and nothing else, which is
+        SymbolIn({"VN30"}) on its own
+      - the plan must NOT treat the index as an ordinary candidate competing
+        with its own members, which is Not(SymbolIn({"VN30"})) AND the real
+        condition. Without it the index would be bought alongside the very
+        stocks it is composed of, and the comparison would be against a
+        benchmark the plan partly holds.
+
+    Reads no window, so it adds nothing to what the loader must fetch.
+    """
+    symbols: frozenset
+
+    def __init__(self, symbols):
+        self.symbols = frozenset(str(s).upper() for s in symbols)
+
+    def applies(self, series, index: int) -> bool:
+        return series.symbol.upper() in self.symbols
+
+    def windows(self) -> set:
+        return set()
+
+    def describe(self) -> str:
+        names = ", ".join(sorted(self.symbols))
+        return f"symbol in ({names})"
+
+
+@dataclass
 class AllOf(Rule):
     """
     Every sub-rule must agree. Empty means never — an AND over nothing is

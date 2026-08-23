@@ -394,3 +394,67 @@ Still open:
   pandas only), range_calc.py cannot, because it returns RangeDaysClose and
   IndexCloses from single/models.py. Left alone: a reorganisation should move
   things, not redesign dependencies.
+
+
+=== DONE: benchmark is VN30 itself, and the buy arm falls back to it ===
+
+    UNIVERSE              = "vn30"      current members, 28 after EXCLUDE
+    BENCHMARK             = "VN30"      the index, loaded as a tradable instrument
+    FALLBACK_TO_BENCHMARK = True        no candidate -> buy the index
+
+WHY THE BENCHMARK CHANGED, AND WHY IT MATTERS THIS MUCH
+
+  Equal-weight DCA across the members is itself a strategy — a deliberate tilt
+  away from capitalisation weighting that pays on its own. Measuring against it
+  asked the plan to beat selection PLUS a weighting scheme, and no result could
+  be attributed to either.
+
+  The size of the effect is not subtle. Same plan, same money:
+
+      vs equal-weight DCA over all 49 symbols     +12.20%
+      vs DCA into VN30                            +94.59%
+
+  Most of that gap is the benchmark, not the plan. VN30 the index returns 94.74%
+  over the period while an equal-weighted basket of its members returns far more,
+  which is the small-cap tilt showing up as a number. Nothing from the old
+  baseline is comparable with anything from the new one.
+
+WHY THE FALLBACK
+
+  A strict rule with no fallback is two bets at once: which stocks, and whether
+  to be in the market at all. When nobody qualifies the cash waits, and the
+  comparison quietly becomes stocks-versus-cash. Buying the index instead keeps
+  the plan invested on exactly the bars the benchmark is, so the difference is
+  attributable to the choosing.
+
+  Verified across thresholds — the fallback is dormant where the rule is
+  permissive and takes over where it is not:
+
+      BUY_MAX_PREMIUM   fallback buys   total buys   growth
+             60               0            1,946     189.33%
+             20               3            1,170     190.09%
+              0              11              588     187.90%
+            -20              51              215     155.51%
+            -40             112              129     144.55%
+      DCA VN30              n/a              127      94.74%
+
+  At -40 the plan is 112/129 index purchases and still returns 144.55%, because
+  the 17 picks it did make were bought at deep discounts.
+
+MECHANICS
+
+  rules.SymbolIn is the one rule that keys on WHICH symbol rather than on price.
+  It does two jobs: the baseline is SymbolIn({"VN30"}) alone, and the plan wraps
+  its condition in AllOf([Not(SymbolIn({"VN30"})), ...]) so the index is never an
+  ordinary candidate. Without that the plan would hold the index alongside its
+  own constituents and be partly holding the thing it is measured against.
+
+  universe.resolve() gained `extra=`, appended AFTER the exclusion filter, so the
+  benchmark is always loaded even though it is not a candidate.
+
+Still open:
+  - n = 1 remains the real problem. One run is one number with no error bar, so
+    a 3-point move from a parameter change cannot be told from noise. Rolling
+    start dates (one run per quarter, ~40 paired observations) is the fix and is
+    cheap: the Market loads once, each run is 0.4s.
+  - No equity curve, no max drawdown, no per-symbol attribution.

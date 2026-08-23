@@ -17,7 +17,8 @@ WHY THE ALLOCATOR IS SHARED AND THE SCORERS ARE NOT
 from dataclasses import dataclass, field
 
 from .allocator import EqualSplitAllocator
-from .rules import AlwaysRule, NeverRule, PremiumBelowRule, Rule
+from .rules import (AllOf, NeverRule, Not, PremiumBelowRule, Rule,
+                    SymbolIn)
 from .scoring import NullScorer, PremiumScorer, Scorer
 
 
@@ -31,6 +32,16 @@ class Plan:
     sell_scorer: Scorer = field(default_factory=NullScorer)
     reinvest_scorer: Scorer = field(default_factory=NullScorer)
     allocator: EqualSplitAllocator = field(default_factory=EqualSplitAllocator)
+    # Where this month's money goes when the buy rule admits NOBODY.
+    #
+    # Without it a strict rule quietly turns into a market-timing bet: the cash
+    # waits, and the comparison stops being "which stocks" and becomes "stocks
+    # versus cash". Falling back to the index keeps the plan fully invested on
+    # every bar the benchmark is, so what is actually measured is the selection —
+    # whether picking members beats simply holding the whole index.
+    #
+    # None restores the old behaviour: nothing is bought and the cash carries.
+    fallback_symbol: "str | None" = None
 
     def windows(self) -> set:
         """
@@ -74,9 +85,21 @@ def build_plan(config) -> Plan:
         use_pe=config.USE_PE,
     )
 
+    # The benchmark instrument sits in the same Market as the members it is made
+    # of, because the plan has to be able to BUY it as a fallback. It must not
+    # also be admitted as an ordinary candidate: the plan would then hold the
+    # index alongside its own constituents, and would be partly holding the very
+    # thing it is measured against.
+    benchmark = getattr(config, "BENCHMARK", None)
+    if benchmark:
+        buy_rule = AllOf([Not(SymbolIn({benchmark})), buy_rule])
+
     return Plan(
         name=getattr(config, "PLAN_NAME", "portfolio"),
         buy_rule=buy_rule,
+        fallback_symbol=(benchmark
+                         if getattr(config, "FALLBACK_TO_BENCHMARK", False)
+                         else None),
         buy_scorer=scorer(config.BUY_WINDOW, config.BUY_REFERENCE, cheapest_first=True),
         # Both arms stay off; their scorers are irrelevant until a rule admits
         # anything, and a NullScorer says that plainly.
@@ -88,21 +111,36 @@ def build_plan(config) -> Plan:
 
 def build_baseline(config) -> Plan:
     """
-    Equal-weight DCA: every eligible symbol gets 1/n of every contribution,
+    DCA into the benchmark index itself: every contribution buys BENCHMARK, and
     nothing is ever sold.
 
-    The comparison this method has to beat, and the plainest thing a person could
-    do with a basket. Two details are deliberate:
+    A harder and more honest comparison than equal-weight DCA across the members.
+    Equal weighting is itself a strategy — a deliberate tilt away from
+    capitalisation weighting, which has historically paid on its own. Measuring
+    against it would ask the plan to beat stock selection PLUS a weighting
+    scheme, and neither a win nor a loss could then be attributed to either.
 
-      - NullScorer, not for lack of a better one. Every eligible symbol is
-        equally deserving by definition here; an ordering would quietly make the
-        baseline a second strategy.
-      - top_k=None regardless of what the plan under test uses, for the same
-        reason. A baseline that concentrated would be testing concentration.
+    Buying the index is what a person can actually do instead, so the difference
+    answers one clean question: does choosing among the members beat holding all
+    of them.
 
-    It shares the Market with the plan under test, so warmup, eligibility and the
-    tradable calendar are identical by construction rather than by agreement.
+    Shares the Market with the plan, so warmup, eligibility and the tradable
+    calendar are identical by construction rather than by agreement. It inherits
+    the same warmup as every stock, which is why it cannot start on day one even
+    though its own rule reads no window.
+
+    With no BENCHMARK configured this falls back to equal-weight DCA across
+    whatever is eligible.
     """
+    benchmark = getattr(config, "BENCHMARK", None)
+    if benchmark:
+        return Plan(
+            name=f"DCA {benchmark}",
+            buy_rule=SymbolIn({benchmark}),
+            allocator=EqualSplitAllocator(top_k=None, min_ticket=0),
+        )
+
+    from .rules import AlwaysRule
     return Plan(
         name="equal-weight DCA",
         buy_rule=AlwaysRule(),
