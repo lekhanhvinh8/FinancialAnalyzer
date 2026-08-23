@@ -25,6 +25,7 @@ from portfolio.engine import run_backtest
 from portfolio.market import Market
 from portfolio.report import compare
 from portfolio.report_html import build_report
+from portfolio.symbol_chart import build_all as build_symbol_charts
 from portfolio.strategy import build_baseline, build_plan
 from portfolio.universe import resolve
 
@@ -88,9 +89,14 @@ def main(argv) -> int:
     print(compare(result, base, plan_name=plan.name,
                   baseline_name=baseline.name))
 
-    out = Path(__file__).resolve().parent / "charts" / "report.html"
+    charts_dir = Path(__file__).resolve().parent / "charts"
+    t3 = time.time()
+    charts = build_symbol_charts(result, market, config, charts_dir)
+    print(f"{len(charts)} bieu do ma  {time.time() - t3:.1f}s")
+
+    out = charts_dir / "report.html"
     build_report(result, base, plan, baseline, config, market, out,
-                 load_seconds=load_s)
+                 load_seconds=load_s, charts=charts)
     print(f"\nReport -> {out}")
     if "--no-open" not in argv:
         try:

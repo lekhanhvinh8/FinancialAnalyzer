@@ -39,6 +39,7 @@ NO CHART LIBRARY
   two-series line chart that is not worth it.
 """
 
+import json
 from datetime import datetime
 from html import escape
 from pathlib import Path
@@ -122,7 +123,8 @@ def _curve_svg(plan_curve, base_curve, plan_name, base_name) -> str:
 # ── Report ────────────────────────────────────────────────────────────────────
 
 def build_report(result, baseline, plan, baseline_plan, config, market,
-                 path: Path, load_seconds: float = 0.0) -> Path:
+                 path: Path, load_seconds: float = 0.0,
+                 charts: dict | None = None) -> Path:
     invested = result["invested"]
     growth, base_growth = result["growth_%"], baseline["growth_%"]
 
@@ -148,7 +150,8 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
     for r in rows:
         sign = "pos" if r["profit"] >= 0 else "neg"
         body += (
-            f'<tr><td class="sym">{escape(r["symbol"])}</td>'
+            f'<tr data-sym="{escape(r["symbol"])}">'
+            f'<td class="sym">{escape(r["symbol"])}</td>'
             f'<td class="n">{r["basis"]:,.0f}</td>'
             f'<td class="n">{r["value"]:,.0f}</td>'
             f'<td class="n {sign}">{r["profit"]:+,.0f}</td>'
@@ -209,6 +212,7 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
         plan_name=escape(plan.name), base_name=escape(baseline_plan.name),
         n_win=len(winners), n_lose=len(losers), n_all=len(rows),
         top3=f"{top3:+.2f}", growth=f"{growth:.2f}", skipped=skipped,
+        charts=json.dumps(charts or {}, separators=(",", ":")),
     )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
@@ -271,6 +275,9 @@ polyline{{fill:none;stroke-width:2;stroke-linejoin:round}}
 details.skip{{margin-top:12px;font-size:13px;color:var(--ink2)}}
 details.skip summary{{cursor:pointer;color:var(--ink3)}}
 details.skip ul{{margin:8px 0 0;padding-left:20px}}
+tbody tr{{cursor:pointer}}
+tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent)}}
+.hint{{color:var(--ink3);font-size:12.5px;margin:8px 0 0}}
 </style></head><body><div class="wrap">
 
 <header>
@@ -309,10 +316,20 @@ details.skip ul{{margin:8px 0 0;padding-left:20px}}
     <th class="n">Lãi/lỗ</th><th class="n">Suất sinh lời</th><th class="n">Đóng góp (điểm)</th>
     <th class="n">Tỷ trọng</th><th class="n">Mua</th><th class="n">Bán</th>
   </tr></thead><tbody>{rows}</tbody></table></div>
+  <p class="hint">Bấm vào một dòng để mở biểu đồ giá và các lệnh của mã đó trong tab mới.</p>
 </section>
 
 </div>
 <script>
+var CHARTS = {charts};
+
+document.querySelectorAll('#tbl tbody tr').forEach(function(tr){{
+  var f = CHARTS[tr.dataset.sym];
+  if (!f) {{ tr.style.cursor = 'default'; return; }}
+  tr.title = 'Mở biểu đồ ' + tr.dataset.sym;
+  tr.addEventListener('click', function(){{ window.open(f, '_blank'); }});
+}});
+
 document.querySelectorAll('#tbl thead th').forEach(function(th, i){{
   var asc = false;
   th.addEventListener('click', function(){{

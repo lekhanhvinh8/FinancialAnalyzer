@@ -98,7 +98,7 @@ LEFTOVER = "carry"
 # median widens with the window, so a threshold tuned at 1000 bars means
 # something much stricter at 100. Sweep them together, never one alone.
 BUY_WINDOW = 1000
-BUY_MAX_PREMIUM = 60.0
+BUY_MAX_PREMIUM = 10
 BUY_REFERENCE = "median"     # 'median' | 'mean' | 'top' | 'bottom'
 
 # Measure against the P/E's own history instead of the price's. Off: the P/E
