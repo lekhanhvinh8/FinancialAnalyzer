@@ -202,8 +202,12 @@ class SymbolIn(Rule):
         return set()
 
     def describe(self) -> str:
-        names = ", ".join(sorted(self.symbols))
-        return f"symbol in ({names})"
+        # "is VN30", not "in VN30" — this matches the symbol's own NAME, and the
+        # index shares its name with the basket it tracks. Read as "in" it looks
+        # like a membership test over the constituents, which is the opposite of
+        # what Not(SymbolIn({"VN30"})) is doing.
+        names = " or ".join(sorted(self.symbols))
+        return f"is {names}"
 
 
 @dataclass

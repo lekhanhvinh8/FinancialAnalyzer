@@ -80,7 +80,8 @@ def main(argv) -> int:
                         leftover=config.LEFTOVER)
     print(f"plan {t2 - t1:.1f}s | baseline {time.time() - t2:.1f}s\n")
 
-    print(compare(result, base))
+    print(compare(result, base, plan_name=plan.name,
+                  baseline_name=baseline.name))
     return 0
 
 

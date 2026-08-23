@@ -398,9 +398,13 @@ Still open:
 
 === DONE: benchmark is VN30 itself, and the buy arm falls back to it ===
 
-    UNIVERSE              = "vn30"      current members, 28 after EXCLUDE
+    UNIVERSE              = "all"       every stock in the DB, 53 after EXCLUDE
     BENCHMARK             = "VN30"      the index, loaded as a tradable instrument
     FALLBACK_TO_BENCHMARK = True        no candidate -> buy the index
+
+  UNIVERSE and BENCHMARK are independent. The benchmark is what the result is
+  compared WITH, not a restriction on what may be bought: the plan picks from the
+  whole database and is asked whether that beats simply holding the index.
 
 WHY THE BENCHMARK CHANGED, AND WHY IT MATTERS THIS MUCH
 
@@ -411,8 +415,16 @@ WHY THE BENCHMARK CHANGED, AND WHY IT MATTERS THIS MUCH
 
   The size of the effect is not subtle. Same plan, same money:
 
-      vs equal-weight DCA over all 49 symbols     +12.20%
-      vs DCA into VN30                            +94.59%
+      universe        benchmark            diff
+      all (53)        equal-weight DCA     +12.20%
+      all (53)        DCA VN30             +48.63%
+      vn30 (28)       DCA VN30             +94.59%
+
+  The last row is worth keeping: restricting the universe to VN30 members BEATS
+  the benchmark by twice as much as picking from everything. Adding the ~25
+  non-VN30 names drags the result down rather than lifting it, which is the
+  opposite of what "more to choose from" suggests and is the first thing here
+  worth chasing.
 
   Most of that gap is the benchmark, not the plan. VN30 the index returns 94.74%
   over the period while an equal-weighted basket of its members returns far more,

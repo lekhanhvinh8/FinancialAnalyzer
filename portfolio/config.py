@@ -31,13 +31,17 @@ PLAN_NAME = "premium-below-median, equal split"
 # index_members table has 5 distinct join dates for vn30 and no departures at all
 # for vnfinlead. Until that is filled in, every number this package produces is
 # an upper bound, and should be quoted as one.
-UNIVERSE = "vn30"
+UNIVERSE = "all"
 
 # Never held. Kept separate from the universe rule so a data problem with one
 # symbol does not force a change of universe.
 EXCLUDE = ["VIX", "VIC"]
 
 # The index this plan is measured against, and the instrument it falls back to.
+#
+# Independent of UNIVERSE. The benchmark is what the result is compared with, not
+# a restriction on what may be bought — the plan picks from the whole database
+# and is asked whether that beats simply holding the index.
 #
 # It is loaded into the Market alongside the members, so it is genuinely
 # tradable, but strategy.py excludes it from the plan's own candidates — holding

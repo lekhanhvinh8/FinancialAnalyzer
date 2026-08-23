@@ -14,14 +14,15 @@ WHAT THE COMPARISON IS NOT
 """
 
 
-def compare(result: dict, baseline: dict, top_n: int = 15) -> str:
+def compare(result: dict, baseline: dict, top_n: int = 15,
+            plan_name: str = "plan", baseline_name: str = "benchmark") -> str:
     lines = []
     w = 22
 
     def row(label, a, b, fmt="{:>16,.0f}"):
         lines.append(f"{label:<{w}}{fmt.format(a):>18}{fmt.format(b):>20}")
 
-    lines.append(f"{'':<{w}}{'plan':>18}{'equal-weight DCA':>20}")
+    lines.append(f"{'':<{w}}{plan_name[:18]:>18}{baseline_name[:20]:>20}")
     lines.append("-" * (w + 38))
 
     for label, key in (("months", "months"),
