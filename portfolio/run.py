@@ -13,6 +13,7 @@ are identical by construction rather than by agreement — the only difference
 between the two runs is what strategy.py says.
 """
 
+import os
 import sys
 import time
 from pathlib import Path
@@ -23,6 +24,7 @@ from portfolio import config
 from portfolio.engine import run_backtest
 from portfolio.market import Market
 from portfolio.report import compare
+from portfolio.report_html import build_report
 from portfolio.strategy import build_baseline, build_plan
 from portfolio.universe import resolve
 
@@ -68,20 +70,33 @@ def main(argv) -> int:
     # Both plans share the Market, so it must carry every window either reads.
     market = Market.load(universe, plan.windows() | baseline.windows(),
                          min_rows=config.MIN_ROWS, on_symbol=on_symbol)
-    print(f"\n{market.summary()}   ({time.time() - t0:.1f}s to load)\n")
+    load_s = time.time() - t0
+    print(f"\n{market.summary()}   ({load_s:.1f}s to load)\n")
 
+    # track=True records the month-end equity curve, which only the HTML report
+    # reads. A sweep leaves it off.
     t1 = time.time()
     result = run_backtest(market, plan, config.CONTRIBUTION,
                           deposit_rate=config.DEPOSIT_RATE,
-                          leftover=config.LEFTOVER)
+                          leftover=config.LEFTOVER, track=True)
     t2 = time.time()
     base = run_backtest(market, baseline, config.CONTRIBUTION,
                         deposit_rate=config.DEPOSIT_RATE,
-                        leftover=config.LEFTOVER)
+                        leftover=config.LEFTOVER, track=True)
     print(f"plan {t2 - t1:.1f}s | baseline {time.time() - t2:.1f}s\n")
 
     print(compare(result, base, plan_name=plan.name,
                   baseline_name=baseline.name))
+
+    out = Path(__file__).resolve().parent / "charts" / "report.html"
+    build_report(result, base, plan, baseline, config, market, out,
+                 load_seconds=load_s)
+    print(f"\nReport -> {out}")
+    if "--no-open" not in argv:
+        try:
+            os.startfile(out)
+        except Exception:
+            pass
     return 0
 
 

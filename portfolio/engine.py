@@ -199,7 +199,7 @@ def rank(market, day, rule, scorer, symbols) -> list:
 # ── The loop ──────────────────────────────────────────────────────────────────
 
 def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
-                 leftover: str = "carry") -> dict:
+                 leftover: str = "carry", track: bool = False) -> dict:
     """
     `plan` carries the three arms and the allocator; see strategy.py.
 
@@ -211,6 +211,17 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
         raise ValueError(f"leftover must be 'carry' or 'reserve', got {leftover!r}")
 
     wallet = Wallet()
+
+    # Month-end snapshots of the equity curve. Kept in a dict keyed by (year,
+    # month) and overwritten every day, so what survives for each month is its
+    # LAST trading day — no need to know in advance which day that is.
+    #
+    # Marking to market needs a price for every open position, and a position's
+    # symbol may not trade on the snapshot day, so the last price seen is carried
+    # forward. Off by default: it costs one pass over the positions per day, and
+    # a sweep running thousands of backtests wants none of it.
+    curve: dict = {}
+    last_price: dict = {}
 
     for day in market.days():
         date = day.date
@@ -274,7 +285,24 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
             wallet.reserve_basis += wallet.contribution
             wallet.contribution = 0.0
 
-    return summarise(wallet, market)
+        if track:
+            for sym, bar in day.bars.items():
+                last_price[sym] = bar.price
+            held = 0.0
+            for p in wallet.positions.values():
+                if p.shares > 0:
+                    held += p.shares * last_price.get(p.symbol, 0.0)
+            curve[(date.year, date.month)] = {
+                "date": str(date.date()),
+                "equity": held + wallet.reserve + wallet.contribution,
+                "invested": wallet.basis + wallet.reserve_basis + wallet.contribution,
+                "holdings": held,
+                "cash": wallet.reserve + wallet.contribution,
+            }
+
+    out = summarise(wallet, market)
+    out["curve"] = [curve[k] for k in sorted(curve)]
+    return out
 
 
 def summarise(wallet: Wallet, market) -> dict:
@@ -331,4 +359,5 @@ def summarise(wallet: Wallet, market) -> dict:
         "sells": wallet.count("sell"),
         "reinvests": wallet.count("reinvest"),
         "holdings": holdings,
+        "curve": [],
     }
