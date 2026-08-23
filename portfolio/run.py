@@ -91,7 +91,7 @@ def main(argv) -> int:
 
     charts_dir = Path(__file__).resolve().parent / "charts"
     t3 = time.time()
-    charts = build_symbol_charts(result, market, config, charts_dir)
+    charts = build_symbol_charts(result, market, plan, config, charts_dir)
     print(f"{len(charts)} bieu do ma  {time.time() - t3:.1f}s")
 
     out = charts_dir / "report.html"
