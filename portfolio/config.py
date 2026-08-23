@@ -120,16 +120,33 @@ SCORER = "premium"
 
 # How many of the ranked candidates share one day's money. None = all of them.
 #
-# INERT WHILE None: an equal split over the whole list gives the first and last
-# candidate the same money, so the ranking changes nothing. That makes SCORER and
-# TOP_K a single axis — sweep them together.
+# 5 rather than None, which is what makes SCORER do anything at all: an equal
+# split over the whole list gives the first and last candidate the same money,
+# so the ranking is inert until there is a cutoff. SCORER and TOP_K are one
+# axis, never two.
 #
-# None is the deliberate default anyway. Measure the rule with no cutoff first;
-# a tuned number nobody has tested would only obscure which half of the design is
-# carrying the result. Expect it to matter: with a permissive rule and ~50
-# symbols, one month's contribution spread over the whole list funds each name
-# with a rounding error and approximates buying everything.
-TOP_K = None
+# MEASURED, AND THE MARGIN IS THIN. Sweeping K against four scorers on the full
+# universe, with the price rule at premium < 10%:
+#
+#     scorer                K=1     K=3     K=5    K=10   K=all
+#     cheapest vs median   66.1   139.1   138.8   138.7   137.1
+#     dearest vs median   141.8   148.0   142.2   136.6   137.1
+#     drawdown deepest    158.2   131.3   140.7   139.0   137.1
+#     no ranking          117.1    92.4   104.1   129.0   137.1
+#
+# 5 with the shipped scorer buys +1.7 points over K=None. That is small, and the
+# whole table is ONE RUN with no error bar — K=1 swings from 66 to 158 across
+# scorers, which is what noise looks like. 5 is chosen as the least concentrated
+# setting that still lets the ranking matter, not because 138.8 beat 137.1.
+#
+# Two results in that table are worth more than the number adopted:
+#   - "no ranking" is the control, and it is WORSE at every cutoff. So the
+#     ordering carries something; it is not just concentration.
+#   - "dearest" beats "cheapest" almost everywhere, which is the opposite of
+#     what the buy rule assumes. Do not treat the shipped scorer as settled.
+#
+# Nothing here is trustworthy until the same sweep runs over many start dates.
+TOP_K = 5
 
 # Smallest single purchase, in VND. 0 disables the floor. Fractional shares are
 # allowed throughout, so nothing forces a minimum yet.
