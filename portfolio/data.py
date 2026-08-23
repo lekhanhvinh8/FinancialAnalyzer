@@ -63,6 +63,12 @@ class WindowStats:
     top: np.ndarray
     bottom: np.ndarray
     mean: np.ndarray
+    # Quartiles. No rule reads them — they are here because the per-symbol chart
+    # draws the same band single/median1000's does, and a chart that showed a
+    # different set of references than the one the reader already knows would be
+    # worse than no chart.
+    p25: np.ndarray = None
+    p75: np.ndarray = None
 
     def _at(self, arr: np.ndarray, i: int):
         if i < 0 or i >= len(arr):
@@ -117,6 +123,14 @@ class SymbolSeries:
     def mean(self, window: int, i: int):
         s = self.stats.get(window)
         return None if s is None else s._at(s.mean, i)
+
+    def p25(self, window: int, i: int):
+        s = self.stats.get(window)
+        return None if s is None else s._at(s.p25, i)
+
+    def p75(self, window: int, i: int):
+        s = self.stats.get(window)
+        return None if s is None else s._at(s.p75, i)
 
     def reference(self, kind: str, window: int, i: int):
         """One of 'median' / 'top' / 'bottom' / 'mean', chosen by name."""
@@ -226,7 +240,8 @@ def _load_window_stats(symbol: str, windows: list, date_to_row: dict,
     hindsight and must never reach a decision.
     """
     placeholders = ",".join("?" * len(windows))
-    sql = (f"SELECT range_days, date, median, local_top, local_bottom, local_avg "
+    sql = (f"SELECT range_days, date, median, local_top, local_bottom, local_avg, "
+           f"p25, p75 "
            f"FROM range_stats "
            f"WHERE symbol = ? AND direction = 'back' AND range_days IN ({placeholders})")
 
@@ -238,11 +253,13 @@ def _load_window_stats(symbol: str, windows: list, date_to_row: dict,
             top=np.full(n_rows, np.nan),
             bottom=np.full(n_rows, np.nan),
             mean=np.full(n_rows, np.nan),
+            p25=np.full(n_rows, np.nan),
+            p75=np.full(n_rows, np.nan),
         )
 
     seen = set()
     with sqlite3.connect(DB_PATH) as con:
-        for rd, date, median, top, bottom, mean in con.execute(
+        for rd, date, median, top, bottom, mean, p25, p75 in con.execute(
                 sql, (symbol, *windows)):
             i = date_to_row.get(date)
             if i is None:
@@ -252,6 +269,10 @@ def _load_window_stats(symbol: str, windows: list, date_to_row: dict,
             ws.top[i] = top / _STATS_SCALE
             ws.bottom[i] = bottom / _STATS_SCALE
             ws.mean[i] = mean / _STATS_SCALE
+            if p25 is not None:
+                ws.p25[i] = p25 / _STATS_SCALE
+            if p75 is not None:
+                ws.p75[i] = p75 / _STATS_SCALE
             seen.add(rd)
 
     return {w: ws for w, ws in out.items() if w in seen}
