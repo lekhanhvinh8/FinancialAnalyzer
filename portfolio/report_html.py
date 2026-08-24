@@ -304,6 +304,7 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
             "share": (profit / invested * 100) if invested else 0.0,
             "weight_%": h["weight_%"],
             "buys": h["buys"],
+            "reinvests": h["reinvests"],
             "sells": h["sells"],
         })
     # Never-bought rows sort to 0 and land between the winners and the losers,
@@ -332,7 +333,10 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
             + cell(r["basis"], ",.0f") + cell(r["value"], ",.0f")
             + cell(r["profit"], "+,.0f", sign) + cell(r["return_%"], "+.1f", sign)
             + cell(r["share"], "+.2f", sign) + cell(r["weight_%"], ".2f")
-            + f'<td class="n">{r["buys"]}</td><td class="n">{r["sells"]}</td></tr>\n')
+            + f'<td class="n">{r["buys"]}</td>'
+            + f'<td class="n">{r["reinvests"]}</td>'
+            + f'<td class="n">{r["sells"]}</td>'
+            + '<td class="open"></td></tr>\n')
 
     winners = [r for r in rows if r["profit"] > 0]
     losers = [r for r in rows if r["profit"] < 0]
@@ -340,6 +344,8 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
     top3 = sum(r["share"] for r in rows[:3])
 
     def kv(label, a, b=None, cls=""):
+        # A leading "·" marks a component of the row above it.
+        rowcls = ' class="kv-sub"' if str(label).startswith("·") else ""
         bcell = f'<td class="n">{b}</td>' if b is not None else '<td></td>'
         return f'<tr><th>{label}</th><td class="n {cls}">{a}</td>{bcell}</tr>\n'
 
@@ -349,10 +355,24 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
              "pos" if growth >= base_growth else "neg")
         + kv("Vốn đã nạp", f'{invested:,.0f}', f'{baseline["invested"]:,.0f}')
         + kv("Giá trị cuối", f'{result["final"]:,.0f}', f'{baseline["final"]:,.0f}')
+        # Where that final figure actually sits. The three lines below sum to it
+        # exactly, and printing them apart is the only way to tell a plan that
+        # is fully invested from one sitting on cash — two very different things
+        # that a single "final value" reports identically.
+        + kv("· cổ phiếu", f'{result["holdings_value"]:,.0f}',
+             f'{baseline["holdings_value"]:,.0f}')
+        + kv("· tiền dự trữ", f'{result["reserve"]:,.0f}',
+             f'{baseline["reserve"]:,.0f}')
+        + kv("· tiền chưa giải ngân", f'{result["idle_cash"]:,.0f}',
+             f'{baseline["idle_cash"]:,.0f}')
+        + kv("· lãi tiền gửi (đã gồm)", f'{result["interest_paid"]:,.0f}',
+             f'{baseline["interest_paid"]:,.0f}')
         + kv("Số tháng", result["months"], baseline["months"])
         + kv("Số mã nắm giữ", result["symbols_held"], baseline["symbols_held"])
         + kv("Lệnh mua", f'{result["buys"]:,}', f'{baseline["buys"]:,}')
         + kv("Lệnh bán", f'{result["sells"]:,}', f'{baseline["sells"]:,}')
+        + kv("Lệnh tái đầu tư", f'{result["reinvests"]:,}',
+             f'{baseline["reinvests"]:,}')
     )
 
     cfg = "".join(
@@ -472,7 +492,6 @@ polyline{{fill:none;stroke-width:2;stroke-linejoin:round}}
 details.skip{{margin-top:12px;font-size:13px;color:var(--ink2)}}
 details.skip summary{{cursor:pointer;color:var(--ink3)}}
 details.skip ul{{margin:8px 0 0;padding-left:20px}}
-tbody tr{{cursor:pointer}}
 .k{{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;
    padding:2px 7px;border-radius:3px;white-space:nowrap}}
 .k-buy{{color:#15803d;background:rgba(34,197,94,.16)}}
@@ -498,7 +517,14 @@ tbody tr{{cursor:pointer}}
 .chip:hover{{border-color:var(--accent);color:var(--accent)}}
 .chip.on{{background:var(--accent);border-color:var(--accent);color:#fff}}
 .count{{font-size:12px;color:var(--ink3)}}
-tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent)}}
+tbody tr:hover{{background:var(--surface2)}}
+a.open{{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+ color:var(--accent);text-decoration:none;border:1px solid var(--line);
+ border-radius:4px;padding:2px 9px;white-space:nowrap}}
+a.open:hover{{background:var(--accent);border-color:var(--accent);color:#fff}}
+td.open{{text-align:center}}
+.kv-sub th{{padding-left:14px;color:var(--ink3);font-weight:400}}
+.kv-sub td{{color:var(--ink2)}}
 .hint{{color:var(--ink3);font-size:12.5px;margin:8px 0 0}}
 </style></head><body><div id="tip"></div>
 <div class="wrap">
@@ -545,9 +571,11 @@ tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent
   <div class="scroll"><table id="tbl"><thead><tr>
     <th data-t="s">Mã</th><th data-t="s">Trạng thái</th><th class="n">Vốn gốc</th><th class="n">Giá trị</th>
     <th class="n">Lãi/lỗ</th><th class="n">Suất sinh lời</th><th class="n">Đóng góp (điểm)</th>
-    <th class="n">Tỷ trọng</th><th class="n">Mua</th><th class="n">Bán</th>
+    <th class="n">Tỷ trọng</th><th class="n">Mua</th>
+    <th class="n">Tái đầu tư</th><th class="n">Bán</th>
+    <th>Chart</th>
   </tr></thead><tbody>{rows}</tbody></table></div>
-  <p class="hint">Bấm vào một dòng để mở biểu đồ giá và các lệnh của mã đó trong tab mới.
+  <p class="hint">Cột <b>Chart</b> mở biểu đồ giá và các lệnh của mã đó trong tab mới.
   Trên biểu đồ đó, <b>vùng xanh</b> là điều kiện của <em>riêng mã ấy</em> (tầng 1) — không
   gồm lọc vốn hoá hay top-K, vì hai thứ đó phụ thuộc vào các mã khác. <b>Marker</b> là
   lệnh thật. Khoảng cách giữa hai thứ chính là phần bị tầng 2 và 3 loại.</p>
@@ -617,11 +645,23 @@ document.querySelectorAll('.chip').forEach(function(c){{
 }});
 applyFilter('all');
 
+// An explicit link, not a click handler on the row. A whole clickable row is
+// undiscoverable — nothing says it is clickable — and it steals text selection
+// from every cell in it, so copying a number out of the table opened a chart
+// instead.
 document.querySelectorAll('#tbl tbody tr').forEach(function(tr){{
   var f = CHARTS[tr.dataset.sym];
-  if (!f) {{ tr.style.cursor = 'default'; return; }}
-  tr.title = 'Mở biểu đồ ' + tr.dataset.sym;
-  tr.addEventListener('click', function(){{ window.open(f, '_blank'); }});
+  var cell = tr.querySelector('td.open');
+  if (!cell) return;
+  if (!f) {{ cell.innerHTML = '<span class="muted">—</span>'; return; }}
+  var a = document.createElement('a');
+  a.className = 'open';
+  a.href = f;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.textContent = 'mở';
+  a.title = 'Biểu đồ ' + tr.dataset.sym + ' (tab mới)';
+  cell.appendChild(a);
 }});
 
 (function(){{

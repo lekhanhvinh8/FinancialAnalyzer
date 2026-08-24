@@ -60,8 +60,22 @@ THE FOUR TRANSLATIONS
 
   4. cal_range_close, straight from database.load_range_stats. Unused by the
      rules here, but the overlay signature requires it.
+
+MARKERS ON THE PRICE LINE
+
+  save_backtest_chart draws its own event markers, but on a separate axis at a
+  fixed height — a strip along the bottom, disconnected from the price. That is
+  a reasonable choice when the events are sparse and the chart is mostly about
+  the P/E band, and it is the wrong one here: the question this package asks of
+  a symbol chart is "was the price low when we bought", which cannot be read
+  from a marker that is nowhere near the price.
+
+  So a second set is appended AT THE PRICE, on the price axis, after the
+  renderer has finished. Same shapes and colours, so it reads as the same
+  legend, and every point carries the money and the share count in its hover.
 """
 
+import json
 import os
 import sqlite3
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -174,7 +188,74 @@ def _render(symbol, series, position, plan, window, out_dir, want_path=False):
         cal_range_close=cal_range_close,
         start_index=series.warmup,
     )
+    _add_price_markers(path, position, df)
     return str(path) if want_path else path.name
+
+
+# Same shapes and colours as single/median1000's, and as the strip the renderer
+# already draws — one legend for the reader, not two.
+_PRICE_MARKS = {
+    "buy":      ("Mua (tren gia)",        "rgba(34,197,94,0.9)",  "#15803d", "triangle-up",   10),
+    "sell":     ("Ban (tren gia)",        "rgba(239,68,68,0.9)",  "#991b1b", "triangle-down", 11),
+    "reinvest": ("Tai dau tu (tren gia)", "rgba(249,115,22,0.9)", "#c2410c", "diamond",        9),
+}
+
+
+def _add_price_markers(path: Path, position, df) -> None:
+    """
+    Append trade markers plotted AT THE PRICE, on the price axis.
+
+    Injected after the fact rather than passed in, because save_backtest_chart
+    puts its markers on a fixed-height strip and takes no argument to change
+    that. Adding traces to the finished figure is the smaller change: it leaves
+    the shared renderer alone, and a renderer used by two packages should not
+    grow a parameter for one of them.
+
+    The price axis is y2 for a stock chart — y is the P/E — so the traces say so
+    explicitly. Getting that wrong would place every marker against the P/E
+    scale, which for a 75,000 VND price on a 0-to-50 axis means somewhere far
+    above the top of the chart.
+    """
+    trades = [t for t in (position.trades if position else [])]
+    if not trades:
+        return
+
+    dates = [str(d)[:10] for d in df["time"]]
+    specs = []
+    for kind, (label, fill, border, shape, size) in _PRICE_MARKS.items():
+        items = [t for t in trades if t.kind == kind]
+        if not items:
+            continue
+        specs.append({
+            "type": "scatter", "mode": "markers", "name": f"{label} ({len(items)})",
+            "yaxis": "y2",
+            "x": [dates[t.index] if 0 <= t.index < len(dates) else str(t.date)[:10]
+                  for t in items],
+            "y": [t.price for t in items],
+            "customdata": [[t.amount, t.shares] for t in items],
+            "marker": {"symbol": shape, "size": size, "color": fill,
+                       "line": {"color": border, "width": 1.2}},
+            "hovertemplate": (f"<b>{label}</b><br>%{{x}}<br>Gia: %{{y:,.0f}}<br>"
+                              "Tien: %{customdata[0]:,.0f}<br>"
+                              "CP: %{customdata[1]:,.1f}<extra></extra>"),
+            "legendgroup": "price-marks",
+        })
+    if not specs:
+        return
+
+    html = path.read_text(encoding="utf-8")
+    script = f"""
+<script>
+(function add() {{
+  var gd = document.querySelector('.plotly-graph-div');
+  // The renderer injects its own traces on a timer; wait for the div AND for
+  // Plotly itself rather than racing them.
+  if (!gd || !window.Plotly || !gd.data) {{ return setTimeout(add, 200); }}
+  Plotly.addTraces(gd, {json.dumps(specs)});
+}})();
+</script>
+</body>"""
+    path.write_text(html.replace("</body>", script, 1), encoding="utf-8")
 
 
 def _worker(args):
