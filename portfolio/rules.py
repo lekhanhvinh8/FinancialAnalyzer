@@ -55,6 +55,11 @@ class Rule:
         """Window sizes this rule reads, so the loader knows what to fetch."""
         return set()
 
+    def slope_windows(self) -> set:
+        """Trend-signal windows this rule reads. Kept apart from windows()
+        because they come from a different table and are loaded separately."""
+        return set()
+
     def describe(self) -> str:
         return type(self).__name__
 
@@ -170,6 +175,52 @@ class PremiumAboveRule(Rule):
 
 
 @dataclass
+class SlopeBelowRule(Rule):
+    """
+    Momentum has faded: the `window`-bar regression slope of price is under
+    `max_slope` percent per day.
+
+    WHAT IT IS FOR
+
+      Only ever paired with a sell condition, and it is the answer to the way a
+      price-stretch sell rule fails. "Sell once the price is 70% above its own
+      median" is in practice "sell whatever is winning": a compounder crosses
+      that line early and never comes back, and the position is gone for the
+      rest of the decade. Requiring the slope to have flattened first says take
+      the profit when the run is OVER, not while it is still happening.
+
+      single/median1000 reached the same gate from the other direction and calls
+      it the one sell filter that earns its keep — switching it off costs that
+      runner about 21 mean points across its universe.
+
+    THE THRESHOLD SCALES WITH THE WINDOW. A trend measured over 120 bars gives a
+    smaller slope than the same trend over 20, so max_slope has to move with
+    `window`. single uses k / sqrt(window) with k = 2.5, which is 0.228 at 120.
+
+    A MISSING SLOPE ADMITS THE SELL. That matches single, whose map lookup
+    defaults to 0.0 and therefore never blocks, and it is the permissive
+    direction, so it is worth being deliberate: this gates an action that only
+    happens when a price condition has already fired, so a missing signal falls
+    back to that condition alone rather than freezing the position forever.
+    """
+    window: int = 120
+    max_slope: float = 0.228
+
+    def applies(self, series, index: int) -> bool:
+        v = series.slope(self.window, index)
+        return v is None or v < self.max_slope
+
+    def windows(self) -> set:
+        return set()
+
+    def slope_windows(self) -> set:
+        return {self.window}
+
+    def describe(self) -> str:
+        return f"slope[{self.window}] < {self.max_slope:g}%/day"
+
+
+@dataclass
 class CapRankAboveRule(Rule):
     """
     Keep a symbol only if it is in the top (1 - min_rank) of the day's universe
@@ -258,6 +309,10 @@ class AllOf(Rule):
     def windows(self) -> set:
         return set().union(*(r.windows() for r in self.rules)) if self.rules else set()
 
+    def slope_windows(self) -> set:
+        return (set().union(*(r.slope_windows() for r in self.rules))
+                if self.rules else set())
+
     def describe(self) -> str:
         return " AND ".join(r.describe() for r in self.rules) if self.rules else "never"
 
@@ -273,6 +328,10 @@ class AnyOf(Rule):
     def windows(self) -> set:
         return set().union(*(r.windows() for r in self.rules)) if self.rules else set()
 
+    def slope_windows(self) -> set:
+        return (set().union(*(r.slope_windows() for r in self.rules))
+                if self.rules else set())
+
     def describe(self) -> str:
         return " OR ".join(r.describe() for r in self.rules) if self.rules else "never"
 
@@ -287,6 +346,9 @@ class Not(Rule):
 
     def windows(self) -> set:
         return self.rule.windows()
+
+    def slope_windows(self) -> set:
+        return self.rule.slope_windows()
 
     def describe(self) -> str:
         return f"NOT ({self.rule.describe()})"

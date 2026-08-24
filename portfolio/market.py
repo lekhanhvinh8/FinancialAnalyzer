@@ -86,6 +86,12 @@ class Market:
 
         Recomputed per DAY rather than once, because membership changes: a
         symbol listing in 2018 shifts everyone else's rank from that day on.
+
+        INDICES ARE EXCLUDED. VN30 is loaded and tradable, because the benchmark
+        has to be buyable as a fallback, but its market cap is the SUM of thirty
+        companies — it would take the top rank every single day and push every
+        real stock down a place. A percentile is a comparison among peers, and an
+        index is not a peer.
         """
         import numpy as np
 
@@ -95,6 +101,8 @@ class Market:
         for date in self.calendar:
             todays = []
             for sym, s in self.series.items():
+                if s.is_index:
+                    continue
                 i = s.row_of.get(date)
                 if i is None:
                     continue
@@ -109,7 +117,8 @@ class Market:
                 self.series[sym].cap_pct[i] = pos / last
 
     @classmethod
-    def load(cls, symbols, windows, min_rows: int = 0, on_symbol=None) -> "Market":
+    def load(cls, symbols, windows, min_rows: int = 0, on_symbol=None,
+             slope_windows=()) -> "Market":
         """
         Load every symbol, dropping those that cannot be evaluated.
 
@@ -123,7 +132,8 @@ class Market:
         """
         series, skipped = {}, {}
         for symbol in symbols:
-            s, reason = load_symbol(symbol, windows, min_rows=min_rows)
+            s, reason = load_symbol(symbol, windows, min_rows=min_rows,
+                                    slope_windows=slope_windows)
             if s is None:
                 skipped[symbol] = reason
             else:

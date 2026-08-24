@@ -157,6 +157,60 @@ CAP_MIN_RANK = 0.5
 # the next scorer worth trying will need it.
 CAP_WEIGHT = 0.0
 
+# ── The sell condition ────────────────────────────────────────────────────────
+
+# Sell a holding once its price is more than SELL_MIN_PREMIUM percent ABOVE its
+# own BUY_WINDOW-bar median. None switches the sell arm off entirely.
+#
+# Full exit, not a trim: whatever the position is worth goes to the reserve.
+#
+# NO CHURN GUARD IS NEEDED, and that is a property of these two numbers rather
+# than of the code. The engine runs sell before buy, so a bar that satisfied both
+# conditions would liquidate and re-enter the same day. It cannot here: selling
+# needs premium > 70 and buying needs premium < 10, which are complementary. Move
+# SELL_MIN_PREMIUM below BUY_MAX_PREMIUM and that stops being true — the arms
+# would then need the cross-check single/median1000's factory wires in.
+SELL_MIN_PREMIUM = 70.0
+
+# Momentum gate on the sell arm: only sell once the SELL_SIGNAL1_WINDOW-bar
+# regression slope has fallen below SELL_MAX_SIGNAL1 percent per day. None
+# removes the gate and the arm sells on price alone.
+#
+# THIS IS THE FIX FOR HOW THE PRICE RULE FAILS, and the failure was measured
+# before the gate was added. Selling on price alone turned +163.60% into
+# +63.05%: it sold every one of the ten best holdings, because "70% above its
+# own median" IS the definition of a symbol that is winning. ACB went at 3,780
+# and ended at 21,650; STB at 20,100 and ended at 75,200. Across 24 sells the
+# proceeds were 1.87bn where holding would have been 2.92bn.
+#
+# Requiring the slope to have flattened changes the claim from "sell what is
+# expensive" to "sell what has stopped rising", which is a different and far
+# more defensible thing to do.
+#
+# THE THRESHOLD SCALES WITH THE WINDOW: k / sqrt(window), k = 2.5, so 0.228 at
+# 120. Change one and the other has to move. Both are single/median1000's
+# values, carried over as a starting point and not yet swept here.
+SELL_SIGNAL1_WINDOW = 120
+SELL_MAX_SIGNAL1 = 0.228
+
+# ── The reinvest condition ────────────────────────────────────────────────────
+
+# Where money in the reserve goes. Same price test as the buy arm; the market-cap
+# filter is the only thing that differs. None switches the reinvest arm off.
+#
+# WHY TIGHTER THAN THE BUY ARM. Reserve money is realised profit, not this
+# month's wage. The buy arm is fed a fixed contribution whatever the market is
+# doing, so it has to accept a broad set of candidates; the reserve arrives only
+# after something ran up 70% and was sold, and it can afford to wait for the
+# larger, steadier names. 0.8 keeps the top fifth of the day's universe against
+# the buy arm's top half.
+#
+# NOT MEASURED YET. Unlike CAP_MIN_RANK this is a stated preference, not a swept
+# result — and the buy-arm sweep is a warning, not a precedent: there, tightening
+# past 0.55 collapsed the return, because filtering to the very largest converges
+# on the benchmark. Sweep this before believing it.
+REINVEST_CAP_MIN_RANK = 0.8
+
 # ── Ranking and sizing ────────────────────────────────────────────────────────
 
 # How candidates are ORDERED before TOP_K cuts the list. See scoring.py.

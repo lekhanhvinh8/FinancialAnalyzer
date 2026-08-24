@@ -18,7 +18,8 @@ from dataclasses import dataclass, field
 
 from .allocator import EqualSplitAllocator
 from .rules import (AllOf, CapRankAboveRule, NeverRule, Not,
-                    PremiumBelowRule, Rule, SymbolIn)
+                    PremiumAboveRule, PremiumBelowRule, Rule,
+                    SlopeBelowRule, SymbolIn)
 from .scoring import BlendScorer, CapRankScorer, NullScorer, PremiumScorer, Scorer
 
 
@@ -55,6 +56,13 @@ class Plan:
                      self.buy_scorer, self.sell_scorer, self.reinvest_scorer):
             out |= part.windows()
         return out or {1000}
+
+    def slope_windows(self) -> set:
+        """Trend-signal windows this plan reads, for Market.load."""
+        out: set = set()
+        for r in (self.buy_rule, self.sell_rule, self.reinvest_rule):
+            out |= r.slope_windows()
+        return out
 
     def describe(self) -> str:
         lines = [f"plan: {self.name}",
@@ -100,17 +108,63 @@ def build_plan(config) -> Plan:
     if benchmark:
         buy_rule = AllOf([Not(SymbolIn({benchmark})), buy_rule])
 
+    # ── sell ─────────────────────────────────────────────────────────────────
+    sell_min = getattr(config, "SELL_MIN_PREMIUM", None)
+    if sell_min is None:
+        sell_rule, sell_scorer = NeverRule(), NullScorer()
+    else:
+        sell_rule = PremiumAboveRule(window=config.BUY_WINDOW,
+                                     min_premium=sell_min,
+                                     reference=config.BUY_REFERENCE,
+                                     use_pe=config.USE_PE)
+        # Momentum gate. Sell when the run is over, not while it is happening —
+        # see config.SELL_MAX_SIGNAL1 for the measurement that made this
+        # necessary rather than optional.
+        max_slope = getattr(config, "SELL_MAX_SIGNAL1", None)
+        if max_slope is not None:
+            sell_rule = AllOf([sell_rule, SlopeBelowRule(
+                window=getattr(config, "SELL_SIGNAL1_WINDOW", 120),
+                max_slope=max_slope)])
+        if benchmark:
+            # The fallback holding is the benchmark itself. Selling it would be
+            # selling the thing the plan falls back TO, and on a rule tuned for
+            # single stocks — an index does not stretch 70% above its own median
+            # the way one company can.
+            sell_rule = AllOf([Not(SymbolIn({benchmark})), sell_rule])
+        # Most stretched first. Inert while every candidate sells anyway, and it
+        # starts mattering the day sells are rationed or partial.
+        sell_scorer = scorer(config.BUY_WINDOW, config.BUY_REFERENCE,
+                             cheapest_first=False)
+
+    # ── reinvest ─────────────────────────────────────────────────────────────
+    ri_cap = getattr(config, "REINVEST_CAP_MIN_RANK", None)
+    if sell_min is None and ri_cap is None:
+        reinvest_rule, reinvest_scorer = NeverRule(), NullScorer()
+    else:
+        # The buy arm's price test, with its own market-cap floor. See
+        # config.REINVEST_CAP_MIN_RANK for why the floor is higher.
+        parts = [PremiumBelowRule(window=config.BUY_WINDOW,
+                                  max_premium=config.BUY_MAX_PREMIUM,
+                                  reference=config.BUY_REFERENCE,
+                                  use_pe=config.USE_PE)]
+        if ri_cap is not None:
+            parts.append(CapRankAboveRule(ri_cap))
+        if benchmark:
+            parts.insert(0, Not(SymbolIn({benchmark})))
+        reinvest_rule = AllOf(parts)
+        reinvest_scorer = _buy_scorer(config, scorer)
+
     return Plan(
         name=getattr(config, "PLAN_NAME", "portfolio"),
         buy_rule=buy_rule,
+        sell_rule=sell_rule,
+        sell_scorer=sell_scorer,
+        reinvest_rule=reinvest_rule,
+        reinvest_scorer=reinvest_scorer,
         fallback_symbol=(benchmark
                          if getattr(config, "FALLBACK_TO_BENCHMARK", False)
                          else None),
         buy_scorer=_buy_scorer(config, scorer),
-        # Both arms stay off; their scorers are irrelevant until a rule admits
-        # anything, and a NullScorer says that plainly.
-        sell_rule=NeverRule(),
-        reinvest_rule=NeverRule(),
         allocator=allocator,
     )
 

@@ -100,6 +100,9 @@ class SymbolSeries:
     closes: np.ndarray                # VND
     pes: np.ndarray                   # NaN where the symbol had no P/E
     caps: np.ndarray = None           # market capitalisation in VND, NaN where unknown
+    # {window: array} of signal1_slope, the short-window linear-regression slope
+    # of price in percent per day. Loaded only for windows a rule asks for.
+    slopes: dict = field(default_factory=dict)
     # Cross-sectional percentile of `caps` among the symbols trading that day,
     # 0 = smallest, 1 = largest. NOT computed here — one symbol cannot see the
     # others. Market fills it after every symbol is loaded; see market.py.
@@ -107,6 +110,10 @@ class SymbolSeries:
     stats: dict = field(default_factory=dict)   # window -> WindowStats
     row_of: dict = field(default_factory=dict)  # pd.Timestamp -> row index
     warmup: int = 0                   # first row any condition may be evaluated on
+    # True for an aggregate like VN30. It is loaded and tradable — the benchmark
+    # has to be buyable as a fallback — but it is NOT a company, and anything
+    # that compares companies with each other has to leave it out.
+    is_index: bool = False
 
     def __len__(self) -> int:
         return len(self.closes)
@@ -124,6 +131,18 @@ class SymbolSeries:
         if self.caps is None:
             return None
         v = self.caps[i]
+        return None if v != v else float(v)
+
+    def slope(self, window: int, i: int):
+        """
+        Short-term momentum: the regression slope of price over `window` bars,
+        in percent per day. None when it was never computed for that window or
+        the row predates it.
+        """
+        a = self.slopes.get(window)
+        if a is None or i < 0 or i >= len(a):
+            return None
+        v = a[i]
         return None if v != v else float(v)
 
     def cap_rank(self, i: int):
@@ -183,7 +202,7 @@ class SymbolSeries:
 _STATS_SCALE = 1000.0    # range_stats is stored at price * 1000; see the module docstring
 
 
-def load_symbol(symbol: str, windows, min_rows: int = 0
+def load_symbol(symbol: str, windows, min_rows: int = 0, slope_windows=()
                 ) -> "tuple[SymbolSeries | None, str | None]":
     """
     Returns (series, None) or (None, skip_reason).
@@ -246,6 +265,7 @@ def load_symbol(symbol: str, windows, min_rows: int = 0
         caps=df["market_cap"].to_numpy(dtype=float),
         row_of={d: i for i, d in enumerate(dates)},
         warmup=max(windows) - 1,
+        is_index=_is_index(symbol),
     )
 
     stats = _load_window_stats(symbol, windows, {str(d.date()): i
@@ -255,6 +275,28 @@ def load_symbol(symbol: str, windows, min_rows: int = 0
     if missing:
         return None, f"no range_stats for window(s) {missing}"
     series.stats = stats
+
+    # Trend signals, only for windows a rule actually reads. The table holds
+    # ~1500 windows per symbol and millions of rows; asking for all of them
+    # would cost more than the whole backtest.
+    #
+    # NOT allowed to move `warmup`. single/symbol_data.py pushes the start index
+    # out until every signal exists, because there a missing gate silently stops
+    # filtering. Here a missing slope is handled explicitly by the rule that
+    # reads it — see rules.SlopeBelowRule — so the price warmup stays the only
+    # thing that decides where the run begins, and the universe does not shrink
+    # because one signal started late.
+    for w in sorted({int(x) for x in slope_windows}):
+        arr = np.full(len(dates), np.nan)
+        row_of_str = {str(d.date()): i for i, d in enumerate(dates)}
+        with sqlite3.connect(DB_PATH) as con:
+            for date, v in con.execute(
+                    "SELECT date, signal1_slope FROM trend_signals "
+                    "WHERE symbol = ? AND window_days = ?", (symbol, w)):
+                i = row_of_str.get(date)
+                if i is not None and v is not None:
+                    arr[i] = v
+        series.slopes[w] = arr
 
     if len(series) - series.warmup <= 0:
         return None, f"nothing left after {series.warmup} bars of warmup"
@@ -266,6 +308,13 @@ def _load_prices(symbol: str) -> pd.DataFrame:
         return pd.read_sql(
             "SELECT date, close FROM daily_prices WHERE symbol = ? ORDER BY date",
             con, params=(symbol,))
+
+
+def _is_index(symbol: str) -> bool:
+    with sqlite3.connect(DB_PATH) as con:
+        row = con.execute("SELECT symbol_type FROM symbols WHERE symbol = ?",
+                          (symbol,)).fetchone()
+    return bool(row) and row[0] == "index"
 
 
 def _load_caps(symbol: str) -> pd.DataFrame:

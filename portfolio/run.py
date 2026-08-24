@@ -70,7 +70,9 @@ def main(argv) -> int:
 
     # Both plans share the Market, so it must carry every window either reads.
     market = Market.load(universe, plan.windows() | baseline.windows(),
-                         min_rows=config.MIN_ROWS, on_symbol=on_symbol)
+                         min_rows=config.MIN_ROWS, on_symbol=on_symbol,
+                         slope_windows=plan.slope_windows()
+                                       | baseline.slope_windows())
     load_s = time.time() - t0
     print(f"\n{market.summary()}   ({load_s:.1f}s to load)\n")
 
