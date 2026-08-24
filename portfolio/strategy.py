@@ -16,7 +16,7 @@ WHY THE ALLOCATOR IS SHARED AND THE SCORERS ARE NOT
 
 from dataclasses import dataclass, field
 
-from .allocator import EqualSplitAllocator
+from .allocator import EqualSplitAllocator, QuotaAllocator
 from .rules import (AllOf, CapRankAboveRule, NeverRule, Not,
                     PremiumAboveRule, PremiumBelowRule, Rule,
                     SlopeBelowRule, SymbolIn)
@@ -43,6 +43,22 @@ class Plan:
     #
     # None restores the old behaviour: nothing is bought and the cash carries.
     fallback_symbol: "str | None" = None
+    # The reinvest arm sizes its own purchases. The buy arm's allocator answers
+    # "how do I spread a monthly wage", which is not the question a lump of
+    # realised profit asks — see allocator.QuotaAllocator. None falls back to
+    # `allocator`, so a plan that does not care keeps one policy for everything.
+    reinvest_allocator: object = None
+    # Bars that must pass before the reserve may buy the SAME symbol again.
+    #
+    # Cannot live in a Rule: a rule sees market data and this is a fact about
+    # the wallet — when we last acted on this name. The engine applies it in the
+    # reinvest step, where the wallet is in scope. 0 disables it.
+    #
+    # Without it the reserve concentrates by accident. The ranking is stable
+    # from day to day, so the cheapest name stays cheapest, and a reserve that
+    # is deployed over several days pours into the same one or two symbols
+    # simply because nothing else has moved.
+    reinvest_cooldown: int = 0
 
     def windows(self) -> set:
         """
@@ -71,6 +87,11 @@ class Plan:
             rule = getattr(self, f"{arm}_rule")
             scorer = getattr(self, f"{arm}_scorer")
             lines.append(f"  {arm:<9} : {rule.describe()}   [rank: {scorer.describe()}]")
+            if arm == "reinvest" and not isinstance(rule, NeverRule):
+                alloc = self.reinvest_allocator or self.allocator
+                extra = (f", cooldown {self.reinvest_cooldown}d"
+                         if self.reinvest_cooldown else "")
+                lines.append(f"  {'':<9}   {alloc.describe()}{extra}")
         return "\n".join(lines)
 
 
@@ -137,22 +158,29 @@ def build_plan(config) -> Plan:
                              cheapest_first=False)
 
     # ── reinvest ─────────────────────────────────────────────────────────────
-    ri_cap = getattr(config, "REINVEST_CAP_MIN_RANK", None)
-    if sell_min is None and ri_cap is None:
+    if not getattr(config, "REINVEST_ENABLED", False):
         reinvest_rule, reinvest_scorer = NeverRule(), NullScorer()
+        reinvest_alloc = None
     else:
-        # The buy arm's price test, with its own market-cap floor. See
-        # config.REINVEST_CAP_MIN_RANK for why the floor is higher.
+        # The buy arm's price test, and NO cap filter — size enters through the
+        # ranking instead. See config.REINVEST_CAP_WEIGHT.
         parts = [PremiumBelowRule(window=config.BUY_WINDOW,
                                   max_premium=config.BUY_MAX_PREMIUM,
                                   reference=config.BUY_REFERENCE,
                                   use_pe=config.USE_PE)]
-        if ri_cap is not None:
-            parts.append(CapRankAboveRule(ri_cap))
         if benchmark:
             parts.insert(0, Not(SymbolIn({benchmark})))
         reinvest_rule = AllOf(parts)
-        reinvest_scorer = _buy_scorer(config, scorer)
+
+        cheap = scorer(config.BUY_WINDOW, config.BUY_REFERENCE, cheapest_first=True)
+        w = getattr(config, "REINVEST_CAP_WEIGHT", 0.0) or 0.0
+        reinvest_scorer = (cheap if w <= 0 else
+                           BlendScorer([(cheap, 1.0 - w), (CapRankScorer(True), w)]))
+
+        reinvest_alloc = QuotaAllocator(
+            quota_pct=getattr(config, "REINVEST_QUOTA_PCT", 25.0),
+            min_split=getattr(config, "REINVEST_MIN_SPLIT", 20_000_000),
+            min_ticket=getattr(config, "MIN_TICKET", 0))
 
     return Plan(
         name=getattr(config, "PLAN_NAME", "portfolio"),
@@ -161,6 +189,8 @@ def build_plan(config) -> Plan:
         sell_scorer=sell_scorer,
         reinvest_rule=reinvest_rule,
         reinvest_scorer=reinvest_scorer,
+        reinvest_allocator=reinvest_alloc,
+        reinvest_cooldown=getattr(config, "REINVEST_COOLDOWN_DAYS", 0),
         fallback_symbol=(benchmark
                          if getattr(config, "FALLBACK_TO_BENCHMARK", False)
                          else None),

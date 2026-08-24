@@ -275,7 +275,17 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
         if wallet.reserve >= CASH_EPSILON:
             candidates = rank(market, day, plan.reinvest_rule,
                               plan.reinvest_scorer, day.bars)
-            for cand, amount in plan.allocator.allocate(wallet.reserve, candidates):
+            # Cooldown, applied HERE rather than in a rule because it asks about
+            # the wallet and not about the market. Both indices are row numbers
+            # in the same symbol's own series, so the subtraction is meaningful.
+            cd = getattr(plan, "reinvest_cooldown", 0)
+            if cd:
+                candidates = [
+                    c for c in candidates
+                    if wallet.position(c.symbol).last_reinvest_index < 0
+                    or c.index - wallet.position(c.symbol).last_reinvest_index >= cd]
+            alloc = getattr(plan, "reinvest_allocator", None) or plan.allocator
+            for cand, amount in alloc.allocate(wallet.reserve, candidates):
                 execute_reinvest(wallet, cand.symbol, amount, cand.index,
                                  cand.price, date)
             if wallet.reserve < CASH_EPSILON:

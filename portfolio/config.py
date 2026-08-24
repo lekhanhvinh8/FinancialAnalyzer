@@ -204,30 +204,68 @@ SELL_MAX_SIGNAL1 = 0.228
 
 # ── The reinvest condition ────────────────────────────────────────────────────
 
-# Where money in the reserve goes. Same price test as the buy arm; the market-cap
-# filter is the only thing that differs. None switches the reinvest arm off.
+# Where money in the reserve goes. Same price test as the buy arm; everything
+# below is what differs. None switches the reinvest arm off.
 #
-# WHY TIGHTER THAN THE BUY ARM. Reserve money is realised profit, not this
-# month's wage. The buy arm is fed a fixed contribution whatever the market is
-# doing, so it has to accept a broad set of candidates; the reserve arrives only
-# after something ran up 70% and was sold, and it can afford to wait for the
-# larger, steadier names. 0.8 keeps the top fifth of the day's universe against
-# the buy arm's top half.
+# It cannot run on its own: the reserve's only source is a sale, so this and
+# SELL_MIN_PREMIUM go on together or not at all.
+REINVEST_ENABLED = False
+
+# NO MARKET-CAP FILTER on this arm — size is a RANKING input here, not a gate.
 #
-# NOT MEASURED YET. Unlike CAP_MIN_RANK this is a stated preference, not a swept
-# result — and the buy-arm sweep is a warning, not a precedent: there, tightening
-# past 0.55 collapsed the return, because filtering to the very largest converges
-# on the benchmark. Sweep this before believing it.
-# OFF with the sell arm — with nothing selling there is no reserve for it to
-# deploy, so leaving it on would only be misleading.
+# The buy arm's sweep is the reason. Tightening its cap filter past 0.55
+# collapsed the return (154.71% at 0.55, 108.69% at 0.60, 83.51% at 0.70),
+# because filtering to the very largest converges on the benchmark, and the
+# benchmark returns 95.75%. A hard floor throws away a cheap mid-cap entirely;
+# a ranking lets size lose to cheapness when cheapness is extreme enough.
 #
-# THIS IS THE ARM TO FIX, not the sell arm. The sell timing is defensible once
-# gated on momentum; where the money lands afterwards is not. single/median1000
-# makes proceeds return to the SAME symbol, while this sends them to whatever is
-# cheapest — a systematic rotation out of what is winning into what is not. The
-# "breaking the dead zone" property this package was designed around is the
-# mechanism doing the damage, and this arm has never been varied once.
-REINVEST_CAP_MIN_RANK = None
+# REINVEST_CAP_WEIGHT is that ranking's weight, blended with distance below the
+# median over same-day ranks (scoring.BlendScorer). 0 = order by cheapness
+# alone, 1 = by size alone.
+#
+# NOT MEASURED. This is a stated design, and the buy arm's own result is a
+# warning rather than a precedent: there, blending cap into the score made
+# things worse at every weight. Sweep it before believing it.
+REINVEST_CAP_WEIGHT = 0.5
+
+# How much of the reserve ONE symbol may take, as a percent, in rank order until
+# the money runs out. See allocator.QuotaAllocator.
+#
+# A quota rather than an equal split because reserve money arrives in lumps. An
+# equal split makes the size of a purchase depend on how many other names
+# happened to qualify that day; a quota fixes the size and lets the count follow.
+#
+# 50 = the reserve funds two positions. MEASURED, and it is the peak of a curve
+# that falls off hard on both sides:
+#
+#     quota    100%     50%     25%     10%
+#     growth  78.54  194.23  154.63  138.16
+#     reinvests  23      45      82     209
+#
+# Both ends fail for opposite reasons. At 100% the whole reserve goes into one
+# name and the arm becomes a concentrated bet; at 10% it is spread over 209
+# purchases too small to matter. The 25 that shipped first was a guess made
+# before any of this was measured.
+#
+# Four points is a coarse curve and 50 is the best of four, not a located
+# optimum. Worth a denser sweep before it is treated as settled.
+REINVEST_QUOTA_PCT = 50.0
+
+# Below this the whole reserve goes to the top-ranked candidate instead of being
+# sliced. Quota-sized pieces of a small pot are too small to be worth their own
+# line, and — once costs are modelled — too small to clear a brokerage minimum.
+REINVEST_MIN_SPLIT = 20_000_000
+
+# Bars before the reserve may buy the SAME symbol again. 0 disables it.
+#
+# Applied by the engine, not by a rule: it is a fact about the WALLET (when did
+# we last act on this name) and rules only see market data.
+#
+# Without it the reserve concentrates by accident. The ranking barely moves from
+# one day to the next, so the cheapest name stays cheapest, and a reserve spent
+# over several days pours into the same one or two symbols simply because
+# nothing else changed. ~3 months of trading days.
+REINVEST_COOLDOWN_DAYS = 60
 
 # ── Ranking and sizing ────────────────────────────────────────────────────────
 
