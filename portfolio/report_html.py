@@ -58,13 +58,29 @@ def _polyline(points, x0, y0, w, h, xmin, xmax, ymin, ymax) -> str:
     return " ".join(out)
 
 
-def _curve_svg(plan_curve, base_curve, plan_name, base_name) -> str:
-    """Two equity curves plus the money paid in, on one linear axis."""
+def _curve_svg(plan_curve, base_curve, plan_name, base_name, trades=None) -> str:
+    """
+    Two equity curves plus the money paid in, with the trades marked on the
+    same time axis.
+
+    WHY THE TRADES BELONG ON THIS CHART
+
+      The curve says WHAT happened to the money; the marks say WHEN the
+      strategy acted. Apart, neither answers the question a reader actually
+      has — whether the acting had anything to do with the outcome. Do the
+      sells cluster at the tops? Do the reinvests land in the dips? Is a flat
+      stretch of curve a flat market, or a stretch where nothing was bought?
+
+      Sells and reinvests are drawn individually because there are tens of
+      them. Buys run to hundreds, so they become a DENSITY STRIP under the
+      axis instead — one tick per month that had any, shaded by how many.
+      Drawn as marks they would be a solid wall and say nothing.
+    """
     if not plan_curve:
         return "<p class='muted'>No curve recorded.</p>"
 
     W, H = 900, 320
-    pad_l, pad_r, pad_t, pad_b = 74, 16, 18, 34
+    pad_l, pad_r, pad_t, pad_b = 74, 16, 18, 46
     w, h = W - pad_l - pad_r, H - pad_t - pad_b
 
     n = len(plan_curve)
@@ -102,6 +118,85 @@ def _curve_svg(plan_curve, base_curve, plan_name, base_name) -> str:
                 f'<line x1="{x:.1f}" y1="{pad_t}" x2="{x:.1f}" y2="{pad_t + h}" class="grid"/>'
                 f'<text x="{x:.1f}" y="{pad_t + h + 20}" class="xtick">{year}</text>')
 
+    # ── trade marks ──────────────────────────────────────────────────────────
+    # The curve is monthly, so trades are GROUPED BY MONTH and one marker is
+    # drawn per month per kind. Drawing them individually looked right and was
+    # not: several sells in the same month land on the same pixel, so all but the
+    # topmost were unhoverable and invisible — the chart silently under-reported
+    # its own activity.
+    #
+    # Hit areas are a transparent rect larger than the glyph, because a 10px
+    # triangle is not a target. And the tooltip is an HTML element driven by
+    # mouseenter rather than SVG <title>, which has a delay, cannot be styled,
+    # and will not show a list.
+    marks, mark_legend = "", ""
+    if trades:
+        month_x = {c["date"][:7]: pad_l + i / (n - 1) * w
+                   for i, c in enumerate(plan_curve)}
+        equity = {c["date"][:7]: c["equity"] for c in plan_curve}
+
+        grouped: dict = {}
+        for t in trades:
+            grouped.setdefault((t["date"][:7], t["kind"]), []).append(t)
+
+        pieces, buy_months = [], {}
+        for (month, kind), items in sorted(grouped.items()):
+            x = month_x.get(month)
+            if x is None:
+                continue
+            if kind == "buy":
+                buy_months[month] = items
+                continue
+            v = equity.get(month)
+            if v is None:
+                continue
+            y = pad_t + h - (v - ymin) / (ymax - ymin) * h
+
+            head = ("Bán" if kind == "sell" else "Tái đầu tư") + f" · {month}"
+            lines = [f'{i["symbol"]} @ {i["price"]:,.0f} · {i["amount"]:,.0f}đ'
+                     + (f' · sau đó {i["after"]:+.0%}' if kind == "sell" else "")
+                     for i in items]
+            tip = escape(head + "\n" + "\n".join(lines))
+
+            if kind == "sell":
+                glyph = (f'<polygon class="mk-sell" points="{x:.1f},{y - 3:.1f} '
+                         f'{x - 5:.1f},{y - 12:.1f} {x + 5:.1f},{y - 12:.1f}"/>')
+                hit_y = y - 16
+            else:
+                glyph = (f'<polygon class="mk-rei" points="{x:.1f},{y + 3:.1f} '
+                         f'{x + 5:.1f},{y + 9:.1f} {x:.1f},{y + 15:.1f} '
+                         f'{x - 5:.1f},{y + 9:.1f}"/>')
+                hit_y = y + 1
+            badge = (f'<text class="mk-n" x="{x:.1f}" '
+                     f'y="{(y - 15) if kind == "sell" else (y + 25):.1f}">'
+                     f'{len(items)}</text>' if len(items) > 1 else "")
+            pieces.append(
+                f'<g class="mk" data-tip="{tip}">{glyph}{badge}'
+                f'<rect class="hit" x="{x - 8:.1f}" y="{hit_y:.1f}" '
+                f'width="16" height="18"/></g>')
+
+        if buy_months:
+            top_n = max(len(v) for v in buy_months.values())
+            strip_y = pad_t + h + 5
+            for month, items in buy_months.items():
+                x = month_x.get(month)
+                if x is None:
+                    continue
+                syms = ", ".join(sorted({i["symbol"] for i in items}))
+                tip = escape(f"Mua · {month}\n{len(items)} lệnh: {syms}")
+                pieces.append(
+                    f'<g class="mk" data-tip="{tip}">'
+                    f'<rect class="mk-buy" x="{x - 2:.1f}" y="{strip_y:.1f}" '
+                    f'width="4" height="7" opacity="'
+                    f'{0.3 + 0.7 * len(items) / top_n:.2f}"/>'
+                    f'<rect class="hit" x="{x - 4:.1f}" y="{strip_y - 2:.1f}" '
+                    f'width="8" height="11"/></g>')
+
+        marks = "".join(pieces)
+        mark_legend = ('<span><i class="sw sw-mksell"></i>Bán</span>'
+                       '<span><i class="sw sw-mkrei"></i>Tái đầu tư</span>'
+                       '<span><i class="sw sw-mkbuy"></i>Mua</span>')
+
     return f"""
 <div class="chartwrap">
 <svg viewBox="0 0 {W} {H}" class="chart" role="img"
@@ -111,13 +206,77 @@ def _curve_svg(plan_curve, base_curve, plan_name, base_name) -> str:
   <polyline points="{pts(paid_v)}" class="line-paid"/>
   <polyline points="{pts(base_v)}" class="line-base"/>
   <polyline points="{pts(plan_v)}" class="line-plan"/>
+  {marks}
 </svg>
 <div class="legend">
   <span><i class="sw sw-plan"></i>{escape(plan_name)}</span>
   <span><i class="sw sw-base"></i>{escape(base_name)}</span>
   <span><i class="sw sw-paid"></i>Tiền đã nạp</span>
+  {mark_legend}
 </div>
 </div>"""
+
+
+def _trade_log(result, market, plan, config) -> tuple:
+    """
+    Every executed trade, with the two things that make one reviewable by eye:
+    the condition values AT THE TIME, and what the price did AFTERWARDS.
+
+    The hindsight column is the point. A sell cannot be judged by the profit it
+    booked — every sell here books a profit, that is what the rule fires on — but
+    by what the position went on to do without it. Selling ACB at 3,780 booked a
+    gain and cost 473%, and no column that stops at the sale price can show that.
+
+    It is hindsight and is labelled as such. The strategy could not know it; the
+    reader is allowed to.
+    """
+    final = market.final_prices()
+    window = config.BUY_WINDOW
+    slope_w = getattr(config, "SELL_SIGNAL1_WINDOW", None)
+    label = {"buy": "Mua", "sell": "Bán", "reinvest": "Tái đầu tư"}
+
+    rows = []
+    for sym, pos in result["wallet"].positions.items():
+        series = market[sym]
+        for t in pos.trades:
+            med = series.median(window, t.index)
+            rows.append({
+                "date": str(t.date)[:10], "kind": t.kind, "symbol": sym,
+                "price": t.price, "amount": t.amount, "shares": t.shares,
+                "prem": ((t.price - med) / med * 100) if med else None,
+                "slope": series.slope(slope_w, t.index) if slope_w else None,
+                "cap": series.cap_rank(t.index),
+                "final": final[sym],
+                "after": final[sym] / t.price - 1,
+            })
+    rows.sort(key=lambda r: (r["date"], r["symbol"]))
+
+    def num(v, fmt, dash="—"):
+        return dash if v is None else format(v, fmt)
+
+    out = []
+    for r in rows:
+        # A rise after a BUY is good. After a SELL it is the opposite — the
+        # position was given up, so a rise is what the sale cost.
+        good = (r["after"] >= 0) if r["kind"] != "sell" else (r["after"] < 0)
+        out.append(
+            f'<tr data-kind="{r["kind"]}">'
+            f'<td class="mono">{r["date"]}</td>'
+            f'<td><span class="k k-{r["kind"]}">{label[r["kind"]]}</span></td>'
+            f'<td class="sym">{escape(r["symbol"])}</td>'
+            f'<td class="n">{r["price"]:,.0f}</td>'
+            f'<td class="n">{r["amount"]:,.0f}</td>'
+            f'<td class="n">{r["shares"]:,.0f}</td>'
+            f'<td class="n">{num(r["prem"], "+.1f")}%</td>'
+            f'<td class="n">{num(r["slope"], "+.3f")}</td>'
+            f'<td class="n">{num(r["cap"], ".2f")}</td>'
+            f'<td class="n">{r["final"]:,.0f}</td>'
+            f'<td class="n {"pos" if good else "neg"}">{r["after"]:+.0%}</td>'
+            f'</tr>')
+
+    counts = {k: sum(1 for r in rows if r["kind"] == k)
+              for k in ("buy", "sell", "reinvest")}
+    return "\n".join(out), counts, rows
 
 
 # ── Report ────────────────────────────────────────────────────────────────────
@@ -216,8 +375,9 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
         skipped = (f'<details class="skip"><summary>{len(market.skipped)} mã bị loại'
                    f'</summary><ul>{items}</ul></details>')
 
+    log_rows, log_counts, log_raw = _trade_log(result, market, plan, config)
     chart = _curve_svg(result.get("curve", []), baseline.get("curve", []),
-                       plan.name, baseline_plan.name)
+                       plan.name, baseline_plan.name, trades=log_raw)
 
     html = _TEMPLATE.format(
         title=escape(plan.name),
@@ -230,6 +390,10 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
         top3=f"{top3:+.2f}", growth=f"{growth:.2f}", skipped=skipped,
         n_never=len(never),
         charts=json.dumps(charts or {}, separators=(",", ":")),
+        log_rows=log_rows,
+        n_buy=log_counts["buy"], n_sell=log_counts["sell"],
+        n_rei=log_counts["reinvest"],
+        slope_head=f"slope[{getattr(config, 'SELL_SIGNAL1_WINDOW', 0)}]",
     )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
@@ -288,11 +452,37 @@ polyline{{fill:none;stroke-width:2;stroke-linejoin:round}}
 .legend{{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--ink2)}}
 .sw{{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle}}
 .sw-plan{{background:var(--accent)}} .sw-base{{background:var(--base)}} .sw-paid{{background:var(--paid)}}
+.mk-sell{{fill:#ef4444;stroke:#991b1b;stroke-width:.8}}
+.mk-rei{{fill:#f97316;stroke:#c2410c;stroke-width:.8}}
+.mk-buy{{fill:#22c55e}}
+.mk{{cursor:pointer}}
+.hit{{fill:transparent}}
+.mk:hover .mk-sell{{fill:#dc2626}}
+.mk:hover .mk-rei{{fill:#ea580c}}
+.mk:hover .mk-buy{{opacity:1 !important}}
+.mk-n{{fill:var(--ink2);font:600 9px "IBM Plex Mono",monospace;text-anchor:middle;pointer-events:none}}
+#tip{{position:fixed;z-index:50;display:none;max-width:340px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 11px;font-size:12.5px;line-height:1.5;white-space:pre-line;box-shadow:0 6px 20px rgba(0,0,0,.18);pointer-events:none;font-family:"IBM Plex Mono",monospace}}
+.sw-mksell,.sw-mkrei,.sw-mkbuy{{height:8px;width:8px;border-radius:2px}}
+.sw-mksell{{background:#ef4444}} .sw-mkrei{{background:#f97316}} .sw-mkbuy{{background:#22c55e}}
 .note{{color:var(--ink2);font-size:13.5px;margin:12px 0 0}}
 details.skip{{margin-top:12px;font-size:13px;color:var(--ink2)}}
 details.skip summary{{cursor:pointer;color:var(--ink3)}}
 details.skip ul{{margin:8px 0 0;padding-left:20px}}
 tbody tr{{cursor:pointer}}
+.k{{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;
+   padding:2px 7px;border-radius:3px;white-space:nowrap}}
+.k-buy{{color:#15803d;background:rgba(34,197,94,.16)}}
+.k-sell{{color:#b03030;background:rgba(239,68,68,.16)}}
+.k-reinvest{{color:#c2410c;background:rgba(249,115,22,.16)}}
+#log tbody tr{{cursor:default}}
+#log tbody tr:hover{{box-shadow:none}}
+.chips{{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}}
+.chip{{font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:14px;background:var(--surface);color:var(--ink2);cursor:pointer;
+  font-family:"IBM Plex Mono",monospace}}
+.chip.on{{background:var(--accent);border-color:var(--accent);color:#fff}}
+.tall{{max-height:520px;overflow:auto}}
+.tall thead th{{position:sticky;top:0;background:var(--surface);z-index:1}}
 .pill{{font-size:11px;font-family:"IBM Plex Mono",monospace;padding:2px 7px;
   border-radius:3px;white-space:nowrap}}
 .st-held{{color:var(--pos);background:color-mix(in srgb,var(--pos) 14%,transparent)}}
@@ -306,7 +496,8 @@ tbody tr{{cursor:pointer}}
 .count{{font-size:12px;color:var(--ink3)}}
 tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent)}}
 .hint{{color:var(--ink3);font-size:12.5px;margin:8px 0 0}}
-</style></head><body><div class="wrap">
+</style></head><body><div id="tip"></div>
+<div class="wrap">
 
 <header>
   <h1>{title}</h1>
@@ -355,6 +546,28 @@ tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent
   <p class="hint">Bấm vào một dòng để mở biểu đồ giá và các lệnh của mã đó trong tab mới.</p>
 </section>
 
+<section class="card">
+  <h2>Nhật ký giao dịch</h2>
+  <p class="note">Cột <b>chênh</b>, <b>{slope_head}</b> và <b>vốn hoá</b> là giá trị
+  <em>tại thời điểm giao dịch</em> — dùng để kiểm tra luật có chạy đúng không.
+  Cột <b>sau đó</b> là <em>hậu nghiệm</em>: giá hôm nay so với giá lúc giao dịch.
+  Với lệnh <b>bán</b>, tăng là xấu — đó chính là cái đã bỏ lỡ.</p>
+  <div class="chips">
+    <button class="chip on" data-k="all">Tất cả</button>
+    <button class="chip" data-k="buy">Mua ({n_buy})</button>
+    <button class="chip" data-k="sell">Bán ({n_sell})</button>
+    <button class="chip" data-k="reinvest">Tái đầu tư ({n_rei})</button>
+  </div>
+  <div class="scroll tall"><table id="log"><thead><tr>
+    <th data-t="s">Ngày</th><th data-t="s">Loại</th><th data-t="s">Mã</th>
+    <th class="n">Giá</th><th class="n">Tiền</th><th class="n">Cổ phiếu</th>
+    <th class="n">Chênh vs median</th><th class="n">{slope_head}</th>
+    <th class="n">Vốn hoá</th><th class="n">Giá hôm nay</th><th class="n">Sau đó</th>
+  </tr></thead><tbody>
+{log_rows}
+  </tbody></table></div>
+</section>
+
 </div>
 <script>
 var CHARTS = {charts};
@@ -369,6 +582,25 @@ function applyFilter(f){{
   document.getElementById('chipCount').textContent =
     shown + '/' + document.querySelectorAll('#tbl tbody tr').length + ' mã';
 }}
+(function(){{
+  var tip = document.getElementById('tip');
+  function place(e){{
+    tip.style.left = Math.min(e.clientX + 14,
+                              window.innerWidth - tip.offsetWidth - 12) + 'px';
+    tip.style.top = Math.min(e.clientY + 14,
+                             window.innerHeight - tip.offsetHeight - 12) + 'px';
+  }}
+  document.querySelectorAll('.mk').forEach(function(g){{
+    g.addEventListener('mouseenter', function(e){{
+      tip.textContent = g.dataset.tip;
+      tip.style.display = 'block';
+      place(e);
+    }});
+    g.addEventListener('mousemove', place);
+    g.addEventListener('mouseleave', function(){{ tip.style.display = 'none'; }});
+  }});
+}})();
+
 document.querySelectorAll('.chip').forEach(function(c){{
   c.addEventListener('click', function(){{
     document.querySelectorAll('.chip').forEach(function(o){{ o.classList.remove('on'); }});
@@ -383,6 +615,56 @@ document.querySelectorAll('#tbl tbody tr').forEach(function(tr){{
   if (!f) {{ tr.style.cursor = 'default'; return; }}
   tr.title = 'Mở biểu đồ ' + tr.dataset.sym;
   tr.addEventListener('click', function(){{ window.open(f, '_blank'); }});
+}});
+
+(function(){{
+  var tip = document.getElementById('tip');
+  function place(e){{
+    tip.style.left = Math.min(e.clientX + 14,
+                              window.innerWidth - tip.offsetWidth - 12) + 'px';
+    tip.style.top = Math.min(e.clientY + 14,
+                             window.innerHeight - tip.offsetHeight - 12) + 'px';
+  }}
+  document.querySelectorAll('.mk').forEach(function(g){{
+    g.addEventListener('mouseenter', function(e){{
+      tip.textContent = g.dataset.tip;
+      tip.style.display = 'block';
+      place(e);
+    }});
+    g.addEventListener('mousemove', place);
+    g.addEventListener('mouseleave', function(){{ tip.style.display = 'none'; }});
+  }});
+}})();
+
+document.querySelectorAll('.chip').forEach(function(c){{
+  c.addEventListener('click', function(){{
+    document.querySelectorAll('.chip').forEach(function(o){{ o.classList.remove('on'); }});
+    c.classList.add('on');
+    var k = c.dataset.k;
+    document.querySelectorAll('#log tbody tr').forEach(function(tr){{
+      tr.style.display = (k === 'all' || tr.dataset.kind === k) ? '' : 'none';
+    }});
+  }});
+}});
+
+document.querySelectorAll('#log thead th').forEach(function(th, i){{
+  var asc = false;
+  th.style.cursor = 'pointer';
+  th.addEventListener('click', function(){{
+    var tb = document.querySelector('#log tbody');
+    var rows = Array.prototype.slice.call(tb.rows);
+    var txt = function(r){{ return r.cells[i].textContent.trim(); }};
+    var isText = th.dataset.t === 's';
+    rows.sort(function(a, b){{
+      if (isText) return txt(a).localeCompare(txt(b));
+      var na = parseFloat(txt(a).replace(/[^0-9.\-]/g, '')) || 0;
+      var nb = parseFloat(txt(b).replace(/[^0-9.\-]/g, '')) || 0;
+      return na - nb;
+    }});
+    if (!asc) rows.reverse();
+    asc = !asc;
+    rows.forEach(function(r){{ tb.appendChild(r); }});
+  }});
 }});
 
 document.querySelectorAll('#tbl thead th').forEach(function(th, i){{
