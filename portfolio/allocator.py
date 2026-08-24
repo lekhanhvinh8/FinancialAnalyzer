@@ -141,5 +141,5 @@ class QuotaAllocator:
 
     def describe(self) -> str:
         k = "" if self.top_k is None else f", top {self.top_k}"
-        return (f"quota {self.quota_pct:g}% mỗi mã (dưới "
-                f"{self.min_split:,.0f} thì dồn 1 mã){k}")
+        return (f"quota {self.quota_pct:g}% each (all-in below "
+                f"{self.min_split:,.0f}){k}")

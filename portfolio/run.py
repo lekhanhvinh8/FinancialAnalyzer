@@ -20,6 +20,18 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+# A Windows console defaults to cp1252, which cannot encode most of what this
+# program prints — Vietnamese labels, the box-drawing in a describe() string,
+# an em dash in a skip reason. Without this a run dies on a PRINT STATEMENT
+# after minutes of work, which has now happened three times in this package's
+# short life. errors="replace" rather than "strict": a mangled character in a
+# progress line is not a reason to lose the run.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
+
 from portfolio import config
 from portfolio.engine import run_backtest
 from portfolio.market import Market

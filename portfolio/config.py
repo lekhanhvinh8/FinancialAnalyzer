@@ -170,16 +170,22 @@ CAP_WEIGHT = 0.0
 # needs premium > 70 and buying needs premium < 10, which are complementary. Move
 # SELL_MIN_PREMIUM below BUY_MAX_PREMIUM and that stops being true — the arms
 # would then need the cross-check single/median1000's factory wires in.
-# OFF. Measured, and it costs 65 points:
+# ON. Selling on price alone cost 65 points; two things had to be true before
+# this was worth switching on, and both now are:
 #
-#     buy only            163.44%
-#     + sell + reinvest    98.76%
-#     DCA VN30             95.75%
+#   1. the momentum gate below, so the arm sells when a run is OVER rather than
+#      while it is happening
+#   2. the reinvest arm's quota and cooldown, because the damage was never the
+#      sell timing — it was where the proceeds went afterwards
 #
-# 70.0 with the momentum gate below is the best version of this arm found so
-# far, and it is still worse than never selling. Set it back to 70.0 to switch
-# the arm on; everything it needs is wired and measured.
-SELL_MIN_PREMIUM = None
+#     DCA VN30                                  95.75%
+#     buy only                                 163.44%
+#     sell + reinvest, before those two         98.76%
+#     sell + reinvest, now                     194.23%
+#
+# None switches the arm off, and takes the reinvest arm with it in practice: the
+# reserve has no other source.
+SELL_MIN_PREMIUM = 70.0
 
 # Momentum gate on the sell arm: only sell once the SELL_SIGNAL1_WINDOW-bar
 # regression slope has fallen below SELL_MAX_SIGNAL1 percent per day. None
@@ -209,7 +215,7 @@ SELL_MAX_SIGNAL1 = 0.228
 #
 # It cannot run on its own: the reserve's only source is a sale, so this and
 # SELL_MIN_PREMIUM go on together or not at all.
-REINVEST_ENABLED = False
+REINVEST_ENABLED = True
 
 # NO MARKET-CAP FILTER on this arm — size is a RANKING input here, not a gate.
 #
