@@ -46,6 +46,18 @@ THE FOUR TRANSLATIONS
      safe precisely because the rule reads its own series and never the passed
      close.
 
+     ONLY THE SYMBOL-LEVEL PART IS PAINTED. Three separate things decide whether
+     a symbol is bought — its own condition, a filter against the rest of the
+     universe, and whether it made the day's top K — and only the first belongs
+     on a chart of one symbol. Painting the cap filter would draw a zone that
+     moves when an unrelated symbol lists; top K is not a condition at all and
+     cannot be drawn per bar.
+
+     So the green zone answers "was this symbol itself eligible", and the markers
+     answer "was it actually bought". THE GAP BETWEEN THEM IS THE POINT: green
+     with no marker is a bar this symbol passed its own test and lost the
+     competition anyway.
+
   4. cal_range_close, straight from database.load_range_stats. Unused by the
      rules here, but the overlay signature requires it.
 """
@@ -102,6 +114,10 @@ class _RuleShim:
         self._series = series
 
     def check(self, index, close=None, pe=None, cal_range_close=None) -> bool:
+        # A rule that was entirely cross-sectional strips to None; nothing about
+        # this symbol alone can be drawn for it.
+        if self._rule is None:
+            return False
         try:
             return bool(self._rule.applies(self._series, index))
         except Exception:
@@ -149,9 +165,12 @@ def _render(symbol, series, position, plan, window, out_dir, want_path=False):
         df, buys, sells, reinvests,
         path=str(path),
         index=symbol,
-        buy_strategy=_RuleShim(plan.buy_rule, series),
-        sell_strategy=_RuleShim(plan.sell_rule, series),
-        reinvest_strategy=_RuleShim(plan.reinvest_rule, series),
+        # symbol_only(): the cap filter is dropped here on purpose. See the
+        # module docstring — the zone is this symbol's own condition, the
+        # markers are what survived everything else.
+        buy_strategy=_RuleShim(plan.buy_rule.symbol_only(), series),
+        sell_strategy=_RuleShim(plan.sell_rule.symbol_only(), series),
+        reinvest_strategy=_RuleShim(plan.reinvest_rule.symbol_only(), series),
         cal_range_close=cal_range_close,
         start_index=series.warmup,
     )
@@ -167,7 +186,8 @@ def _worker(args):
         return symbol, None, f"{type(exc).__name__}: {exc}"
 
 
-def build_all(result, market, plan, config, out_dir: Path, workers=None) -> dict:
+def build_all(result, market, plan, config, out_dir: Path, workers=None,
+              on_chart=None) -> dict:
     """
     One chart per symbol the portfolio traded. Returns {symbol: filename}.
 
@@ -191,15 +211,24 @@ def build_all(result, market, plan, config, out_dir: Path, workers=None) -> dict
     out_dir.mkdir(parents=True, exist_ok=True)
     workers = workers or min(len(jobs), (os.cpu_count() or 4))
 
+    import time
+    t0 = time.time()
     out, done = {}, 0
     with ProcessPoolExecutor(max_workers=workers) as pool:
         futures = [pool.submit(_worker, j) for j in jobs]
         for fut in as_completed(futures):
             symbol, name, err = fut.result()
             done += 1
-            if err:
-                print(f"  [{done}/{len(jobs)}] {symbol} — {err}", flush=True)
-            else:
+            el = time.time() - t0
+            eta = el / done * (len(jobs) - done)
+            width = 18
+            filled = int(width * done / len(jobs))
+            bar = "[" + "#" * filled + "." * (width - filled) + "]"
+            tail = f"— {err}" if err else ""
+            if not err:
                 out[symbol] = name
-                print(f"  [{done}/{len(jobs)}] {symbol}", flush=True)
+            print(f"  {bar} {done:>3}/{len(jobs)}  {symbol:<7}{tail:<34}"
+                  f"{el:>5.0f}s  con ~{eta:>4.0f}s", flush=True)
+            if on_chart:
+                on_chart(symbol, err is None, err)
     return out

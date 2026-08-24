@@ -23,11 +23,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from portfolio import config
 from portfolio.engine import run_backtest
 from portfolio.market import Market
+from portfolio.progress import RunProgress
 from portfolio.report import compare
 from portfolio.report_html import build_report
 from portfolio.symbol_chart import build_all as build_symbol_charts
 from portfolio.strategy import build_baseline, build_plan
 from portfolio.universe import resolve
+
+
+def _bar(n: int, total: int, width: int = 18) -> str:
+    """A text progress bar. Plain ASCII so it survives a cp1252 console."""
+    filled = int(width * n / total) if total else width
+    return "[" + "#" * filled + "." * (width - filled) + "]"
 
 
 def main(argv) -> int:
@@ -63,12 +70,42 @@ def main(argv) -> int:
     print(f"Universe: {len(universe)} symbols"
           + (f"  (gom ca benchmark {benchmark})" if benchmark else ""))
 
+    # Progress matters here because loading dominates the wall clock — minutes
+    # against a backtest that takes under a second — and without a counter the
+    # symbol list just scrolls with no way to tell a slow run from a stuck one.
+    charts_dir = Path(__file__).resolve().parent / "charts"
+    total = len(universe)
+    n_est = total  # charts are capped by traded symbols; refined after the run
+    prog = RunProgress(charts_dir / "progress.html", [
+        ("load", f"Nạp dữ liệu {total} mã", total),
+        ("backtest", "Chạy backtest", None),
+        ("charts", "Dựng biểu đồ mã", None),
+    ])
+    print(f"Progress -> {charts_dir / 'progress.html'}", flush=True)
+
     t0 = time.time()
+    state = {"n": 0}
 
     def on_symbol(symbol, ok, reason):
-        print(f"  {symbol:<6} {'ok' if ok else 'skip: ' + str(reason)}", flush=True)
+        state["n"] += 1
+        n = state["n"]
+        done = time.time() - t0
+        # ETA from the average so far. Crude, and honest about it: symbols do
+        # not take the same time, but over fifty of them the average is close
+        # enough to answer "another minute or another ten".
+        eta = done / n * (total - n)
+        bar = _bar(n, total)
+        status = "ok" if ok else f"bo qua: {reason}"
+        print(f"  {bar} {n:>3}/{total}  {symbol:<7}{status:<34}"
+              f"{done:>5.0f}s  con ~{eta:>4.0f}s", flush=True)
+        prog.step("load", symbol, ok=ok, detail="" if ok else str(reason))
 
     # Both plans share the Market, so it must carry every window either reads.
+    prog.begin("load")
+    print(f"\n[1/3] Nap du lieu {total} ma "
+          f"(cua so {sorted(plan.windows() | baseline.windows())}"
+          + (f", slope {sorted(plan.slope_windows())}" if plan.slope_windows() else "")
+          + ")", flush=True)
     market = Market.load(universe, plan.windows() | baseline.windows(),
                          min_rows=config.MIN_ROWS, on_symbol=on_symbol,
                          slope_windows=plan.slope_windows()
@@ -76,6 +113,9 @@ def main(argv) -> int:
     load_s = time.time() - t0
     print(f"\n{market.summary()}   ({load_s:.1f}s to load)\n")
 
+    prog.end("load", market.summary())
+    prog.begin("backtest")
+    print("[2/3] Chay backtest", flush=True)
     # track=True records the month-end equity curve, which only the HTML report
     # reads. A sweep leaves it off.
     t1 = time.time()
@@ -88,17 +128,34 @@ def main(argv) -> int:
                         leftover=config.LEFTOVER, track=True)
     print(f"plan {t2 - t1:.1f}s | baseline {time.time() - t2:.1f}s\n")
 
+    prog.end("backtest",
+             f"{result['growth_%']:.2f}% vs {base['growth_%']:.2f}%")
     print(compare(result, base, plan_name=plan.name,
                   baseline_name=baseline.name))
 
-    charts_dir = Path(__file__).resolve().parent / "charts"
+    n_charts = len([p for p in result["wallet"].positions.values() if p.trades])
+    print(f"\n[3/3] Dung {n_charts} bieu do ma "
+          f"(~30s/ma, chay song song)", flush=True)
+    prog.begin("charts")
+    prog._phase("charts")["total"] = n_charts
     t3 = time.time()
-    charts = build_symbol_charts(result, market, plan, config, charts_dir)
-    print(f"{len(charts)} bieu do ma  {time.time() - t3:.1f}s")
+    charts = build_symbol_charts(result, market, plan, config, charts_dir,
+                                 on_chart=lambda sym, ok, err:
+                                     prog.step("charts", sym, ok=ok, detail=err or ""))
+    print(f"  xong {len(charts)} bieu do trong {time.time() - t3:.0f}s")
 
+    prog.end("charts")
     out = charts_dir / "report.html"
     build_report(result, base, plan, baseline, config, market, out,
                  load_seconds=load_s, charts=charts)
+    prog.finish({
+        "Tăng trưởng": f"{result['growth_%']:.2f}%",
+        "Benchmark": f"{base['growth_%']:.2f}%",
+        "Chênh lệch": f"{result['growth_%'] - base['growth_%']:+.2f}%",
+        "Mã nắm giữ": result["symbols_held"],
+        "Lệnh mua": f"{result['buys']:,}",
+        "Lệnh bán": f"{result['sells']:,}",
+    }, report="report.html")
     print(f"\nReport -> {out}")
     if "--no-open" not in argv:
         try:

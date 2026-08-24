@@ -361,9 +361,13 @@ def build_report(result, baseline, plan, baseline_plan, config, market,
             ("Rổ", f'{config.UNIVERSE}  →  {len(market.symbols)} mã nạp được'),
             ("Benchmark", config.BENCHMARK),
             ("Fallback", plan.fallback_symbol or "—"),
-            ("Buy rule", plan.buy_rule.describe()),
-            ("Xếp hạng", plan.buy_scorer.describe()),
-            ("Chia tiền", plan.allocator.describe()),
+            ("1 · Điều kiện của mã",
+             (plan.buy_rule.symbol_only() or plan.buy_rule).describe()),
+            ("2 · Lọc so với rổ",
+             (f"vốn hoá top {(1 - config.CAP_MIN_RANK) * 100:.0f}%"
+              if getattr(config, "CAP_MIN_RANK", None) is not None else "—")),
+            ("3 · Phân bổ",
+             f"{plan.buy_scorer.describe()} → {plan.allocator.describe()}"),
             ("Tiền mỗi tháng", f'{config.CONTRIBUTION:,.0f}'),
             ("Tiền thừa", config.LEFTOVER),
         ])
@@ -543,7 +547,10 @@ tbody tr:hover{{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent
     <th class="n">Lãi/lỗ</th><th class="n">Suất sinh lời</th><th class="n">Đóng góp (điểm)</th>
     <th class="n">Tỷ trọng</th><th class="n">Mua</th><th class="n">Bán</th>
   </tr></thead><tbody>{rows}</tbody></table></div>
-  <p class="hint">Bấm vào một dòng để mở biểu đồ giá và các lệnh của mã đó trong tab mới.</p>
+  <p class="hint">Bấm vào một dòng để mở biểu đồ giá và các lệnh của mã đó trong tab mới.
+  Trên biểu đồ đó, <b>vùng xanh</b> là điều kiện của <em>riêng mã ấy</em> (tầng 1) — không
+  gồm lọc vốn hoá hay top-K, vì hai thứ đó phụ thuộc vào các mã khác. <b>Marker</b> là
+  lệnh thật. Khoảng cách giữa hai thứ chính là phần bị tầng 2 và 3 loại.</p>
 </section>
 
 <section class="card">

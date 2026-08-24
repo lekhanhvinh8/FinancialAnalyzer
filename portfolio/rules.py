@@ -48,6 +48,28 @@ def premium(price: float, reference: float) -> "float | None":
 class Rule:
     """Base: never acts. Also the real implementation of a switched-off arm."""
 
+    # True when the answer depends on the OTHER symbols, not just this one.
+    #
+    # Three different things decide whether a symbol is actually bought, and
+    # they are worth keeping apart because only the first is a property of the
+    # symbol itself:
+    #
+    #   1. its own condition      price against its own median
+    #   2. cross-sectional filter its size against the rest of the universe
+    #   3. allocation             whether it made the day's top K
+    #
+    # A per-symbol chart can only honestly paint (1). Painting (2) would show a
+    # green zone that moves when an unrelated symbol lists or delists, and (3)
+    # is not a condition at all. See symbol_only() below.
+    cross_sectional = False
+
+    def symbol_only(self) -> "Rule | None":
+        """
+        This rule with every cross-sectional part removed, or None if nothing is
+        left. What a single-symbol chart may draw.
+        """
+        return None if self.cross_sectional else self
+
     def applies(self, series, index: int) -> bool:
         return False
 
@@ -241,6 +263,9 @@ class CapRankAboveRule(Rule):
     data would quietly turn the filter off exactly where it is least informed.
     """
     min_rank: float = 0.5
+    # Reads a ranking computed across the whole universe, so it cannot be drawn
+    # on a chart of one symbol — see Rule.cross_sectional.
+    cross_sectional: bool = True
 
     def applies(self, series, index: int) -> bool:
         r = series.cap_rank(index)
@@ -303,6 +328,10 @@ class AllOf(Rule):
     """
     rules: list
 
+    def symbol_only(self):
+        kept = [x for x in (r.symbol_only() for r in self.rules) if x is not None]
+        return AllOf(kept) if kept else None
+
     def applies(self, series, index: int) -> bool:
         return bool(self.rules) and all(r.applies(series, index) for r in self.rules)
 
@@ -322,6 +351,10 @@ class AnyOf(Rule):
     """Any sub-rule suffices. Empty means never, for the same reason as AllOf."""
     rules: list
 
+    def symbol_only(self):
+        kept = [x for x in (r.symbol_only() for r in self.rules) if x is not None]
+        return AnyOf(kept) if kept else None
+
     def applies(self, series, index: int) -> bool:
         return any(r.applies(series, index) for r in self.rules)
 
@@ -340,6 +373,10 @@ class AnyOf(Rule):
 class Not(Rule):
     """Inverts a rule. Useful for keeping one arm out of another's way."""
     rule: Rule
+
+    def symbol_only(self):
+        inner = self.rule.symbol_only()
+        return None if inner is None else Not(inner)
 
     def applies(self, series, index: int) -> bool:
         return not self.rule.applies(series, index)
