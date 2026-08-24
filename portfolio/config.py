@@ -170,7 +170,16 @@ CAP_WEIGHT = 0.0
 # needs premium > 70 and buying needs premium < 10, which are complementary. Move
 # SELL_MIN_PREMIUM below BUY_MAX_PREMIUM and that stops being true — the arms
 # would then need the cross-check single/median1000's factory wires in.
-SELL_MIN_PREMIUM = 70.0
+# OFF. Measured, and it costs 65 points:
+#
+#     buy only            163.44%
+#     + sell + reinvest    98.76%
+#     DCA VN30             95.75%
+#
+# 70.0 with the momentum gate below is the best version of this arm found so
+# far, and it is still worse than never selling. Set it back to 70.0 to switch
+# the arm on; everything it needs is wired and measured.
+SELL_MIN_PREMIUM = None
 
 # Momentum gate on the sell arm: only sell once the SELL_SIGNAL1_WINDOW-bar
 # regression slope has fallen below SELL_MAX_SIGNAL1 percent per day. None
@@ -209,7 +218,16 @@ SELL_MAX_SIGNAL1 = 0.228
 # result — and the buy-arm sweep is a warning, not a precedent: there, tightening
 # past 0.55 collapsed the return, because filtering to the very largest converges
 # on the benchmark. Sweep this before believing it.
-REINVEST_CAP_MIN_RANK = 0.8
+# OFF with the sell arm — with nothing selling there is no reserve for it to
+# deploy, so leaving it on would only be misleading.
+#
+# THIS IS THE ARM TO FIX, not the sell arm. The sell timing is defensible once
+# gated on momentum; where the money lands afterwards is not. single/median1000
+# makes proceeds return to the SAME symbol, while this sends them to whatever is
+# cheapest — a systematic rotation out of what is winning into what is not. The
+# "breaking the dead zone" property this package was designed around is the
+# mechanism doing the damage, and this arm has never been varied once.
+REINVEST_CAP_MIN_RANK = None
 
 # ── Ranking and sizing ────────────────────────────────────────────────────────
 
