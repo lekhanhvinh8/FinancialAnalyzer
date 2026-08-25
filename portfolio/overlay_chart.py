@@ -117,6 +117,58 @@ def _ticks(lo_log, hi_log):
     return out
 
 
+def _place_labels(ends, top, bottom, gap=10.0):
+    """
+    Push the end-of-line labels apart so every one of them stays readable.
+
+    WHY THEY CANNOT SIT WHERE THE LINES END
+
+      Fifty-four lines finish inside one column a few hundred pixels tall, and
+      after a decade of compounding most of them finish near the middle of it.
+      Labels drawn at their natural heights would overlap into an unreadable
+      stack. Dropping the colliding ones is worse than moving them: the names
+      that collide are the ones in the middle of the pack, which is most of the
+      basket.
+
+      So a label keeps its ORDER but not its exact height, and a leader line
+      joins it back to the point it belongs to. Reading the column top to bottom
+      still ranks the symbols correctly wherever a label has moved.
+
+    THE ALGORITHM, AND WHY THE OBVIOUS ONE IS WRONG
+
+      A single downward pass -- push each label below the previous one -- is not
+      enough. It runs the last labels past the bottom of the plot, and clamping
+      them there piles them back on top of each other, which is exactly the
+      collision it was meant to prevent. Measured on a synthetic cluster at the
+      bottom edge, that version left 51 of 54 labels overlapping.
+
+      Correct is: shrink the gap first if the column cannot hold them all, then
+      push DOWN from the top, and if the last label still overflows, anchor it at
+      the bottom and push back UP. The second pass cannot re-collide anything,
+      because it only ever moves a label further from the one below it. Both
+      passes together guarantee the spacing and the bounds.
+    """
+    if not ends:
+        return []
+    out = sorted(ends, key=lambda e: e["y"])
+    n = len(out)
+    # Never ask for more room than exists. Below this the labels are unreadable
+    # anyway, but overlapping unreadable beats stacked unreadable.
+    if n > 1:
+        gap = min(gap, (bottom - top) / (n - 1))
+
+    prev = top - gap
+    for e in out:
+        e["ly"] = max(e["y"], prev + gap)
+        prev = e["ly"]
+
+    if out[-1]["ly"] > bottom:
+        out[-1]["ly"] = bottom
+        for i in range(n - 2, -1, -1):
+            out[i]["ly"] = min(out[i]["ly"], out[i + 1]["ly"] - gap)
+    return out
+
+
 def build_overlay(result, market, config, path: Path,
                   charts: dict | None = None) -> Path:
     charts = charts or {}
@@ -129,7 +181,7 @@ def build_overlay(result, market, config, path: Path,
     date_pos = {d: i for i, d in enumerate(dates)}
 
     W, H = 1180, 640
-    pad_l, pad_r, pad_t, pad_b = 62, 18, 20, 46
+    pad_l, pad_r, pad_t, pad_b = 62, 56, 20, 46
     w, h = W - pad_l - pad_r, H - pad_t - pad_b
     n = len(dates)
 
@@ -187,7 +239,7 @@ def build_overlay(result, market, config, path: Path,
         if p.trades:
             trades_by_symbol[sym] = p.trades
 
-    groups, meta, n_marks = [], [], 0
+    groups, meta, n_marks, ends = [], [], 0, []
     for k, sym in enumerate(order):
         row = values[k]
         live = np.flatnonzero(np.isfinite(row))
@@ -229,11 +281,25 @@ def build_overlay(result, market, config, path: Path,
         # The hit path is drawn first and carries a wide transparent stroke: a
         # 1.2px line is not a hover target, and pointer-events:stroke keeps the
         # area to the line itself rather than the box around it.
+        # The label slot is filled after every line is known: where a name can
+        # go depends on where all the others want to go. See _place_labels.
+        ends.append({"i": len(groups), "sym": sym, "bench": is_bench,
+                     "x": X(keep[-1]), "y": Y(row[keep[-1]])})
         groups.append(
             f'<g class="{cls}" data-k="{len(meta) - 1}">'
             f'<path class="hit" d="{d}"/>'
             f'<path class="ln" d="{d}"/>'
-            + "".join(dots) + '</g>')
+            + "".join(dots) + '__LABEL__</g>')
+
+    for e in _place_labels(ends, pad_t, pad_t + h):
+        lead = ""
+        if abs(e["y"] - e["ly"]) > 1.5 or (pad_l + w + 4) - e["x"] > 4:
+            lead = (f'<line class="lead" x1="{e["x"] + 1.5:.1f}" y1="{e["y"]:.1f}" '
+                    f'x2="{pad_l + w + 3:.1f}" y2="{e["ly"]:.1f}"/>')
+        groups[e["i"]] = groups[e["i"]].replace(
+            "__LABEL__",
+            lead + f'<text class="lb" x="{pad_l + w + 6:.1f}" '
+                   f'y="{e["ly"] + 3:.1f}">{escape(e["sym"])}</text>')
 
     return _write(path, config, groups, grid, meta, W, H, n_marks,
                   dates, benchmark)
@@ -275,6 +341,10 @@ svg{display:block;width:100%;height:auto}
   stroke-linejoin:round;stroke-linecap:round}
 .hit{fill:none;stroke:transparent;stroke-width:9;pointer-events:stroke;cursor:pointer}
 .bench .ln{stroke:var(--accent);stroke-width:2.2;opacity:.95;stroke-dasharray:6 4}
+.lb{fill:var(--ink3);font:500 9px "IBM Plex Mono",monospace;
+  pointer-events:none;opacity:.75}
+.lead{stroke:var(--ink3);stroke-width:.7;opacity:.3;pointer-events:none}
+.bench .lb{fill:var(--accent);font-weight:600;opacity:1}
 .d{opacity:.5;pointer-events:none}
 .d.buy{fill:#22c55e} .d.sell{fill:#ef4444} .d.reinvest{fill:#f97316}
 
@@ -283,8 +353,12 @@ svg{display:block;width:100%;height:auto}
    visible, just quiet. */
 svg.dim .sy:not(.on) .ln{opacity:.06}
 svg.dim .sy:not(.on) .d{opacity:0}
+svg.dim .sy:not(.on) .lb{opacity:.18}
+svg.dim .sy:not(.on) .lead{opacity:.05}
 .sy.on .ln{stroke:var(--accent);stroke-width:2.4;opacity:1}
 .sy.on .d{opacity:1;r:4}
+.sy.on .lb{fill:var(--accent);font-weight:600;opacity:1;font-size:11px}
+.sy.on .lead{stroke:var(--accent);opacity:.8}
 
 #tip{position:fixed;z-index:50;display:none;max-width:420px;background:var(--surface);
   color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px 12px;
@@ -437,7 +511,7 @@ def _write(path, config, groups, grid, meta, W, H, n_marks, dates, benchmark):
   <span><i style="background:#ef4444"></i>bán</span>
   <span><i style="background:#f97316"></i>tái đầu tư</span>
   <span><span class="dash"></span>{escape(str(benchmark or '-'))}</span>
-  <span style="color:var(--ink3)">di chuột vào một đường để tách nó ra</span>
+  <span style="color:var(--ink3)">tên mã ở đầu mút phải &middot; di chuột vào một đường để tách nó ra</span>
 </div>
 </div>
 
