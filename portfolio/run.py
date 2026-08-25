@@ -37,6 +37,7 @@ from portfolio.engine import run_backtest
 from portfolio.market import Market
 from portfolio.progress import RunProgress
 from portfolio.report import compare
+from portfolio.overlay_chart import build_overlay
 from portfolio.report_html import build_report
 from portfolio.symbol_chart import build_all as build_symbol_charts
 from portfolio.strategy import build_baseline, build_plan
@@ -157,6 +158,10 @@ def main(argv) -> int:
     print(f"  xong {len(charts)} bieu do trong {time.time() - t3:.0f}s")
 
     prog.end("charts")
+    overlay = build_overlay(result, market, config,
+                            charts_dir / "overlay.html", charts=charts)
+    print(f"Overlay -> {overlay}")
+
     out = charts_dir / "report.html"
     build_report(result, base, plan, baseline, config, market, out,
                  load_seconds=load_s, charts=charts)

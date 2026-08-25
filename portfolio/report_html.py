@@ -550,7 +550,7 @@ td.open{{text-align:center}}
 
 <header>
   <h1>{title}</h1>
-  <p class="muted">{period} · nạp {load} · dựng {generated}</p>
+  <p class="muted">{period} · nạp {load} · dựng {generated} · <a class="open" href="overlay.html">toàn cảnh mọi mã →</a></p>
 </header>
 
 <div class="grid2">
