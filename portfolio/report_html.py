@@ -152,11 +152,18 @@ def _curve_svg(plan_curve, base_curve, plan_name, base_name, trades=None) -> str
                 continue
             y = pad_t + h - (v - ymin) / (ymax - ymin) * h
 
+            # JSON rather than pre-rendered text, because the popover turns each
+            # symbol into a link and needs the name as a field, not buried in a
+            # sentence.
             head = ("Bán" if kind == "sell" else "Tái đầu tư") + f" · {month}"
-            lines = [f'{i["symbol"]} @ {i["price"]:,.0f} · {i["amount"]:,.0f}đ'
-                     + (f' · sau đó {i["after"]:+.0%}' if kind == "sell" else "")
-                     for i in items]
-            tip = escape(head + "\n" + "\n".join(lines))
+            payload = escape(json.dumps({
+                "head": head,
+                "kind": kind,
+                "items": [{"sym": i["symbol"], "price": i["price"],
+                           "amount": i["amount"],
+                           "after": i["after"] if kind == "sell" else None}
+                          for i in items],
+            }, ensure_ascii=False), quote=True)
 
             if kind == "sell":
                 glyph = (f'<polygon class="mk-sell" points="{x:.1f},{y - 3:.1f} '
@@ -171,7 +178,7 @@ def _curve_svg(plan_curve, base_curve, plan_name, base_name, trades=None) -> str
                      f'y="{(y - 15) if kind == "sell" else (y + 25):.1f}">'
                      f'{len(items)}</text>' if len(items) > 1 else "")
             pieces.append(
-                f'<g class="mk" data-tip="{tip}">{glyph}{badge}'
+                f'<g class="mk" data-items="{payload}">{glyph}{badge}'
                 f'<rect class="hit" x="{x - 8:.1f}" y="{hit_y:.1f}" '
                 f'width="16" height="18"/></g>')
 
@@ -182,10 +189,15 @@ def _curve_svg(plan_curve, base_curve, plan_name, base_name, trades=None) -> str
                 x = month_x.get(month)
                 if x is None:
                     continue
-                syms = ", ".join(sorted({i["symbol"] for i in items}))
-                tip = escape(f"Mua · {month}\n{len(items)} lệnh: {syms}")
+                payload = escape(json.dumps({
+                    "head": f"Mua · {month}",
+                    "kind": "buy",
+                    "items": [{"sym": i["symbol"], "price": i["price"],
+                               "amount": i["amount"], "after": None}
+                              for i in items],
+                }, ensure_ascii=False), quote=True)
                 pieces.append(
-                    f'<g class="mk" data-tip="{tip}">'
+                    f'<g class="mk" data-items="{payload}">'
                     f'<rect class="mk-buy" x="{x - 2:.1f}" y="{strip_y:.1f}" '
                     f'width="4" height="7" opacity="'
                     f'{0.3 + 0.7 * len(items) / top_n:.2f}"/>'
@@ -485,7 +497,14 @@ polyline{{fill:none;stroke-width:2;stroke-linejoin:round}}
 .mk:hover .mk-rei{{fill:#ea580c}}
 .mk:hover .mk-buy{{opacity:1 !important}}
 .mk-n{{fill:var(--ink2);font:600 9px "IBM Plex Mono",monospace;text-anchor:middle;pointer-events:none}}
-#tip{{position:fixed;z-index:50;display:none;max-width:340px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 11px;font-size:12.5px;line-height:1.5;white-space:pre-line;box-shadow:0 6px 20px rgba(0,0,0,.18);pointer-events:none;font-family:"IBM Plex Mono",monospace}}
+#tip .th{{font-weight:600;margin-bottom:6px;color:var(--ink2)}}
+#tip .row{{display:flex;gap:10px;align-items:center;padding:3px 0;white-space:nowrap}}
+#tip .s{{font-weight:600;min-width:42px}}
+#tip .m{{color:var(--ink2)}}
+#tip .aft{{margin-left:auto}}
+#tip .row a.open{{margin-left:auto;padding:1px 8px;font-size:11px}}
+#tip .aft + a.open{{margin-left:10px}}
+#tip{{position:fixed;z-index:50;display:none;max-width:460px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 11px;font-size:12.5px;line-height:1.5;box-shadow:0 6px 20px rgba(0,0,0,.18);font-family:"IBM Plex Mono",monospace}}
 .sw-mksell,.sw-mkrei,.sw-mkbuy{{height:8px;width:8px;border-radius:2px}}
 .sw-mksell{{background:#ef4444}} .sw-mkrei{{background:#f97316}} .sw-mkbuy{{background:#22c55e}}
 .note{{color:var(--ink2);font-size:13.5px;margin:12px 0 0}}
@@ -618,21 +637,65 @@ function applyFilter(f){{
     shown + '/' + document.querySelectorAll('#tbl tbody tr').length + ' mã';
 }}
 (function(){{
+  // WHY THE POPOVER OUTLIVES THE POINTER LEAVING THE MARKER
+  //
+  //   Every symbol on it carries a "mở" button, and a tooltip that vanishes the
+  //   instant the pointer leaves its 16px marker can never have its button
+  //   pressed — the gap between the two is crossed with the mouse, and the
+  //   tooltip would be gone before the pointer arrived.
+  //
+  //   So hiding is DEFERRED, and entering the popover cancels it. Hover to read,
+  //   walk onto it to click. No click needed to open it, no pinning to remember.
   var tip = document.getElementById('tip');
+  var timer = null;
+
   function place(e){{
-    tip.style.left = Math.min(e.clientX + 14,
-                              window.innerWidth - tip.offsetWidth - 12) + 'px';
-    tip.style.top = Math.min(e.clientY + 14,
-                             window.innerHeight - tip.offsetHeight - 12) + 'px';
+    var x = (e && e.clientX != null) ? e.clientX : innerWidth / 2;
+    var y = (e && e.clientY != null) ? e.clientY : innerHeight / 2;
+    tip.style.left = Math.max(8, Math.min(x + 14, innerWidth - tip.offsetWidth - 12)) + 'px';
+    tip.style.top = Math.max(8, Math.min(y + 14, innerHeight - tip.offsetHeight - 12)) + 'px';
   }}
-  document.querySelectorAll('.mk').forEach(function(g){{
-    g.addEventListener('mouseenter', function(e){{
-      tip.textContent = g.dataset.tip;
-      tip.style.display = 'block';
-      place(e);
+
+  function money(v){{ return v.toLocaleString('vi-VN', {{maximumFractionDigits: 0}}); }}
+
+  function render(d){{
+    var h = '<div class="th">' + d.head + ' · ' + d.items.length + ' lệnh</div>';
+    d.items.forEach(function(i){{
+      h += '<div class="row"><span class="s">' + i.sym + '</span>'
+         + '<span class="m">@ ' + money(i.price) + ' · ' + money(i.amount) + 'đ</span>';
+      if (i.after != null) {{
+        // After a SELL a rise is the cost of having sold, so the colours invert.
+        var cls = (i.after < 0) ? 'pos' : 'neg';
+        h += '<span class="aft ' + cls + '">sau đó '
+           + (i.after >= 0 ? '+' : '') + (i.after * 100).toFixed(0) + '%</span>';
+      }}
+      var f = CHARTS[i.sym];
+      h += f
+        ? '<a class="open" href="' + f + '" target="_blank" rel="noopener" '
+          + 'title="Biểu đồ ' + i.sym + ' (tab mới)">mở</a>'
+        : '<span class="muted" style="margin-left:auto">—</span>';
+      h += '</div>';
     }});
-    g.addEventListener('mousemove', place);
-    g.addEventListener('mouseleave', function(){{ tip.style.display = 'none'; }});
+    tip.innerHTML = h;
+  }}
+
+  function show(d, e){{ clearTimeout(timer); render(d); tip.style.display = 'block'; place(e); }}
+  function scheduleHide(){{ timer = setTimeout(function(){{ tip.style.display = 'none'; }}, 320); }}
+
+  tip.addEventListener('mouseenter', function(){{ clearTimeout(timer); }});
+  tip.addEventListener('mouseleave', scheduleHide);
+
+  document.querySelectorAll('.mk').forEach(function(g){{
+    var data = JSON.parse(g.dataset.items);
+    g.addEventListener('mouseenter', function(e){{ show(data, e); }});
+    g.addEventListener('mouseleave', scheduleHide);
+    // Click does the same thing as hover. On a touch screen there is no hover at
+    // all, and a chart whose only affordance is hovering is unusable there.
+    g.addEventListener('click', function(e){{ e.stopPropagation(); show(data, e); }});
+  }});
+
+  document.addEventListener('keydown', function(e){{
+    if (e.key === 'Escape') tip.style.display = 'none';
   }});
 }})();
 
@@ -663,25 +726,6 @@ document.querySelectorAll('#tbl tbody tr').forEach(function(tr){{
   a.title = 'Biểu đồ ' + tr.dataset.sym + ' (tab mới)';
   cell.appendChild(a);
 }});
-
-(function(){{
-  var tip = document.getElementById('tip');
-  function place(e){{
-    tip.style.left = Math.min(e.clientX + 14,
-                              window.innerWidth - tip.offsetWidth - 12) + 'px';
-    tip.style.top = Math.min(e.clientY + 14,
-                             window.innerHeight - tip.offsetHeight - 12) + 'px';
-  }}
-  document.querySelectorAll('.mk').forEach(function(g){{
-    g.addEventListener('mouseenter', function(e){{
-      tip.textContent = g.dataset.tip;
-      tip.style.display = 'block';
-      place(e);
-    }});
-    g.addEventListener('mousemove', place);
-    g.addEventListener('mouseleave', function(){{ tip.style.display = 'none'; }});
-  }});
-}})();
 
 document.querySelectorAll('.chip').forEach(function(c){{
   c.addEventListener('click', function(){{
