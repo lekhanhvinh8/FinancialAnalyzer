@@ -241,21 +241,46 @@ REINVEST_CAP_WEIGHT = 0.5
 # equal split makes the size of a purchase depend on how many other names
 # happened to qualify that day; a quota fixes the size and lets the count follow.
 #
-# 50 = the reserve funds two positions. MEASURED, and it is the peak of a curve
-# that falls off hard on both sides:
+# THE QUOTA IS THE POSITION COUNT. It funds ceil(100 / quota) names and stops, so
+# 20 means five and 50 means two — REINVEST_TOP_K cannot widen it past that, it
+# can only cut it shorter.
 #
-#     quota    100%     50%     25%     10%
-#     growth  78.54  194.23  154.63  138.16
-#     reinvests  23      45      82     209
+# 20 IS A DELIBERATE MOVE AWAY FROM THE MEASURED PEAK, chosen to spread the
+# reserve over five names instead of two. It costs 28 points and is not a
+# mistake — it buys breadth, and breadth is worth something this backtest cannot
+# price. What follows is what it costs, so the trade is visible.
 #
-# Both ends fail for opposite reasons. At 100% the whole reserve goes into one
-# name and the arm becomes a concentrated bet; at 10% it is spread over 209
-# purchases too small to matter. The 25 that shipped first was a guess made
-# before any of this was measured.
+# THE QUOTA AND THE COOLDOWN DO NOT SEPARATE. Measured together, growth %:
 #
-# Four points is a coarse curve and 50 is the best of four, not a located
-# optimum. Worth a denser sweep before it is treated as settled.
-REINVEST_QUOTA_PCT = 50.0
+#     quota   cooldown 0    10    30    60
+#       50%              -  137.75    -  194.23
+#       25%              -  178.99    -  154.63
+#       20%         131.86  166.32  150.17  152.06
+#
+# Read the rows, not the columns. At 50% the reserve funds two names and wants a
+# LONG cooldown — 194.23 at 60, collapsing to 137.75 at 10. At 20% it funds five
+# and wants a SHORT one — 166.32 at 10, down to ~150 at 30 and 60. The best
+# quota and the best cooldown cannot be picked separately and combined; each
+# pairing has to be measured as a pairing.
+#
+# WHY THE ROWS REVERSE. Two names is a concentrated bet, and a long cooldown is
+# what stops the reserve returning to the same one until the case has genuinely
+# refreshed. Five names is already diluted, and a long cooldown on top of that
+# keeps handing the money to the sixth-best candidate instead of the first.
+#
+# 25% at cooldown 10 gives 178.99 on four names — two thirds of the breadth for
+# half the cost. It is the better trade if breadth is the goal rather than five
+# specifically.
+REINVEST_QUOTA_PCT = 20.0
+
+# Hard ceiling on how many names one reinvest may fund. None leaves it to the
+# quota alone.
+#
+# Belt and braces rather than the real control, and MEASURED TO BE INERT: 5 and
+# None give the same 166.32% at quota 20, because the money runs out after five
+# either way. It is here so that lowering the quota later cannot silently turn
+# one reinvest into a ten-way scatter.
+REINVEST_TOP_K = 5
 
 # Below this the whole reserve goes to the top-ranked candidate instead of being
 # sliced. Quota-sized pieces of a small pot are too small to be worth their own
@@ -267,11 +292,29 @@ REINVEST_MIN_SPLIT = 20_000_000
 # Applied by the engine, not by a rule: it is a fact about the WALLET (when did
 # we last act on this name) and rules only see market data.
 #
-# Without it the reserve concentrates by accident. The ranking barely moves from
-# one day to the next, so the cheapest name stays cheapest, and a reserve spent
-# over several days pours into the same one or two symbols simply because
-# nothing else changed. ~3 months of trading days.
-REINVEST_COOLDOWN_DAYS = 60
+# BARS, NOT CALENDAR DAYS. Both indices are row numbers in the symbol's own price
+# series, so 10 is ten trading days — about a fortnight, not ten days.
+#
+# WHAT IT IS FOR, AND WHAT IT IS NOT FOR. The ranking barely moves from one day
+# to the next, so the cheapest name stays cheapest and a reserve spent over
+# several consecutive days pours into whichever name happened to be top. The
+# cooldown is a brake on that RUN, not a judgement about the symbol.
+#
+# Which is the argument for keeping it short at THIS quota. A name that keeps
+# ranking first keeps deserving the money; a long cooldown throws that away and
+# hands the reserve to a worse candidate purely because of when the last
+# purchase landed. At quota 20 that is measurable: 166.32 at 10 bars against
+# 150.17 at 30 and 152.06 at 60.
+#
+# BUT IT IS STILL REQUIRED. Switching it off entirely is the worst setting
+# measured on that row -- 131.86, below every cooldown that does something.
+# Short is not the same as absent: without any brake the reserve pours into one
+# name over consecutive days simply because the ranking had not moved yet.
+#
+# NOT INDEPENDENT of REINVEST_QUOTA_PCT. At quota 50 this row reverses and a
+# long cooldown wins by a wide margin. See the table there before changing
+# either.
+REINVEST_COOLDOWN_DAYS = 10
 
 # ── Ranking and sizing ────────────────────────────────────────────────────────
 

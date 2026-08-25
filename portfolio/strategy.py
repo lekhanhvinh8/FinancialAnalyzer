@@ -180,6 +180,7 @@ def build_plan(config) -> Plan:
         reinvest_alloc = QuotaAllocator(
             quota_pct=getattr(config, "REINVEST_QUOTA_PCT", 25.0),
             min_split=getattr(config, "REINVEST_MIN_SPLIT", 20_000_000),
+            top_k=getattr(config, "REINVEST_TOP_K", None),
             min_ticket=getattr(config, "MIN_TICKET", 0))
 
     return Plan(
