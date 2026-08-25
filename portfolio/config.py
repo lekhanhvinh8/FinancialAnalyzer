@@ -118,8 +118,11 @@ USE_PE = False
 # almost nobody early and almost everybody late — it would be measuring the
 # calendar. market.py ranks the universe fresh every day.
 #
-# THE STRONGEST RESULT MEASURED HERE SO FAR. Sweeping it at K=5 with the shipped
-# scorer:
+# OFF. Size now enters through the SCORE instead — see CAP_WEIGHT, and see the
+# reinvest arm, which was rearranged the same way first.
+#
+# It earned its place while it was here. Swept at K=5 with a pure price scorer,
+# before the sell and reinvest arms were switched on:
 #
 #     min_rank   keeps   growth        min_rank   keeps   growth
 #       0.30      70%    131.79%         0.50      50%    163.60%
@@ -127,35 +130,51 @@ USE_PE = False
 #       0.40      60%    153.25%         0.60      40%    108.69%
 #       0.45      55%    164.31%         0.70      30%     83.51%
 #
-# +25 points over no filter (138.77%), on a smooth unimodal curve rather than a
-# single lucky cell, and robust to the allocator: at 0.50 the result is 160.7 to
-# 163.6 across K = 3, 5, 8, 10 and None. The gain is the filter's, not an
-# interaction.
-#
-# 0.5 rather than the peak at 0.45 — they are within half a point of each other
-# and the rounder number is not pretending to a precision this has not earned.
-#
-# BOTH ENDS ARE BAD, which is the interesting part. Below 0.40 the small caps
-# drag; above 0.55 it collapses, and it should — filtering to the very largest
-# converges on the benchmark, and the benchmark returns 95.75%.
-CAP_MIN_RANK = 0.5
+# WHY IT IS OFF ANYWAY. A hard filter and a heavy score weight turn out to do the
+# same job — see the two-regime table under CAP_WEIGHT — and they finish within a
+# point of each other. The score is the better of two equals because it never
+# empties the day: a filter that admits nobody sends the contribution to the
+# benchmark, and dropping it took the plan from 546 buys to 671 on the same
+# calendar. A ranking always has a first place.
+CAP_MIN_RANK = None
 
 # Weight of market-cap rank in the buy SCORE, blended with the price scorer over
 # same-day ranks (see scoring.BlendScorer). 0 switches the blend off entirely.
 #
-# MEASURED AND REJECTED. Across every filter level, adding cap to the score made
-# things worse, monotonically:
+# 0.75 = three parts size, one part cheapness. This REPLACES the hard cap filter
+# rather than supplementing it; CAP_MIN_RANK is None.
 #
-#     filter        w=0     w=.25    w=.5    w=.75    w=1
-#     none        138.8%   136.0%   129.1%  133.2%  129.5%
-#     top 65%     141.8%   139.1%   134.7%  133.9%  133.5%
-#     top 50%     163.6%   160.4%   156.9%  152.6%  153.0%
+# AN EARLIER MEASUREMENT SAID THE OPPOSITE and is worth recording, because it was
+# not wrong so much as out of date. With the sell and reinvest arms switched off,
+# every weight above zero hurt at every filter level, and the conclusion drawn
+# was that size should decide eligibility and nothing else. That table is gone
+# now; what follows replaces it, measured with both arms on and the reinvest
+# quota at 20.
 #
-# So size decides WHO IS ELIGIBLE and nothing else; among the eligible, ordering
-# by size is worse than ordering by cheapness. The blend machinery is kept
-# because it is the only way to combine scorers whose units do not compare, and
-# the next scorer worth trying will need it.
-CAP_WEIGHT = 0.0
+# TWO REGIMES, NOT A HILL. Twenty-one weights, no filter:
+#
+#     w      0.0   0.25    0.5   0.55  |  0.60   0.70   0.75   0.80   0.90   1.0
+#     growth 144.9 148.0  135.9  134.1 | 151.3  165.5  166.6  167.8  164.8  164.0
+#
+# The step at 0.55 -> 0.60 is 17 points; the mean step across the row is 2.8. One
+# phase change, and either side of it is smooth. Above 0.70 is a PLATEAU five
+# cells wide, all of it at or above 164, so this is not one lucky cell.
+#
+# The same walk WITH the top-50% filter is nearly flat -- 159.8 to 166.4, mean
+# step 0.71 -- and its best point is w=0. That is the tell: past about 0.7 the
+# score is already doing the filter's job, so adding the filter on top changes
+# almost nothing.
+#
+# WHAT THE PLATEAU MEANS. It is flat from 0.7 to 1.0, and 1.0 means the price
+# scorer contributes NOTHING to the ordering. So once size dominates the rank,
+# cheapness adds almost nothing on top of it — the buy condition has already
+# used the cheapness, and ordering the survivors by how cheap they are is close
+# to ordering them at random.
+#
+# 0.75 rather than the peak at 0.80. They are 1.2 points apart inside a plateau
+# whose own cells vary by 3, and the rounder number is not pretending to a
+# precision this has not earned.
+CAP_WEIGHT = 0.75
 
 # ── The sell condition ────────────────────────────────────────────────────────
 
