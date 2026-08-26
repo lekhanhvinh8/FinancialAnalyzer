@@ -13,6 +13,25 @@ is a STARTING POINT, not a finding.
 
 PLAN_NAME = "premium-below-median, equal split"
 
+# ── HEALTH WARNING ON EVERY MEASUREMENT BELOW ────────────────────────────────
+#
+# Every sweep table in this file was measured BEFORE 2026-08-26, when VHM was
+# found to be carrying 1,412 rows of fabricated pre-listing history. The result
+# it produced was inflated by 21 points: 166.55% before the fix, 145.29% after,
+# on identical settings.
+#
+# The mechanism was warmup. VHM listed on 17/05/2018 and needs BUY_WINDOW bars
+# before any condition can be evaluated, so its first trade should fall in mid
+# 2022 -- and does now. The fictitious history satisfied that warmup, so the
+# symbol was tradable from 2015 against a median computed from prices that never
+# existed, and it took 58 buys, more than any other name in the basket. It now
+# takes 34, none before 2022-06-01.
+#
+# So the tables below still show the SHAPE of each curve, which is what they
+# were read for, but not one of their absolute figures is current. Anything
+# treated as settled on the strength of a two-point gap should be re-measured
+# before it is trusted again. See syncs/seeds/listings.py.
+
 # ── Universe ──────────────────────────────────────────────────────────────────
 
 # Which symbols the portfolio may hold.
