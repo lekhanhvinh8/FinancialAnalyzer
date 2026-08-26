@@ -137,11 +137,24 @@ USE_PE = False
 # almost nobody early and almost everybody late — it would be measuring the
 # calendar. market.py ranks the universe fresh every day.
 #
-# OFF. Size now enters through the SCORE instead — see CAP_WEIGHT, and see the
-# reinvest arm, which was rearranged the same way first.
+# ON, at the larger half of whatever is trading that day. It now sits ALONGSIDE
+# the score rather than instead of it: CAP_WEIGHT still orders the survivors.
 #
-# It earned its place while it was here. Swept at K=5 with a pure price scorer,
-# before the sell and reinvest arms were switched on:
+# WHY BOTH. A filter and a ranking answer different questions and neither
+# substitutes for the other. The ranking compares a symbol with the day's other
+# CANDIDATES, and the price test has already narrowed those to names that are
+# falling, so "large for this pool" can still mean small for the market. HAG was
+# bought thirty times on the way from percentile 0.76 down to 0.09, passing at
+# 0.12 while ranking 0.67 inside a pool of four. Only a floor measured against
+# the whole basket refuses that.
+#
+# THE COST IS EMPTY DAYS. A filter can admit nobody, and a day with no candidate
+# sends the contribution to the benchmark. Switching this off previously took
+# the plan from 546 buys to 671 for the same return, which is that same fact
+# seen from the other side.
+#
+# Swept at K=5 with a pure price scorer, before the sell and reinvest arms were
+# switched on -- and before the VHM repair, so read the shape, not the figures:
 #
 #     min_rank   keeps   growth        min_rank   keeps   growth
 #       0.30      70%    131.79%         0.50      50%    163.60%
@@ -149,13 +162,13 @@ USE_PE = False
 #       0.40      60%    153.25%         0.60      40%    108.69%
 #       0.45      55%    164.31%         0.70      30%     83.51%
 #
-# WHY IT IS OFF ANYWAY. A hard filter and a heavy score weight turn out to do the
-# same job — see the two-regime table under CAP_WEIGHT — and they finish within a
-# point of each other. The score is the better of two equals because it never
-# empties the day: a filter that admits nobody sends the contribution to the
-# benchmark, and dropping it took the plan from 546 buys to 671 on the same
-# calendar. A ranking always has a first place.
-CAP_MIN_RANK = None
+# 0.5 rather than the peak at 0.45: they are within half a point of each other
+# and the rounder number is not pretending to a precision this has not earned.
+#
+# UNMEASURED IN COMBINATION with CAP_WEIGHT = 0.75. The sweep above held the
+# weight at zero, and the sweep under CAP_WEIGHT held this at None. Nothing has
+# yet measured the two switched on together.
+CAP_MIN_RANK = 0.5
 
 # WHICH SET the cross-sectional percentile is measured over. Applies to both
 # arms' cap floors.
@@ -295,7 +308,7 @@ REINVEST_ENABLED = True
 # NOT MEASURED. This is a stated design, and the buy arm's own result is a
 # warning rather than a precedent: there, blending cap into the score made
 # things worse at every weight. Sweep it before believing it.
-REINVEST_CAP_WEIGHT = 0.5
+REINVEST_CAP_WEIGHT = 0.75
 
 # How much of the reserve ONE symbol may take, as a percent, in rank order until
 # the money runs out. See allocator.QuotaAllocator.
@@ -357,11 +370,19 @@ REINVEST_MIN_SPLIT = 20_000_000
 #
 # Read together with CAP_RANK_BASIS, which decides what the percentile is of.
 #
-# UNMEASURED at the time of writing. The buy arm's own floor was swept and the
-# curve peaked around 0.5 before both arms were switched on, but nothing about
-# that transfers here: the reserve arrives in lumps, competes with nothing, and
-# is already ranked with size at half weight.
-REINVEST_CAP_MIN_RANK = None
+# 0.5, matching CAP_MIN_RANK. The two stay separate settings and are equal only
+# because nothing yet argues they should differ; a reason to split them would be
+# a measurement, not a preference.
+#
+# This arm needs the floor at least as much as the buy arm does. Its pool is the
+# same pool, narrowed the same way by the same price test, and its cooldown
+# actively PROMOTES low-ranked names: on 2021-09-15 HAG ranked tenth of ten and
+# still took 102m, because the four names above it had each been reinvested
+# inside the cooldown window and were removed from the list.
+#
+# UNMEASURED. The buy arm's floor was swept and peaked near 0.5, but that was a
+# different arm, a pure price scorer, and a run predating the VHM repair.
+REINVEST_CAP_MIN_RANK = 0.5
 
 # Bars before the reserve may buy the SAME symbol again. 0 disables it.
 #
