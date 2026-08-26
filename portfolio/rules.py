@@ -70,7 +70,13 @@ class Rule:
         """
         return None if self.cross_sectional else self
 
-    def applies(self, series, index: int) -> bool:
+    def applies(self, series, index: int, pool_rank=None) -> bool:
+        """
+        `pool_rank` is this symbol's size percentile among the day's SURVIVORS,
+        supplied by engine.rank() and None unless CAP_RANK_BASIS asks for it.
+        Every rule accepts it and almost every rule ignores it; only a
+        cross-sectional rule has any use for it. See CapRankAboveRule.
+        """
         return False
 
     def windows(self) -> set:
@@ -261,21 +267,50 @@ class CapRankAboveRule(Rule):
     A symbol with no market cap is DECLINED rather than admitted. The data comes
     from the same table as P/E and has the same gaps, and admitting on missing
     data would quietly turn the filter off exactly where it is least informed.
+
+    WHICH SET THE PERCENTILE IS OF
+
+      "Top half" only means something once you say top half OF WHAT, and the two
+      available answers are different filters, not two spellings of one.
+
+        basis="universe"  the percentile is over every symbol trading that day.
+                          A hard floor on size. Whether the price test admitted
+                          two names or forty does not move it.
+
+        basis="pool"      the percentile is over the symbols that already passed
+                          the SYMBOL-LEVEL conditions. It keeps the larger half
+                          OF THE CANDIDATES, so it is a relative test twice over
+                          and always admits somebody as long as anybody passed
+                          the price test.
+
+      The price test selects for falling stocks, so the pool is systematically
+      smaller and weaker than the basket. That is exactly why the two differ: a
+      name in the bottom tenth of the market can sit in the top half of a pool
+      of five other names that are also falling. Under "universe" it is refused;
+      under "pool" it is admitted and may be the day's first choice.
+
+      "universe" is the stricter reading and the one this filter was written
+      for. "pool" is offered because it is the other honest reading of the same
+      sentence, not because it is equivalent.
     """
     min_rank: float = 0.5
-    # Reads a ranking computed across the whole universe, so it cannot be drawn
-    # on a chart of one symbol — see Rule.cross_sectional.
+    basis: str = "universe"      # 'universe' | 'pool'
+    # Reads a ranking computed across other symbols either way, so it cannot be
+    # drawn on a chart of one symbol — see Rule.cross_sectional.
     cross_sectional: bool = True
 
-    def applies(self, series, index: int) -> bool:
-        r = series.cap_rank(index)
+    def applies(self, series, index: int, pool_rank=None) -> bool:
+        r = pool_rank if self.basis == "pool" else series.cap_rank(index)
         return r is not None and r >= self.min_rank
 
     def windows(self) -> set:
         return set()
 
     def describe(self) -> str:
-        return f"market cap in top {(1 - self.min_rank) * 100:.0f}% of the day"
+        # Naming the SET is not decoration. "top 50%" alone is the sentence that
+        # made this ambiguous in the first place.
+        of = "candidates" if self.basis == "pool" else "the whole basket"
+        return f"market cap in top {(1 - self.min_rank) * 100:.0f}% of {of}"
 
 
 @dataclass
@@ -332,8 +367,9 @@ class AllOf(Rule):
         kept = [x for x in (r.symbol_only() for r in self.rules) if x is not None]
         return AllOf(kept) if kept else None
 
-    def applies(self, series, index: int) -> bool:
-        return bool(self.rules) and all(r.applies(series, index) for r in self.rules)
+    def applies(self, series, index: int, pool_rank=None) -> bool:
+        return bool(self.rules) and all(
+            r.applies(series, index, pool_rank) for r in self.rules)
 
     def windows(self) -> set:
         return set().union(*(r.windows() for r in self.rules)) if self.rules else set()
@@ -355,8 +391,8 @@ class AnyOf(Rule):
         kept = [x for x in (r.symbol_only() for r in self.rules) if x is not None]
         return AnyOf(kept) if kept else None
 
-    def applies(self, series, index: int) -> bool:
-        return any(r.applies(series, index) for r in self.rules)
+    def applies(self, series, index: int, pool_rank=None) -> bool:
+        return any(r.applies(series, index, pool_rank) for r in self.rules)
 
     def windows(self) -> set:
         return set().union(*(r.windows() for r in self.rules)) if self.rules else set()
@@ -378,8 +414,8 @@ class Not(Rule):
         inner = self.rule.symbol_only()
         return None if inner is None else Not(inner)
 
-    def applies(self, series, index: int) -> bool:
-        return not self.rule.applies(series, index)
+    def applies(self, series, index: int, pool_rank=None) -> bool:
+        return not self.rule.applies(series, index, pool_rank)
 
     def windows(self) -> set:
         return self.rule.windows()
