@@ -114,7 +114,7 @@ class AlwaysRule(Rule):
     and therefore the honest thing to measure against.
     """
 
-    def applies(self, series, index: int) -> bool:
+    def applies(self, series, index: int, pool_rank=None) -> bool:
         return True
 
     def describe(self) -> str:
@@ -150,7 +150,7 @@ class PremiumBelowRule(Rule):
     reference: str = "median"
     use_pe: bool = False
 
-    def applies(self, series, index: int) -> bool:
+    def applies(self, series, index: int, pool_rank=None) -> bool:
         if index < series.warmup:
             return False
         current = series.pe(index) if self.use_pe else series.close(index)
@@ -185,7 +185,7 @@ class PremiumAboveRule(Rule):
     reference: str = "median"
     use_pe: bool = False
 
-    def applies(self, series, index: int) -> bool:
+    def applies(self, series, index: int, pool_rank=None) -> bool:
         if index < series.warmup:
             return False
         current = series.pe(index) if self.use_pe else series.close(index)
@@ -234,7 +234,7 @@ class SlopeBelowRule(Rule):
     window: int = 120
     max_slope: float = 0.228
 
-    def applies(self, series, index: int) -> bool:
+    def applies(self, series, index: int, pool_rank=None) -> bool:
         v = series.slope(self.window, index)
         return v is None or v < self.max_slope
 
@@ -339,7 +339,7 @@ class SymbolIn(Rule):
     def __init__(self, symbols):
         self.symbols = frozenset(str(s).upper() for s in symbols)
 
-    def applies(self, series, index: int) -> bool:
+    def applies(self, series, index: int, pool_rank=None) -> bool:
         return series.symbol.upper() in self.symbols
 
     def windows(self) -> set:
