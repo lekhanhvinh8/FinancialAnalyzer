@@ -162,13 +162,20 @@ USE_PE = False
 #       0.40      60%    153.25%         0.60      40%    108.69%
 #       0.45      55%    164.31%         0.70      30%     83.51%
 #
-# 0.5 rather than the peak at 0.45: they are within half a point of each other
-# and the rounder number is not pretending to a precision this has not earned.
+# 0.8 = the largest FIFTH of the day's basket, about eleven names out of
+# fifty-four before the price test takes any of them.
+#
+# THIS IS PAST WHERE THE OLD SWEEP TURNED DOWN. That table stops at 0.70 and had
+# already fallen to 83.51% there, against 163.60% at 0.50, and the reason given
+# was that filtering to the very largest converges on the benchmark -- which
+# returns 95.75%. 0.80 is stricter still. It was measured on a pure price
+# scorer, on a plan with no sell or reinvest arm, and before the VHM repair, so
+# it does not settle the question; it does say which way to expect this to go.
 #
 # UNMEASURED IN COMBINATION with CAP_WEIGHT = 0.75. The sweep above held the
 # weight at zero, and the sweep under CAP_WEIGHT held this at None. Nothing has
-# yet measured the two switched on together.
-CAP_MIN_RANK = 0.5
+# yet measured the two switched on together at any level.
+CAP_MIN_RANK = 0.8
 
 # WHICH SET the cross-sectional percentile is measured over. Applies to both
 # arms' cap floors.
@@ -308,7 +315,7 @@ REINVEST_ENABLED = True
 # NOT MEASURED. This is a stated design, and the buy arm's own result is a
 # warning rather than a precedent: there, blending cap into the score made
 # things worse at every weight. Sweep it before believing it.
-REINVEST_CAP_WEIGHT = 0.75
+REINVEST_CAP_WEIGHT = 0.5
 
 # How much of the reserve ONE symbol may take, as a percent, in rank order until
 # the money runs out. See allocator.QuotaAllocator.
@@ -370,7 +377,7 @@ REINVEST_MIN_SPLIT = 20_000_000
 #
 # Read together with CAP_RANK_BASIS, which decides what the percentile is of.
 #
-# 0.5, matching CAP_MIN_RANK. The two stay separate settings and are equal only
+# 0.8, matching CAP_MIN_RANK. The two stay separate settings and are equal only
 # because nothing yet argues they should differ; a reason to split them would be
 # a measurement, not a preference.
 #
@@ -382,7 +389,7 @@ REINVEST_MIN_SPLIT = 20_000_000
 #
 # UNMEASURED. The buy arm's floor was swept and peaked near 0.5, but that was a
 # different arm, a pure price scorer, and a run predating the VHM repair.
-REINVEST_CAP_MIN_RANK = 0.5
+REINVEST_CAP_MIN_RANK = 0.8
 
 # Bars before the reserve may buy the SAME symbol again. 0 disables it.
 #
