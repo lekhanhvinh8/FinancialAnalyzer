@@ -80,16 +80,37 @@ KIND_COLOR = {"buy": "#22c55e", "sell": "#ef4444", "reinvest": "#f97316"}
 # SQUARES, BECAUSE THE TRADE MARKERS ARE CIRCLES. Same chart, two meanings, and
 # a reader should not have to remember which small dot is which.
 #
-# Violet through grey, deliberately clear of the green/red/orange the trades use
-# and of the accent blue the hover state uses. Size climbs with the bucket too:
-# redundant encoding, which is what makes a 5-pixel chip readable at a glance.
+# THE RAMP HAS TO CARRY ITS OWN ORDER. The first version of this scale ran grey
+# to blue to violet to magenta, and it was wrong: those are five hues with no
+# order between them, a CATEGORICAL palette used for a quantity. A reader looking
+# at one chip could not tell whether it was large or small without going to the
+# legend, which defeats the point of putting it on the label at all.
+#
+# So the ramp now moves along ONE channel that has an order: SATURATION, from
+# near-grey to vivid, with lightness held roughly level. More colour = bigger.
+#
+# Lightness would have been the obvious channel and cannot be used. This page
+# renders on a light ground or a dark one depending on the reader's system, and
+# "darker = bigger" reverses into "darker = closer to the background" when the
+# ground flips. Saturation does not flip.
+#
+# SIZE CLIMBS TOO, over a wider range than before -- 3.5 to 8.0 px, better than
+# double the area. Redundant encoding on a channel nobody can misread, so the
+# chip still works for a reader who cannot separate the middle two colours.
+#
+# The hues stay clear of the green/red/orange the trades use and of the accent
+# the hover state uses.
+# Generated from HLS rather than picked by eye, which is how the first attempt
+# ended up with its top step LESS saturated than the one below it. Lightness is
+# pinned at 66% for every step; only saturation climbs, 14 -> 97%.
 CAP_STEPS = [
-    ("#93A1B4", 4.0),
-    ("#6E90D8", 4.7),
-    ("#6C6FE6", 5.4),
-    ("#9B5BE0", 6.1),
-    ("#D247C4", 6.8),
+    ("#9CA5B4", 3.5),   # 0-20    bao hoa 14%, gan nhu xam
+    ("#8998C8", 4.6),   # 20-40   36%
+    ("#7679DB", 5.7),   # 40-60   58%
+    ("#9665EC", 6.8),   # 60-80   78%
+    ("#E555FC", 8.0),   # 80-100  97%, ruc nhat
 ]
+CAP_BANDS = ["0-20", "20-40", "40-60", "60-80", "80-100"]
 
 
 def _rebase(market, symbols):
@@ -452,8 +473,11 @@ a.open:hover{background:var(--accent);border-color:var(--accent);color:#fff}
   font-size:12.5px;color:var(--ink2);padding:8px 4px 2px}
 .key i{display:inline-block;width:9px;height:9px;border-radius:50%;
   margin-right:6px;vertical-align:-1px}
-.key .caps{display:inline-flex;gap:3px;align-items:center;margin:0 6px}
-.key .caps b{display:inline-block;border-radius:1.5px}
+.key .caps{display:inline-flex;gap:7px;align-items:flex-end;margin:0 4px}
+.key .cs{display:inline-flex;flex-direction:column;align-items:center;gap:3px}
+.key .cs b{display:inline-block;border-radius:1.5px}
+.key .cs i{font-style:normal;font-size:9.5px;color:var(--ink3);
+  font-family:"IBM Plex Mono",monospace}
 .key .dash{display:inline-block;width:16px;border-top:2px dashed var(--accent);
   margin-right:6px;vertical-align:4px}
 .find{display:flex;gap:10px;align-items:center;margin:0 0 12px}
@@ -497,8 +521,11 @@ function lineTip(m){
       + m.entry.toFixed(0) + '</b> · nay <b>' + m.level.toFixed(0) + '</b></div>'
     + '<div class="r">so với rổ: <b class="' + cls + '">' + pct(m.ret) + '</b></div>'
     + (m.cap ? '<div class="r">vốn hoá <b>' + cap(m.cap) + '</b>'
-               + (m.caprank != null ? ' · hạng <b>' + (m.caprank * 100).toFixed(0)
-                                      + '/100</b>' : '') + '</div>'
+               + (m.caprank != null
+                  ? ' · phân vị <b>' + (m.caprank * 100).toFixed(0) + '</b>'
+                    + ' <span style="color:var(--ink3)">(bậc '
+                    + (Math.min(4, Math.floor(m.caprank * 5)) + 1) + '/5)</span>'
+                  : '') + '</div>'
              : '');
   var n = m.n, parts = [];
   if (n.buy) parts.push('<span><i style="background:#22c55e"></i>' + n.buy + ' mua</span>');
@@ -636,9 +663,12 @@ def _write(path, config, groups, grid, meta, W, H, n_marks, dates, benchmark):
 
     js = _JS.replace("__META__", json.dumps(meta, ensure_ascii=False,
                                             separators=(",", ":")))
+    # The legend carries the NUMBERS, not just an arrow. "small -> large" tells a
+    # reader the direction but not where any single chip sits; the band does.
     cap_key = "".join(
-        f'<b style="background:{c};width:{sz:.0f}px;height:{sz:.0f}px"></b>'
-        for c, sz in CAP_STEPS)
+        f'<span class="cs"><b style="background:{c};width:{sz:.1f}px;'
+        f'height:{sz:.1f}px"></b><i>{band}</i></span>'
+        for (c, sz), band in zip(CAP_STEPS, CAP_BANDS))
     body = f"""<!doctype html>
 <html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -666,9 +696,9 @@ def _write(path, config, groups, grid, meta, W, H, n_marks, dates, benchmark):
   <span><i style="background:#ef4444"></i>bán</span>
   <span><i style="background:#f97316"></i>tái đầu tư</span>
   <span><span class="dash"></span>{escape(str(benchmark or '-'))}</span>
-  <span>vốn hoá
+  <span style="display:inline-flex;align-items:flex-end;gap:4px">vốn hoá
     <span class="caps">{cap_key}</span>
-    <span style="color:var(--ink3)">nhỏ &rarr; lớn</span></span>
+    <span style="color:var(--ink3);font-size:11px">phân vị</span></span>
   <span style="color:var(--ink3)">di chuột vào một đường &mdash; hoặc vào tên mã ở đầu mút &mdash; để tách nó ra</span>
 </div>
 </div>
