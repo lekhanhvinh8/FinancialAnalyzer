@@ -6,6 +6,7 @@ from datetime import date as _date
 import database as db
 from syncs.sources import vnstock
 from ._helpers import PRICE_START, call_with_retry, resolve_symbols, fill_merge, is_price_current
+from .seeds.listings import trim_to_listing
 
 _PRICE_COLS = ["close"]
 
@@ -99,6 +100,11 @@ def _sync_one(
     """
     getter = vnstock.get_index_prices if sym_type == "index" else vnstock.get_prices
     df = call_with_retry(getter, sym, fetch_from, today, label=sym)
+
+    # Applied at the door, before anything reads the frame. The source returns
+    # pre-listing filler for a few symbols and would otherwise reinstate it on
+    # every sync, however many times it is deleted. See seeds/listings.py.
+    df = trim_to_listing(sym, df)
 
     if df is None or df.empty:
         print(f"  [prices] {sym}: no data returned")
