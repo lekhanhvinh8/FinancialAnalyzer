@@ -64,6 +64,33 @@ SAMPLE = 5
 
 KIND_COLOR = {"buy": "#22c55e", "sell": "#ef4444", "reinvest": "#f97316"}
 
+# Market cap on the last day, as a chip beside each name.
+#
+# BY PERCENTILE, NOT BY VALUE. Market cap on this universe is log-normal and
+# badly skewed -- the largest name is worth more than the bottom twenty put
+# together -- so five equal buckets of VND would put almost every symbol in the
+# first one and the scale would carry no information. A percentile spreads the
+# basket evenly across the five steps. The exact figure is in the tooltip, so
+# nothing is lost by ranking here.
+#
+# It is also the quantity the strategy itself uses: CapRankScorer ranks, and
+# CAP_WEIGHT blends ranks. Colouring by value would show something the plan never
+# reads.
+#
+# SQUARES, BECAUSE THE TRADE MARKERS ARE CIRCLES. Same chart, two meanings, and
+# a reader should not have to remember which small dot is which.
+#
+# Violet through grey, deliberately clear of the green/red/orange the trades use
+# and of the accent blue the hover state uses. Size climbs with the bucket too:
+# redundant encoding, which is what makes a 5-pixel chip readable at a glance.
+CAP_STEPS = [
+    ("#93A1B4", 4.0),
+    ("#6E90D8", 4.7),
+    ("#6C6FE6", 5.4),
+    ("#9B5BE0", 6.1),
+    ("#D247C4", 6.8),
+]
+
 
 def _rebase(market, symbols):
     """
@@ -267,6 +294,20 @@ def build_overlay(result, market, config, path: Path,
                         f'cy="{Y(row[p]):.1f}" r="2.4" data-t="{payload}"/>')
         n_marks += len(dots)
 
+        # The last row with a cap, not simply the last row: the cap series has
+        # holes at the end for a symbol whose latest filing has not landed, and
+        # reading NaN there would drop the chip from exactly the names most
+        # likely to be interesting.
+        ser = market[sym]
+        cap_v = cap_r = None
+        for i in range(len(ser) - 1, -1, -1):
+            if cap_v is None:
+                cap_v = ser.cap(i)
+            if cap_r is None:
+                cap_r = ser.cap_rank(i)
+            if cap_v is not None and cap_r is not None:
+                break
+
         start, end = int(live[0]), int(live[-1])
         counts = {kd: sum(1 for t in trades_by_symbol.get(sym, []) if t.kind == kd)
                   for kd in KIND_COLOR}
@@ -276,6 +317,7 @@ def build_overlay(result, market, config, path: Path,
             "vs": row[end] / max(row[start], 1e-9),
             "level": float(row[end]), "entry": float(row[start]),
             "bench": is_bench, "n": counts,
+            "cap": cap_v, "caprank": cap_r,
             "file": charts.get(sym, ""),
         })
         # The hit path is drawn first and carries a wide transparent stroke: a
@@ -284,7 +326,8 @@ def build_overlay(result, market, config, path: Path,
         # The label slot is filled after every line is known: where a name can
         # go depends on where all the others want to go. See _place_labels.
         ends.append({"i": len(groups), "sym": sym, "bench": is_bench,
-                     "x": X(keep[-1]), "y": Y(row[keep[-1]])})
+                     "x": X(keep[-1]), "y": Y(row[keep[-1]]),
+                     "caprank": cap_r})
         groups.append(
             f'<g class="{cls}" data-k="{len(meta) - 1}">'
             f'<path class="hit" d="{d}"/>'
@@ -296,10 +339,29 @@ def build_overlay(result, market, config, path: Path,
         if abs(e["y"] - e["ly"]) > 1.5 or (pad_l + w + 4) - e["x"] > 4:
             lead = (f'<line class="lead" x1="{e["x"] + 1.5:.1f}" y1="{e["y"]:.1f}" '
                     f'x2="{pad_l + w + 3:.1f}" y2="{e["ly"]:.1f}"/>')
+        cr = e.get("caprank")
+        if cr is None:
+            # An index has no place in a ranking of companies -- market.py
+            # excludes it from the cap ranking for that reason -- so it gets an
+            # empty outline rather than a colour it has not earned.
+            chip = (f'<rect class="cap none" x="{pad_l + w + 4:.1f}" '
+                    f'y="{e["ly"] - 2.5:.1f}" width="5" height="5" rx="1.4"/>')
+        else:
+            colour, size = CAP_STEPS[min(4, int(cr * 5))]
+            chip = (f'<rect class="cap" x="{pad_l + w + 6.5 - size / 2:.1f}" '
+                    f'y="{e["ly"] - size / 2:.1f}" width="{size:.1f}" '
+                    f'height="{size:.1f}" rx="1.4" fill="{colour}"/>')
+        # The name is a HANDLE, not a caption. Finding one symbol among fifty
+        # by hunting for its line is the problem the labels were added to solve,
+        # and it is only half solved while the label itself cannot be pointed at.
+        # Height 10 matches the label spacing exactly, so adjacent rows cannot
+        # steal each other's hover.
+        hit = (f'<rect class="lbhit" x="{pad_l + w + 2:.1f}" '
+               f'y="{e["ly"] - 5:.1f}" width="{pad_r - 4}" height="10"/>')
         groups[e["i"]] = groups[e["i"]].replace(
             "__LABEL__",
-            lead + f'<text class="lb" x="{pad_l + w + 6:.1f}" '
-                   f'y="{e["ly"] + 3:.1f}">{escape(e["sym"])}</text>')
+            lead + chip + f'<text class="lb" x="{pad_l + w + 13:.1f}" '
+                          f'y="{e["ly"] + 3:.1f}">{escape(e["sym"])}</text>' + hit)
 
     return _write(path, config, groups, grid, meta, W, H, n_marks,
                   dates, benchmark)
@@ -340,10 +402,13 @@ svg{display:block;width:100%;height:auto}
 .ln{fill:none;stroke:var(--ink3);stroke-width:1.1;opacity:.42;
   stroke-linejoin:round;stroke-linecap:round}
 .hit{fill:none;stroke:transparent;stroke-width:9;pointer-events:stroke;cursor:pointer}
+.lbhit{fill:transparent;pointer-events:all;cursor:pointer}
 .bench .ln{stroke:var(--accent);stroke-width:2.2;opacity:.95;stroke-dasharray:6 4}
 .lb{fill:var(--ink3);font:500 9px "IBM Plex Mono",monospace;
   pointer-events:none;opacity:.75}
 .lead{stroke:var(--ink3);stroke-width:.7;opacity:.3;pointer-events:none}
+.cap{pointer-events:none;opacity:.9}
+.cap.none{fill:none;stroke:var(--ink3);stroke-width:1;opacity:.5}
 .bench .lb{fill:var(--accent);font-weight:600;opacity:1}
 .d{opacity:.5;pointer-events:none}
 .d.buy{fill:#22c55e} .d.sell{fill:#ef4444} .d.reinvest{fill:#f97316}
@@ -355,6 +420,15 @@ svg.dim .sy:not(.on) .ln{opacity:.06}
 svg.dim .sy:not(.on) .d{opacity:0}
 svg.dim .sy:not(.on) .lb{opacity:.18}
 svg.dim .sy:not(.on) .lead{opacity:.05}
+svg.dim .sy:not(.on) .cap{opacity:.25}
+.sy.mute .ln{opacity:.05}
+.sy.mute .d{opacity:0}
+.sy.mute .lb{opacity:.14}
+.sy.mute .cap{opacity:.18}
+.sy.mute .lead{opacity:.04}
+.sy.found .ln{stroke:var(--accent);stroke-width:2.2;opacity:1}
+.sy.found .d{opacity:1}
+.sy.found .lb{fill:var(--accent);font-weight:600;opacity:1;font-size:11px}
 .sy.on .ln{stroke:var(--accent);stroke-width:2.4;opacity:1}
 .sy.on .d{opacity:1;r:4}
 .sy.on .lb{fill:var(--accent);font-weight:600;opacity:1;font-size:11px}
@@ -378,8 +452,20 @@ a.open:hover{background:var(--accent);border-color:var(--accent);color:#fff}
   font-size:12.5px;color:var(--ink2);padding:8px 4px 2px}
 .key i{display:inline-block;width:9px;height:9px;border-radius:50%;
   margin-right:6px;vertical-align:-1px}
+.key .caps{display:inline-flex;gap:3px;align-items:center;margin:0 6px}
+.key .caps b{display:inline-block;border-radius:1.5px}
 .key .dash{display:inline-block;width:16px;border-top:2px dashed var(--accent);
   margin-right:6px;vertical-align:4px}
+.find{display:flex;gap:10px;align-items:center;margin:0 0 12px}
+#q{background:var(--surface);color:var(--ink);border:1px solid var(--line);
+  border-radius:7px;padding:7px 11px;font:13.5px "IBM Plex Mono",monospace;
+  width:220px;outline:none}
+#q:focus{border-color:var(--accent)}
+#qn{color:var(--ink3);font-size:12.5px;font-family:"IBM Plex Mono",monospace}
+#qhits{display:flex;gap:5px;flex-wrap:wrap}
+#qhits button{background:var(--surface2);color:var(--accent);border:1px solid var(--line);
+  border-radius:5px;padding:2px 8px;font:12px "IBM Plex Mono",monospace;cursor:pointer}
+#qhits button:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 .note{color:var(--ink2);font-size:13px;margin:16px 0 0}
 .note b{color:var(--ink);font-weight:600}
 '''
@@ -397,6 +483,10 @@ function place(e){
 }
 function money(v){ return v.toLocaleString('vi-VN', {maximumFractionDigits: 0}); }
 function pct(v){ return (v >= 0 ? '+' : '') + (v * 100).toFixed(0) + '%'; }
+function cap(v){
+  return v >= 1e12 ? (v / 1e12).toFixed(1).replace('.', ',') + ' nghìn tỷ'
+                   : (v / 1e9).toFixed(0) + ' tỷ';
+}
 
 function lineTip(m){
   var cls = m.ret >= 0 ? 'pos' : 'neg';
@@ -405,7 +495,11 @@ function lineTip(m){
                     + 'rel="noopener">mở</a>' : '') + '</div>'
     + '<div class="r">từ <b>' + m.from + '</b> · vào ở <b>'
       + m.entry.toFixed(0) + '</b> · nay <b>' + m.level.toFixed(0) + '</b></div>'
-    + '<div class="r">so với rổ: <b class="' + cls + '">' + pct(m.ret) + '</b></div>';
+    + '<div class="r">so với rổ: <b class="' + cls + '">' + pct(m.ret) + '</b></div>'
+    + (m.cap ? '<div class="r">vốn hoá <b>' + cap(m.cap) + '</b>'
+               + (m.caprank != null ? ' · hạng <b>' + (m.caprank * 100).toFixed(0)
+                                      + '/100</b>' : '') + '</div>'
+             : '');
   var n = m.n, parts = [];
   if (n.buy) parts.push('<span><i style="background:#22c55e"></i>' + n.buy + ' mua</span>');
   if (n.sell) parts.push('<span><i style="background:#ef4444"></i>' + n.sell + ' bán</span>');
@@ -468,8 +562,60 @@ document.querySelectorAll('.sy').forEach(function(g){
     scheduleHide();
   });
 });
+// SEARCH
+//
+//   Fifty-four lines and no way to ask "where is this one" was the gap the end
+//   labels only half closed: you can read a name once you have found its line,
+//   but you still cannot go the other way. Typing mutes everything that does not
+//   match, so a symbol's whole path stands alone against the faded pack.
+//
+//   Matching is a substring, not a prefix, because these tickers are three or
+//   four letters and a prefix match on such short names rules out too little to
+//   be worth the surprise when "PB" fails to find LPB.
+var q = document.getElementById('q');
+var qn = document.getElementById('qn');
+var qhits = document.getElementById('qhits');
+var groups = [].slice.call(document.querySelectorAll('.sy'));
+
+function applyFind(){
+  var v = q.value.trim().toUpperCase();
+  var found = [];
+  groups.forEach(function(g){
+    var sym = META[+g.dataset.k].sym.toUpperCase();
+    var hit = v !== '' && sym.indexOf(v) !== -1;
+    g.classList.toggle('found', hit);
+    g.classList.toggle('mute', v !== '' && !hit);
+    if (hit) found.push(g);
+  });
+  // Raise the matches so their markers are not buried under the fifty lines
+  // crossing them.
+  found.forEach(function(g){ g.parentNode.appendChild(g); });
+
+  qn.textContent = v === '' ? groups.length + ' mã'
+                            : found.length + '/' + groups.length + ' mã';
+  qhits.innerHTML = '';
+  if (v !== '' && found.length && found.length <= 8) {
+    found.forEach(function(g){
+      var m = META[+g.dataset.k];
+      var b = document.createElement('button');
+      b.textContent = m.sym;
+      b.title = m.file ? 'Mở biểu đồ ' + m.sym : 'Chưa có biểu đồ';
+      b.addEventListener('click', function(){
+        if (m.file) window.open(m.file, '_blank', 'noopener');
+      });
+      qhits.appendChild(b);
+    });
+  }
+}
+q.addEventListener('input', applyFind);
+applyFind();
+
 document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape'){ tip.style.display = 'none'; svg.classList.remove('dim'); }
+  if (e.key === 'Escape'){
+    tip.style.display = 'none';
+    svg.classList.remove('dim');
+    if (q.value !== ''){ q.value = ''; applyFind(); }
+  }
 });
 '''
 
@@ -490,6 +636,9 @@ def _write(path, config, groups, grid, meta, W, H, n_marks, dates, benchmark):
 
     js = _JS.replace("__META__", json.dumps(meta, ensure_ascii=False,
                                             separators=(",", ":")))
+    cap_key = "".join(
+        f'<b style="background:{c};width:{sz:.0f}px;height:{sz:.0f}px"></b>'
+        for c, sz in CAP_STEPS)
     body = f"""<!doctype html>
 <html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -501,6 +650,12 @@ def _write(path, config, groups, grid, meta, W, H, n_marks, dates, benchmark):
 <p class="sub">{span} &middot; {traded} mã đã giao dịch &middot; {n_marks} lệnh
 &middot; <a href="report.html">&larr; báo cáo tổng</a></p>
 
+<div class="find">
+  <input id="q" type="search" placeholder="tìm mã…" autocomplete="off" spellcheck="false">
+  <span id="qn"></span>
+  <span id="qhits"></span>
+</div>
+
 <div class="card">
 <svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">
 {''.join(grid)}
@@ -511,7 +666,10 @@ def _write(path, config, groups, grid, meta, W, H, n_marks, dates, benchmark):
   <span><i style="background:#ef4444"></i>bán</span>
   <span><i style="background:#f97316"></i>tái đầu tư</span>
   <span><span class="dash"></span>{escape(str(benchmark or '-'))}</span>
-  <span style="color:var(--ink3)">tên mã ở đầu mút phải &middot; di chuột vào một đường để tách nó ra</span>
+  <span>vốn hoá
+    <span class="caps">{cap_key}</span>
+    <span style="color:var(--ink3)">nhỏ &rarr; lớn</span></span>
+  <span style="color:var(--ink3)">di chuột vào một đường &mdash; hoặc vào tên mã ở đầu mút &mdash; để tách nó ra</span>
 </div>
 </div>
 
