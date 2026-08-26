@@ -173,7 +173,47 @@ def execute_reinvest(wallet: Wallet, symbol: str, amount: float, index: int,
 
 # ── Arms ──────────────────────────────────────────────────────────────────────
 
-def rank(market, day, rule, scorer, symbols) -> list:
+def _pool_cap_ranks(market, day, rule, symbols) -> dict:
+    """
+    Size percentile of each symbol WITHIN the day's survivors of the
+    symbol-level conditions.
+
+    This is the second reading of "top half of the basket" -- top half of what
+    is LEFT after the price test, rather than of everything trading. The two are
+    genuinely different filters, and which one you get is decided by the order
+    of the two stages. See CapRankAboveRule and config.CAP_RANK_BASIS.
+
+    symbol_only() is what makes the first stage expressible: the rule with every
+    cross-sectional part stripped out. It already exists because a per-symbol
+    chart may only draw that part.
+
+    Indices are excluded, for the reason market.py excludes them from the
+    universe ranking -- an aggregate is not a company and would take first place
+    every day.
+    """
+    sym_rule = rule.symbol_only()
+    pre = []
+    for symbol in symbols:
+        bar = day.bars.get(symbol)
+        if bar is None:
+            continue
+        series = market[symbol]
+        if series.is_index:
+            continue
+        if sym_rule is not None and not sym_rule.applies(series, bar.index):
+            continue
+        c = series.cap(bar.index)
+        if c is not None:
+            pre.append((symbol, c))
+
+    if not pre:
+        return {}
+    pre.sort(key=lambda kv: kv[1])
+    last = max(1, len(pre) - 1)
+    return {s: pos / last for pos, (s, _v) in enumerate(pre)}
+
+
+def rank(market, day, rule, scorer, symbols, cap_basis="universe") -> list:
     """
     Candidates among `symbols` that the rule admits, best score first.
 
@@ -184,13 +224,19 @@ def rank(market, day, rule, scorer, symbols) -> list:
     """
     parts = getattr(scorer, "parts", None)
 
+    # Only computed when something asks for it: it costs a second pass over the
+    # universe and a sort, and the default basis needs neither.
+    pool = (_pool_cap_ranks(market, day, rule, symbols)
+            if cap_basis == "pool" else None)
+
     out, admitted = [], []
     for symbol in symbols:
         bar = day.bars.get(symbol)
         if bar is None:
             continue
         series = market[symbol]
-        if not rule.applies(series, bar.index):
+        if not rule.applies(series, bar.index,
+                            None if pool is None else pool.get(symbol)):
             continue
         admitted.append((symbol, bar, series))
         out.append(Candidate(symbol=symbol, index=bar.index, price=bar.price,
@@ -266,7 +312,7 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
         #    The whole list acts: selling is not rationed the way buying is, so
         #    the allocator takes no part and the ordering is presentational.
         for cand in rank(market, day, plan.sell_rule, plan.sell_scorer,
-                         wallet.held_symbols()):
+                         wallet.held_symbols(), cap_basis=plan.cap_basis):
             pos = wallet.position(cand.symbol)
             execute_sell(wallet, cand.symbol, pos.shares * cand.price,
                          cand.index, cand.price, date)
@@ -274,7 +320,8 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
         # 4. Reinvest out of the shared reserve.
         if wallet.reserve >= CASH_EPSILON:
             candidates = rank(market, day, plan.reinvest_rule,
-                              plan.reinvest_scorer, day.bars)
+                              plan.reinvest_scorer, day.bars,
+                              cap_basis=plan.cap_basis)
             # Cooldown, applied HERE rather than in a rule because it asks about
             # the wallet and not about the market. Both indices are row numbers
             # in the same symbol's own series, so the subtraction is meaningful.
@@ -296,7 +343,8 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
 
         # 5. Buy with this month's cash.
         if wallet.contribution >= CASH_EPSILON:
-            candidates = rank(market, day, plan.buy_rule, plan.buy_scorer, day.bars)
+            candidates = rank(market, day, plan.buy_rule, plan.buy_scorer,
+                              day.bars, cap_basis=plan.cap_basis)
             # Nobody qualified: put the money in the fallback instead of letting
             # it sit. See Plan.fallback_symbol — this is what keeps a strict rule
             # from silently becoming a bet on holding cash.
