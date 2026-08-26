@@ -60,6 +60,12 @@ class Plan:
     # simply because nothing else has moved.
     reinvest_cooldown: int = 0
 
+    # Which set the cross-sectional percentile is measured over: the whole
+    # universe trading that day, or only the symbols that already passed the
+    # symbol-level conditions. Carried on the plan rather than read from config
+    # in the engine, so a sweep can vary it without touching the module.
+    cap_basis: str = "universe"
+
     def windows(self) -> set:
         """
         Every window size this plan reads, so Market.load fetches those and no
@@ -121,9 +127,10 @@ def build_plan(config) -> Plan:
     # thing it is measured against.
     # Size decides eligibility, not order — see config.CAP_WEIGHT for the
     # measurement that settled which.
+    cap_basis = getattr(config, "CAP_RANK_BASIS", "universe")
     cap_min = getattr(config, "CAP_MIN_RANK", None)
     if cap_min is not None:
-        buy_rule = AllOf([buy_rule, CapRankAboveRule(cap_min)])
+        buy_rule = AllOf([buy_rule, CapRankAboveRule(cap_min, cap_basis)])
 
     benchmark = getattr(config, "BENCHMARK", None)
     if benchmark:
@@ -162,12 +169,17 @@ def build_plan(config) -> Plan:
         reinvest_rule, reinvest_scorer = NeverRule(), NullScorer()
         reinvest_alloc = None
     else:
-        # The buy arm's price test, and NO cap filter — size enters through the
-        # ranking instead. See config.REINVEST_CAP_WEIGHT.
+        # The buy arm's price test, plus its own cap floor. The floor is
+        # SEPARATE from the buy arm's: the two arms spend different money on
+        # different schedules, and there is no reason one number should govern
+        # both. None leaves size to the ranking alone.
         parts = [PremiumBelowRule(window=config.BUY_WINDOW,
                                   max_premium=config.BUY_MAX_PREMIUM,
                                   reference=config.BUY_REFERENCE,
                                   use_pe=config.USE_PE)]
+        rei_cap = getattr(config, "REINVEST_CAP_MIN_RANK", None)
+        if rei_cap is not None:
+            parts.append(CapRankAboveRule(rei_cap, cap_basis))
         if benchmark:
             parts.insert(0, Not(SymbolIn({benchmark})))
         reinvest_rule = AllOf(parts)
@@ -192,6 +204,7 @@ def build_plan(config) -> Plan:
         reinvest_scorer=reinvest_scorer,
         reinvest_allocator=reinvest_alloc,
         reinvest_cooldown=getattr(config, "REINVEST_COOLDOWN_DAYS", 0),
+        cap_basis=cap_basis,
         fallback_symbol=(benchmark
                          if getattr(config, "FALLBACK_TO_BENCHMARK", False)
                          else None),

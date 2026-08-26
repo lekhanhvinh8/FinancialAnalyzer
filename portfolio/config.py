@@ -138,6 +138,31 @@ USE_PE = False
 # calendar. A ranking always has a first place.
 CAP_MIN_RANK = None
 
+# WHICH SET the cross-sectional percentile is measured over. Applies to both
+# arms' cap floors.
+#
+#   "universe"  every symbol trading that day. A hard floor on size: whether the
+#               price test admitted two names or forty does not move it.
+#
+#   "pool"      only the symbols that already passed the SYMBOL-LEVEL
+#               conditions. Keeps the larger half OF THE CANDIDATES.
+#
+# THESE ARE DIFFERENT FILTERS, NOT TWO SPELLINGS OF ONE, and the difference is
+# the order of the two stages. The price test selects for falling stocks, so the
+# pool is systematically smaller and weaker than the basket: a name in the
+# bottom tenth of the market can sit in the top half of a pool of five other
+# names that are also falling. "universe" refuses it; "pool" admits it and may
+# make it the day's first choice.
+#
+# HAG is the worked example. Bought thirty times on the way from percentile 0.76
+# to 0.09, and by 2018 it was passing at universe percentile 0.12 while sitting
+# at 0.67 within the day's pool of four candidates.
+#
+# "pool" also never empties the day: as long as anything passed the price test,
+# something passes the cap floor. That is either the feature or the flaw,
+# depending on whether a floor is meant to be a floor.
+CAP_RANK_BASIS = "universe"
+
 # Weight of market-cap rank in the buy SCORE, blended with the price scorer over
 # same-day ranks (see scoring.BlendScorer). 0 switches the blend off entirely.
 #
@@ -305,6 +330,19 @@ REINVEST_TOP_K = 5
 # sliced. Quota-sized pieces of a small pot are too small to be worth their own
 # line, and — once costs are modelled — too small to clear a brokerage minimum.
 REINVEST_MIN_SPLIT = 20_000_000
+
+# Size floor for the reinvest arm, as a percentile — the cross-sectional filter
+# the buy arm has in CAP_MIN_RANK, kept SEPARATE from it. The two arms spend
+# different money on different schedules and there is no reason one number
+# should govern both. None leaves size to REINVEST_CAP_WEIGHT alone.
+#
+# Read together with CAP_RANK_BASIS, which decides what the percentile is of.
+#
+# UNMEASURED at the time of writing. The buy arm's own floor was swept and the
+# curve peaked around 0.5 before both arms were switched on, but nothing about
+# that transfers here: the reserve arrives in lumps, competes with nothing, and
+# is already ranked with size at half weight.
+REINVEST_CAP_MIN_RANK = None
 
 # Bars before the reserve may buy the SAME symbol again. 0 disables it.
 #
