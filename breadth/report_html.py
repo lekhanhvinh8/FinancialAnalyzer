@@ -51,15 +51,23 @@ def _curve_svg(plan_curve, base_curve, trades, dates):
             grid.append(f'<line x1="{x:.1f}" y1="{pt}" x2="{x:.1f}" y2="{pt + h}" class="g"/>'
                         f'<text x="{x:.1f}" y="{pt + h + 18}" class="xt">{year}</text>')
 
-    # Trades sit on the plan's equity line, at the month they happened.
-    month_x = {c["date"][:7]: pl + i / (n - 1) * w for i, c in enumerate(plan_curve)}
-    month_y = {c["date"][:7]: pt + h - c["equity"] / ymax * h for c in plan_curve}
+    # Trades sit on the plan's equity line at the DAY they happened, not the
+    # month. The curve is monthly, so the x position is interpolated inside the
+    # month -- rounding to the month put a buy on the 1st and a sell on the 2nd
+    # at the same pixel, which reads as buying and selling at once.
+    months = [c["date"][:7] for c in plan_curve]
+    idx_of = {m: i for i, m in enumerate(months)}
+    ys = [pt + h - c["equity"] / ymax * h for c in plan_curve]
     marks = []
     for t in trades:
         m = t["date"][:7]
-        if m not in month_x:
+        if m not in idx_of:
             continue
-        x, y = month_x[m], month_y[m]
+        i0 = idx_of[m]
+        frac = (int(t["date"][8:10]) - 1) / 31.0
+        i = min(i0 + frac, n - 1)
+        x = pl + i / (n - 1) * w
+        y = ys[min(i0, len(ys) - 1)]
         label, colour = KIND[t["kind"]]
         tip = escape(f'{label} · {t["date"]} · {t["amount"]:,.0f}đ @ {t["price"]:,.0f}')
         if t["kind"] == "sell":

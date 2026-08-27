@@ -124,18 +124,19 @@ def run_backtest(market, breadth_series, plan, contribution: float,
         thin = support < plan.min_symbols
 
         # 3. Sell, if the arm is configured and breadth says the run is over.
-        sold = False
-        if not thin and plan.fires(plan.sell_when, i):
+        # THE SELL CONDITION BLOCKS BOTH OTHER ARMS, whether or not there was
+        # anything to sell. It is the CONDITION that carries the meaning: it
+        # says the basket is extended today, and that is as much a reason not to
+        # buy as it is a reason to leave. Gating on the executed trade instead
+        # let an empty position buy on a day the plan had just called expensive.
+        selling = not thin and plan.fires(plan.sell_when, i)
+        if selling:
             pos = wallet.position(symbol)
             if pos.shares > 0:
-                sold = execute_sell(wallet, symbol, pos.shares * bar.price,
-                                    bar.index, bar.price, date)
+                execute_sell(wallet, symbol, pos.shares * bar.price,
+                             bar.index, bar.price, date)
 
-        # A DAY THAT SOLD DOES NOT ALSO BUY. The sell arm just said the basket
-        # is extended; spending the proceeds the same day would undo the
-        # decision at the same price and leave only the trade record behind.
-        # The money waits in the reserve for a day the buy side agrees with.
-        if sold:
+        if selling:
             if wallet.contribution > CASH_EPSILON:
                 wallet.reserve += wallet.contribution
                 wallet.reserve_basis += wallet.contribution

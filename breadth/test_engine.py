@@ -167,11 +167,26 @@ def main() -> int:
                buy_strong=2.0, buy_normal=1.0, buy_weak=1.0, min_symbols=0)
     sp.attach(bs)
     r = run_backtest(ms, bs, sp, CONTRIB, deposit_rate=0.0)
-    ts = r["wallet"].position("IDX").trades
-    sell_days = {t.date for t in ts if t.kind == "sell"}
-    clash = sorted(t.date for t in ts if t.kind != "sell" and t.date in sell_days)
-    check(r["sells"] > 0, "phep thu can co lenh ban de co nghia")
-    check(not clash, f"co {len(clash)} ngay vua ban vua mua: {clash[:3]}")
+    # The condition holds every day here, so nothing may ever be bought -- not
+    # even on the days the position was already empty and no sale could run.
+    check(r["buys"] == 0,
+          f"dieu kien ban thoa moi ngay thi khong duoc mua, co {r['buys']}")
+    check(abs(r["reserve"] - r["invested"]) < 1.0,
+          f"tien phai nam o reserve, co {r['reserve']:,.0f}")
+
+    # ── a plan of conditions has no fallback pace ───────────────────────────
+    # buy_weak > 0 means "buy this much whatever the signal says". In a
+    # three-arm plan that makes the buy CONDITION decorative: it sold one day
+    # and bought back the next, every month, and the chart showed exactly that.
+    cond = _plan(buy_when=[("below_pct", ValueAboveRule(0.99))],   # never
+                 hold_when=[],
+                 buy_strong=1.0, buy_normal=0.0, buy_weak=0.0, min_symbols=0)
+    bc = _breadth(m.dates, [0.10] * 300)
+    cond.attach(bc)
+    r = run_backtest(m, bc, cond, CONTRIB, deposit_rate=0.0)
+    check(r["buys"] == 0, f"dieu kien khong thoa thi khong duoc mua, co {r['buys']}")
+    check(abs(r["reserve"] - r["invested"]) < 1.0, "tien phai o reserve")
+
 
     # ── a month the instrument did not trade must not leak into the reserve ──
     # This is the bug the first real run exposed: sizing off "one month" while a
