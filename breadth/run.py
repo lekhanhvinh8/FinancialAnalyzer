@@ -162,7 +162,7 @@ def _report(config, plan, base, breadth, market, prog) -> int:
         print(f"{year:<6}{avg:>13.2f} {strong:>13} {weak:>12} {nbar:>6.0f}")
 
     prog.begin("report")
-    ch = chartmod.build(result, config, CHARTS, breadth)
+    ch = chartmod.build(result, config, CHARTS, breadth, plan)
     print(f"\nChart  -> {ch}")
     rep = report_html.build(result, bench, plan, config, breadth,
                             CHARTS / "report.html", chart_name=ch.name,

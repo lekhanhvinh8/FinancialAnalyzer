@@ -1,5 +1,6 @@
 """VN30 backtest chart, rendered by export/chart.py — the same code single/ uses."""
 
+import dataclasses
 import json
 import sqlite3
 from pathlib import Path
@@ -113,7 +114,57 @@ setTimeout(function wait() {{
     path.write_text(html.replace("</body>", script, 1), encoding="utf-8")
 
 
-def build(result, config, out_dir: Path, breadth=None) -> Path:
+@dataclasses.dataclass
+class _ZoneShim:
+    """
+    Adapts one breadth arm to the check(index, close, pe, cal_range_close) call
+    the condition-zone overlay makes per bar.
+
+    The arguments are accepted and ignored: a breadth condition is about the
+    BASKET on that date, not about the instrument's own price, so the shim looks
+    the date up in the breadth series instead.
+
+    Dataclass because export/chart.py lists a strategy's fields in its parameter
+    table; `label` is what shows there.
+    """
+    label: str
+    n_days: int = 0
+
+    def _wire(self, plan, arm, breadth, rows, blocked):
+        self._plan, self._arm, self._b = plan, arm, breadth
+        self._rows = rows            # df row -> breadth index
+        self._blocked = blocked      # arms the sell condition switches off
+        self.n_days = len(rows)
+        return self
+
+    def check(self, index, close=None, pe=None, cal_range_close=None) -> bool:
+        i = self._rows.get(index)
+        if i is None or self._b.counts[i] < self._plan.min_symbols:
+            return False
+        if self._blocked and self._plan.fires(self._plan.sell_when, i):
+            return False
+        return self._plan.fires(self._arm, i)
+
+
+def _zones(plan, breadth, dates):
+    """Three shims, or None if breadth is not available."""
+    if breadth is None:
+        return None, None, None
+    pos = {str(d)[:10]: i for i, d in enumerate(breadth.dates)}
+    rows = {}
+    for r, d in enumerate(dates):
+        i = pos.get(str(d)[:10])
+        if i is not None:
+            rows[r] = i
+    # The buy and reinvest zones are painted with the sell block applied, so the
+    # green shows where the plan would ACT, not merely where its own condition
+    # holds. Without that the chart contradicts the trades.
+    return (_ZoneShim("buy")._wire(plan, plan.buy_when, breadth, rows, True),
+            _ZoneShim("sell")._wire(plan, plan.sell_when, breadth, rows, False),
+            _ZoneShim("reinvest")._wire(plan, plan.reinvest_when, breadth, rows, True))
+
+
+def build(result, config, out_dir: Path, breadth=None, plan=None) -> Path:
     """
     Chart for the traded instrument, with every trade marked.
 
@@ -134,6 +185,9 @@ def build(result, config, out_dir: Path, breadth=None) -> Path:
         growth = ((t.amount - t.basis) / t.basis * 100) if t.basis else 0.0
         bucket[t.kind].append(_Trade(row, t.price, t.amount, t.shares, growth))
 
+    zb, zs, zr = (_zones(plan, breadth, df["time"]) if plan is not None
+                  else (None, None, None))
+
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{symbol.lower()}_backtest.html"
     save_backtest_chart(
@@ -143,6 +197,7 @@ def build(result, config, out_dir: Path, breadth=None) -> Path:
         index=symbol.lower(),
         cal_range_close=db.load_range_stats(symbol, df,
                                             range_days={config.WINDOW, 1000}),
+        buy_strategy=zb, sell_strategy=zs, reinvest_strategy=zr,
         result=result,
         start_index=config.WINDOW - 1,
         sig1_window=config.SLOPE_WINDOW,
