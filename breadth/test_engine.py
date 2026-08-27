@@ -156,6 +156,23 @@ def main() -> int:
     check(abs(r["shares"] * PRICE - months * CONTRIB) < 1.0,
           "ngay mong phai quay ve DCA (x1), khong phai x0.5")
 
+    # ── a day that sells does not also buy ──────────────────────────────────
+    # The sell arm has just said the basket is extended; spending the proceeds
+    # at the same price the same day undoes the decision and leaves only the
+    # trade record behind.
+    ms = _Market(300)
+    bs = _breadth(ms.dates, [0.9] * 300)
+    sp = _plan(buy_when=[("below_pct", ValueAboveRule(0.5))],
+               sell_when=[("below_pct", ValueAboveRule(0.5))],   # both fire, always
+               buy_strong=2.0, buy_normal=1.0, buy_weak=1.0, min_symbols=0)
+    sp.attach(bs)
+    r = run_backtest(ms, bs, sp, CONTRIB, deposit_rate=0.0)
+    ts = r["wallet"].position("IDX").trades
+    sell_days = {t.date for t in ts if t.kind == "sell"}
+    clash = sorted(t.date for t in ts if t.kind != "sell" and t.date in sell_days)
+    check(r["sells"] > 0, "phep thu can co lenh ban de co nghia")
+    check(not clash, f"co {len(clash)} ngay vua ban vua mua: {clash[:3]}")
+
     # ── a month the instrument did not trade must not leak into the reserve ──
     # This is the bug the first real run exposed: sizing off "one month" while a
     # second month's money was already waiting pushed the difference into the

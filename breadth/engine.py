@@ -124,11 +124,24 @@ def run_backtest(market, breadth_series, plan, contribution: float,
         thin = support < plan.min_symbols
 
         # 3. Sell, if the arm is configured and breadth says the run is over.
+        sold = False
         if not thin and plan.fires(plan.sell_when, i):
             pos = wallet.position(symbol)
             if pos.shares > 0:
-                execute_sell(wallet, symbol, pos.shares * bar.price,
-                             bar.index, bar.price, date)
+                sold = execute_sell(wallet, symbol, pos.shares * bar.price,
+                                    bar.index, bar.price, date)
+
+        # A DAY THAT SOLD DOES NOT ALSO BUY. The sell arm just said the basket
+        # is extended; spending the proceeds the same day would undo the
+        # decision at the same price and leave only the trade record behind.
+        # The money waits in the reserve for a day the buy side agrees with.
+        if sold:
+            if wallet.contribution > CASH_EPSILON:
+                wallet.reserve += wallet.contribution
+                wallet.reserve_basis += wallet.contribution
+                wallet.contribution = 0.0
+            monthly = 0.0
+            continue
 
         # 3b. Reinvest: spend the reserve when its own condition holds. A
         #     separate arm, not a side effect of the buy pace -- the reserve is
