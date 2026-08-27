@@ -41,10 +41,14 @@ class Plan:
     buy_when: list = field(default_factory=list)
     hold_when: list = field(default_factory=list)
     sell_when: list = field(default_factory=list)
+    # Spends the reserve, not the contribution. Empty means the arm never fires.
+    reinvest_when: list = field(default_factory=list)
 
     buy_strong: float = 2.0           # contributions to spend when buy_when holds
     buy_normal: float = 1.0
     buy_weak: float = 0.5
+    # Share of the reserve one reinvest may spend, 0..1.
+    reinvest_pct: float = 1.0
 
     min_symbols: int = 20
     window: int = 1000
@@ -70,14 +74,15 @@ class Plan:
         symbol. Confusing them loads the database for nothing.
         """
         out = set()
-        for arm in (self.buy_when, self.hold_when, self.sell_when):
+        for arm in (self.buy_when, self.hold_when, self.sell_when,
+                    self.reinvest_when):
             for _name, rule in arm:
                 out |= rule.windows()
         return out or {1}
 
     def signals(self) -> set:
-        return {n for arm in (self.buy_when, self.hold_when, self.sell_when)
-                for n, _r in arm}
+        return {n for arm in (self.buy_when, self.hold_when, self.sell_when,
+                              self.reinvest_when) for n, _r in arm}
 
     def attach(self, breadth) -> None:
         """One SignalSeries per signal any arm names."""
@@ -101,12 +106,44 @@ class Plan:
             f"  strong : {arm(self.buy_when)}   -> x{self.buy_strong:g}",
             f"  normal : {arm(self.hold_when)}   -> x{self.buy_normal:g}",
             f"  else   : x{self.buy_weak:g}",
+            f"  reinv  : {arm(self.reinvest_when)}   {self.reinvest_pct:.0%} reserve",
             f"  sell   : {arm(self.sell_when)}",
             f"  min n  : {self.min_symbols}",
         ])
 
 
+def _prem_plan(config) -> Plan:
+    """
+    Three arms on median_prem: buy deep, reinvest on mild weakness, sell on
+    broad strength. `median_prem <= -60` reads as "half the basket is at least
+    60% below its own median".
+    """
+    def arm(name, rule):
+        return [] if rule is None else [(name, rule)]
+
+    return Plan(
+        name=getattr(config, "PLAN_NAME", "breadth"),
+        symbol=config.SYMBOL,
+        buy_when=arm("median_prem", None if config.BUY_PREM_MAX is None
+                     else ValueBelowRule(config.BUY_PREM_MAX)),
+        hold_when=[],                      # no middle pace in this shape
+        reinvest_when=arm("median_prem", None if config.REINVEST_PREM_MAX is None
+                          else ValueBelowRule(config.REINVEST_PREM_MAX)),
+        sell_when=arm("median_prem", None if config.SELL_PREM_MIN is None
+                      else ValueAboveRule(config.SELL_PREM_MIN)),
+        buy_strong=config.BUY_STRONG_MULT,
+        buy_normal=config.BUY_NORMAL_MULT,
+        buy_weak=config.BUY_WEAK_MULT,
+        reinvest_pct=config.REINVEST_PCT,
+        min_symbols=config.MIN_SYMBOLS,
+        window=config.WINDOW,
+        slope_window=config.SLOPE_WINDOW,
+    )
+
+
 def build_plan(config) -> Plan:
+    if getattr(config, "USE_PREM_ARMS", False):
+        return _prem_plan(config)
     """
     THE DEFAULT SHAPE
 

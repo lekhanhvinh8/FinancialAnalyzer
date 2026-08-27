@@ -222,6 +222,8 @@ def main() -> int:
             return self._m
         def slope(self, _w, _i):
             return 0.0
+        def sharpe(self, _w, _i):
+            return 0.0
 
     class _M2:
         def __init__(self):

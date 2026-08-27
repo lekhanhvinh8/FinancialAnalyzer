@@ -130,6 +130,14 @@ def run_backtest(market, breadth_series, plan, contribution: float,
                 execute_sell(wallet, symbol, pos.shares * bar.price,
                              bar.index, bar.price, date)
 
+        # 3b. Reinvest: spend the reserve when its own condition holds. A
+        #     separate arm, not a side effect of the buy pace -- the reserve is
+        #     older money and answers a different question.
+        if not thin and plan.reinvest_when and plan.fires(plan.reinvest_when, i):
+            take = wallet.reserve * plan.reinvest_pct
+            if take >= CASH_EPSILON:
+                execute_reinvest(wallet, symbol, take, bar.index, bar.price, date)
+
         # 4. Buy. On a thin day the pace falls back to plain DCA rather than to
         #    zero: a signal computed over six symbols is not evidence of
         #    anything, and treating it as evidence of "expensive" would sit out

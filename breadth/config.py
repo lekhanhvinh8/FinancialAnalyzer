@@ -190,3 +190,54 @@ BUY_WEAK_MULT = 0.8
 # level alone is not a signal to leave.
 SELL_BELOW_PCT = None        # e.g. 0.25 -- fewer than a quarter still cheap
 SELL_MAX_SLOPE = -0.10       # and average momentum clearly negative
+
+# ── Three arms on median_prem ─────────────────────────────────────────────────
+#
+# median_prem is the median distance from median across the basket, so
+# "median_prem <= -60" IS "half the basket is at least 60% below its own median".
+# One number expresses both halves of that sentence.
+#
+# None on any of the three switches that arm off.
+#
+# MIND THE RANGE. median_prem has never been below -28.5% in this history and its
+# median day is +24.8%: the market rose, so the typical symbol sits ABOVE its own
+# 1000-bar median. A buy threshold of -60 fires on 0.0% of days.
+#
+#     <= -60:  0.0%      <= -10:  1.6%      >= +40: 29.3%
+#     <= -40:  0.0%      <=   0:  5.2%      >= +20: 63.0%
+#     <= -20:  0.3%      <= +10: 16.9%      >= +90:  4.5%
+# MEASURED. Against DCA's 95.75%:
+#
+#   mua / reinvest / ban      lai 4%   lai 0%   %tien mat cuoi ky   ban
+#   -60 / -10 / +40           151.03%  101.32%        98%            45
+#   -20 / -10 / +40           151.04%  --             98%            45
+#   -10 /   0 / +40           121.34%  --              0%            45
+#     0 / +10 / +40           135.79%  --              0%            45
+#   +10 / +20 / +90           212.46%  195.23%         0%             9
+#     0 / +10 / khong ban      95.68%  --              0%             0
+#   +10 / +20 / khong ban      97.67%  --              0%             0
+#
+# READ THE LAST TWO COLUMNS FIRST.
+#
+# The -60 row ends 98% IN CASH: the buy arm never fires (median_prem has never
+# been below -28.5%), the sell arm fires on 29% of days, and the reinvest arm at
+# -10 fires on 1.6% -- so money leaves the market and does not come back. A third
+# of its profit is deposit interest, and at 0% it drops from 151% to 101%. That
+# is not an equity strategy, it is a savings account with a stock-shaped start.
+#
+# The +10/+20/+90 row is the interesting one: it ends fully invested, sells only
+# nine times, and 195% survives with no interest at all.
+#
+# BUT IT IS NINE EVENTS. The whole difference rests on nine sell decisions in
+# eleven years, all of them selecting the same two or three market tops, and the
+# thresholds were chosen after seeing which ones those were. Treat it as a
+# hypothesis, not a result.
+#
+# Switching the sell arm off collapses everything back to DCA (95.68%, 97.67%),
+# which says plainly where the difference comes from: it is the selling, not the
+# pace.
+USE_PREM_ARMS = True
+BUY_PREM_MAX = -60.0         # mua khi median_prem <= day
+REINVEST_PREM_MAX = -10.0    # reinvest khi median_prem <= day
+SELL_PREM_MIN = 40.0         # ban khi median_prem >= day
+REINVEST_PCT = 1.0           # phan reserve moi lan reinvest tieu
