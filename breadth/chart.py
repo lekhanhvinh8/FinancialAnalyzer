@@ -1,5 +1,6 @@
 """VN30 backtest chart, rendered by export/chart.py — the same code single/ uses."""
 
+import json
 import sqlite3
 from pathlib import Path
 
@@ -42,7 +43,65 @@ def _load_df(symbol: str) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
-def build(result, config, out_dir: Path) -> Path:
+# The signals the arms actually read, with the thresholds drawn as dashed lines.
+def _arm_signals(config):
+    if getattr(config, "USE_PREM_ARMS", False):
+        lines = [(config.BUY_PREM_MAX, "mua"),
+                 (config.REINVEST_PREM_MAX, "reinvest"),
+                 (config.SELL_PREM_MIN, "ban")]
+        return "median_prem", [(v, n) for v, n in lines if v is not None]
+    return "below_pct", [(config.BUY_STRONG_BELOW_PCT, "manh"),
+                         (config.BUY_NORMAL_BELOW_PCT, "thuong")]
+
+
+def _add_signal(path: Path, breadth, config, dates) -> None:
+    """
+    Draw the deciding signal on the finished chart, on its own right-hand axis.
+
+    Appended after the renderer has run rather than passed in: export/chart.py
+    is shared with single/ and should not grow a parameter for one package. The
+    axis is added by relayout for the same reason.
+    """
+    name, lines = _arm_signals(config)
+    if name not in breadth.values:
+        return
+    by_date = {str(d)[:10]: v for d, v in zip(breadth.dates, breadth.values[name])}
+
+    x = [str(d)[:10] for d in dates]
+    y = [by_date.get(k) for k in x]
+    if not any(v is not None and v == v for v in y):
+        return
+
+    traces = [{"type": "scatter", "mode": "lines", "name": name, "yaxis": "y3",
+               "x": x, "y": y,
+               "line": {"color": "rgba(147,102,240,0.85)", "width": 1.4},
+               "hovertemplate": name + ": %{y:.2f}<extra></extra>"}]
+    for v, label in lines:
+        traces.append({"type": "scatter", "mode": "lines",
+                       "name": f"{label} ({v:g})", "yaxis": "y3",
+                       "x": [x[0], x[-1]], "y": [v, v],
+                       "line": {"color": "rgba(147,102,240,0.45)", "width": 1,
+                                "dash": "dash"},
+                       "hoverinfo": "skip"})
+
+    script = f"""
+<script>
+(function add() {{
+  var gd = document.querySelector('.plotly-graph-div');
+  if (!gd || !window.Plotly || !gd.data) return setTimeout(add, 200);
+  Plotly.relayout(gd, {{
+    'yaxis3': {{overlaying: 'y', side: 'right', showgrid: false,
+                title: {{text: '{name}'}}, position: 1.0,
+                titlefont: {{size: 10}}, tickfont: {{size: 9}}}}
+  }}).then(function() {{ Plotly.addTraces(gd, {json.dumps(traces)}); }});
+}})();
+</script>
+</body>"""
+    html = path.read_text(encoding="utf-8")
+    path.write_text(html.replace("</body>", script, 1), encoding="utf-8")
+
+
+def build(result, config, out_dir: Path, breadth=None) -> Path:
     """
     Chart for the traded instrument, with every trade marked.
 
@@ -76,4 +135,6 @@ def build(result, config, out_dir: Path) -> Path:
         start_index=config.WINDOW - 1,
         sig1_window=config.SLOPE_WINDOW,
     )
+    if breadth is not None:
+        _add_signal(path, breadth, config, df["time"])
     return path
