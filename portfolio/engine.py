@@ -199,7 +199,8 @@ def apply_cooldown(wallet, candidates, bars: int, field: str) -> list:
     return out
 
 
-def position_headroom(wallet, candidates, prices, max_pct, cash) -> dict:
+def position_headroom(wallet, candidates, prices, max_pct, cash,
+                      exempt=()) -> dict:
     """
     How much more may be put into each candidate before it exceeds `max_pct` of
     the portfolio. {symbol: VND}, and a symbol already at or over the cap gets 0.
@@ -241,13 +242,26 @@ def position_headroom(wallet, candidates, prices, max_pct, cash) -> dict:
     ceiling = total * max_pct / 100.0
     out = {}
     for c in candidates:
+        # AN INDEX IS NOT A COMPANY. The cap exists to stop the portfolio
+        # depending on one issuer; a thirty-name aggregate is already the
+        # diversification the cap is trying to buy, so holding it does not
+        # concentrate anything. market.py excludes indices from the size ranking
+        # on exactly this reasoning.
+        #
+        # It matters most because the index is the FALLBACK. Capping the one
+        # destination for money nothing else will take does not spread the money
+        # around -- there is nowhere else for it to go -- it simply leaves it in
+        # cash.
+        if c.symbol in exempt:
+            out[c.symbol] = float("inf")
+            continue
         pos = wallet.positions.get(c.symbol)
         value = (pos.shares * prices.get(c.symbol, c.price)) if pos and pos.shares > 0 else 0.0
         out[c.symbol] = max(0.0, ceiling - value)
     return out
 
 
-def apply_position_cap(wallet, candidates, prices, max_pct, cash):
+def apply_position_cap(wallet, candidates, prices, max_pct, cash, exempt=()):
     """
     -> (candidates that may still take money, {symbol: ceiling})
 
@@ -258,7 +272,7 @@ def apply_position_cap(wallet, candidates, prices, max_pct, cash):
     """
     if not max_pct or not candidates:
         return candidates, None
-    room = position_headroom(wallet, candidates, prices, max_pct, cash)
+    room = position_headroom(wallet, candidates, prices, max_pct, cash, exempt)
     if not room:
         return candidates, None
     keep = [c for c in candidates if room.get(c.symbol, 0.0) > CASH_EPSILON]
@@ -384,6 +398,11 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
     curve: dict = {}
     last_price: dict = {}
 
+    # Computed once: it cannot change mid-run, and asking the Market per day
+    # would be a lookup per candidate per bar. See position_headroom.
+    cap_exempt = (frozenset(s for s in market.symbols if market[s].is_index)
+                  if getattr(plan, "cap_exempt_index", True) else frozenset())
+
     for day in market.days():
         date = day.date
         # Kept up to date on every day, not only when tracking: the position cap
@@ -424,7 +443,7 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
                                         "last_reinvest_index")
             candidates, room = apply_position_cap(
                 wallet, candidates, last_price, plan.max_position_pct,
-                wallet.contribution)
+                wallet.contribution, cap_exempt)
             alloc = getattr(plan, "reinvest_allocator", None) or plan.allocator
             for cand, amount in alloc.allocate(wallet.reserve, candidates, room):
                 execute_reinvest(wallet, cand.symbol, amount, cand.index,
@@ -456,7 +475,7 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
             # the same mistake wearing a different hat.
             candidates, room = apply_position_cap(
                 wallet, candidates, last_price, plan.max_position_pct,
-                wallet.contribution)
+                wallet.contribution, cap_exempt)
             if not candidates and plan.fallback_symbol:
                 bar = day.bars.get(plan.fallback_symbol)
                 if bar is not None:
@@ -464,7 +483,7 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
                                     price=bar.price, score=0.0)]
                     candidates, room = apply_position_cap(
                         wallet, fb, last_price, plan.max_position_pct,
-                        wallet.contribution)
+                        wallet.contribution, cap_exempt)
             for cand, amount in plan.allocator.allocate(wallet.contribution,
                                                         candidates, room):
                 execute_buy(wallet, cand.symbol, amount, cand.index,

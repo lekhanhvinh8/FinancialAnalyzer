@@ -71,6 +71,8 @@ class Plan:
     # buying and reinvesting. 0 or None switches it off. See
     # engine.position_headroom for what "portfolio" means here.
     max_position_pct: float = 0.0
+    # Indices sit outside the position cap. See engine.position_headroom.
+    cap_exempt_index: bool = True
 
     def windows(self) -> set:
         """
@@ -213,6 +215,7 @@ def build_plan(config) -> Plan:
         buy_cooldown=getattr(config, "BUY_COOLDOWN_DAYS", 0) or 0,
         cap_basis=cap_basis,
         max_position_pct=getattr(config, "MAX_POSITION_PCT", 0.0) or 0.0,
+        cap_exempt_index=bool(getattr(config, "CAP_EXEMPT_INDEX", True)),
         fallback_symbol=(benchmark
                          if getattr(config, "FALLBACK_TO_BENCHMARK", False)
                          else None),

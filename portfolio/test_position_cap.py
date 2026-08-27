@@ -122,6 +122,30 @@ def main() -> int:
                         f"vuot tran: {c.symbol} {before:.0f}+{amt:.0f} > {ceiling:.0f} "
                         f"(cash {cash:.0f}, held {held})")
 
+    # ── index exemption ─────────────────────────────────────────────────────
+    # An exempt symbol gets unlimited room and is never dropped, however large
+    # the position already is; everything beside it is still capped normally.
+    w = _wallet({"A": 900.0, "IDX": 900.0}, {**PRICES, "IDX": 10_000.0}, cash=200.0)
+    pr = {**PRICES, "IDX": 10_000.0}
+    kept, room = apply_position_cap(w, _cands("A", "IDX", "B"), pr, 10.0,
+                                    w.contribution, exempt={"IDX"})
+    check(room["IDX"] == float("inf"), f"IDX phai vo han, duoc {room['IDX']}")
+    check("IDX" in [c.symbol for c in kept], "IDX khong duoc bi loai")
+    check(room["A"] == 0.0, "A da vuot tran, phai bang 0")
+    check("A" not in [c.symbol for c in kept], "A phai bi loai")
+
+    # Without the exemption it is capped like anything else.
+    kept2, room2 = apply_position_cap(w, _cands("IDX",), pr, 10.0, w.contribution)
+    check(room2["IDX"] == 0.0 and not kept2,
+          "khong mien tru thi IDX phai bi chan nhu moi ma")
+
+    # And the allocator must actually spend into an infinite ceiling.
+    got = dict((c.symbol, v) for c, v in
+               EqualSplitAllocator(top_k=2).allocate(500.0, _cands("IDX",),
+                                                     {"IDX": float("inf")}))
+    check(abs(got.get("IDX", 0) - 500.0) < 1e-6,
+          f"tran vo han phai nhan het 500, duoc {got.get('IDX')}")
+
     # ── cooldown ────────────────────────────────────────────────────────────
     # It only ever removes names, and it must remove the RIGHT ones: a symbol
     # never acted on (index -1) is always eligible, one acted on exactly `bars`

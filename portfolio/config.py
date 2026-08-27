@@ -296,6 +296,25 @@ BUY_COOLDOWN_DAYS = 100
 # UNMEASURED.
 MAX_POSITION_PCT = 10.0
 
+# Indices sit outside MAX_POSITION_PCT.
+#
+# AN INDEX IS NOT A COMPANY. The cap exists so the portfolio does not depend on
+# one issuer, and a thirty-name aggregate is already the diversification the cap
+# is trying to buy. Treating 10% of VN30 as the same exposure as 10% of GAS
+# misreads what is being held. market.py excludes indices from the size ranking
+# for the same reason.
+#
+# IT MATTERS BECAUSE THE INDEX IS THE FALLBACK. Capping the one destination for
+# money that nothing else will take does not spread that money around -- there
+# is nowhere else for it to go -- it just leaves it in cash. With the cap on the
+# fallback, the previous run ended holding 431m of reserve and had earned 34m of
+# deposit interest.
+#
+# False puts the index back under the cap, which is the stricter reading: a
+# fallback that can absorb any amount makes it easier for a rule to be too
+# strict without the result showing it.
+CAP_EXEMPT_INDEX = True
+
 # ── The sell condition ────────────────────────────────────────────────────────
 
 # Sell a holding once its price is more than SELL_MIN_PREMIUM percent ABOVE its
