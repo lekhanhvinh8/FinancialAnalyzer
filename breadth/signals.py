@@ -58,9 +58,19 @@ from dataclasses import dataclass, field
 import numpy as np
 
 
-SIGNALS = ("below_pct", "median_prem", "p25_prem", "slope_pos", "mean_slope",
-           "spread", "median_zdev", "spread_zdev",
-           "median_sharpe", "sharpe_pos")
+# Premium quantiles, every 5%. Storing the whole shape rather than one summary
+# is what lets a rule name BOTH parameters of the sentence "F of the basket is
+# at least T% above its median": F picks the quantile, T is the threshold.
+#
+#   F of the basket >= T   <=>   quantile(1 - F) >= T
+#
+# So F = 0.5 reads prem_q50, F = 0.25 reads prem_q75, F = 0.75 reads prem_q25.
+PREM_QS = tuple(range(5, 100, 5))
+
+SIGNALS = (("below_pct", "median_prem", "p25_prem", "slope_pos", "mean_slope",
+            "spread", "median_zdev", "spread_zdev",
+            "median_sharpe", "sharpe_pos")
+           + tuple(f"prem_q{q}" for q in PREM_QS))
 
 
 @dataclass
@@ -152,6 +162,8 @@ def compute(market, window: int, slope_window: int,
         push("median_prem", a, lambda v: float(np.median(v)))
         push("p25_prem", a, lambda v: float(np.percentile(v, 25)))
         push("spread", a, lambda v: float(np.percentile(v, 75) - np.percentile(v, 25)))
+        for q in PREM_QS:
+            push(f"prem_q{q}", a, lambda v, q=q: float(np.percentile(v, q)))
 
         b = np.asarray(slopes)
         push("slope_pos", b, lambda v: float((v > 0).mean()))

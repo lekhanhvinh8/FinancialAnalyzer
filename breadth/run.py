@@ -66,7 +66,7 @@ def main(argv) -> int:
     # safely. The load it avoids is eight minutes; the compute it avoids is one
     # second. --fresh forces the long way round.
     cpath = cache_path(config.UNIVERSE, config.WINDOW,
-                       f"{config.SLOPE_WINDOW}z{config.ZDEV_STAT_WINDOW}s")
+                       f"{config.SLOPE_WINDOW}z{config.ZDEV_STAT_WINDOW}sq")
     breadth = None if "--fresh" in argv else load_cache(cpath)
     if breadth is not None:
         print(f"Breadth: {len(breadth)} ngay (cache)")

@@ -112,25 +112,45 @@ class Plan:
         ])
 
 
+def prem_signal(fraction: float) -> str:
+    """
+    Signal name for "this fraction of the basket must pass the threshold".
+
+    F of the basket at or above T is the same statement as the (1-F) quantile
+    being at or above T, so the fraction chooses which stored quantile the rule
+    reads and the threshold stays free.
+
+    Rounded to the nearest 5%, which is what signals.py stores.
+    """
+    q = int(round((1.0 - fraction) * 100 / 5.0)) * 5
+    return f"prem_q{min(95, max(5, q))}"
+
+
 def _prem_plan(config) -> Plan:
     """
     Three arms on median_prem: buy deep, reinvest on mild weakness, sell on
     broad strength. `median_prem <= -60` reads as "half the basket is at least
     60% below its own median".
     """
-    def arm(name, rule):
-        return [] if rule is None else [(name, rule)]
+    def below(thr, frac):
+        """`frac` of the basket at or BELOW thr — the low tail, so quantile frac."""
+        if thr is None:
+            return []
+        q = int(round(frac * 100 / 5.0)) * 5
+        return [(f"prem_q{min(95, max(5, q))}", ValueBelowRule(thr))]
+
+    def above(thr, frac):
+        if thr is None:
+            return []
+        return [(prem_signal(frac), ValueAboveRule(thr))]
 
     return Plan(
         name=getattr(config, "PLAN_NAME", "breadth"),
         symbol=config.SYMBOL,
-        buy_when=arm("median_prem", None if config.BUY_PREM_MAX is None
-                     else ValueBelowRule(config.BUY_PREM_MAX)),
+        buy_when=below(config.BUY_PREM_MAX, config.BUY_PREM_FRAC),
         hold_when=[],                      # no middle pace in this shape
-        reinvest_when=arm("median_prem", None if config.REINVEST_PREM_MAX is None
-                          else ValueBelowRule(config.REINVEST_PREM_MAX)),
-        sell_when=arm("median_prem", None if config.SELL_PREM_MIN is None
-                      else ValueAboveRule(config.SELL_PREM_MIN)),
+        reinvest_when=below(config.REINVEST_PREM_MAX, config.REINVEST_PREM_FRAC),
+        sell_when=above(config.SELL_PREM_MIN, config.SELL_PREM_FRAC),
         buy_strong=config.BUY_STRONG_MULT,
         buy_normal=config.BUY_NORMAL_MULT,
         buy_weak=config.BUY_WEAK_MULT,

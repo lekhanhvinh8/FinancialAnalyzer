@@ -236,8 +236,49 @@ SELL_MAX_SLOPE = -0.10       # and average momentum clearly negative
 # Switching the sell arm off collapses everything back to DCA (95.68%, 97.67%),
 # which says plainly where the difference comes from: it is the selling, not the
 # pace.
+# EACH ARM HAS TWO PARAMETERS, not one: the threshold, and HOW MUCH of the
+# basket has to pass it.
+#
+#     SELL:  SELL_PREM_FRAC of the basket is at least SELL_PREM_MIN% above its
+#            own median  ->  sell
+#
+# The fraction was previously hard-coded at 0.5 inside np.median. It is now
+# explicit, because "half the basket 40% up" and "a quarter of the basket 80%
+# up" are different statements about the market and only one of them was
+# expressible.
+#
+# Implemented by storing premium quantiles every 5% and letting the fraction
+# choose which one to read: F of the basket >= T is the same as quantile(1-F)
+# >= T. Fractions are rounded to the nearest 5%.
 USE_PREM_ARMS = True
-BUY_PREM_MAX = -60.0         # mua khi median_prem <= day
-REINVEST_PREM_MAX = -10.0    # reinvest khi median_prem <= day
-SELL_PREM_MIN = 40.0         # ban khi median_prem >= day
+
+BUY_PREM_MAX = -60.0         # mua khi BUY_PREM_FRAC ro nam duoi -60%
+BUY_PREM_FRAC = 0.5
+
+REINVEST_PREM_MAX = -10.0    # reinvest khi REINVEST_PREM_FRAC ro duoi -10%
+REINVEST_PREM_FRAC = 0.5
+
+# SWEPT, both parameters at once. Growth %, against DCA's 95.75%:
+#
+#     % of basket \ threshold    20      40      60      80     100
+#              25%              48.2    90.6   137.6   152.9   207.0
+#              50%             102.7   150.9   201.8   224.9   240.2
+#              75%             140.8   213.8   139.4   100.4   100.4
+#
+#     sells                     20      40      60      80     100
+#              25%               4       5       8       9       4
+#              50%              14       9       7       3       4
+#              75%              10       5       1       0       0
+#
+# THE SELL COUNTS ARE THE WHOLE STORY. Nothing here rests on more than fourteen
+# decisions and most cells rest on fewer than ten; the 240.2 cell fires four
+# times in eleven years and the two 100.4 cells never fire at all -- they are
+# plain DCA with a rounding difference. A surface built from four-event cells
+# has no shape to read, and picking its maximum is picking noise.
+#
+# 40 / 0.5 is kept because it is legible -- "half the basket 40% above its own
+# four-year median" -- not because it won anything.
+SELL_PREM_MIN = 40.0         # ban khi SELL_PREM_FRAC ro tren +40%
+SELL_PREM_FRAC = 0.5
+
 REINVEST_PCT = 1.0           # phan reserve moi lan reinvest tieu
