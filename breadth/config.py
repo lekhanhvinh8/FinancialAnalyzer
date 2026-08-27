@@ -49,6 +49,28 @@ WINDOW = 1000
 # reads.
 SLOPE_WINDOW = 120
 
+# signal3_sharpe (return over volatility) is loaded from the same trend_signals
+# rows and aggregated as median_sharpe / sharpe_pos.
+#
+# MEASURED, AND WORSE THAN EITHER OTHER SIGNAL, in BOTH directions:
+#
+#     contrarian  median_sharpe < -0.24 / < 0.33    93.86%  -1.89     9m reserve
+#     contrarian  median_sharpe < -0.85 / < -0.24   87.97%  -7.78   168m
+#     momentum    median_sharpe > 1.23 / > 0.33     93.64%  -2.11    13m
+#     momentum    median_sharpe > 2.57 / > 0.33     88.93%  -6.82    86m
+#     sharpe_pos < 0.41 / < 0.61                    94.30%  -1.45     0m
+#     sharpe_pos > 0.77 / > 0.61                    94.04%  -1.71    11m
+#     below_pct 0.388 / 0.224  (shipped)            96.58%  +0.83    34m
+#
+# THIS IS A STRONGER NEGATIVE THAN THE z_dev ONE. Those variants lost roughly in
+# proportion to the cash they held; these lose while holding almost none -- 9m
+# and 0m still give -1.89 and -1.45. So sharpe is not merely uninformative here,
+# it points the wrong way, and it does so whichever direction it is read in.
+#
+# Combining it with a cheapness signal is worse again (-6.01, -3.23): requiring
+# both drops the strong arm to 1-2% of days, so the reserve piles up and the
+# earlier pattern takes over.
+
 # Window z_dev standardises over: how many bars of a symbol's own dev history
 # define "normal" for it. 250 is about a year.
 #

@@ -44,6 +44,8 @@ WHAT IS COMPUTED
     spread        p75 minus p25 of premium: agreement or dispersion     %
     median_zdev   the basket's cheapness in units of its own sigma      sigma
     spread_zdev   p75 minus p25 of z_dev: falling together, or rotating sigma
+    median_sharpe median signal3_sharpe: momentum divided by volatility
+    sharpe_pos    share of the basket with positive sharpe                0..1
     n             how many symbols the day's figures rest on            count
 
   `n` is not decoration. Early in the run only a handful of symbols are past
@@ -57,7 +59,8 @@ import numpy as np
 
 
 SIGNALS = ("below_pct", "median_prem", "p25_prem", "slope_pos", "mean_slope",
-           "spread", "median_zdev", "spread_zdev")
+           "spread", "median_zdev", "spread_zdev",
+           "median_sharpe", "sharpe_pos")
 
 
 @dataclass
@@ -123,7 +126,7 @@ def compute(market, window: int, slope_window: int,
         cols[key].append(fn(values) if len(values) else np.nan)
 
     for day in market.days():
-        prem, slopes, zs = [], [], []
+        prem, slopes, zs, sh = [], [], [], []
         for symbol, bar in day.bars.items():
             series = market[symbol]
             if series.is_index:
@@ -134,6 +137,9 @@ def compute(market, window: int, slope_window: int,
             sl = series.slope(slope_window, bar.index)
             if sl is not None:
                 slopes.append(sl)
+            s3 = series.sharpe(slope_window, bar.index)
+            if s3 is not None:
+                sh.append(s3)
             z = zdev.get(symbol)
             if z is not None and bar.index < len(z) and z[bar.index] == z[bar.index]:
                 zs.append(float(z[bar.index]))
@@ -150,6 +156,10 @@ def compute(market, window: int, slope_window: int,
         b = np.asarray(slopes)
         push("slope_pos", b, lambda v: float((v > 0).mean()))
         push("mean_slope", b, lambda v: float(v.mean()))
+
+        d = np.asarray(sh)
+        push("median_sharpe", d, lambda v: float(np.median(v)))
+        push("sharpe_pos", d, lambda v: float((v > 0).mean()))
 
         c = np.asarray(zs)
         push("median_zdev", c, lambda v: float(np.median(v)))

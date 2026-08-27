@@ -103,6 +103,9 @@ class SymbolSeries:
     # {window: array} of signal1_slope, the short-window linear-regression slope
     # of price in percent per day. Loaded only for windows a rule asks for.
     slopes: dict = field(default_factory=dict)
+    # {window: array} of signal3_sharpe — return divided by volatility, so it
+    # compares across symbols where a raw slope does not.
+    sharpes: dict = field(default_factory=dict)
     # Cross-sectional percentile of `caps` among the symbols trading that day,
     # 0 = smallest, 1 = largest. NOT computed here — one symbol cannot see the
     # others. Market fills it after every symbol is loaded; see market.py.
@@ -140,6 +143,13 @@ class SymbolSeries:
         the row predates it.
         """
         a = self.slopes.get(window)
+        if a is None or i < 0 or i >= len(a):
+            return None
+        v = a[i]
+        return None if v != v else float(v)
+
+    def sharpe(self, window: int, i: int):
+        a = self.sharpes.get(window)
         if a is None or i < 0 or i >= len(a):
             return None
         v = a[i]
@@ -286,17 +296,25 @@ def load_symbol(symbol: str, windows, min_rows: int = 0, slope_windows=()
     # reads it — see rules.SlopeBelowRule — so the price warmup stays the only
     # thing that decides where the run begins, and the universe does not shrink
     # because one signal started late.
+    # Both signals come from the same row, so they are read in one pass:
+    # signal1_slope into .slopes, signal3_sharpe into .sharpes.
     for w in sorted({int(x) for x in slope_windows}):
         arr = np.full(len(dates), np.nan)
+        sh = np.full(len(dates), np.nan)
         row_of_str = {str(d.date()): i for i, d in enumerate(dates)}
         with sqlite3.connect(DB_PATH) as con:
-            for date, v in con.execute(
-                    "SELECT date, signal1_slope FROM trend_signals "
+            for date, v, s3 in con.execute(
+                    "SELECT date, signal1_slope, signal3_sharpe FROM trend_signals "
                     "WHERE symbol = ? AND window_days = ?", (symbol, w)):
                 i = row_of_str.get(date)
-                if i is not None and v is not None:
+                if i is None:
+                    continue
+                if v is not None:
                     arr[i] = v
+                if s3 is not None:
+                    sh[i] = s3
         series.slopes[w] = arr
+        series.sharpes[w] = sh
 
     if len(series) - series.warmup <= 0:
         return None, f"nothing left after {series.warmup} bars of warmup"
