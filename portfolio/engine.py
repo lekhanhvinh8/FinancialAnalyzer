@@ -173,6 +173,72 @@ def execute_reinvest(wallet: Wallet, symbol: str, amount: float, index: int,
 
 # ── Arms ──────────────────────────────────────────────────────────────────────
 
+def position_headroom(wallet, candidates, prices, max_pct, cash) -> dict:
+    """
+    How much more may be put into each candidate before it exceeds `max_pct` of
+    the portfolio. {symbol: VND}, and a symbol already at or over the cap gets 0.
+
+    WHAT THE PORTFOLIO MEANS HERE
+
+      Holdings marked to today's prices, PLUS the cash in hand. Including cash is
+      what makes the rule solvable in one step: a purchase moves money from cash
+      into a position, so the total is the same before and after it, and the
+      constraint is a plain inequality rather than a fixed point.
+
+      It is also the only denominator that works at the start. Measured against
+      holdings alone, the first purchase into an empty wallet is 100% of the
+      portfolio whatever its size, and nothing could ever be bought.
+
+      The consequence is that the cap BINDS HARDEST EARLY and loosens on its own.
+      With 8m a month and a 10% cap, month one allows 800k into any one name;
+      by month twenty the portfolio is around 160m and a full month's
+      contribution fits in a single position. That is the rule working, not a
+      flaw in it, but it does mean the early years buy less than they receive.
+
+    WHAT IT DOES NOT DO
+
+      Nothing is ever sold to enforce this. A position that grows past the cap on
+      its own is left alone -- the cap governs DECISIONS, not outcomes -- and it
+      simply stops being eligible for more money until it falls back under.
+    """
+    if not max_pct:
+        return {}
+
+    held = 0.0
+    for p in wallet.positions.values():
+        if p.shares > 0:
+            held += p.shares * prices.get(p.symbol, 0.0)
+    total = held + cash + wallet.reserve
+    if total <= 0:
+        return {}
+
+    ceiling = total * max_pct / 100.0
+    out = {}
+    for c in candidates:
+        pos = wallet.positions.get(c.symbol)
+        value = (pos.shares * prices.get(c.symbol, c.price)) if pos and pos.shares > 0 else 0.0
+        out[c.symbol] = max(0.0, ceiling - value)
+    return out
+
+
+def apply_position_cap(wallet, candidates, prices, max_pct, cash):
+    """
+    -> (candidates that may still take money, {symbol: ceiling})
+
+    Both halves of the rule come from one calculation. A name with no headroom is
+    dropped rather than allocated zero, so `candidates` stays an honest answer to
+    "did anything qualify today" -- which is what decides whether the fallback
+    fires.
+    """
+    if not max_pct or not candidates:
+        return candidates, None
+    room = position_headroom(wallet, candidates, prices, max_pct, cash)
+    if not room:
+        return candidates, None
+    keep = [c for c in candidates if room.get(c.symbol, 0.0) > CASH_EPSILON]
+    return keep, room
+
+
 def _pool_cap_ranks(market, day, rule, symbols) -> dict:
     """
     Size percentile of each symbol WITHIN the day's survivors of the
@@ -294,6 +360,11 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
 
     for day in market.days():
         date = day.date
+        # Kept up to date on every day, not only when tracking: the position cap
+        # marks the portfolio to market before each decision, and a stale price
+        # would size the purchase against a portfolio that no longer exists.
+        for _sym, _bar in day.bars.items():
+            last_price[_sym] = _bar.price
 
         # 1. Interest on idle cash, monthly.
         if _new_month(wallet.last_interest_month, date):
@@ -331,8 +402,11 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
                     c for c in candidates
                     if wallet.position(c.symbol).last_reinvest_index < 0
                     or c.index - wallet.position(c.symbol).last_reinvest_index >= cd]
+            candidates, room = apply_position_cap(
+                wallet, candidates, last_price, plan.max_position_pct,
+                wallet.contribution)
             alloc = getattr(plan, "reinvest_allocator", None) or plan.allocator
-            for cand, amount in alloc.allocate(wallet.reserve, candidates):
+            for cand, amount in alloc.allocate(wallet.reserve, candidates, room):
                 execute_reinvest(wallet, cand.symbol, amount, cand.index,
                                  cand.price, date)
             if wallet.reserve < CASH_EPSILON:
@@ -348,13 +422,24 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
             # Nobody qualified: put the money in the fallback instead of letting
             # it sit. See Plan.fallback_symbol — this is what keeps a strict rule
             # from silently becoming a bet on holding cash.
+            # The cap runs BEFORE the fallback is considered, so a day on
+            # which every candidate is full falls back like a day on which
+            # nobody qualified. The fallback is then capped in its turn: it is a
+            # position like any other and concentrating into the index would be
+            # the same mistake wearing a different hat.
+            candidates, room = apply_position_cap(
+                wallet, candidates, last_price, plan.max_position_pct,
+                wallet.contribution)
             if not candidates and plan.fallback_symbol:
                 bar = day.bars.get(plan.fallback_symbol)
                 if bar is not None:
-                    candidates = [Candidate(symbol=bar.symbol, index=bar.index,
-                                            price=bar.price, score=0.0)]
+                    fb = [Candidate(symbol=bar.symbol, index=bar.index,
+                                    price=bar.price, score=0.0)]
+                    candidates, room = apply_position_cap(
+                        wallet, fb, last_price, plan.max_position_pct,
+                        wallet.contribution)
             for cand, amount in plan.allocator.allocate(wallet.contribution,
-                                                        candidates):
+                                                        candidates, room):
                 execute_buy(wallet, cand.symbol, amount, cand.index,
                             cand.price, date)
             if wallet.contribution < CASH_EPSILON:
@@ -367,8 +452,6 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
             wallet.contribution = 0.0
 
         if track:
-            for sym, bar in day.bars.items():
-                last_price[sym] = bar.price
             held = 0.0
             for p in wallet.positions.values():
                 if p.shares > 0:

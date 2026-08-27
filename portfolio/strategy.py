@@ -66,6 +66,11 @@ class Plan:
     # in the engine, so a sweep can vary it without touching the module.
     cap_basis: str = "universe"
 
+    # Ceiling on any one position as a percent of the portfolio, enforced when
+    # buying and reinvesting. 0 or None switches it off. See
+    # engine.position_headroom for what "portfolio" means here.
+    max_position_pct: float = 0.0
+
     def windows(self) -> set:
         """
         Every window size this plan reads, so Market.load fetches those and no
@@ -205,6 +210,7 @@ def build_plan(config) -> Plan:
         reinvest_allocator=reinvest_alloc,
         reinvest_cooldown=getattr(config, "REINVEST_COOLDOWN_DAYS", 0),
         cap_basis=cap_basis,
+        max_position_pct=getattr(config, "MAX_POSITION_PCT", 0.0) or 0.0,
         fallback_symbol=(benchmark
                          if getattr(config, "FALLBACK_TO_BENCHMARK", False)
                          else None),

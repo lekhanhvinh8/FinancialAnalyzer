@@ -240,6 +240,36 @@ CAP_RANK_BASIS = "universe"
 # precision this has not earned.
 CAP_WEIGHT = 0.75
 
+# ── Concentration ─────────────────────────────────────────────────────────────
+
+# No single position may be taken past this percent of the portfolio by a BUY or
+# a REINVEST. None or 0 switches it off.
+#
+# TWO HALVES OF ONE RULE. A symbol already at or over the ceiling is dropped from
+# the day's candidates, and a symbol under it may only be given the difference.
+# Both come from the same headroom calculation in engine.position_headroom.
+#
+# IT GOVERNS DECISIONS, NOT OUTCOMES. Nothing is ever sold to enforce it. A
+# position that grows past 10% on its own is left alone and simply stops being
+# eligible for more money until it falls back under, which is the difference
+# between a concentration limit and a rebalancing rule. This is the first and
+# not the second.
+#
+# THE PORTFOLIO INCLUDES CASH. Holdings marked to today's prices plus the
+# uninvested contribution and the reserve. That is what makes it solvable in one
+# step -- a purchase moves money from cash into a position and leaves the total
+# unchanged -- and it is the only denominator that works at the start, since
+# against holdings alone the first purchase into an empty wallet is 100% of the
+# portfolio whatever its size.
+#
+# IT BINDS HARDEST EARLY. At 8m a month, month one allows 800k into any one name
+# and the rest carries; by month twenty the portfolio is around 160m and a whole
+# month's contribution fits in one position. The early years therefore buy less
+# than they receive, and that is the rule working rather than a flaw in it.
+#
+# UNMEASURED.
+MAX_POSITION_PCT = 10.0
+
 # ── The sell condition ────────────────────────────────────────────────────────
 
 # Sell a holding once its price is more than SELL_MIN_PREMIUM percent ABOVE its

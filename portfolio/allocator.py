@@ -27,13 +27,23 @@ MIN_TICKET
   the list is trimmed FROM THE BOTTOM — the ranking already says which names to
   lose. Zero disables it, which is the default.
 
+LIMITS
+
+  `allocate(amount, candidates, limits)` takes an optional {symbol: ceiling} and
+  gives no candidate more than its ceiling. That is how the concentration cap
+  reaches sizing without either allocator learning what a Wallet is: the engine
+  knows the portfolio and works out the headroom, and the allocator only has to
+  respect a number it is handed.
+
+  A ceiling of zero is a candidate that may not be funded at all. The engine
+  normally drops those before they get here, so an allocator seeing one is not an
+  error, just money that goes elsewhere.
+
 WHAT THIS DELIBERATELY DOES NOT DO
 
   No re-sorting: the order is the scorer's judgement, and re-deriving it here
-  would make two places responsible for one decision. No concentration cap and no
-  view of what is already held, so allocation is stateless with respect to the
-  wallet. A position limit means giving allocate() the wallet, which is a real
-  interface change and should happen when there is a limit to enforce.
+  would make two places responsible for one decision. Nothing here reads the
+  wallet; a ceiling arrives as a plain number.
 """
 
 from dataclasses import dataclass
@@ -51,7 +61,7 @@ class EqualSplitAllocator:
     top_k: "int | None" = None
     min_ticket: float = 0.0
 
-    def allocate(self, amount: float, candidates: list) -> list:
+    def allocate(self, amount: float, candidates: list, limits: dict = None) -> list:
         if amount <= 0 or not candidates:
             return []
 
@@ -67,8 +77,38 @@ class EqualSplitAllocator:
                 return []
             chosen = chosen[:affordable]
 
-        each = amount / len(chosen)
-        return [(c, each) for c in chosen]
+        if not limits:
+            each = amount / len(chosen)
+            return [(c, each) for c in chosen]
+
+        # WATER-FILLING, not "split then trim". Trimming would leave the money a
+        # capped candidate could not take sitting as cash, which turns a
+        # concentration limit into an accidental decision to hold cash. Filling
+        # tops up whoever still has room, repeatedly, so the cap changes WHERE
+        # the money goes and only reduces how much is spent when the whole
+        # chosen list is full.
+        room = {c.symbol: max(0.0, float(limits.get(c.symbol, amount)))
+                for c in chosen}
+        give = {c.symbol: 0.0 for c in chosen}
+        left = amount
+        active = [c for c in chosen if room[c.symbol] > 0]
+
+        while left > 1.0 and active:
+            share = left / len(active)
+            moved = 0.0
+            for c in active:
+                take = min(share, room[c.symbol])
+                if take <= 0:
+                    continue
+                give[c.symbol] += take
+                room[c.symbol] -= take
+                left -= take
+                moved += take
+            if moved <= 0:
+                break
+            active = [c for c in active if room[c.symbol] > 1.0]
+
+        return [(c, give[c.symbol]) for c in chosen if give[c.symbol] > 0]
 
     def describe(self) -> str:
         k = "all" if self.top_k is None else str(self.top_k)
@@ -115,7 +155,7 @@ class QuotaAllocator:
     top_k: "int | None" = None
     min_ticket: float = 0.0
 
-    def allocate(self, amount: float, candidates: list) -> list:
+    def allocate(self, amount: float, candidates: list, limits: dict = None) -> list:
         if amount <= 0 or not candidates:
             return []
 
@@ -123,18 +163,36 @@ class QuotaAllocator:
         if not chosen:
             return []
 
+        def ceiling(c):
+            return amount if not limits else max(0.0, float(limits.get(c.symbol, amount)))
+
         if amount < self.min_split:
-            return [(chosen[0], amount)]
+            # All-in on the best name, but never past its ceiling. Walk down the
+            # ranking for one that can take the money rather than giving up: the
+            # pot is small by definition here and splitting it was already
+            # rejected.
+            for c in chosen:
+                room = ceiling(c)
+                if room > 1.0:
+                    return [(c, min(amount, room))]
+            return []
 
         quota = amount * self.quota_pct / 100
         if self.min_ticket > 0:
             quota = max(quota, self.min_ticket)
 
+        # No water-filling here, unlike the equal split. The quota is a
+        # DELIBERATE ticket size -- the whole reason this allocator exists is
+        # that the size of a purchase should not depend on how many other names
+        # qualified -- so a candidate held below its quota by the cap passes the
+        # money down the ranking rather than inflating its neighbours.
         out, left = [], amount
         for c in chosen:
             if left < max(self.min_ticket, 1.0):
                 break
-            take = min(quota, left)
+            take = min(quota, left, ceiling(c))
+            if take <= 1.0:
+                continue
             out.append((c, take))
             left -= take
         return out
