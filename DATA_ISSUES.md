@@ -49,3 +49,39 @@ Aggregate P/E for early dates is computed over fewer members, making it less rep
 
 **Resolution:**  
 No fix needed — the calculation correctly excludes them before their listing date.
+
+---
+
+## 4. No free float — market cap overstates investable size (HIGH IMPACT)
+
+**What's wrong:**  
+`pe_ratios.total_market_cap` counts every issued share. It is not adjusted for
+free float, so it includes shares that never reach the market: state holdings,
+founder and family stakes, strategic blocks locked by agreement.
+
+**Root cause:**  
+Free-float ratios are not in any source currently collected. vnstock's free tier
+does not expose them, and they are not derivable from the balance sheet — the
+distinction is about *who holds* the shares, not how many exist.
+
+**Impact:**  
+Anything that ranks or filters by size is partly ranking by *who is not selling*.
+In this market that is not a rounding error: several VN30 names are majority
+state-owned, so their investable size is a fraction of their headline size. Two
+companies with the same total capitalisation can differ several-fold in the
+capital an outside investor can actually deploy, and in liquidity.
+
+This is what stopped the `portfolio/` strand — see `portfolio/CONCLUSIONS.md`.
+Market cap was standing in for company quality, and without free float it is not
+even a reliable measure of size.
+
+**Most affected:**  
+State-linked large caps — VCB, BID, CTG, GAS, and the VN30 aggregate that
+includes them.
+
+**Resolution options:**  
+- A provider that publishes free-float ratios (FiinPro, or HOSE's own index
+  methodology files, which carry free-float factors for index members).
+- HOSE index review announcements list the free-float factor per constituent at
+  each review; those are point-in-time by construction, which is the right shape.
+- Failing both, drop size as a proxy rather than continue tuning against it.
