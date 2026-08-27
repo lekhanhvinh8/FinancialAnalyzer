@@ -17,10 +17,10 @@ WHY THE ALLOCATOR IS SHARED AND THE SCORERS ARE NOT
 from dataclasses import dataclass, field
 
 from .allocator import EqualSplitAllocator, QuotaAllocator
-from .rules import (AllOf, CapRankAboveRule, NeverRule, Not,
+from core.rules import (AllOf, CapRankAboveRule, NeverRule, Not,
                     PremiumAboveRule, PremiumBelowRule, Rule,
                     SlopeBelowRule, SymbolIn)
-from .scoring import BlendScorer, CapRankScorer, NullScorer, PremiumScorer, Scorer
+from core.scoring import BlendScorer, CapRankScorer, NullScorer, PremiumScorer, Scorer
 
 
 @dataclass
@@ -255,7 +255,7 @@ def build_baseline(config) -> Plan:
             allocator=EqualSplitAllocator(top_k=None, min_ticket=0),
         )
 
-    from .rules import AlwaysRule
+    from core.rules import AlwaysRule
     return Plan(
         name="equal-weight DCA",
         buy_rule=AlwaysRule(),
@@ -274,7 +274,7 @@ def _buy_scorer(config, factory):
 
 def _scorer(config):
     """`(window, reference, cheapest_first) -> Scorer` for the configured SCORER."""
-    from .scoring import DrawdownScorer
+    from core.scoring import DrawdownScorer
 
     name = getattr(config, "SCORER", "premium")
     if name in (None, "none", "null"):

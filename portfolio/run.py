@@ -34,14 +34,14 @@ for _stream in (sys.stdout, sys.stderr):
 
 from portfolio import config
 from portfolio.engine import run_backtest
-from portfolio.market import Market
-from portfolio.progress import RunProgress
+from core.market import Market
+from core.progress import RunProgress
 from portfolio.report import compare
 from portfolio.overlay_chart import build_overlay
 from portfolio.report_html import build_report
 from portfolio.symbol_chart import build_all as build_symbol_charts
 from portfolio.strategy import build_baseline, build_plan
-from portfolio.universe import resolve
+from core.universe import resolve
 
 
 def _bar(n: int, total: int, width: int = 18) -> str:

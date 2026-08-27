@@ -50,7 +50,7 @@ COSTS ARE ZERO
   and until then every return here is an upper bound.
 """
 
-from .models import Candidate, Trade, Wallet
+from core.models import Candidate, Trade, Wallet
 
 
 # Cash below this is numerically zero, in VND.

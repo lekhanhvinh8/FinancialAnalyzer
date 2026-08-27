@@ -20,26 +20,28 @@ THREE DECISIONS THAT COLLAPSE INTO ONE FOR A SINGLE SYMBOL
 
 MODULE MAP
 
-    data.py        reading one symbol out of the shared database
-    market.py      one calendar over many symbols; warmup per symbol
-    models.py      Wallet, Position, Trade
-    rules.py       conditions
-    scoring.py     ranking
     allocator.py   sizing
     strategy.py    Plan — the three arms plus the allocator, i.e. the strategy
     engine.py      the daily loop and execution
-    universe.py    which symbols are in scope
     report.py      text comparison
     run.py         CLI
 
+  Reading the market — data, universe, market, models — and the vocabulary for
+  conditions — rules, scoring — moved to core/ when a second method needed the
+  same things. What is left here is what makes this method THIS method: ranking
+  symbols that compete for one wallet, and dividing that wallet between them.
+
 RELATIONSHIP TO THE REST OF THE PROJECT
 
-  This package shares the DATABASE and nothing else. Prices, P/E and rolling
-  statistics are facts about the market, and a second definition of them is how
-  two halves of a project start disagreeing about reality.
+  This package shares core/ and the database. Prices, P/E and rolling statistics
+  are facts about the market, and a second definition of them is how two halves
+  of a project start disagreeing about reality.
 
-  Everything above that line is its own: its own conditions, its own ledger, its
-  own engine. Nothing here imports the single-symbol method, and nothing here can
+  The strategy above that line is its own: its own arms, its own ledger, its own
+  engine. Nothing here imports the single-symbol method, and nothing here can
   change one of its results — which is the point, because those results carry
   years of measured findings that a new experiment has no business disturbing.
+
+  STATUS: closed. See CONCLUSIONS.md. The code and its tests stay; the parameter
+  search does not continue.
 """

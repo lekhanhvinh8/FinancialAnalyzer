@@ -20,7 +20,7 @@ import sys
 from portfolio.allocator import EqualSplitAllocator, QuotaAllocator
 from portfolio.engine import (apply_cooldown, apply_position_cap,
                               position_headroom)
-from portfolio.models import Candidate, Wallet
+from core.models import Candidate, Wallet
 
 
 def _wallet(holdings: dict, prices: dict, cash=0.0, reserve=0.0) -> Wallet:

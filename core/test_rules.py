@@ -18,7 +18,7 @@ WHY THIS FILE EXISTS
   the SIGNATURE, not of the logic, and a subclass added later is picked up
   without anyone remembering to list it here.
 
-Run with:  python -m portfolio.test_rules
+Run with:  python -m core.test_rules
 """
 
 import inspect
@@ -26,8 +26,8 @@ import sys
 
 import numpy as np
 
-from portfolio import rules as R
-from portfolio.data import SymbolSeries, WindowStats
+from core import rules as R
+from core.data import SymbolSeries, WindowStats
 
 
 def _series() -> SymbolSeries:
