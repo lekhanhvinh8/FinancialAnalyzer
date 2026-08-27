@@ -215,6 +215,9 @@ def main() -> int:
     class _S:
         def __init__(self, is_index, med, price):
             self.is_index, self._m, self._p = is_index, med, price
+            self.closes = np.array([price])
+        def __len__(self):
+            return 1
         def median(self, _w, _i):
             return self._m
         def slope(self, _w, _i):
@@ -231,6 +234,9 @@ def main() -> int:
             return iter(self._d)
         def __getitem__(self, k):
             return self._s[k]
+        @property
+        def symbols(self):
+            return list(self._s)
 
     br = compute(_M2(), 1000, 120)
     check(br.counts[0] == 2, f"chi so phai bi loai, dem duoc {br.counts[0]}")

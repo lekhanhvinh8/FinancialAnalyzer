@@ -42,6 +42,8 @@ WHAT IS COMPUTED
     slope_pos     share with positive short-window momentum             0..1
     mean_slope    average momentum, percent per day                     %
     spread        p75 minus p25 of premium: agreement or dispersion     %
+    median_zdev   the basket's cheapness in units of its own sigma      sigma
+    spread_zdev   p75 minus p25 of z_dev: falling together, or rotating sigma
     n             how many symbols the day's figures rest on            count
 
   `n` is not decoration. Early in the run only a handful of symbols are past
@@ -55,7 +57,7 @@ import numpy as np
 
 
 SIGNALS = ("below_pct", "median_prem", "p25_prem", "slope_pos", "mean_slope",
-           "spread")
+           "spread", "median_zdev", "spread_zdev")
 
 
 @dataclass
@@ -80,20 +82,48 @@ class BreadthSeries:
         return None if v != v else float(v)
 
 
-def compute(market, window: int, slope_window: int) -> BreadthSeries:
+def _zdev_per_symbol(market, window: int, stat_window: int) -> dict:
     """
-    Walk the calendar once and reduce each day to a handful of numbers.
+    z_dev for every symbol: how many of its OWN sigmas the price sits from its
+    own median.
 
-    `window` is the reference the premium is measured against and must be one the
-    Market was loaded with; `slope_window` likewise for momentum. Asking for a
-    window nobody loaded gives all-NaN rather than an error, which is why the
-    caller declares them through Plan.windows() as usual.
+    WHY NOT JUST AVERAGE dev. A percentage from median is not comparable across
+    symbols -- a volatile name is routinely 40% below its median, a stable one
+    rarely 15% -- so a median of raw dev mixes two scales. Dividing by each
+    symbol's own sigma puts them on one.
     """
+    import pandas as pd
+
+    out = {}
+    for sym in market.symbols:
+        series = market[sym]
+        if series.is_index:
+            continue
+        n = len(series)
+        dev = np.full(n, np.nan)
+        for i in range(n):
+            med = series.median(window, i)
+            if med:
+                dev[i] = (series.closes[i] - med) / med
+        r = pd.Series(dev).rolling(stat_window, min_periods=stat_window)
+        z = (dev - r.mean().to_numpy()) / r.std().to_numpy()
+        out[sym] = z
+    return out
+
+
+def compute(market, window: int, slope_window: int,
+            zdev_stat_window: int = 250) -> BreadthSeries:
+    """Walk the calendar once and reduce each day to a handful of numbers."""
+    zdev = _zdev_per_symbol(market, window, zdev_stat_window)
+
     dates, counts = [], []
     cols = {k: [] for k in SIGNALS}
 
+    def push(key, values, fn):
+        cols[key].append(fn(values) if len(values) else np.nan)
+
     for day in market.days():
-        prem, slopes = [], []
+        prem, slopes, zs = [], [], []
         for symbol, bar in day.bars.items():
             series = market[symbol]
             if series.is_index:
@@ -104,26 +134,27 @@ def compute(market, window: int, slope_window: int) -> BreadthSeries:
             sl = series.slope(slope_window, bar.index)
             if sl is not None:
                 slopes.append(sl)
+            z = zdev.get(symbol)
+            if z is not None and bar.index < len(z) and z[bar.index] == z[bar.index]:
+                zs.append(float(z[bar.index]))
 
         dates.append(day.date)
         counts.append(len(prem))
-        if prem:
-            a = np.asarray(prem)
-            q25, q75 = np.percentile(a, [25, 75])
-            cols["below_pct"].append(float((a < 0).mean()))
-            cols["median_prem"].append(float(np.median(a)))
-            cols["p25_prem"].append(float(q25))
-            cols["spread"].append(float(q75 - q25))
-        else:
-            for k in ("below_pct", "median_prem", "p25_prem", "spread"):
-                cols[k].append(np.nan)
-        if slopes:
-            b = np.asarray(slopes)
-            cols["slope_pos"].append(float((b > 0).mean()))
-            cols["mean_slope"].append(float(b.mean()))
-        else:
-            cols["slope_pos"].append(np.nan)
-            cols["mean_slope"].append(np.nan)
+
+        a = np.asarray(prem)
+        push("below_pct", a, lambda v: float((v < 0).mean()))
+        push("median_prem", a, lambda v: float(np.median(v)))
+        push("p25_prem", a, lambda v: float(np.percentile(v, 25)))
+        push("spread", a, lambda v: float(np.percentile(v, 75) - np.percentile(v, 25)))
+
+        b = np.asarray(slopes)
+        push("slope_pos", b, lambda v: float((v > 0).mean()))
+        push("mean_slope", b, lambda v: float(v.mean()))
+
+        c = np.asarray(zs)
+        push("median_zdev", c, lambda v: float(np.median(v)))
+        push("spread_zdev", c,
+             lambda v: float(np.percentile(v, 75) - np.percentile(v, 25)))
 
     return BreadthSeries(
         dates=dates,

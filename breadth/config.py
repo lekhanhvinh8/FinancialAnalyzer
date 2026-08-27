@@ -49,6 +49,30 @@ WINDOW = 1000
 # reads.
 SLOPE_WINDOW = 120
 
+# Window z_dev standardises over: how many bars of a symbol's own dev history
+# define "normal" for it. 250 is about a year.
+#
+# MEASURED AND IT DID NOT HELP. z_dev was added because dev% is not comparable
+# across symbols -- a volatile name is routinely 40% below its median, a stable
+# one rarely 15% -- so dividing by each symbol's own sigma should be the better
+# cheapness measure. Against DCA's 95.75%:
+#
+#     median_zdev < -0.81 / < -0.19          95.43%   -0.32
+#     median_zdev < -1.38 / < -0.19          95.62%   -0.13
+#     median_zdev < -1.38 / < -0.81          89.54%   -6.21
+#     + spread_zdev < 1.21 (falling together) 95.92%  +0.17
+#     + spread_zdev > 2.02 (rotating)         92.04%  -3.71
+#     below_pct 0.388 / 0.224  (shipped)      96.58%  +0.83
+#
+# Every variant lands within a point of DCA except the two that hold a large
+# reserve, and those lose in proportion to what they held. Same pattern as the
+# below_pct sweep: the reserve explains the result, the signal does not.
+#
+# The signals are computed and cached anyway -- they cost 3 seconds and they are
+# the right measure to reach for if a future rule needs cheapness on a
+# comparable scale.
+ZDEV_STAT_WINDOW = 250
+
 # ── The pace ──────────────────────────────────────────────────────────────────
 
 # Share of the basket trading under its own median, 0..1.
