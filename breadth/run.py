@@ -11,6 +11,7 @@ a decade-by-decade view of what the pace actually did.
 
 import sys
 import time
+from pathlib import Path
 
 # The console here is cp1252 and the output is Vietnamese. Reconfiguring beats
 # rewriting the strings in English, which is what the first two attempts at this
@@ -25,8 +26,14 @@ from breadth import config
 from breadth.engine import run_backtest
 from breadth.signals import cache_path, compute, load as load_cache, save as save_cache
 from breadth.strategy import build_baseline, build_plan
+from breadth import chart as chartmod
+from breadth import report_html
 from core.market import Market
+from core.progress import RunProgress
 from core.universe import resolve
+
+
+CHARTS = Path(__file__).resolve().parent / "charts"
 
 
 def main(argv) -> int:
@@ -47,6 +54,14 @@ def main(argv) -> int:
     universe = resolve(config.UNIVERSE, config.EXCLUDE, extra=[config.SYMBOL])
     print(f"Universe: {len(universe)} ma (do breadth), giao dich {config.SYMBOL}")
 
+    prog = RunProgress(CHARTS / "progress.html", [
+        ("load", f"Nap du lieu {len(universe)} ma", len(universe)),
+        ("breadth", "Tinh breadth", None),
+        ("backtest", "Chay backtest", None),
+        ("report", "Dung bao cao", None),
+    ])
+    print(f"Progress -> {CHARTS / 'progress.html'}", flush=True)
+
     # Breadth is a pure function of the market and the two windows, so it caches
     # safely. The load it avoids is eight minutes; the compute it avoids is one
     # second. --fresh forces the long way round.
@@ -59,10 +74,15 @@ def main(argv) -> int:
     t0 = time.time()
     n = {"i": 0}
     if breadth is not None:
-        return _report(config, plan, base, breadth, None)
+        prog.end("load", "dung cache")
+        prog.end("breadth", f"{len(breadth)} ngay (cache)")
+        return _report(config, plan, base, breadth, None, prog)
+
+    prog.begin("load")
 
     def on_symbol(symbol, ok, reason):
         n["i"] += 1
+        prog.step("load", symbol, ok=ok, detail="" if ok else str(reason))
         if n["i"] % 10 == 0 or not ok:
             done = time.time() - t0
             print(f"  {n['i']:>3}/{len(universe)}  {symbol:<7}"
@@ -78,10 +98,11 @@ def main(argv) -> int:
     print(f"Breadth: {len(breadth)} ngay  ({time.time() - t1:.1f}s)")
     save_cache(breadth, cpath)
     print(f"Cache -> {cpath}")
-    return _report(config, plan, base, breadth, market)
+    prog.end("breadth", f"{len(breadth)} ngay")
+    return _report(config, plan, base, breadth, market, prog)
 
 
-def _report(config, plan, base, breadth, market) -> int:
+def _report(config, plan, base, breadth, market, prog) -> int:
     from breadth.market_stub import PriceMarket
     if market is None:
         # Same warmup core.data would give it, so the two paths agree.
@@ -90,6 +111,7 @@ def _report(config, plan, base, breadth, market) -> int:
     plan.attach(breadth)
     base.attach(breadth)
 
+    prog.begin("backtest")
     result = run_backtest(market, breadth, plan, config.CONTRIBUTION,
                           deposit_rate=config.DEPOSIT_RATE, track=True)
     bench = run_backtest(market, breadth, base, config.CONTRIBUTION,
@@ -137,6 +159,19 @@ def _report(config, plan, base, breadth, market) -> int:
         nbar = sum(breadth.counts[i] for i in idx) / len(idx)
         print(f"{year:<6}{avg:>13.2f} {strong:>13} {weak:>12} {nbar:>6.0f}")
 
+    prog.begin("report")
+    ch = chartmod.build(result, config, CHARTS)
+    print(f"\nChart  -> {ch}")
+    rep = report_html.build(result, bench, plan, config, breadth,
+                            CHARTS / "report.html", chart_name=ch.name,
+                            bench_name=base.name)
+    print(f"Report -> {rep}")
+    prog.end("report", rep.name)
+    prog.finish({
+        "Tang truong": f"{result['growth_%']:.2f}%",
+        "DCA": f"{bench['growth_%']:.2f}%",
+        "Chenh lech": f"{result['growth_%'] - bench['growth_%']:+.2f}%",
+    }, report="report.html")
     return 0
 
 
