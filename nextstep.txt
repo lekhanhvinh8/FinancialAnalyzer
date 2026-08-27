@@ -470,3 +470,9 @@ Still open:
     start dates (one run per quarter, ~40 paired observations) is the fix and is
     cheap: the Market loads once, each run is 0.4s.
   - No equity curve, no max drawdown, no per-symbol attribution.
+
+
+
+ look at the aggregate chart of 54 symbols, the buy and reinvest consider better in symbols that in the bottom, that kind of symbols may never go up normally: (HAG, MSN)
+ So just change strategy -> let's consider capital more, and remove the 95% of bottom, we may buy and reinvest premium, but not the top one.
+ New strategy -> the median of median 54 -> buy and reinvest the best that < 95%, not the best one.
