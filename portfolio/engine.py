@@ -173,6 +173,32 @@ def execute_reinvest(wallet: Wallet, symbol: str, amount: float, index: int,
 
 # ── Arms ──────────────────────────────────────────────────────────────────────
 
+def apply_cooldown(wallet, candidates, bars: int, field: str) -> list:
+    """
+    Drop candidates whose last action of this kind was fewer than `bars` ago.
+
+    APPLIED HERE RATHER THAN IN A RULE because it asks about the WALLET and not
+    about the market, and a Rule only ever sees one symbol's price series.
+
+    BARS, NOT CALENDAR DAYS. Both numbers are row indices into the same symbol's
+    own series, which is what makes the subtraction meaningful -- and what makes
+    100 mean roughly five months of trading rather than three of calendar.
+
+    It runs AFTER the ranking, so it only ever removes names and never reorders
+    them. The consequence is easy to miss: removing the top of a list PROMOTES
+    everything under it, so a cooldown does not merely restrain the names it
+    blocks, it hands their money to whatever ranked below.
+    """
+    if not bars:
+        return candidates
+    out = []
+    for c in candidates:
+        last = getattr(wallet.position(c.symbol), field)
+        if last < 0 or c.index - last >= bars:
+            out.append(c)
+    return out
+
+
 def position_headroom(wallet, candidates, prices, max_pct, cash) -> dict:
     """
     How much more may be put into each candidate before it exceeds `max_pct` of
@@ -393,15 +419,9 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
             candidates = rank(market, day, plan.reinvest_rule,
                               plan.reinvest_scorer, day.bars,
                               cap_basis=plan.cap_basis)
-            # Cooldown, applied HERE rather than in a rule because it asks about
-            # the wallet and not about the market. Both indices are row numbers
-            # in the same symbol's own series, so the subtraction is meaningful.
-            cd = getattr(plan, "reinvest_cooldown", 0)
-            if cd:
-                candidates = [
-                    c for c in candidates
-                    if wallet.position(c.symbol).last_reinvest_index < 0
-                    or c.index - wallet.position(c.symbol).last_reinvest_index >= cd]
+            candidates = apply_cooldown(wallet, candidates,
+                                        plan.reinvest_cooldown,
+                                        "last_reinvest_index")
             candidates, room = apply_position_cap(
                 wallet, candidates, last_price, plan.max_position_pct,
                 wallet.contribution)
@@ -422,6 +442,13 @@ def run_backtest(market, plan, contribution: float, deposit_rate: float = 4.0,
             # Nobody qualified: put the money in the fallback instead of letting
             # it sit. See Plan.fallback_symbol — this is what keeps a strict rule
             # from silently becoming a bet on holding cash.
+            # The buy arm's own cooldown, kept separate from the reinvest
+            # arm's: the two spend different money on different schedules, and
+            # a monthly contribution meets a very different list from a lump
+            # that arrives whenever something was sold.
+            candidates = apply_cooldown(wallet, candidates, plan.buy_cooldown,
+                                        "last_buy_index")
+
             # The cap runs BEFORE the fallback is considered, so a day on
             # which every candidate is full falls back like a day on which
             # nobody qualified. The fallback is then capped in its turn: it is a

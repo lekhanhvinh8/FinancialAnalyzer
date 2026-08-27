@@ -240,6 +240,32 @@ CAP_RANK_BASIS = "universe"
 # precision this has not earned.
 CAP_WEIGHT = 0.75
 
+# Bars before the monthly contribution may buy the SAME symbol again. 0
+# disables it.
+#
+# BARS, NOT CALENDAR DAYS -- both numbers are row indices in the symbol's own
+# price series. 100 is roughly five months of trading, so a name can take the
+# contribution about twice a year.
+#
+# SEPARATE FROM REINVEST_COOLDOWN_DAYS on purpose. The two arms spend different
+# money on different schedules: a monthly contribution meets a list shaped by
+# the calendar, a reserve lump meets whatever the market did on the day
+# something was sold.
+#
+# WHAT A COOLDOWN ACTUALLY DOES. It runs after the ranking, so it only removes
+# names -- but removing the top of a list PROMOTES everything below it. A
+# cooldown therefore does not merely restrain the names it blocks; it hands
+# their money to whatever ranked next, which may be considerably worse. That is
+# how HAG once took 102m while ranked tenth of ten.
+#
+# AND IT INTERACTS WITH THE POSITION CAP. Both narrow the same list: the cap
+# needs ten simultaneously eligible names to stay fully invested, and a long
+# cooldown removes names from that count for months at a time. Set both high and
+# the plan holds cash by construction.
+#
+# UNMEASURED.
+BUY_COOLDOWN_DAYS = 100
+
 # ── Concentration ─────────────────────────────────────────────────────────────
 
 # No single position may be taken past this percent of the portfolio by a BUY or
@@ -448,7 +474,7 @@ REINVEST_CAP_MIN_RANK = 0.8
 # NOT INDEPENDENT of REINVEST_QUOTA_PCT. At quota 50 this row reverses and a
 # long cooldown wins by a wide margin. See the table there before changing
 # either.
-REINVEST_COOLDOWN_DAYS = 10
+REINVEST_COOLDOWN_DAYS = 100
 
 # ── Ranking and sizing ────────────────────────────────────────────────────────
 

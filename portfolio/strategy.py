@@ -59,6 +59,7 @@ class Plan:
     # is deployed over several days pours into the same one or two symbols
     # simply because nothing else has moved.
     reinvest_cooldown: int = 0
+    buy_cooldown: int = 0
 
     # Which set the cross-sectional percentile is measured over: the whole
     # universe trading that day, or only the symbols that already passed the
@@ -209,6 +210,7 @@ def build_plan(config) -> Plan:
         reinvest_scorer=reinvest_scorer,
         reinvest_allocator=reinvest_alloc,
         reinvest_cooldown=getattr(config, "REINVEST_COOLDOWN_DAYS", 0),
+        buy_cooldown=getattr(config, "BUY_COOLDOWN_DAYS", 0) or 0,
         cap_basis=cap_basis,
         max_position_pct=getattr(config, "MAX_POSITION_PCT", 0.0) or 0.0,
         fallback_symbol=(benchmark

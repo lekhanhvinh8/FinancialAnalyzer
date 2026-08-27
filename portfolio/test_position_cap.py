@@ -18,7 +18,8 @@ Run with:  python -m portfolio.test_position_cap
 import sys
 
 from portfolio.allocator import EqualSplitAllocator, QuotaAllocator
-from portfolio.engine import apply_position_cap, position_headroom
+from portfolio.engine import (apply_cooldown, apply_position_cap,
+                              position_headroom)
 from portfolio.models import Candidate, Wallet
 
 
@@ -121,12 +122,42 @@ def main() -> int:
                         f"vuot tran: {c.symbol} {before:.0f}+{amt:.0f} > {ceiling:.0f} "
                         f"(cash {cash:.0f}, held {held})")
 
+    # ── cooldown ────────────────────────────────────────────────────────────
+    # It only ever removes names, and it must remove the RIGHT ones: a symbol
+    # never acted on (index -1) is always eligible, one acted on exactly `bars`
+    # ago is eligible again, one bar short is not.
+    w = Wallet()
+    w.position("A").last_buy_index = 100
+    w.position("B").last_buy_index = 50
+    # C untouched: last_buy_index stays -1.
+    cands = [Candidate(symbol=s, index=150, price=1.0, score=0.0)
+             for s in ("A", "B", "C")]
+
+    check([c.symbol for c in apply_cooldown(w, cands, 0, "last_buy_index")]
+          == ["A", "B", "C"], "cooldown=0 phai tat han")
+    check([c.symbol for c in apply_cooldown(w, cands, 50, "last_buy_index")]
+          == ["A", "B", "C"], "dung 50 bar truoc phai duoc mua lai (>=)")
+    check([c.symbol for c in apply_cooldown(w, cands, 51, "last_buy_index")]
+          == ["B", "C"], "thieu 1 bar thi A phai bi loai")
+    check([c.symbol for c in apply_cooldown(w, cands, 101, "last_buy_index")]
+          == ["C"], "chi C (chua mua bao gio) con lai")
+
+    # The two arms read different fields and must not see each other's history.
+    w2 = Wallet()
+    w2.position("A").last_reinvest_index = 149
+    c2 = [Candidate(symbol="A", index=150, price=1.0, score=0.0)]
+    check(len(apply_cooldown(w2, c2, 100, "last_buy_index")) == 1,
+          "cooldown mua khong duoc doc lich su reinvest")
+    check(len(apply_cooldown(w2, c2, 100, "last_reinvest_index")) == 0,
+          "cooldown reinvest phai doc dung truong cua no")
+
     if fails:
         print(f"LOI ({len(fails)}):")
         for f in fails:
             print("  -", f)
         return 1
-    print("OK — headroom, hai allocator, va bat bien 'khong lenh nao vuot tran'")
+    print("OK — headroom, hai allocator, cooldown, va bat bien "
+          "'khong lenh nao vuot tran'")
     return 0
 
 
