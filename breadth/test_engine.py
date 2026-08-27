@@ -19,7 +19,8 @@ from datetime import date, timedelta
 
 import numpy as np
 
-from breadth.engine import buy_multiple, execute_sell, run_backtest
+from breadth.engine import buy_multiple, run_backtest
+from core.ledger import execute_sell
 from breadth.signals import SIGNALS, BreadthSeries, compute
 from breadth.strategy import Plan
 from core.rules import ValueAboveRule, ValueBelowRule
@@ -202,7 +203,7 @@ def main() -> int:
     w.contribution = 0.0
     pos = w.position("IDX")
     pos.shares, pos.basis, pos.basis_current = 100.0, 90_000.0, 90_000.0
-    execute_sell(w, "IDX", 5, 1200.0, date(2020, 6, 1))
+    execute_sell(w, "IDX", 100.0 * 1200.0, 5, 1200.0, date(2020, 6, 1))
     check(abs(w.reserve - 120_000.0) < 1e-6, f"tien ve reserve, duoc {w.reserve}")
     check(abs(w.reserve_basis - 90_000.0) < 1e-6,
           f"von goc di theo, duoc {w.reserve_basis}")

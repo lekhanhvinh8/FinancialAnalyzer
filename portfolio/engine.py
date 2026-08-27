@@ -50,7 +50,9 @@ COSTS ARE ZERO
   and until then every return here is an upper bound.
 """
 
-from core.models import Candidate, Trade, Wallet
+from core.ledger import (CASH_EPSILON, _new_month, execute_buy,
+                         execute_reinvest, execute_sell)
+from core.models import Candidate, Wallet
 
 
 # Cash below this is numerically zero, in VND.
@@ -65,112 +67,6 @@ from core.models import Candidate, Trade, Wallet
 # badly, and a cost model would charge brokerage on every ghost. 1 VND is safely
 # above any residue on wallets of this size and below the smallest amount that
 # can buy anything.
-CASH_EPSILON = 1.0
-
-
-def _new_month(previous, now) -> bool:
-    return (previous is None
-            or now.year > previous.year
-            or (now.year == previous.year and now.month > previous.month))
-
-
-# ── Execution ─────────────────────────────────────────────────────────────────
-
-def execute_buy(wallet: Wallet, symbol: str, amount: float, index: int,
-                price: float, date) -> bool:
-    if amount < CASH_EPSILON or price <= 0:
-        return False
-    # Only ever a rounding tail from the split; clamp rather than let the wallet
-    # go negative.
-    amount = min(amount, wallet.contribution)
-    if amount < CASH_EPSILON:
-        return False
-
-    shares = amount / price
-    wallet.contribution -= amount
-
-    # Fresh outside money, so both numbers take the same amount. They only ever
-    # diverge once a sale has put profit into the reserve.
-    pos = wallet.position(symbol)
-    pos.shares += shares
-    pos.basis += amount
-    pos.basis_current += amount
-    pos.last_buy_index = index
-    pos.trades.append(Trade("buy", symbol, date, index, price, amount, shares,
-                            basis=amount))
-    return True
-
-
-def execute_sell(wallet: Wallet, symbol: str, amount: float, index: int,
-                 price: float, date) -> bool:
-    """
-    Sell `amount` worth of `symbol` into the shared reserve.
-
-    Written proportionally although every sell today is a full exit: partial
-    sells are the next thing this arm will want, and proportional costs nothing
-    now. Cost basis leaves in the same proportion as value, so what remains still
-    describes what is held.
-    """
-    pos = wallet.position(symbol)
-    value = pos.shares * price
-    if pos.shares <= 0 or value <= 0 or amount < CASH_EPSILON:
-        return False
-    amount = min(amount, value)
-
-    # Everything leaves in the same proportion as value, so the average cost per
-    # share of what remains is unchanged by a partial sale.
-    ratio = amount / value
-    shares = pos.shares * ratio
-    basis = pos.basis * ratio
-    basis_current = pos.basis_current * ratio
-
-    pos.shares -= shares
-    pos.basis -= basis
-    pos.basis_current -= basis_current
-    pos.last_sell_index = index
-
-    # Cash only — the reserve carries no share count. See models.py.
-    wallet.reserve += amount
-    wallet.reserve_basis += basis
-
-    pos.trades.append(Trade("sell", symbol, date, index, price, amount, shares,
-                            basis=basis))
-    return True
-
-
-def execute_reinvest(wallet: Wallet, symbol: str, amount: float, index: int,
-                     price: float, date) -> bool:
-    if amount < CASH_EPSILON or price <= 0 or wallet.reserve < CASH_EPSILON:
-        return False
-    amount = min(amount, wallet.reserve)
-
-    # Basis leaves the pool in proportion to value, so the reserve's remaining
-    # basis keeps describing the cash still in it.
-    # THE ONE PLACE THE TWO BASIS NUMBERS PART COMPANY.
-    #
-    # `basis` takes only the ORIGINAL capital riding along with this cash, so the
-    # profit being recycled is not re-counted as money the investor put in.
-    # `basis_current` takes the full amount, because that is genuinely what these
-    # shares cost today.
-    #
-    # Sell 18m of original capital for 40m and put all 40m into another name:
-    # basis 18m, basis_current 40m. Measuring the final return against 40m would
-    # count the 22m gain twice.
-    basis = amount * wallet.reserve_basis / wallet.reserve if wallet.reserve else amount
-    wallet.reserve -= amount
-    wallet.reserve_basis -= basis
-
-    shares = amount / price
-    pos = wallet.position(symbol)
-    pos.shares += shares
-    pos.basis += basis
-    pos.basis_current += amount
-    pos.last_reinvest_index = index
-    pos.trades.append(Trade("reinvest", symbol, date, index, price, amount,
-                            shares, basis=basis))
-    return True
-
-
 # ── Arms ──────────────────────────────────────────────────────────────────────
 
 def apply_cooldown(wallet, candidates, bars: int, field: str) -> list:

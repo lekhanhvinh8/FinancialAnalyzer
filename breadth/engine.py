@@ -34,6 +34,20 @@ WHY THE SIZING IS A MULTIPLE AND NOT A TARGET WEIGHT
   timing arm. A multiple of the contribution can only ever change the PACE of
   accumulation, which keeps the two claims separate and separately measurable.
 
+THE MONEY CODE IS NOT HERE
+
+  execute_buy, execute_sell and execute_reinvest come from core.ledger, which is
+  where portfolio/ debugged them over a long series of measured runs. Writing
+  fresh ones for this engine produced three accounting bugs in a row, every one
+  of them already solved there next to a comment explaining the trap. What is
+  left in this file is the DECISION -- how much, today -- which is the only part
+  that differs between the two methods.
+
+  A purchase out of the reserve is recorded as a REINVEST, which is this
+  project's word for money held back going in later. That is not a relabelling
+  for its own sake: execute_reinvest is the function that knows only the
+  original capital riding with that cash counts as basis.
+
 THE CASH THAT IS NOT SPENT
 
   Carried, and earning the deposit rate. It is not a third arm: it accumulates
@@ -42,57 +56,9 @@ THE CASH THAT IS NOT SPENT
   purchase forgone.
 """
 
-from core.models import Trade, Wallet
-
-# Same guard as portfolio/engine.py: binary division leaves residue that is not
-# zero and is not money either, and a ghost trade of 1e-13 VND is worse than a
-# rounding error because it appears in the ledger.
-CASH_EPSILON = 1.0
-
-
-def _new_month(last, date) -> bool:
-    return last is None or (date.year, date.month) != (last.year, last.month)
-
-
-def execute_buy(wallet, symbol, amount, index, price, date) -> bool:
-    if amount < CASH_EPSILON or price <= 0:
-        return False
-    pos = wallet.position(symbol)
-    shares = amount / price
-    pos.shares += shares
-    pos.basis += amount
-    pos.basis_current += amount
-    pos.last_buy_index = index
-    pos.trades.append(Trade("buy", symbol, date, index, price, amount, shares,
-                            basis=amount))
-    return True
-
-
-def execute_sell(wallet, symbol, index, price, date) -> bool:
-    """
-    Sell the whole position into the reserve.
-
-    Whole rather than partial, matching portfolio/: a partial sale needs a size
-    rule of its own, and inventing one here would be a second untested decision
-    riding on the first.
-    """
-    pos = wallet.position(symbol)
-    if pos.shares <= 0 or price <= 0:
-        return False
-    proceeds = pos.shares * price
-    shares = pos.shares
-
-    # The basis leaves with the shares. Keeping it would double-count the
-    # capital: it is about to be recorded again against the reserve.
-    wallet.reserve += proceeds
-    wallet.reserve_basis += pos.basis
-    pos.basis = 0.0
-    pos.basis_current = 0.0
-    pos.shares = 0.0
-    pos.last_sell_index = index
-    pos.trades.append(Trade("sell", symbol, date, index, price, proceeds,
-                            shares, basis=0.0))
-    return True
+from core.ledger import (CASH_EPSILON, _new_month, execute_buy,
+                         execute_reinvest, execute_sell)
+from core.models import Wallet
 
 
 def buy_multiple(plan, index: int) -> float:
@@ -159,7 +125,10 @@ def run_backtest(market, breadth_series, plan, contribution: float,
 
         # 3. Sell, if the arm is configured and breadth says the run is over.
         if not thin and plan.fires(plan.sell_when, i):
-            execute_sell(wallet, symbol, bar.index, bar.price, date)
+            pos = wallet.position(symbol)
+            if pos.shares > 0:
+                execute_sell(wallet, symbol, pos.shares * bar.price,
+                             bar.index, bar.price, date)
 
         # 4. Buy. On a thin day the pace falls back to plain DCA rather than to
         #    zero: a signal computed over six symbols is not evidence of
@@ -174,43 +143,28 @@ def run_backtest(market, breadth_series, plan, contribution: float,
         # A month whose first trading days the instrument did not trade leaves
         # two contributions waiting, and sizing off "one month" would push the
         # difference into the reserve where -- at a multiple of one -- it would
-        # circulate for ever without ever being spent. That is what made the DCA
-        # baseline hold 80m of principal it should have invested.
+        # circulate for ever without being spent.
         pending = wallet.contribution
         want = pending * mult
 
         # PENDING FIRST, RESERVE ONLY ABOVE IT. At a multiple of one the reserve
         # is deliberately untouched: the normal pace is the normal pace, and the
         # reserve exists to be spent when the signal asks for MORE than normal.
-        # Spending reserve first instead would drain and refill it every month
-        # and the pace rule would move no money at all.
+        #
+        # Both moves go through core.ledger, which is the whole point. A
+        # purchase out of the reserve is a REINVEST in this project's
+        # vocabulary -- money that was held back going in later -- and
+        # execute_reinvest already knows that only the original capital riding
+        # with that cash counts as basis while the full amount counts as
+        # basis_current. Doing that arithmetic here is what produced three
+        # separate accounting bugs before this call replaced it.
         from_pending = min(want, pending)
-        from_reserve = min(max(0.0, want - from_pending), wallet.reserve)
-        spend = from_pending + from_reserve
+        if from_pending >= CASH_EPSILON:
+            execute_buy(wallet, symbol, from_pending, bar.index, bar.price, date)
 
-        if spend >= CASH_EPSILON and execute_buy(wallet, symbol, spend,
-                                                 bar.index, bar.price, date):
-            wallet.contribution -= from_pending
-
-            # THE BASIS LEAVING THE RESERVE IS PROPORTIONAL, NOT THE WHOLE
-            # AMOUNT. The reserve holds contributions AND the interest they
-            # earned, and interest is profit, not capital. Deducting the full
-            # withdrawal from reserve_basis while execute_buy adds the full
-            # amount to the position's basis books the interest as though it
-            # had been paid in: this run reported 1,103,038,348 invested
-            # against 1,096,000,000 actually contributed, and growth is
-            # measured against that denominator.
-            if from_reserve > 0:
-                share = (wallet.reserve_basis / wallet.reserve) if wallet.reserve else 0.0
-                moved = min(wallet.reserve_basis, from_reserve * share)
-                wallet.reserve -= from_reserve
-                wallet.reserve_basis -= moved
-                # execute_buy credited the whole spend as basis; give back the
-                # part that was interest.
-                pos = wallet.position(symbol)
-                pos.basis -= (from_reserve - moved)
-                pos.basis_current -= (from_reserve - moved)
-                pos.trades[-1].basis -= (from_reserve - moved)
+        rest = want - from_pending
+        if rest >= CASH_EPSILON:
+            execute_reinvest(wallet, symbol, rest, bar.index, bar.price, date)
 
         # 5. Whatever today would not take moves to the reserve, where it earns
         #    the deposit rate until breadth improves.
@@ -247,6 +201,7 @@ def summarise(wallet, symbol, price) -> dict:
     return {
         "months": wallet.months,
         "buys": pos.count("buy"),
+        "reinvests": pos.count("reinvest"),
         "sells": pos.count("sell"),
         "invested": invested,
         "value": value,
