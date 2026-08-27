@@ -72,29 +72,41 @@ def _add_signal(path: Path, breadth, config, dates) -> None:
     if not any(v is not None and v == v for v in y):
         return
 
-    traces = [{"type": "scatter", "mode": "lines", "name": name, "yaxis": "y3",
+    vals = [v for v in y if v is not None and v == v]
+    lo, hi = min(vals + [v for v, _ in lines]), max(vals + [v for v, _ in lines])
+    pad = (hi - lo) * 0.08 or 1.0
+
+    # y8. save_backtest_chart already uses y2..y7 -- y3 carries its Buy/Sell
+    # markers and y4..y7 are the signal panels underneath -- so anything lower
+    # overwrites one of them. Writing y3 the first time flattened the trade
+    # markers out of sight.
+    traces = [{"type": "scatter", "mode": "lines", "name": name, "yaxis": "y8",
                "x": x, "y": y,
-               "line": {"color": "rgba(147,102,240,0.85)", "width": 1.4},
-               "hovertemplate": name + ": %{y:.2f}<extra></extra>"}]
+               "line": {"color": "rgba(147,102,240,0.9)", "width": 1.4},
+               "hovertemplate": name + ": %{y:.1f}<extra></extra>"}]
     for v, label in lines:
         traces.append({"type": "scatter", "mode": "lines",
-                       "name": f"{label} ({v:g})", "yaxis": "y3",
+                       "name": f"{label} ({v:g})", "yaxis": "y8",
                        "x": [x[0], x[-1]], "y": [v, v],
-                       "line": {"color": "rgba(147,102,240,0.45)", "width": 1,
+                       "line": {"color": "rgba(147,102,240,0.5)", "width": 1,
                                 "dash": "dash"},
                        "hoverinfo": "skip"})
 
     script = f"""
 <script>
-(function add() {{
+// Runs AFTER the renderer's own 1s timer has added its event traces; adding
+// first and letting it re-plot on top would drop these again.
+setTimeout(function wait() {{
   var gd = document.querySelector('.plotly-graph-div');
-  if (!gd || !window.Plotly || !gd.data) return setTimeout(add, 200);
+  if (!gd || !window.Plotly || !gd.data || !gd.data.length) return setTimeout(wait, 300);
   Plotly.relayout(gd, {{
-    'yaxis3': {{overlaying: 'y', side: 'right', showgrid: false,
-                title: {{text: '{name}'}}, position: 1.0,
-                titlefont: {{size: 10}}, tickfont: {{size: 9}}}}
+    'yaxis8': {{overlaying: 'y', side: 'right', anchor: 'free', position: 1.0,
+                showgrid: false, range: [{lo - pad:.2f}, {hi + pad:.2f}],
+                title: {{text: '{name}', font: {{size: 10}}}},
+                tickfont: {{size: 9}}, zeroline: false}},
+    'xaxis.domain': [0, 0.94]
   }}).then(function() {{ Plotly.addTraces(gd, {json.dumps(traces)}); }});
-}})();
+}}, 1600);
 </script>
 </body>"""
     html = path.read_text(encoding="utf-8")
