@@ -314,6 +314,48 @@ class CapRankAboveRule(Rule):
 
 
 @dataclass
+class ValueAboveRule(Rule):
+    """
+    The series' own value is at or above `threshold`.
+
+    ABSOLUTE, WHERE EVERY OTHER RULE HERE IS RELATIVE, and that is the point.
+    A price has no meaningful level -- 30,000 is cheap for one company and dear
+    for another -- so a price rule has to compare it with the symbol's own
+    history. A breadth signal is different: "sixty percent of the basket is
+    below its median" means the same thing in 2015 and 2026, and forcing it
+    through a rolling comparison would throw that away.
+
+    Reads close(), so it works on any series. On a price series it is a fixed
+    price level, which is almost always the wrong question -- see above.
+    """
+    threshold: float = 0.0
+
+    def applies(self, series, index: int, pool_rank=None) -> bool:
+        if index < series.warmup:
+            return False
+        v = series.close(index)
+        return v is not None and v >= self.threshold
+
+    def describe(self) -> str:
+        return f"value >= {self.threshold:g}"
+
+
+@dataclass
+class ValueBelowRule(Rule):
+    """The series' own value is below `threshold`. See ValueAboveRule."""
+    threshold: float = 0.0
+
+    def applies(self, series, index: int, pool_rank=None) -> bool:
+        if index < series.warmup:
+            return False
+        v = series.close(index)
+        return v is not None and v < self.threshold
+
+    def describe(self) -> str:
+        return f"value < {self.threshold:g}"
+
+
+@dataclass
 class SymbolIn(Rule):
     """
     Admit a symbol purely by name.

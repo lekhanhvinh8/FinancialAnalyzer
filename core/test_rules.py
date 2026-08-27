@@ -62,6 +62,8 @@ def _instances() -> list:
         R.SlopeBelowRule: R.SlopeBelowRule(window=10, max_slope=0.2),
         R.CapRankAboveRule: R.CapRankAboveRule(0.5),
         R.SymbolIn: R.SymbolIn({"TST"}),
+        R.ValueAboveRule: R.ValueAboveRule(0.0),
+        R.ValueBelowRule: R.ValueBelowRule(1e9),
         R.AllOf: R.AllOf([leaf, R.CapRankAboveRule(0.5)]),
         R.AnyOf: R.AnyOf([leaf]),
         R.Not: R.Not(leaf),
