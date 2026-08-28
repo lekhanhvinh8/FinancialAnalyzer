@@ -137,7 +137,10 @@ def process_symbol(symbol: str, out_dir: Path):
 
     p, b, df, cal = r["plan"], r["base"], r["df"], r["cal"]
     last = len(df) - 1
-    close_last = float(df["close"].iloc[-1])
+    # x1000: range_stats is stored at the raw database scale while df["close"]
+    # is not, so comparing them directly gave -99.9% in every vs_* column.
+    # median1000/run_all.py does the same multiply for the same reason.
+    close_last = float(df["close"].iloc[last]) * 1000
 
     # Where the last price sits in its own 1000-bar range. Description of the
     # symbol for the reader, not an input to any decision -- same four columns
