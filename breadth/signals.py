@@ -44,6 +44,8 @@ WHAT IS COMPUTED
     spread        p75 minus p25 of premium: agreement or dispersion     %
     median_zdev   the basket's cheapness in units of its own sigma      sigma
     spread_zdev   p75 minus p25 of z_dev: falling together, or rotating sigma
+    prem_trim     mean premium after dropping the 5% tails at each end     %
+    prem_trim_sd  its standard deviation, over the same trimmed set        %
     median_sharpe median signal3_sharpe: momentum divided by volatility
     sharpe_pos    share of the basket with positive sharpe                0..1
     n             how many symbols the day's figures rest on            count
@@ -67,10 +69,14 @@ import numpy as np
 # So F = 0.5 reads prem_q50, F = 0.25 reads prem_q75, F = 0.75 reads prem_q25.
 PREM_QS = tuple(range(5, 100, 5))
 
+# Tails dropped before the trimmed mean.
+TRIM_LOW, TRIM_HIGH = 5, 95
+
 SIGNALS = (("below_pct", "median_prem", "p25_prem", "slope_pos", "mean_slope",
             "spread", "median_zdev", "spread_zdev",
             "median_sharpe", "sharpe_pos")
-           + tuple(f"prem_q{q}" for q in PREM_QS))
+           + tuple(f"prem_q{q}" for q in PREM_QS)
+           + ("prem_trim", "prem_trim_sd"))
 
 
 @dataclass
@@ -164,6 +170,17 @@ def compute(market, window: int, slope_window: int,
         push("spread", a, lambda v: float(np.percentile(v, 75) - np.percentile(v, 25)))
         for q in PREM_QS:
             push(f"prem_q{q}", a, lambda v, q=q: float(np.percentile(v, q)))
+
+        # Trimmed mean: drop the 5% most extreme at each end, then average.
+        # A plain mean is dragged by a handful of names that ran 300% or
+        # collapsed; the median ignores magnitude entirely. Trimming keeps the
+        # magnitude of the ordinary 90% and discards only the tails.
+        def _trim(v):
+            lo, hi = np.percentile(v, [TRIM_LOW, TRIM_HIGH])
+            k = v[(v >= lo) & (v <= hi)]
+            return k if len(k) else v
+        push("prem_trim", a, lambda v: float(_trim(v).mean()))
+        push("prem_trim_sd", a, lambda v: float(_trim(v).std()))
 
         b = np.asarray(slopes)
         push("slope_pos", b, lambda v: float((v > 0).mean()))

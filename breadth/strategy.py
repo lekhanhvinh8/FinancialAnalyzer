@@ -132,7 +132,13 @@ def _prem_plan(config) -> Plan:
     broad strength. `median_prem <= -60` reads as "half the basket is at least
     60% below its own median".
     """
+    # The trimmed mean is ONE number, so a fraction has no meaning for it: the
+    # arms compare against the level directly.
+    trim = getattr(config, "USE_TRIM_MEAN", False)
+
     def below(thr, frac):
+        if trim:
+            return [] if thr is None else [("prem_trim", ValueBelowRule(thr))]
         """`frac` of the basket at or BELOW thr — the low tail, so quantile frac."""
         if thr is None:
             return []
@@ -142,6 +148,8 @@ def _prem_plan(config) -> Plan:
     def above(thr, frac):
         if thr is None:
             return []
+        if trim:
+            return [("prem_trim", ValueAboveRule(thr))]
         return [(prem_signal(frac), ValueAboveRule(thr))]
 
     return Plan(

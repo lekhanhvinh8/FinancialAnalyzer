@@ -252,6 +252,35 @@ SELL_MAX_SLOPE = -0.10       # and average momentum clearly negative
 # >= T. Fractions are rounded to the nearest 5%.
 USE_PREM_ARMS = True
 
+# Compare against the TRIMMED MEAN of premium instead of a quantile.
+#
+# Drop the 5% most extreme symbols at each end, average the rest. A plain mean is
+# dragged around by a few names that ran 300% or collapsed; a quantile ignores
+# magnitude entirely and only counts heads. The trimmed mean keeps the magnitude
+# of the ordinary 90% and throws away just the tails.
+#
+# With this on, the FRAC settings below are unused: a mean is one number, so
+# "how much of the basket" has no meaning for it.
+#
+# MEASURED, AND IT LOSES TO THE MEDIAN AT EVERY THRESHOLD. Growth %, sell
+# threshold across the top, DCA = 95.75%:
+#
+#     threshold      40     50     60     70     80     90    100
+#     prem_trim    71.8   81.7  101.1  108.2  132.5  132.6  143.4
+#     median_prem 150.9  189.9  201.8  219.1  224.9  229.0  240.2
+#     sells (both)    9      6      7      3    3-5    2-3      4
+#
+# The two fire on nearly the same days -- the sell counts match almost cell for
+# cell -- so this is not about timing. It is about LEVEL: the premium
+# distribution is right-skewed, so keeping magnitude pulls the trimmed mean
+# above the median everywhere (p50 34.6 against 24.8). The same threshold
+# therefore means something laxer, and the plan sells earlier and holds cash
+# through more of the rise.
+#
+# Read the sell counts before either row: nothing here rests on more than nine
+# decisions.
+USE_TRIM_MEAN = True
+
 BUY_PREM_MAX = -60.0         # mua khi BUY_PREM_FRAC ro nam duoi -60%
 BUY_PREM_FRAC = 0.5
 
