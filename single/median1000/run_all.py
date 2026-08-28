@@ -342,7 +342,15 @@ def process_symbol(symbol: str, run_dir: Path | None = None
 
 
 def build_report(rows: list[dict], out_path: Path,
-                 skipped: list[tuple[str, str]] | None = None):
+                 skipped: list[tuple[str, str]] | None = None,
+                 config_module=None, title: str = "Median1000"):
+    """
+    `config_module` is whose settings the "Configuration used for this run" panel
+    reports; it defaults to this package's. Passed in rather than imported so a
+    second strategy can reuse this report and have it describe ITS parameters --
+    a saved report that names the wrong config is worse than one with no panel.
+    """
+    config = config_module or globals()["config"]
     df = pd.DataFrame(rows)
     df["diff_%"] = df["median_growth_%"] - df["interval_growth_%"]
     df = df.sort_values("diff_%", ascending=False)
@@ -608,7 +616,7 @@ def build_report(rows: list[dict], out_path: Path,
         # Not the same question as "Lost by >=1%", which is relative. NVL beat the
         # interval arm by 8.67 points and is still down 16.23% in absolute terms.
         ("abs",  "Absolute", [
-            ("red",    "Median1000 in the red")]),
+            ("red",    f"{title} in the red")]),
     ]
     # One chip per seeded index, plus "Outside": a symbol in none of them. Outside
     # is not the complement of "no chip selected" — with every index chip on it
@@ -671,7 +679,7 @@ def build_report(rows: list[dict], out_path: Path,
     # the JS fills the cells by data-cell / data-grp.
     SUM_ROWS = [
         ("n",      "Symbols compared",                      "font-weight:600"),
-        ("mw",     "Median1000 wins",                       "color:#4ade80;font-weight:600"),
+        ("mw",     f"{title} wins",                       "color:#4ade80;font-weight:600"),
         ("iw",     "BuyInterval wins",                      "color:#f87171;font-weight:600"),
         ("dr",     "Draws",                                 "color:#94a3b8"),
         None,
@@ -683,8 +691,8 @@ def build_report(rows: list[dict], out_path: Path,
         ("eb",     "Evaluated bars<br><span style='color:#475569;font-size:11px'>"
                    "median (min / max)</span>",             ""),
         None,
-        ("avg",    "Avg growth — Median1000 / Interval",    ""),
-        ("med",    "Median growth — Median1000 / Interval", ""),
+        ("avg",    f"Avg growth — {title} / Interval",    ""),
+        ("med",    f"Median growth — {title} / Interval", ""),
         ("wl",     "Avg win / avg loss",                    ""),
         ("quart",  "Diff spread — p25 / p50 / p75",         ""),
         ("conc",   "Gains concentration — top 1 / top 3",   ""),
@@ -696,9 +704,9 @@ def build_report(rows: list[dict], out_path: Path,
                    "bar, not today</span>",                  ""),
         ("act",    "Activity — avg sells, never sold",      ""),
         None,
-        ("mbest",  "Best Median1000",                       "color:#4ade80"),
+        ("mbest",  f"Best {title}",                       "color:#4ade80"),
         ("ibest",  "Best BuyInterval",                      "color:#4ade80"),
-        ("mworst", "Worst Median1000",                      "color:#f87171"),
+        ("mworst", f"Worst {title}",                      "color:#f87171"),
     ]
     sum_rows_html = ""
     for item in SUM_ROWS:
@@ -716,7 +724,7 @@ def build_report(rows: list[dict], out_path: Path,
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Median1000 Backtest — All Symbols</title>
+<title>{title} Backtest — All Symbols</title>
 <style>
   body {{ font-family: sans-serif; background: #111; color: #ddd; padding: 20px; }}
   h1 {{ font-size: 1.4rem; margin-bottom: 12px; }}
@@ -753,15 +761,15 @@ def build_report(rows: list[dict], out_path: Path,
 </style>
 </head>
 <body>
-<h1>Median1000 Backtest — All Symbols</h1>
+<h1>{title} Backtest — All Symbols</h1>
 <p style="color:#64748b;font-size:12px">
   {len(rows)} symbols reported{skipped_note} &nbsp;|&nbsp;
   vs BuyInterval (no sell/reinvest), both arms starting at the same bar &nbsp;|&nbsp;
   <span style="color:#94a3b8">Click a column header to sort</span> — Diff
-  (Median1000 − Interval) descending by default. &nbsp;|&nbsp;
+  ({title} − Interval) descending by default. &nbsp;|&nbsp;
   <span style="color:#fbbf24">Amber</span> eval bars = short history. &nbsp;|&nbsp;
   vs Top / Bottom / Median / Mean = latest price against its own 1000-bar range;
-  <span style="color:#fbbf24">amber</span> vs Median = at or past PERCENT_SELL. &nbsp;|&nbsp;
+  <span style="color:#fbbf24">amber</span> vs Median = at or past the sell threshold. &nbsp;|&nbsp;
   <span style="color:#94a3b8">Uncheck a row to exclude it from summary.</span>
 </p>
 {config_html}
@@ -771,7 +779,7 @@ def build_report(rows: list[dict], out_path: Path,
 <table>
 <thead><tr>
   <th data-sort="sym" data-type="s">Symbol</th>
-  <th data-sort="m">Median1000</th><th data-sort="i">BuyInterval</th>
+  <th data-sort="m">{title}</th><th data-sort="i">BuyInterval</th>
   <th data-sort="d">Diff</th>
   <th data-sort="b">Buys</th><th data-sort="s">Sells</th><th data-sort="r">Reinvests</th>
   <th data-sort="eb">Eval bars</th>

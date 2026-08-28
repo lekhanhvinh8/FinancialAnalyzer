@@ -35,6 +35,7 @@ import database as db
 from breadth.chart import add_signal_line
 from export.chart import save_backtest_chart
 from progress import RunAllProgress
+from single.median1000.run_all import build_report
 from single.breadth_map import build_breadth_map, describe
 from single.runner import load_symbol_df, run_estimate
 from single.strategies.buy import BuyBreadthStrategy, BuyIntervalStrategy
@@ -114,7 +115,8 @@ def run_one(symbol: str, chart: bool = True, out_dir: Path = None) -> dict:
             axis_title="median_prem")
 
     return {"symbol": symbol, "breadth": describe(breadth),
-            "plan": got, "base": base}
+            "plan": got, "base": base, "df": df, "cal": cal,
+            "buy": buy, "sell": sell, "reinvest": rei}
 
 
 def process_symbol(symbol: str, out_dir: Path):
@@ -122,69 +124,50 @@ def process_symbol(symbol: str, out_dir: Path):
     One symbol in a worker process. Returns plain data, never a progress object:
     RunAllProgress is not picklable and the parent owns it, exactly as
     median1000/run_all.py arranges it.
+
+    The row uses that report's key names -- median_growth_%, median_buys and so
+    on -- because it IS that report. "median" there means "the strategy under
+    test", not the median statistic.
     """
     t0 = time.time()
     try:
         r = run_one(symbol, out_dir=out_dir)
     except Exception as exc:
         return symbol, None, f"{type(exc).__name__}: {exc}", time.time() - t0
-    p, b = r["plan"], r["base"]
+
+    p, b, df, cal = r["plan"], r["base"], r["df"], r["cal"]
+    last = len(df) - 1
+    close_last = float(df["close"].iloc[-1])
+
+    # Where the last price sits in its own 1000-bar range. Description of the
+    # symbol for the reader, not an input to any decision -- same four columns
+    # median1000 reports, computed the same way.
+    rng = {}
+    rc = (cal[last].rangeDayCloses.get(1000) if last in cal else None)
+    if rc is not None:
+        for name, ref in (("top", rc.top(False)), ("bottom", rc.bottom(False)),
+                          ("median", rc.pct50(False)), ("mean", rc.avg(False))):
+            rng[f"vs_{name}_%"] = (round((close_last - ref) / ref * 100, 2)
+                                   if ref else None)
+
+    def _chk(strategy):
+        try:
+            return bool(strategy.check(last, close_last, None, cal))
+        except Exception:
+            return False
+
     return symbol, {
-        "symbol": symbol,
-        "growth_%": p["allRatioGrowth"],
+        "symbol":            symbol,
+        "median_growth_%":   p["allRatioGrowth"],
+        "median_buys":       p["totalBuys"],
+        "median_sells":      p["totalSells"],
+        "median_reinvests":  p["totalReinvest"],
         "interval_growth_%": b["allRatioGrowth"],
-        "diff_%": p["allRatioGrowth"] - b["allRatioGrowth"],
-        "buys": p["totalBuys"], "sells": p["totalSells"],
-        "reinvests": p["totalReinvest"],
-        "chart": f"{symbol.lower()}_breadth.html",
+        "chart":             f"{symbol.lower()}_breadth.html",
+        "now_flags":         (_chk(r["buy"]), _chk(r["sell"]), _chk(r["reinvest"])),
+        "eval_bars":         len(df) - START_INDEX,
+        **rng,
     }, None, time.time() - t0
-
-
-def build_report(rows: list, path: Path, skipped: list) -> Path:
-    """
-    One table, sorted by how much the strategy beat interval buying.
-
-    A SIGN TEST, NOT AN AVERAGE. The sells fire on the same few market-wide days
-    for every symbol, so the rows are not independent observations and a mean of
-    them would claim precision that is not there. How many symbols it beat is
-    the honest summary.
-    """
-    rows = sorted(rows, key=lambda r: -r["diff_%"])
-    wins = sum(1 for r in rows if r["diff_%"] > 0)
-    body = "".join(
-        f'<tr><td><a href="{r["chart"]}">{r["symbol"]}</a></td>'
-        f'<td class="n">{r["growth_%"]:.2f}%</td>'
-        f'<td class="n">{r["interval_growth_%"]:.2f}%</td>'
-        f'<td class="n {"pos" if r["diff_%"] > 0 else "neg"}">{r["diff_%"]:+.2f}%</td>'
-        f'<td class="n">{r["buys"]}</td><td class="n">{r["sells"]}</td>'
-        f'<td class="n">{r["reinvests"]}</td></tr>' for r in rows)
-    skip = "".join(f"<li>{s} — {why}</li>" for s, why in skipped)
-
-    path.write_text(f"""<!doctype html><meta charset="utf-8">
-<title>breadth strategy — {len(rows)} mã</title>
-<style>
-body{{font:15px/1.6 system-ui,sans-serif;max-width:900px;margin:32px auto;padding:0 16px;
-background:#0E141C;color:#E4EBF4}}
-table{{width:100%;border-collapse:collapse;font-size:13.5px}}
-th{{text-align:right;color:#7386A0;font-weight:500;border-bottom:1px solid #2B3949;padding:6px}}
-th:first-child{{text-align:left}}
-td{{padding:3px 6px;border-bottom:1px solid #1C2734}}
-td.n{{text-align:right;font-family:ui-monospace,monospace}}
-a{{color:#6E9BFF;text-decoration:none}} .pos{{color:#5FCC9C}} .neg{{color:#F0857D}}
-h1{{font-size:20px}} .sub{{color:#A3B2C6;font-size:13.5px}}
-</style>
-<h1>Breadth strategy</h1>
-<p class="sub">mua &le; {BUY_MAX_BREADTH:g} &middot; bán &gt; {SELL_MIN_BREADTH:g}
-kèm slope[{SELL_SIGNAL1_WINDOW}] &lt; {SELL_MAX_SIGNAL1} &middot;
-reinvest &le; {REINVEST_MAX_BREADTH:g} &middot; dựng {datetime.now():%Y-%m-%d %H:%M}</p>
-<p class="sub"><b>Thắng {wins}/{len(rows)} mã ({wins / len(rows):.0%})</b> so với mua đều.
-Các lệnh bán rơi vào cùng vài ngày toàn thị trường ở mọi mã, nên đây là
-{len(rows)} góc nhìn của một quyết định, không phải {len(rows)} quan sát độc lập.</p>
-<table><thead><tr><th>Mã</th><th>Breadth</th><th>Mua đều</th><th>Chênh</th>
-<th>Mua</th><th>Bán</th><th>Tái đt</th></tr></thead><tbody>{body}</tbody></table>
-{f"<p class='sub'>Bỏ qua {len(skipped)}:</p><ul class='sub'>{skip}</ul>" if skip else ""}
-""", encoding="utf-8")
-    return path
 
 
 def main(argv) -> int:
@@ -232,14 +215,15 @@ def main(argv) -> int:
             done += 1
             if row:
                 rows.append(row)
-                prog.end_ok(sym, dur, median_growth=row["growth_%"],
-                            buys=row["buys"], sells=row["sells"],
-                            reinvests=row["reinvests"],
+                prog.end_ok(sym, dur, median_growth=row["median_growth_%"],
+                            buys=row["median_buys"], sells=row["median_sells"],
+                            reinvests=row["median_reinvests"],
                             interval_growth=row["interval_growth_%"],
                             chart=row["chart"])
+                d = row["median_growth_%"] - row["interval_growth_%"]
                 print(f"[{done}/{len(symbols)}] {sym:<7}"
-                      f"{row['growth_%']:>9.2f}%{row['interval_growth_%']:>11.2f}%"
-                      f"{row['diff_%']:>9.2f}%", flush=True)
+                      f"{row['median_growth_%']:>9.2f}%"
+                      f"{row['interval_growth_%']:>11.2f}%{d:>9.2f}%", flush=True)
             else:
                 skipped.append((sym, why or "unknown"))
                 prog.end_err(sym, why or "unknown")
@@ -250,8 +234,15 @@ def main(argv) -> int:
 
     prog.finish()
     if rows:
-        rep = build_report(rows, run_dir / "report_all.html", skipped)
-        wins = sum(1 for r in rows if r["diff_%"] > 0)
+        # The report median1000 already has: filter chips, the long/short split,
+        # sign tests, the config panel, index membership. Reimplementing it once
+        # produced something far thinner, so this passes THIS module as the
+        # config so the panel names the right parameters.
+        rep = run_dir / "report_all.html"
+        build_report(rows, rep, skipped,
+                     config_module=sys.modules[__name__], title="Breadth")
+        wins = sum(1 for r in rows
+                   if r["median_growth_%"] > r["interval_growth_%"])
         print(f"\nthang {wins}/{len(rows)} ma ({wins / len(rows):.0%})")
         print(f"Report -> {rep}")
     print(f"Done in {(time.time() - t0) / 60:.1f} min tren {n_slots} workers.")
