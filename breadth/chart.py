@@ -179,10 +179,14 @@ def _zones(plan, breadth, dates):
             _ZoneShim("reinvest")._wire(plan, plan.reinvest_when, breadth, rows, True))
 
 
-# Same shapes as the renderer's own markers, drawn hollow and on a lower row of
-# the same strip so the two strategies read as two rows, not two legends.
-_ALT = {"buy": ("circle", "#22c55e"), "sell": ("triangle-down", "#ef4444"),
-        "reinvest": ("diamond", "#f97316")}
+# EXACTLY the renderer's own shapes, sizes and colours -- copied from what it
+# emits, not guessed -- so the two rows differ only in being hollow. A different
+# glyph for the same event would read as a different KIND of event.
+_ALT = {
+    "buy":      ("triangle-up",   9, "rgba(34,197,94,0.9)",  "#15803d"),
+    "sell":     ("triangle-down", 9, "rgba(239,68,68,0.9)",  "#991b1b"),
+    "reinvest": ("diamond",       8, "rgba(249,115,22,0.9)", "#c2410c"),
+}
 
 
 def _add_alt_trades(path: Path, alt_result, label: str, symbol: str) -> None:
@@ -195,15 +199,15 @@ def _add_alt_trades(path: Path, alt_result, label: str, symbol: str) -> None:
 
     traces = []
     for kind, items in by_kind.items():
-        shape, colour = _ALT[kind]
+        shape, size, colour, edge = _ALT[kind]
         traces.append({
             "type": "scatter", "mode": "markers", "yaxis": "y3",
             "name": f"{kind} · {label} ({len(items)})",
             "x": [str(t.date)[:10] for t in items],
             "y": [0.30] * len(items),
             "customdata": [[t.price, t.amount] for t in items],
-            "marker": {"symbol": shape + "-open", "size": 9, "color": colour,
-                       "line": {"color": colour, "width": 1.6}},
+            "marker": {"symbol": shape + "-open", "size": size, "color": colour,
+                       "line": {"color": edge, "width": 1.6}},
             "hovertemplate": (f"<b>%{{x}}</b> {kind} · {label}"
                               "<br>Gia: %{customdata[0]:,.0f}"
                               "<br>Tien: %{customdata[1]:,.0f}<extra></extra>"),
