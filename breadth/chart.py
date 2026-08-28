@@ -44,16 +44,19 @@ def _load_df(symbol: str) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
-# The signals the arms actually read, with the thresholds drawn as dashed lines.
+# Which signals to draw, and the thresholds as dashed lines. The one the arms
+# actually read comes first and is drawn solid; the others are comparisons and
+# are drawn faint, so the chart shows both the decision and the alternative.
 def _arm_signals(config):
     if getattr(config, "USE_PREM_ARMS", False):
         lines = [(config.BUY_PREM_MAX, "mua"),
                  (config.REINVEST_PREM_MAX, "reinvest"),
                  (config.SELL_PREM_MIN, "ban")]
-        name = "prem_trim" if getattr(config, "USE_TRIM_MEAN", False) else "median_prem"
-        return name, [(v, n) for v, n in lines if v is not None]
-    return "below_pct", [(config.BUY_STRONG_BELOW_PCT, "manh"),
-                         (config.BUY_NORMAL_BELOW_PCT, "thuong")]
+        used = "prem_trim" if getattr(config, "USE_TRIM_MEAN", False) else "median_prem"
+        other = "median_prem" if used == "prem_trim" else "prem_trim"
+        return [used, other], [(v, n) for v, n in lines if v is not None]
+    return ["below_pct"], [(config.BUY_STRONG_BELOW_PCT, "manh"),
+                           (config.BUY_NORMAL_BELOW_PCT, "thuong")]
 
 
 def _add_signal(path: Path, breadth, config, dates) -> None:
@@ -64,17 +67,20 @@ def _add_signal(path: Path, breadth, config, dates) -> None:
     is shared with single/ and should not grow a parameter for one package. The
     axis is added by relayout for the same reason.
     """
-    name, lines = _arm_signals(config)
-    if name not in breadth.values:
+    names, lines = _arm_signals(config)
+    names = [n for n in names if n in breadth.values]
+    if not names:
         return
-    by_date = {str(d)[:10]: v for d, v in zip(breadth.dates, breadth.values[name])}
 
     x = [str(d)[:10] for d in dates]
-    y = [by_date.get(k) for k in x]
-    if not any(v is not None and v == v for v in y):
-        return
+    series = {}
+    for n in names:
+        by_date = {str(d)[:10]: v for d, v in zip(breadth.dates, breadth.values[n])}
+        series[n] = [by_date.get(k) for k in x]
 
-    vals = [v for v in y if v is not None and v == v]
+    vals = [v for ys in series.values() for v in ys if v is not None and v == v]
+    if not vals:
+        return
     lo, hi = min(vals + [v for v, _ in lines]), max(vals + [v for v, _ in lines])
     pad = (hi - lo) * 0.08 or 1.0
 
@@ -82,10 +88,18 @@ def _add_signal(path: Path, breadth, config, dates) -> None:
     # markers and y4..y7 are the signal panels underneath -- so anything lower
     # overwrites one of them. Writing y3 the first time flattened the trade
     # markers out of sight.
-    traces = [{"type": "scatter", "mode": "lines", "name": name, "yaxis": "y8",
-               "x": x, "y": y,
-               "line": {"color": "rgba(147,102,240,0.9)", "width": 1.4},
-               "hovertemplate": name + ": %{y:.1f}<extra></extra>"}]
+    STYLE = [("rgba(147,102,240,0.95)", 1.6, None),      # the one in use
+             ("rgba(120,160,200,0.55)", 1.1, "dot")]     # the comparison
+    traces = []
+    for k, n in enumerate(names):
+        colour, width, dash = STYLE[min(k, len(STYLE) - 1)]
+        line = {"color": colour, "width": width}
+        if dash:
+            line["dash"] = dash
+        traces.append({"type": "scatter", "mode": "lines", "yaxis": "y8",
+                       "name": n + ("" if k == 0 else " (so sanh)"),
+                       "x": x, "y": series[n], "line": line,
+                       "hovertemplate": n + ": %{y:.1f}<extra></extra>"})
     for v, label in lines:
         traces.append({"type": "scatter", "mode": "lines",
                        "name": f"{label} ({v:g})", "yaxis": "y8",
@@ -104,7 +118,7 @@ setTimeout(function wait() {{
   Plotly.relayout(gd, {{
     'yaxis8': {{overlaying: 'y', side: 'right', anchor: 'free', position: 1.0,
                 showgrid: false, range: [{lo - pad:.2f}, {hi + pad:.2f}],
-                title: {{text: '{name}', font: {{size: 10}}}},
+                title: {{text: '{names[0]}', font: {{size: 10}}}},
                 tickfont: {{size: 9}}, zeroline: false}},
     'xaxis.domain': [0, 0.94]
   }}).then(function() {{ Plotly.addTraces(gd, {json.dumps(traces)}); }});
