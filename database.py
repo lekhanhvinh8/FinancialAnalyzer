@@ -139,6 +139,54 @@ def init_db():
                 PRIMARY KEY (symbol, median_window, stat_window, min_periods, date)
             );
 
+            -- Cross-sectional statistics: one row per (config, date, signal),
+            -- describing the BASKET rather than any one symbol. Everything else
+            -- here is keyed by symbol; this is deliberately not.
+            --
+            -- Long form rather than a column per signal because the set grows --
+            -- there are already thirty with the premium quantiles -- and a wide
+            -- table would need a migration every time one is added.
+            CREATE TABLE IF NOT EXISTS breadth_signals (
+                universe    TEXT     NOT NULL,  -- 'all', 'vn30', ... what was measured
+                window_days INTEGER  NOT NULL,  -- the per-symbol reference window
+                variant     TEXT     NOT NULL,  -- other windows that change the output
+                date        TEXT     NOT NULL,  -- ISO date: YYYY-MM-DD
+                signal      TEXT     NOT NULL,  -- 'median_prem', 'prem_trim', ...
+                value       REAL,
+                n_symbols   INTEGER,            -- symbols behind this day's figure
+                -- Config pinned first, then signal, then date: a read asks for
+                -- one signal's whole history under one config, and that is a
+                -- range scan on this order.
+                PRIMARY KEY (universe, window_days, variant, signal, date)
+            );
+
+            -- Cross-sectional statistics: one row per (config, date, signal),
+            -- describing the BASKET rather than any one symbol. Everything else
+            -- in this file is keyed by symbol; this deliberately is not.
+            --
+            -- Long form rather than a column per signal because the set grows --
+            -- thirty already, with the premium quantiles -- and a wide table
+            -- would need a migration each time one is added.
+            --
+            -- EVERY WINDOW THAT MOVES THE NUMBER IS IN THE KEY. window_days sets
+            -- what "its own median" means; `variant` carries the rest (trim
+            -- tails, slope and z_dev windows). Two runs on different settings
+            -- must not overwrite each other, and a reader must be able to say
+            -- which settings it is looking at.
+            CREATE TABLE IF NOT EXISTS breadth_signals (
+                universe    TEXT     NOT NULL,  -- 'all', 'vn30', ... what was measured
+                window_days INTEGER  NOT NULL,  -- per-symbol reference window
+                variant     TEXT     NOT NULL,  -- other settings that change the output
+                signal      TEXT     NOT NULL,  -- 'median_prem', 'prem_trim', ...
+                date        TEXT     NOT NULL,  -- ISO date: YYYY-MM-DD
+                value       REAL,               -- percent, not a ratio
+                n_symbols   INTEGER,            -- symbols behind this day's figure
+                -- Config first, then signal, then date: a read asks for one
+                -- signal's whole history under one config, which is a range scan
+                -- on exactly this order.
+                PRIMARY KEY (universe, window_days, variant, signal, date)
+            );
+
             -- Fingerprint of the input a derived table was built from, so a sync
             -- can tell "nothing changed, only append" from "history was revised,
             -- rebuild". prices are re-fetched from 2012 and INSERT OR REPLACE'd on
@@ -930,3 +978,86 @@ if __name__ == "__main__":
         print(summary().to_string(index=False))
     else:
         print("No stock data stored yet.")
+
+# ── Breadth: statistics of the whole basket ──────────────────────────────────
+
+def save_breadth(universe: str, window_days: int, variant: str,
+                 dates, values: dict, counts=None, override: bool = True) -> dict:
+    """
+    Persist one breadth run.
+
+    `values` is {signal name: sequence aligned to `dates`}; `counts` is the
+    symbol count per date. NaN is stored as NULL, so "we had no data that day"
+    and "the value was zero" stay different things.
+
+    override defaults to True: this is derived from prices and always recomputed
+    in full, so a repaired price must be able to overwrite what it produced.
+    """
+    iso = [str(d)[:10] for d in dates]
+    rows = []
+    for name, seq in values.items():
+        for i, v in enumerate(seq):
+            v = None if v is None or v != v else float(v)
+            n = None if counts is None else int(counts[i])
+            rows.append((universe, window_days, variant, name, iso[i], v, n))
+    if not rows:
+        return {"saved": 0}
+
+    verb = "INSERT OR REPLACE" if override else "INSERT OR IGNORE"
+    with _conn() as con:
+        con.executemany(
+            f"""{verb} INTO breadth_signals
+                (universe, window_days, variant, signal, date, value, n_symbols)
+                VALUES (?, ?, ?, ?, ?, ?, ?)""", rows)
+        saved = con.total_changes
+    return {"saved": saved, "signals": len(values), "dates": len(iso)}
+
+
+def load_breadth(universe: str, window_days: int, variant: str,
+                 signals=None) -> pd.DataFrame:
+    """
+    DataFrame indexed by date, one column per signal, plus `n_symbols`.
+
+    `signals` limits which columns are read; None reads them all. Returns an
+    empty frame when the config was never stored, rather than raising -- a
+    missing run is a normal answer to "do we have this yet".
+    """
+    q = ("""SELECT date, signal, value, n_symbols FROM breadth_signals
+            WHERE universe = ? AND window_days = ? AND variant = ?""")
+    params = [universe, window_days, variant]
+    if signals:
+        q += f" AND signal IN ({','.join('?' * len(signals))})"
+        params += list(signals)
+    with _conn() as con:
+        raw = pd.read_sql(q + " ORDER BY date", con, params=params)
+    if raw.empty:
+        return raw
+
+    wide = raw.pivot(index="date", columns="signal", values="value")
+    wide["n_symbols"] = (raw.groupby("date")["n_symbols"].first())
+    wide.index = pd.to_datetime(wide.index)
+    wide.columns.name = None
+    return wide.sort_index()
+
+
+def breadth_variants() -> pd.DataFrame:
+    """Every stored configuration, with its date range and signal count."""
+    with _conn() as con:
+        return pd.read_sql(
+            """SELECT universe, window_days, variant,
+                      COUNT(DISTINCT signal) AS signals,
+                      COUNT(DISTINCT date)   AS days,
+                      MIN(date) AS first_date, MAX(date) AS last_date
+               FROM breadth_signals
+               GROUP BY universe, window_days, variant
+               ORDER BY universe, window_days, variant""", con)
+
+
+def delete_breadth(universe: str, window_days: int, variant: str) -> int:
+    """Drop one stored configuration. Returns rows removed."""
+    with _conn() as con:
+        cur = con.execute(
+            """DELETE FROM breadth_signals
+               WHERE universe = ? AND window_days = ? AND variant = ?""",
+            (universe, window_days, variant))
+        return cur.rowcount

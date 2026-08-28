@@ -243,3 +243,35 @@ def load(path):
     values = {k[2:]: z[k] for k in z.files if k.startswith("v_")}
     return BreadthSeries(dates=dates, values=values, counts=z["counts"],
                          row_of={d: i for i, d in enumerate(dates)})
+
+
+def variant(slope_window: int, zdev_stat: int) -> str:
+    """
+    The settings that change a stored run other than window_days.
+
+    Trim tails are in here because they move prem_trim; slope and z_dev windows
+    because they move the momentum and z_dev signals. Anything that changes a
+    number has to change this string, or two runs will overwrite each other.
+    """
+    return f"trim{TRIM_LOW}-{TRIM_HIGH}_slope{slope_window}_zdev{zdev_stat}"
+
+
+def save_to_db(breadth: BreadthSeries, universe: str, window: int,
+               slope_window: int, zdev_stat: int) -> dict:
+    import database as db
+    return db.save_breadth(universe, window, variant(slope_window, zdev_stat),
+                           breadth.dates, breadth.values, breadth.counts)
+
+
+def load_from_db(universe: str, window: int, slope_window: int, zdev_stat: int):
+    """A stored run as a BreadthSeries, or None if that config is not there."""
+    import database as db
+    import pandas as pd
+    df = db.load_breadth(universe, window, variant(slope_window, zdev_stat))
+    if df.empty:
+        return None
+    dates = list(df.index)
+    counts = df["n_symbols"].to_numpy(dtype=float)
+    values = {c: df[c].to_numpy(dtype=float) for c in df.columns if c != "n_symbols"}
+    return BreadthSeries(dates=dates, values=values, counts=counts,
+                         row_of={d: i for i, d in enumerate(dates)})

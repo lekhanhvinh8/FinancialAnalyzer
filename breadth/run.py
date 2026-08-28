@@ -24,7 +24,8 @@ for _s in (sys.stdout, sys.stderr):
 
 from breadth import config
 from breadth.engine import run_backtest
-from breadth.signals import cache_path, compute, load as load_cache, save as save_cache
+from breadth.signals import (cache_path, compute, load as load_cache,
+                             save as save_cache, save_to_db)
 from breadth.strategy import build_baseline, build_plan
 from breadth import chart as chartmod
 from breadth import report_html
@@ -100,6 +101,10 @@ def main(argv) -> int:
     print(f"Breadth: {len(breadth)} ngay  ({time.time() - t1:.1f}s)")
     save_cache(breadth, cpath)
     print(f"Cache -> {cpath}")
+    info = save_to_db(breadth, config.UNIVERSE, config.WINDOW,
+                      config.SLOPE_WINDOW, config.ZDEV_STAT_WINDOW)
+    print(f"DB    -> breadth_signals: {info['saved']:,} dong "
+          f"({info['signals']} tin hieu x {info['dates']} ngay)")
     prog.end("breadth", f"{len(breadth)} ngay")
     return _report(config, plan, base, breadth, market, prog)
 
