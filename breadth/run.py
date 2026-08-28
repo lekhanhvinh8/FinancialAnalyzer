@@ -119,6 +119,17 @@ def _report(config, plan, base, breadth, market, prog) -> int:
     bench = run_backtest(market, breadth, base, config.CONTRIBUTION,
                          deposit_rate=config.DEPOSIT_RATE, track=True)
 
+    # The other premium statistic, same thresholds. Both go on the chart so the
+    # two sets of decisions can be compared where they were made.
+    was = config.USE_TRIM_MEAN
+    config.USE_TRIM_MEAN = not was
+    alt_plan = build_plan(config)
+    config.USE_TRIM_MEAN = was
+    alt_plan.attach(breadth)
+    alt = run_backtest(market, breadth, alt_plan, config.CONTRIBUTION,
+                       deposit_rate=config.DEPOSIT_RATE, track=True)
+    alt_label = "prem_trim" if not was else "median_prem"
+
     w = 22
     print(f"\n{'':<{w}}{plan.name[:18]:>18}{base.name[:20]:>20}")
     print("-" * (w + 38))
@@ -138,6 +149,14 @@ def _report(config, plan, base, breadth, market, prog) -> int:
     print("-" * (w + 38))
     print(f"{'growth':<{w}}{result['growth_%']:>17.2f}%{bench['growth_%']:>19.2f}%")
     print(f"{'difference':<{w}}{result['growth_%'] - bench['growth_%']:>17.2f}%")
+
+    print(f"\n{'so sanh hai thong ke':<24}{'tang truong':>12}{'mua':>7}"
+          f"{'tai':>6}{'ban':>6}")
+    print("-" * 55)
+    used = "prem_trim" if was else "median_prem"
+    for lab, r in ((used + " (dang dung)", result), (alt_label, alt)):
+        print(f"{lab:<24}{r['growth_%']:>11.2f}%{r['buys']:>7}"
+              f"{r.get('reinvests', 0):>6}{r['sells']:>6}")
 
     # What the pace actually did, which is the only way to tell a rule that
     # fired from one that never got the chance.
@@ -162,7 +181,8 @@ def _report(config, plan, base, breadth, market, prog) -> int:
         print(f"{year:<6}{avg:>13.2f} {strong:>13} {weak:>12} {nbar:>6.0f}")
 
     prog.begin("report")
-    ch = chartmod.build(result, config, CHARTS, breadth, plan)
+    ch = chartmod.build(result, config, CHARTS, breadth, plan,
+                        alt=(alt_label, alt))
     print(f"\nChart  -> {ch}")
     rep = report_html.build(result, bench, plan, config, breadth,
                             CHARTS / "report.html", chart_name=ch.name,

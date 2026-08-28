@@ -179,7 +179,51 @@ def _zones(plan, breadth, dates):
             _ZoneShim("reinvest")._wire(plan, plan.reinvest_when, breadth, rows, True))
 
 
-def build(result, config, out_dir: Path, breadth=None, plan=None) -> Path:
+# Same shapes as the renderer's own markers, drawn hollow and on a lower row of
+# the same strip so the two strategies read as two rows, not two legends.
+_ALT = {"buy": ("circle", "#22c55e"), "sell": ("triangle-down", "#ef4444"),
+        "reinvest": ("diamond", "#f97316")}
+
+
+def _add_alt_trades(path: Path, alt_result, label: str, symbol: str) -> None:
+    """The other strategy's trades, on y3 at a lower height than the main run."""
+    by_kind = {}
+    for t in alt_result["wallet"].position(symbol).trades:
+        by_kind.setdefault(t.kind, []).append(t)
+    if not by_kind:
+        return
+
+    traces = []
+    for kind, items in by_kind.items():
+        shape, colour = _ALT[kind]
+        traces.append({
+            "type": "scatter", "mode": "markers", "yaxis": "y3",
+            "name": f"{kind} · {label} ({len(items)})",
+            "x": [str(t.date)[:10] for t in items],
+            "y": [0.30] * len(items),
+            "customdata": [[t.price, t.amount] for t in items],
+            "marker": {"symbol": shape + "-open", "size": 9, "color": colour,
+                       "line": {"color": colour, "width": 1.6}},
+            "hovertemplate": (f"<b>%{{x}}</b> {kind} · {label}"
+                              "<br>Gia: %{customdata[0]:,.0f}"
+                              "<br>Tien: %{customdata[1]:,.0f}<extra></extra>"),
+        })
+
+    script = f"""
+<script>
+setTimeout(function wait() {{
+  var gd = document.querySelector('.plotly-graph-div');
+  if (!gd || !window.Plotly || !gd.data || !gd.data.length) return setTimeout(wait, 300);
+  Plotly.addTraces(gd, {json.dumps(traces)});
+}}, 1800);
+</script>
+</body>"""
+    html = path.read_text(encoding="utf-8")
+    path.write_text(html.replace("</body>", script, 1), encoding="utf-8")
+
+
+def build(result, config, out_dir: Path, breadth=None, plan=None,
+          alt=None) -> Path:
     """
     Chart for the traded instrument, with every trade marked.
 
@@ -219,4 +263,6 @@ def build(result, config, out_dir: Path, breadth=None, plan=None) -> Path:
     )
     if breadth is not None:
         _add_signal(path, breadth, config, df["time"])
+    if alt is not None:
+        _add_alt_trades(path, alt[1], alt[0], symbol)
     return path
