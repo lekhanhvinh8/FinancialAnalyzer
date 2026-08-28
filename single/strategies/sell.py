@@ -240,3 +240,41 @@ class SellMedian1000Strategy(SellStrategy):
             if v is not None and v <= self.min_pelog:
                 return False
         return True
+
+
+@dataclass
+class SellBreadthStrategy(SellStrategy):
+    """
+    Sell everything once the BASKET is broadly extended and this symbol's own
+    momentum has stopped running.
+
+    Two gates, and both are needed for the reason SellMedian1000Strategy needs
+    its slope gate: an extended market can stay extended for years, and selling
+    on the level alone hands away the rest of the move. The momentum half is
+    about THIS symbol -- the basket says the market is dear, the slope says this
+    holding is no longer being carried up by it.
+
+    breadth_map is median_prem from breadth_signals; signal1_map is the symbol's
+    own signal1_slope, exactly as SellMedian1000Strategy uses it.
+    """
+    breadth_map: dict = field(default_factory=dict)
+    min_breadth: float = 70.0
+    signal1_map: dict = field(default_factory=dict)
+    max_signal1: float = 0.228
+
+    def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
+        if self.check(index, close, pe, cal_range_close):
+            Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        v = self.breadth_map.get(index)
+        if v is None or v <= self.min_breadth:
+            return False
+        if self.signal1_map:
+            s = self.signal1_map.get(index)
+            # Momentum still climbing: let it run. A missing slope does not
+            # unblock the sell -- it is a gate, and an absent reading leaves it
+            # shut.
+            if s is None or s >= self.max_signal1:
+                return False
+        return True

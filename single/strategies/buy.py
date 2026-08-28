@@ -197,3 +197,30 @@ class BuyMA1000Strategy(BuyStrategy):
             if (current - localAvg) / localAvg > self.increasedPercentNotBuy / 100:
                 return False
         return True
+
+
+@dataclass
+class BuyBreadthStrategy(BuyStrategy):
+    """
+    Buy while the BASKET is not expensive, whatever this symbol's own price did.
+
+    Every other strategy here asks about one symbol against its own history. This
+    one asks about the market: `breadth_map` holds median_prem, the median
+    distance from median across the whole basket, read from breadth_signals.
+
+    That is the point of it. A symbol can be cheap against itself while the whole
+    market is stretched, and the median1000 family cannot see the difference.
+
+    A row with no breadth value declines rather than buying: a missing market
+    reading is not a reason to act.
+    """
+    breadth_map: dict = field(default_factory=dict)
+    max_breadth: float = 60.0
+
+    def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
+        if self.check(index, close, pe, cal_range_close):
+            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
+
+    def check(self, index, close, pe, cal_range_close) -> bool:
+        v = self.breadth_map.get(index)
+        return v is not None and v <= self.max_breadth
