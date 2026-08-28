@@ -88,8 +88,11 @@ def _add_signal(path: Path, breadth, config, dates) -> None:
     # markers and y4..y7 are the signal panels underneath -- so anything lower
     # overwrites one of them. Writing y3 the first time flattened the trade
     # markers out of sight.
-    STYLE = [("rgba(147,102,240,0.95)", 1.6, None),      # the one in use
-             ("rgba(120,160,200,0.55)", 1.1, "dot")]     # the comparison
+    # Two colours, one weight. The comparison line was drawn faint and dotted
+    # and simply could not be read against the price chart; a line worth putting
+    # on the chart is worth being able to see.
+    STYLE = [("rgba(147,102,240,0.95)", 1.6, None),      # violet — in use
+             ("rgba(0,176,160,0.95)", 1.6, None)]        # teal   — comparison
     traces = []
     for k, n in enumerate(names):
         colour, width, dash = STYLE[min(k, len(STYLE) - 1)]
@@ -179,13 +182,14 @@ def _zones(plan, breadth, dates):
             _ZoneShim("reinvest")._wire(plan, plan.reinvest_when, breadth, rows, True))
 
 
-# EXACTLY the renderer's own shapes, sizes and colours -- copied from what it
-# emits, not guessed -- so the two rows differ only in being hollow. A different
-# glyph for the same event would read as a different KIND of event.
+# EXACTLY the renderer's own markers -- shape, size, fill and edge, copied from
+# what it emits. The two rows are identical; the ROW is what says which
+# strategy, and nothing else should. Drawing the second hollow made the same
+# event look like a different kind of event.
 _ALT = {
-    "buy":      ("triangle-up",   9, "rgba(34,197,94,0.9)",  "#15803d"),
-    "sell":     ("triangle-down", 9, "rgba(239,68,68,0.9)",  "#991b1b"),
-    "reinvest": ("diamond",       8, "rgba(249,115,22,0.9)", "#c2410c"),
+    "buy":      ("triangle-up",   9, "rgba(34,197,94,0.75)", "#15803d"),
+    "sell":     ("triangle-down", 9, "rgba(239,68,68,0.75)", "#991b1b"),
+    "reinvest": ("diamond",       8, "rgba(249,115,22,0.75)","#c2410c"),
 }
 
 
@@ -206,8 +210,8 @@ def _add_alt_trades(path: Path, alt_result, label: str, symbol: str) -> None:
             "x": [str(t.date)[:10] for t in items],
             "y": [0.30] * len(items),
             "customdata": [[t.price, t.amount] for t in items],
-            "marker": {"symbol": shape + "-open", "size": size, "color": colour,
-                       "line": {"color": edge, "width": 1.6}},
+            "marker": {"symbol": shape, "size": size, "color": colour,
+                       "line": {"color": edge, "width": 1}},
             "hovertemplate": (f"<b>%{{x}}</b> {kind} · {label}"
                               "<br>Gia: %{customdata[0]:,.0f}"
                               "<br>Tien: %{customdata[1]:,.0f}<extra></extra>"),
