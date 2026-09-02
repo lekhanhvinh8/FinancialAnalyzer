@@ -245,8 +245,9 @@ def main() -> int:
 
     # ── signals.compute excludes indices and counts support ─────────────────
     class _S:
-        def __init__(self, is_index, med, price):
+        def __init__(self, is_index, med, price, cap=1.0):
             self.is_index, self._m, self._p = is_index, med, price
+            self._cap = cap
             self.closes = np.array([price])
         def __len__(self):
             return 1
@@ -256,13 +257,18 @@ def main() -> int:
             return 0.0
         def sharpe(self, _w, _i):
             return 0.0
+        def cap(self, _i):
+            return self._cap
 
     class _M2:
         def __init__(self):
             self._d = [_Day(date(2020, 1, 2),
                             {"A": _Bar("A", 0, 90.0), "B": _Bar("B", 0, 110.0),
                              "IDX": _Bar("IDX", 0, 1000.0)})]
-            self._s = {"A": _S(False, 100.0, 90.0), "B": _S(False, 100.0, 110.0),
+            # B is nine times A's size, so a cap-weighted reading must land
+            # near B's +10% while the unweighted ones sit at 0.
+            self._s = {"A": _S(False, 100.0, 90.0, cap=1.0),
+                       "B": _S(False, 100.0, 110.0, cap=9.0),
                        "IDX": _S(True, 1000.0, 1000.0)}
         def days(self):
             return iter(self._d)
@@ -278,6 +284,10 @@ def main() -> int:
           f"1 trong 2 ma duoi median -> 0.5, duoc {br.at('below_pct', 0)}")
     check(abs(br.at("median_prem", 0)) < 1e-9,
           f"-10% va +10% -> trung vi 0, duoc {br.at('median_prem', 0)}")
+    # (-10 x 1 + 10 x 9) / 10 = +8. The median says 0 because it counts heads;
+    # this counts money, and nine tenths of the money is in B.
+    check(abs(br.at("prem_cap", 0) - 8.0) < 1e-9,
+          f"von hoa 1:9 -> +8.0, duoc {br.at('prem_cap', 0)}")
 
     # ── interest is profit, never capital ───────────────────────────────────
     # With a deposit rate on, the reserve grows without anyone paying anything

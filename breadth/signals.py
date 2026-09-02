@@ -76,7 +76,7 @@ SIGNALS = (("below_pct", "median_prem", "p25_prem", "slope_pos", "mean_slope",
             "spread", "median_zdev", "spread_zdev",
             "median_sharpe", "sharpe_pos")
            + tuple(f"prem_q{q}" for q in PREM_QS)
-           + ("prem_trim", "prem_trim_sd"))
+           + ("prem_trim", "prem_trim_sd", "prem_cap"))
 
 
 @dataclass
@@ -130,6 +130,21 @@ def _zdev_per_symbol(market, window: int, stat_window: int) -> dict:
     return out
 
 
+def _cap_weighted(prem, caps, trim_mask) -> float:
+    """
+    Trimmed, cap-weighted mean premium. NaN when nothing survives.
+
+    Kept out of `push` because it needs two aligned arrays, and widening push to
+    take a second one would complicate the twenty callers that do not.
+    """
+    if not len(prem):
+        return np.nan
+    m = trim_mask(prem) & ~np.isnan(caps)
+    if not m.any() or caps[m].sum() <= 0:
+        return np.nan
+    return float((prem[m] * caps[m]).sum() / caps[m].sum())
+
+
 def compute(market, window: int, slope_window: int,
             zdev_stat_window: int = 250) -> BreadthSeries:
     """Walk the calendar once and reduce each day to a handful of numbers."""
@@ -143,6 +158,7 @@ def compute(market, window: int, slope_window: int,
 
     for day in market.days():
         prem, slopes, zs, sh = [], [], [], []
+        caps = []
         for symbol, bar in day.bars.items():
             series = market[symbol]
             if series.is_index:
@@ -150,6 +166,11 @@ def compute(market, window: int, slope_window: int,
             med = series.median(window, bar.index)
             if med:
                 prem.append((bar.price - med) / med * 100.0)
+                # Appended in the SAME branch, so caps[i] is the cap of the
+                # symbol behind prem[i]. NaN for a symbol with no cap reading:
+                # dropping it here would shift the alignment.
+                c = series.cap(bar.index)
+                caps.append(c if c and c > 0 else np.nan)
             sl = series.slope(slope_window, bar.index)
             if sl is not None:
                 slopes.append(sl)
@@ -175,12 +196,31 @@ def compute(market, window: int, slope_window: int,
         # A plain mean is dragged by a handful of names that ran 300% or
         # collapsed; the median ignores magnitude entirely. Trimming keeps the
         # magnitude of the ordinary 90% and discards only the tails.
-        def _trim(v):
+        def _trim_mask(v):
             lo, hi = np.percentile(v, [TRIM_LOW, TRIM_HIGH])
-            k = v[(v >= lo) & (v <= hi)]
-            return k if len(k) else v
+            m = (v >= lo) & (v <= hi)
+            return m if m.any() else np.ones(len(v), dtype=bool)
+
+        def _trim(v):
+            return v[_trim_mask(v)]
         push("prem_trim", a, lambda v: float(_trim(v).mean()))
         push("prem_trim_sd", a, lambda v: float(_trim(v).std()))
+
+        # CAP-WEIGHTED, same tails dropped. prem_trim gives PVD the same vote as
+        # VCB; this one asks what the money in the market is doing rather than
+        # what the average listing is doing. Read the two together: they part
+        # company exactly when the big names and the small ones disagree, which
+        # is the reading neither line can give alone.
+        #
+        # Raw cap as the weight, not sqrt or log. The point is to say what the
+        # index-sized money sees, and that is what raw cap means; softening it
+        # would produce a third thing that is neither this nor prem_trim.
+        #
+        # Trimmed on PREM, exactly as prem_trim is -- the tails being dropped are
+        # extreme moves, not extreme sizes. A symbol with no cap reading drops
+        # out of this signal only; it still counts in every other one.
+        w = np.asarray(caps)
+        cols["prem_cap"].append(_cap_weighted(a, w, _trim_mask))
 
         b = np.asarray(slopes)
         push("slope_pos", b, lambda v: float((v > 0).mean()))
@@ -233,7 +273,16 @@ def save(breadth: BreadthSeries, path) -> None:
 
 
 def load(path):
-    """The cached series, or None if it is not there. Never raises on a miss."""
+    """
+    The cached series, or None if it is not there. Never raises on a miss.
+
+    A CACHE MISSING A SIGNAL IS A MISS, not a partial hit. Adding prem_cap to
+    SIGNALS left a cache on disk that predated it, and the run reused that cache,
+    reported "2829 ngay (cache)" and stored everything EXCEPT the new signal --
+    silently, because nothing compared what was asked for with what came back.
+    Recomputing costs a few minutes; a silently absent signal costs an
+    investigation.
+    """
     path = _Path(path)
     if not path.exists():
         return None
@@ -241,6 +290,10 @@ def load(path):
     import pandas as _pd
     dates = [_pd.Timestamp(str(d)) for d in z["dates"]]
     values = {k[2:]: z[k] for k in z.files if k.startswith("v_")}
+    missing = [k for k in SIGNALS if k not in values]
+    if missing:
+        print(f"  [cache] bo qua {path.name}: thieu {', '.join(missing)}")
+        return None
     return BreadthSeries(dates=dates, values=values, counts=z["counts"],
                          row_of={d: i for i, d in enumerate(dates)})
 
@@ -255,7 +308,7 @@ def load(path):
 # parameter moved.
 #
 # A signal is now named by what it reads, and nothing else.
-_TRIM  = ("prem_trim", "prem_trim_sd")
+_TRIM  = ("prem_trim", "prem_trim_sd", "prem_cap")
 _SLOPE = ("slope_pos", "mean_slope", "median_sharpe", "sharpe_pos")
 _ZDEV  = ("median_zdev", "spread_zdev")
 
