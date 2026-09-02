@@ -103,8 +103,11 @@ def main(argv) -> int:
     print(f"Cache -> {cpath}")
     info = save_to_db(breadth, config.UNIVERSE, config.WINDOW,
                       config.SLOPE_WINDOW, config.ZDEV_STAT_WINDOW)
-    print(f"DB    -> breadth_signals: {info['saved']:,} dong "
-          f"({info['signals']} tin hieu x {info['dates']} ngay)")
+    # One line per variant: a signal is stored under the parameters it reads,
+    # so a run now writes several groups rather than one batch.
+    for v, r in sorted(info.items()):
+        print(f"DB    -> breadth_signals[{v}]: {r['saved']:,} dong "
+              f"({r['signals']} tin hieu x {r['dates']} ngay)")
     prog.end("breadth", f"{len(breadth)} ngay")
     return _report(config, plan, base, breadth, market, prog)
 
