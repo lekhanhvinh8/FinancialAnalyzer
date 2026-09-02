@@ -511,5 +511,10 @@ REINVEST_MAX_BREADTH = None
 # breadth/signals.py::variant.
 BREADTH_UNIVERSE = "all"
 BREADTH_WINDOW = 1000
-BREADTH_VARIANT = "trim5-95_slope120_zdev250"
+# Only needed for a signal that actually reads them: the slope and sharpe
+# signals, and the z_dev ones. BREADTH_SIGNAL = "median_prem" reads neither, so
+# these two are inert as shipped. They exist so that switching BREADTH_SIGNAL to
+# one that does read them addresses the right stored rows.
+BREADTH_SLOPE_WINDOW = 120
+BREADTH_ZDEV_WINDOW = 250
 BREADTH_SIGNAL = "median_prem"

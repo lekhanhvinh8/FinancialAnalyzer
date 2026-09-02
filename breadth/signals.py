@@ -245,31 +245,70 @@ def load(path):
                          row_of={d: i for i, d in enumerate(dates)})
 
 
-def variant(slope_window: int, zdev_stat: int) -> str:
-    """
-    The settings that change a stored run other than window_days.
+# WHICH PARAMETERS EACH SIGNAL ACTUALLY USES
+#
+# The variant string used to name the whole BATCH: every signal computed in one
+# call got "trim5-95_slope120_zdev250", including median_prem, which reads none
+# of those three. That is a lie a reader cannot check -- it says the decision
+# line depends on a 120-bar slope when it depends only on window_days -- and it
+# forced a pointless rewrite of 2829 identical rows every time an unrelated
+# parameter moved.
+#
+# A signal is now named by what it reads, and nothing else.
+_TRIM  = ("prem_trim", "prem_trim_sd")
+_SLOPE = ("slope_pos", "mean_slope", "median_sharpe", "sharpe_pos")
+_ZDEV  = ("median_zdev", "spread_zdev")
 
-    Trim tails are in here because they move prem_trim; slope and z_dev windows
-    because they move the momentum and z_dev signals. Anything that changes a
-    number has to change this string, or two runs will overwrite each other.
+
+def variant(signal: str, slope_window: int, zdev_stat: int) -> str:
     """
-    return f"trim{TRIM_LOW}-{TRIM_HIGH}_slope{slope_window}_zdev{zdev_stat}"
+    The settings that change THIS signal, other than window_days.
+
+    "base" for a signal that reads only the premium and the window: median_prem,
+    the quantiles, below_pct, spread, p25_prem. Not the empty string, because the
+    variant is part of a primary key and an empty key segment is a trap.
+    """
+    if signal in _TRIM:
+        return f"trim{TRIM_LOW}-{TRIM_HIGH}"
+    if signal in _SLOPE:
+        return f"slope{slope_window}"
+    if signal in _ZDEV:
+        return f"zdev{zdev_stat}"
+    return "base"
 
 
 def save_to_db(breadth: BreadthSeries, universe: str, window: int,
                slope_window: int, zdev_stat: int) -> dict:
+    """Write each signal under its own variant. Returns rows written per variant."""
     import database as db
-    return db.save_breadth(universe, window, variant(slope_window, zdev_stat),
-                           breadth.dates, breadth.values, breadth.counts)
+    groups = {}
+    for name, series in breadth.values.items():
+        groups.setdefault(variant(name, slope_window, zdev_stat), {})[name] = series
+    out = {}
+    for v, vals in sorted(groups.items()):
+        r = db.save_breadth(universe, window, v, breadth.dates, vals, breadth.counts)
+        out[v] = r
+    return out
 
 
 def load_from_db(universe: str, window: int, slope_window: int, zdev_stat: int):
-    """A stored run as a BreadthSeries, or None if that config is not there."""
+    """
+    A stored run as a BreadthSeries, or None if nothing was stored for it.
+
+    Reassembles the four variants a run is now spread across; a variant that was
+    never written simply contributes no columns, so a partial store reads back as
+    the signals it has rather than as nothing.
+    """
     import database as db
     import pandas as pd
-    df = db.load_breadth(universe, window, variant(slope_window, zdev_stat))
-    if df.empty:
+    wanted = {variant(n, slope_window, zdev_stat)
+              for n in ("median_prem", *_TRIM, *_SLOPE, *_ZDEV)}
+    frames = [f for f in (db.load_breadth(universe, window, v) for v in sorted(wanted))
+              if not f.empty]
+    if not frames:
         return None
+    df = pd.concat(frames, axis=1)
+    df = df.loc[:, ~df.columns.duplicated()]      # n_symbols is in every frame
     dates = list(df.index)
     counts = df["n_symbols"].to_numpy(dtype=float)
     values = {c: df[c].to_numpy(dtype=float) for c in df.columns if c != "n_symbols"}
