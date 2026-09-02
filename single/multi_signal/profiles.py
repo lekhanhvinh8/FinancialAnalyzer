@@ -70,6 +70,15 @@ PROFILES = {
         "SELL_SIGNAL1_WINDOW": 120,
     },
 
+    # DIAGNOSTIC, not a strategy. "price" carries four gates that "breadth"
+    # switches off, so comparing the two measures the gates and the signal at
+    # once. This is "price" with the same gates off, which isolates the signal.
+    "price_nogates": {
+        "MIN_SIGNAL3": None,
+        "SELL_MIN_ZDEV": None,
+        "SELL_MIN_PELOG": None,
+    },
+
     "both": {
         "BUY_MAX_BREADTH": 60.0,
         "SELL_MIN_BREADTH": 70.0,
