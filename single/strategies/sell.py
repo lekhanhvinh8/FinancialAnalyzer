@@ -148,7 +148,7 @@ class SellMedian1000Strategy(SellStrategy):
     # arm is still fixed at 1000, which is what keeps the backtest start index
     # from moving when this drops below it.
     # percentSell has to move with it: the price's distance from its own median
-    # widens with the window, p95 = 1.29 * w^0.698 (single/median1000/dispersion.py).
+    # widens with the window, p95 = 1.29 * w^0.698 (single/multi_signal/dispersion.py).
     medianWindow: int = 1000
     # {row_index: signal3_sharpe} for 1000-day window — block sell when >= min_signal3 (stable/trending → hold)
     signal3_map: dict = field(default_factory=dict)
@@ -181,6 +181,15 @@ class SellMedian1000Strategy(SellStrategy):
     #     which is right: a company losing money has no "grew into it" defence
     pelog_map: dict = field(default_factory=dict)
     min_pelog: float = 0.0
+
+    # ── the basket, not this symbol ─────────────────────────────────────────
+    # {row_index: median_prem} from breadth_signals. Blocks the sell unless the
+    # WHOLE MARKET is extended by at least min_breadth percent. None switches it
+    # off. A gate like min_signal1, not a strategy of its own: with it here,
+    # "this symbol is 75% above its median AND the market is dear" is one arm,
+    # which a separate SellBreadthStrategy could never express.
+    breadth_map: dict = field(default_factory=dict)
+    min_breadth: float = None
 
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
@@ -218,6 +227,12 @@ class SellMedian1000Strategy(SellStrategy):
                 fired = (current - bottom) / bottom * 100 > self.percentSellBottom
         if not fired:
             return False
+        # Block the sell unless the basket is extended too.
+        if self.min_breadth is not None:
+            b = self.breadth_map.get(index)
+            if b is None or b <= self.min_breadth:
+                return False
+
         # Block sell when short-term momentum (linear regression slope) is still strong — let it run
         if self.signal1_map and self.signal1_map.get(index, 0.0) >= self.min_signal1:
             return False
@@ -238,43 +253,5 @@ class SellMedian1000Strategy(SellStrategy):
         if self.pelog_map:
             v = self.pelog_map.get(index)
             if v is not None and v <= self.min_pelog:
-                return False
-        return True
-
-
-@dataclass
-class SellBreadthStrategy(SellStrategy):
-    """
-    Sell everything once the BASKET is broadly extended and this symbol's own
-    momentum has stopped running.
-
-    Two gates, and both are needed for the reason SellMedian1000Strategy needs
-    its slope gate: an extended market can stay extended for years, and selling
-    on the level alone hands away the rest of the move. The momentum half is
-    about THIS symbol -- the basket says the market is dear, the slope says this
-    holding is no longer being carried up by it.
-
-    breadth_map is median_prem from breadth_signals; signal1_map is the symbol's
-    own signal1_slope, exactly as SellMedian1000Strategy uses it.
-    """
-    breadth_map: dict = field(default_factory=dict)
-    min_breadth: float = 70.0
-    signal1_map: dict = field(default_factory=dict)
-    max_signal1: float = 0.228
-
-    def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        if self.check(index, close, pe, cal_range_close):
-            Sellor().sell(tracker, tracker.totalShare * close, index, close, isPrint)
-
-    def check(self, index, close, pe, cal_range_close) -> bool:
-        v = self.breadth_map.get(index)
-        if v is None or v <= self.min_breadth:
-            return False
-        if self.signal1_map:
-            s = self.signal1_map.get(index)
-            # Momentum still climbing: let it run. A missing slope does not
-            # unblock the sell -- it is a gate, and an absent reading leaves it
-            # shut.
-            if s is None or s >= self.max_signal1:
                 return False
         return True

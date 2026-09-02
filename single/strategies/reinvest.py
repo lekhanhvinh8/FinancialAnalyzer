@@ -119,6 +119,13 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return True
         return self.signal1_map.get(index, 0.0) >= self.min_signal1
 
+    # ── the basket, not this symbol ─────────────────────────────────────────
+    # {row_index: median_prem} from breadth_signals. The reserve goes back to
+    # work only when the whole market is at or below max_breadth. None switches
+    # it off. Same shape as the other gates on this class.
+    breadth_map: dict = field(default_factory=dict)
+    max_breadth: float = None
+
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalReserveFinal <= 0:
             return
@@ -143,6 +150,12 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     def check(self, index, close, pe, cal_range_close) -> bool:
         if index <= 1000:
             return False
+        # The basket has to agree. A market reading we do not have is not
+        # a reason to act, so an absent value leaves the gate shut.
+        if self.max_breadth is not None:
+            b = self.breadth_map.get(index)
+            if b is None or b > self.max_breadth:
+                return False
         current = pe if self.use_pe else close
         if current is None:
             return False
@@ -208,31 +221,3 @@ class ReInvestUnderMA1000OrMaxHoldTimeStrategy(ReinvestStrategy):
                 return
         if tracker.lastSellIndex > 0 and (index - tracker.lastSellIndex) > self.maxHoldTime:
             Reinvestor().reinvest(tracker, tracker.totalReserveFinal, index, close, isPrint)
-
-
-@dataclass
-class ReInvestBreadthStrategy(ReinvestStrategy):
-    """
-    Put the reserve back to work only when the BASKET is genuinely cheap.
-
-    Stricter than the buy arm on purpose: the contribution arrives monthly and
-    has to go somewhere, while the reserve is money already saved from a sale and
-    can afford to wait for a better market.
-    """
-    breadth_map: dict = field(default_factory=dict)
-    max_breadth: float = 10.0
-    percent: float = 100.0
-
-    def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        # An empty reserve is the common case, not an edge one: the condition
-        # fires on days nothing has been sold yet, and the engine divides by the
-        # reserve to work out the share count.
-        if tracker.totalReserveFinal <= 0:
-            return
-        if self.check(index, close, pe, cal_range_close):
-            amount = tracker.totalReserveFinal * self.percent / 100
-            Reinvestor().reinvest(tracker, amount, index, close, isPrint)
-
-    def check(self, index, close, pe, cal_range_close) -> bool:
-        v = self.breadth_map.get(index)
-        return v is not None and v <= self.max_breadth

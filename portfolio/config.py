@@ -327,7 +327,7 @@ CAP_EXEMPT_INDEX = True
 # conditions would liquidate and re-enter the same day. It cannot here: selling
 # needs premium > 70 and buying needs premium < 10, which are complementary. Move
 # SELL_MIN_PREMIUM below BUY_MAX_PREMIUM and that stops being true — the arms
-# would then need the cross-check single/median1000's factory wires in.
+# would then need the cross-check single/multi_signal's factory wires in.
 # ON. Selling on price alone cost 65 points; two things had to be true before
 # this was worth switching on, and both now are:
 #
@@ -361,7 +361,7 @@ SELL_MIN_PREMIUM = 70.0
 # more defensible thing to do.
 #
 # THE THRESHOLD SCALES WITH THE WINDOW: k / sqrt(window), k = 2.5, so 0.228 at
-# 120. Change one and the other has to move. Both are single/median1000's
+# 120. Change one and the other has to move. Both are single/multi_signal's
 # values, carried over as a starting point and not yet swept here.
 SELL_SIGNAL1_WINDOW = 120
 SELL_MAX_SIGNAL1 = 0.228

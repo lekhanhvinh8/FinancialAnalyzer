@@ -1,0 +1,107 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>reinvest median x top sweep</title><style>
+body{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:20px}
+table{border-collapse:collapse;font-size:12px;margin:10px 0}
+th,td{border:1px solid #1e293b;padding:5px 8px;text-align:center}
+th{background:#111c30;color:#94a3b8}
+.note{color:#94a3b8;font-size:13px;line-height:1.7;max-width:980px}
+select{background:#111c30;color:#e2e8f0;border:1px solid #334155;padding:6px 10px;
+  border-radius:6px;font-size:14px}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:8px;
+  padding:12px 16px;margin:12px 12px 12px 0;display:inline-block;vertical-align:top}
+.wrap{overflow-x:auto}
+code{color:#e2e8f0}
+</style></head><body>
+<h2>Sell threshold &times; reinvest threshold</h2>
+<p class="note">52 symbols, 7&times;9 =
+63 cells, 5.4 min. Everything else stays at its
+configured value; only the two reinvest price triggers move, and neither touches
+the warmup.<br>
+<b>What this asks.</b> Both triggers have been measured alone and both tied. They
+are good on different symbols — the median one carries the typical symbol, the top
+one carries VND, HPG and HAG and has the better tail — and the arm ORs them, so
+the open question is whether the pair covers what neither covers by itself.<br>
+<b>Read the synergy table before the heat map.</b> A cell can score well because
+one of its halves is carrying it; complementary means beating what either half
+does ALONE.<br>
+Live cell: <b>PERCENT_REINVEST=10, PERCENT_REINVEST_TOP=None</b> —
+every paired figure is against it. The None row is "top trigger only", the None
+column is "median trigger only", and (None, None) is a floor rather than a
+candidate: the factory drops the whole arm there, timeout included.</p>
+<p class='note'>Skipped: MSB (only 406 bars after warmup), NAB (only 453 bars after warmup), OCB (only 381 bars after warmup), SSB (only 347 bars after warmup), VPL (only 317 rows)</p>
+
+<div class="card"><b>What each metric prefers</b>
+<table><thead><tr><th>metric</th><th>best cell</th>
+<th>value</th></tr></thead><tbody><tr><td style='text-align:left'>Mean diff</td><td><b>median=0, top=-50</b></td><td style='color:#4ade80'>+57.22%</td></tr><tr><td style='text-align:left'>Paired vs live</td><td><b>median=5, top=None</b></td><td style='color:#4ade80'>+0.01%</td></tr><tr><td style='text-align:left'>Sign-test p</td><td><b>median=5, top=None</b></td><td style='color:#4ade80'>+0.04</td></tr><tr><td style='text-align:left'>Neighbours agreeing</td><td><b>median=0, top=None</b></td><td style='color:#4ade80'>+1.00</td></tr><tr><td style='text-align:left'>Cells beaten</td><td><b>median=0, top=-60</b></td><td style='color:#4ade80'>+57.00</td></tr><tr><td style='text-align:left'>Median diff</td><td><b>median=35, top=None</b></td><td style='color:#4ade80'>+22.10%</td></tr><tr><td style='text-align:left'>Win rate</td><td><b>median=10, top=-30</b></td><td style='color:#4ade80'>+82.69%</td></tr><tr><td style='text-align:left'>Worst symbol</td><td><b>median=10, top=None</b></td><td style='color:#4ade80'>-90.68%</td></tr></tbody></table>
+<span class="note">Mean follows the largest symbol; vote gives every symbol one
+vote and is blind to size. A cell winning only one of them tells you which.</span>
+</div>
+
+<div class="card"><b>Do the two actually complement each other?</b>
+<table><thead><tr><th>median / top</th><th>median alone</th><th>top alone</th>
+<th>both</th><th>vs better half</th><th>up / p</th></tr></thead>
+<tbody><tr><td>-10 / -30</td><td>+40.8</td><td>+36.4</td><td>+36.5</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>25/48  p=0.443</td></tr><tr><td>-10 / -35</td><td>+40.8</td><td>+45.4</td><td>+45.5</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>1/1  p=0.500</td></tr><tr><td>-10 / -40</td><td>+40.8</td><td>+46.9</td><td>+46.7</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>2/4  p=0.688</td></tr><tr><td>-10 / -45</td><td>+40.8</td><td>+46.0</td><td>+45.6</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>2/9  p=0.980</td></tr><tr><td>-10 / -50</td><td>+40.8</td><td>+55.8</td><td>+53.3</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>4/13  p=0.954</td></tr><tr><td>-10 / -55</td><td>+40.8</td><td>+55.0</td><td>+49.3</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>5/17  p=0.975</td></tr><tr><td>-10 / -60</td><td>+40.8</td><td>+43.7</td><td>+43.4</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>8/19  p=0.820</td></tr><tr><td>-10 / -70</td><td>+40.8</td><td>+44.8</td><td>+47.0</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>11/23  p=0.661</td></tr><tr><td>0 / -30</td><td>+39.8</td><td>+36.4</td><td>+36.2</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>23/47  p=0.615</td></tr><tr><td>0 / -35</td><td>+39.8</td><td>+45.4</td><td>+44.7</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>1/6  p=0.984</td></tr><tr><td>0 / -40</td><td>+39.8</td><td>+46.9</td><td>+50.7</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>5/15  p=0.941</td></tr><tr><td>0 / -45</td><td>+39.8</td><td>+46.0</td><td>+48.9</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>8/22  p=0.933</td></tr><tr><td>0 / -50</td><td>+39.8</td><td>+55.8</td><td>+57.2</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>7/23  p=0.983</td></tr><tr><td>0 / -55</td><td>+39.8</td><td>+55.0</td><td>+49.2</td><td style='color:#e2e8f0;font-weight:600'>+0.00</td><td style='color:#64748b'>10/29  p=0.969</td></tr></tbody></table>
+<span class="note">A cell scoring well proves nothing on its own — one of its two
+triggers may be carrying it. Complementary means the pair beats what either does
+ALONE, so the last two columns compare each cell against whichever of its own
+row-None and column-None cells is better. The first three columns are means, for
+orientation only; the comparison is a paired per-symbol median. Top 14 by gain.
+</span></div>
+
+<p><b>Heat map:</b> <select id="metric"><option value='mean'>Mean diff</option><option value='paired' selected>Paired vs live</option><option value='pairp'>Sign-test p</option><option value='nb'>Neighbours agreeing</option><option value='vote'>Cells beaten</option><option value='median'>Median diff</option><option value='win'>Win rate</option><option value='worst'>Worst symbol</option><option value='buys'>Buys</option><option value='sells'>Sells</option><option value='reis'>Reinvests</option></select>
+<span class="note">rows = PERCENT_REINVEST, columns = PERCENT_REINVEST_TOP</span></p>
+<div class="wrap"><table id="grid"></table></div>
+<p class="note"><b>Read the plateau, not the best cell.</b> The best of
+63 cells looks good whether or not any edge exists &mdash;
+about 3 of them reach p&lt;0.05 by chance alone. Check <i>Neighbours agreeing</i>
+before believing any single cell, and check <i>Reinvests</i> to see whether a
+winning cell actually changed the re-entry behaviour or just moved the sells.</p>
+
+<script>
+const DATA = {"mean": {"None|None": -27.913, "None|-30": 36.404, "None|-35": 45.442, "None|-40": 46.876, "None|-45": 46.019, "None|-50": 55.791, "None|-55": 55.008, "None|-60": 43.712, "None|-70": 44.756, "-10|None": 40.767, "-10|-30": 36.498, "-10|-35": 45.545, "-10|-40": 46.692, "-10|-45": 45.633, "-10|-50": 53.292, "-10|-55": 49.286, "-10|-60": 43.436, "-10|-70": 46.975, "0|None": 39.834, "0|-30": 36.234, "0|-35": 44.664, "0|-40": 50.656, "0|-45": 48.89, "0|-50": 57.216, "0|-55": 49.215, "0|-60": 45.806, "0|-70": 45.761, "5|None": 45.232, "5|-30": 36.082, "5|-35": 44.7, "5|-40": 52.282, "5|-45": 50.141, "5|-50": 56.94, "5|-55": 48.834, "5|-60": 46.077, "5|-70": 45.25, "10|None": 52.377, "10|-30": 36.375, "10|-35": 43.847, "10|-40": 52.76, "10|-45": 50.928, "10|-50": 56.672, "10|-55": 50.748, "10|-60": 52.381, "10|-70": 52.668, "20|None": 48.646, "20|-30": 37.182, "20|-35": 42.926, "20|-40": 51.155, "20|-45": 51.82, "20|-50": 56.646, "20|-55": 48.443, "20|-60": 47.751, "20|-70": 48.646, "35|None": 49.654, "35|-30": 40.82, "35|-35": 49.724, "35|-40": 55.806, "35|-45": 55.268, "35|-50": 54.516, "35|-55": 51.286, "35|-60": 48.022, "35|-70": 49.654}, "paired": {"None|None": -17.197, "None|-30": -1.892, "None|-35": -0.682, "None|-40": -1.64, "None|-45": -0.057, "None|-50": 0.0, "None|-55": 0.0, "None|-60": 0.0, "None|-70": 0.0, "-10|None": 0.0, "-10|-30": -1.892, "-10|-35": -0.682, "-10|-40": -1.64, "-10|-45": -0.057, "-10|-50": 0.0, "-10|-55": 0.0, "-10|-60": 0.0, "-10|-70": 0.0, "0|None": 0.0, "0|-30": -1.892, "0|-35": -0.682, "0|-40": -1.64, "0|-45": -0.087, "0|-50": 0.0, "0|-55": 0.0, "0|-60": 0.0, "0|-70": 0.0, "5|None": 0.01, "5|-30": -1.892, "5|-35": -0.682, "5|-40": -1.64, "5|-45": 0.0, "5|-50": 0.0, "5|-55": 0.0, "5|-60": 0.0, "5|-70": 0.0, "10|None": 0.0, "10|-30": -1.342, "10|-35": -0.955, "10|-40": 0.0, "10|-45": 0.0, "10|-50": 0.0, "10|-55": 0.0, "10|-60": 0.0, "10|-70": 0.0, "20|None": -1.448, "20|-30": -1.892, "20|-35": -5.147, "20|-40": -3.979, "20|-45": -2.506, "20|-50": -2.506, "20|-55": -1.867, "20|-60": -1.898, "20|-70": -1.448, "35|None": -2.568, "35|-30": -4.047, "35|-35": -2.638, "35|-40": -3.459, "35|-45": -1.826, "35|-50": -2.744, "35|-55": -2.939, "35|-60": -2.568, "35|-70": -2.568}, "pairp": {"None|None": 1.0, "None|-30": 0.993, "None|-35": 0.989, "None|-40": 0.992, "None|-45": 0.937, "None|-50": 0.62, "None|-55": 0.734, "None|-60": 0.78, "None|-70": 0.62, "-10|None": 0.82, "-10|-30": 0.993, "-10|-35": 0.989, "-10|-40": 0.992, "-10|-45": 0.937, "-10|-50": 0.729, "-10|-55": 0.826, "-10|-60": 0.86, "-10|-70": 0.62, "0|None": 0.439, "0|-30": 0.993, "0|-35": 0.995, "0|-40": 0.992, "0|-45": 0.937, "0|-50": 0.82, "0|-55": 0.5, "0|-60": 0.5, "0|-70": 0.322, "5|None": 0.04, "5|-30": 0.993, "5|-35": 0.995, "5|-40": 0.982, "5|-45": 0.889, "5|-50": 0.82, "5|-55": 0.318, "5|-60": 0.134, "5|-70": 0.077, "10|None": 1.0, "10|-30": 0.991, "10|-35": 0.999, "10|-40": 0.994, "10|-45": 0.99, "10|-50": 0.989, "10|-55": 0.91, "10|-60": 0.773, "10|-70": 0.75, "20|None": 1.0, "20|-30": 0.993, "20|-35": 1.0, "20|-40": 1.0, "20|-45": 1.0, "20|-50": 1.0, "20|-55": 1.0, "20|-60": 1.0, "20|-70": 1.0, "35|None": 0.985, "35|-30": 0.995, "35|-35": 0.97, "35|-40": 0.97, "35|-45": 0.985, "35|-50": 0.985, "35|-55": 0.993, "35|-60": 0.993, "35|-70": 0.985}, "nb": {"None|None": 0, "None|-30": 0, "None|-35": 0, "None|-40": 0, "None|-45": 0, "None|-50": 0, "None|-55": 0, "None|-60": 0, "None|-70": 0, "-10|None": 0, "-10|-30": 0, "-10|-35": 0, "-10|-40": 0, "-10|-45": 0, "-10|-50": 0, "-10|-55": 0, "-10|-60": 0, "-10|-70": 0, "0|None": 1, "0|-30": 1, "0|-35": 0, "0|-40": 0, "0|-45": 0, "0|-50": 0, "0|-55": 0, "0|-60": 0, "0|-70": 0, "5|None": 0, "5|-30": 1, "5|-35": 0, "5|-40": 0, "5|-45": 0, "5|-50": 0, "5|-55": 0, "5|-60": 0, "5|-70": 0, "10|None": 1, "10|-30": 1, "10|-35": 0, "10|-40": 0, "10|-45": 0, "10|-50": 0, "10|-55": 0, "10|-60": 0, "10|-70": 0, "20|None": 0, "20|-30": 0, "20|-35": 0, "20|-40": 0, "20|-45": 0, "20|-50": 0, "20|-55": 0, "20|-60": 0, "20|-70": 0, "35|None": 0, "35|-30": 0, "35|-35": 0, "35|-40": 0, "35|-45": 0, "35|-50": 0, "35|-55": 0, "35|-60": 0, "35|-70": 0}, "vote": {"None|None": 0, "None|-30": 6, "None|-35": 14, "None|-40": 24, "None|-45": 38, "None|-50": 54, "None|-55": 51, "None|-60": 46, "None|-70": 28, "-10|None": 4, "-10|-30": 7, "-10|-35": 15, "-10|-40": 23, "-10|-45": 32, "-10|-50": 47, "-10|-55": 46, "-10|-60": 46, "-10|-70": 39, "0|None": 40, "0|-30": 6, "0|-35": 13, "0|-40": 24, "0|-45": 27, "0|-50": 40, "0|-55": 46, "0|-60": 57, "0|-70": 56, "5|None": 50, "5|-30": 5, "5|-35": 12, "5|-40": 29, "5|-45": 30, "5|-50": 43, "5|-55": 46, "5|-60": 51, "5|-70": 50, "10|None": 53, "10|-30": 6, "10|-35": 11, "10|-40": 34, "10|-45": 33, "10|-50": 41, "10|-55": 43, "10|-60": 53, "10|-70": 54, "20|None": 38, "20|-30": 3, "20|-35": 9, "20|-40": 21, "20|-45": 20, "20|-50": 31, "20|-55": 29, "20|-60": 38, "20|-70": 38, "35|None": 30, "35|-30": 1, "35|-35": 8, "35|-40": 17, "35|-45": 17, "35|-50": 21, "35|-55": 21, "35|-60": 32, "35|-70": 30}, "median": {"None|None": -0.474, "None|-30": 14.929, "None|-35": 12.733, "None|-40": 14.273, "None|-45": 20.498, "None|-50": 22.044, "None|-55": 22.019, "None|-60": 15.103, "None|-70": 17.594, "-10|None": 10.451, "-10|-30": 14.929, "-10|-35": 12.733, "-10|-40": 14.273, "-10|-45": 18.748, "-10|-50": 18.237, "-10|-55": 19.378, "-10|-60": 10.729, "-10|-70": 14.846, "0|None": 10.493, "0|-30": 14.929, "0|-35": 8.841, "0|-40": 14.273, "0|-45": 15.204, "0|-50": 16.322, "0|-55": 18.445, "0|-60": 11.529, "0|-70": 13.26, "5|None": 9.518, "5|-30": 15.024, "5|-35": 8.841, "5|-40": 14.273, "5|-45": 14.674, "5|-50": 16.075, "5|-55": 17.89, "5|-60": 10.224, "5|-70": 11.164, "10|None": 20.14, "10|-30": 16.431, "10|-35": 12.149, "10|-40": 17.733, "10|-45": 19.916, "10|-50": 19.423, "10|-55": 21.381, "10|-60": 20.735, "10|-70": 20.735, "20|None": 14.726, "20|-30": 14.954, "20|-35": 9.029, "20|-40": 10.747, "20|-45": 11.37, "20|-50": 13.205, "20|-55": 14.726, "20|-60": 14.726, "20|-70": 14.726, "35|None": 22.103, "35|-30": 14.949, "35|-35": 17.508, "35|-40": 14.292, "35|-45": 19.603, "35|-50": 20.614, "35|-55": 21.612, "35|-60": 22.103, "35|-70": 22.103}, "win": {"None|None": 48.077, "None|-30": 80.769, "None|-35": 80.769, "None|-40": 76.923, "None|-45": 75.0, "None|-50": 75.0, "None|-55": 78.846, "None|-60": 75.0, "None|-70": 71.154, "-10|None": 73.077, "-10|-30": 80.769, "-10|-35": 80.769, "-10|-40": 76.923, "-10|-45": 75.0, "-10|-50": 75.0, "-10|-55": 78.846, "-10|-60": 75.0, "-10|-70": 75.0, "0|None": 71.154, "0|-30": 80.769, "0|-35": 78.846, "0|-40": 75.0, "0|-45": 73.077, "0|-50": 73.077, "0|-55": 76.923, "0|-60": 75.0, "0|-70": 75.0, "5|None": 71.154, "5|-30": 80.769, "5|-35": 78.846, "5|-40": 76.923, "5|-45": 75.0, "5|-50": 75.0, "5|-55": 75.0, "5|-60": 73.077, "5|-70": 73.077, "10|None": 76.923, "10|-30": 82.692, "10|-35": 78.846, "10|-40": 80.769, "10|-45": 78.846, "10|-50": 78.846, "10|-55": 78.846, "10|-60": 78.846, "10|-70": 78.846, "20|None": 78.846, "20|-30": 80.769, "20|-35": 75.0, "20|-40": 78.846, "20|-45": 78.846, "20|-50": 78.846, "20|-55": 78.846, "20|-60": 78.846, "20|-70": 78.846, "35|None": 78.846, "35|-30": 78.846, "35|-35": 76.923, "35|-40": 78.846, "35|-45": 78.846, "35|-50": 78.846, "35|-55": 78.846, "35|-60": 78.846, "35|-70": 78.846}, "worst": {"None|None": -215.687, "None|-30": -121.563, "None|-35": -121.563, "None|-40": -121.563, "None|-45": -121.563, "None|-50": -121.563, "None|-55": -121.563, "None|-60": -105.762, "None|-70": -155.678, "-10|None": -155.678, "-10|-30": -121.563, "-10|-35": -121.563, "-10|-40": -121.563, "-10|-45": -121.563, "-10|-50": -121.563, "-10|-55": -121.563, "-10|-60": -105.762, "-10|-70": -155.678, "0|None": -155.678, "0|-30": -121.563, "0|-35": -121.563, "0|-40": -121.563, "0|-45": -121.563, "0|-50": -121.563, "0|-55": -121.563, "0|-60": -105.762, "0|-70": -155.678, "5|None": -155.678, "5|-30": -121.563, "5|-35": -121.563, "5|-40": -121.563, "5|-45": -121.563, "5|-50": -121.563, "5|-55": -121.563, "5|-60": -105.762, "5|-70": -155.678, "10|None": -90.683, "10|-30": -121.563, "10|-35": -121.563, "10|-40": -121.563, "10|-45": -121.563, "10|-50": -121.563, "10|-55": -121.563, "10|-60": -105.762, "10|-70": -90.683, "20|None": -92.141, "20|-30": -121.563, "20|-35": -121.563, "20|-40": -121.563, "20|-45": -121.563, "20|-50": -121.563, "20|-55": -121.563, "20|-60": -105.762, "20|-70": -92.141, "35|None": -105.916, "35|-30": -122.772, "35|-35": -122.772, "35|-40": -122.772, "35|-45": -122.772, "35|-50": -122.772, "35|-55": -122.772, "35|-60": -105.916, "35|-70": -105.916}, "buys": {"None|None": 81.135, "None|-30": 81.135, "None|-35": 81.135, "None|-40": 81.135, "None|-45": 81.135, "None|-50": 81.135, "None|-55": 81.135, "None|-60": 81.135, "None|-70": 81.135, "-10|None": 81.135, "-10|-30": 81.135, "-10|-35": 81.135, "-10|-40": 81.135, "-10|-45": 81.135, "-10|-50": 81.135, "-10|-55": 81.135, "-10|-60": 81.135, "-10|-70": 81.135, "0|None": 81.135, "0|-30": 81.135, "0|-35": 81.135, "0|-40": 81.135, "0|-45": 81.135, "0|-50": 81.135, "0|-55": 81.135, "0|-60": 81.135, "0|-70": 81.135, "5|None": 81.135, "5|-30": 81.135, "5|-35": 81.135, "5|-40": 81.135, "5|-45": 81.135, "5|-50": 81.135, "5|-55": 81.135, "5|-60": 81.135, "5|-70": 81.135, "10|None": 81.135, "10|-30": 81.135, "10|-35": 81.135, "10|-40": 81.135, "10|-45": 81.135, "10|-50": 81.135, "10|-55": 81.135, "10|-60": 81.135, "10|-70": 81.135, "20|None": 81.135, "20|-30": 81.135, "20|-35": 81.135, "20|-40": 81.135, "20|-45": 81.135, "20|-50": 81.135, "20|-55": 81.135, "20|-60": 81.135, "20|-70": 81.135, "35|None": 81.135, "35|-30": 81.135, "35|-35": 81.135, "35|-40": 81.135, "35|-45": 81.135, "35|-50": 81.135, "35|-55": 81.135, "35|-60": 81.135, "35|-70": 81.135}, "sells": {"None|None": 1.885, "None|-30": 4.231, "None|-35": 3.712, "None|-40": 3.423, "None|-45": 2.904, "None|-50": 2.615, "None|-55": 2.519, "None|-60": 2.423, "None|-70": 2.346, "-10|None": 2.346, "-10|-30": 4.231, "-10|-35": 3.712, "-10|-40": 3.423, "-10|-45": 2.904, "-10|-50": 2.615, "-10|-55": 2.519, "-10|-60": 2.423, "-10|-70": 2.346, "0|None": 2.346, "0|-30": 4.231, "0|-35": 3.712, "0|-40": 3.423, "0|-45": 2.904, "0|-50": 2.615, "0|-55": 2.519, "0|-60": 2.423, "0|-70": 2.346, "5|None": 2.346, "5|-30": 4.231, "5|-35": 3.712, "5|-40": 3.423, "5|-45": 2.904, "5|-50": 2.615, "5|-55": 2.519, "5|-60": 2.423, "5|-70": 2.346, "10|None": 2.346, "10|-30": 4.231, "10|-35": 3.712, "10|-40": 3.423, "10|-45": 2.904, "10|-50": 2.615, "10|-55": 2.519, "10|-60": 2.423, "10|-70": 2.346, "20|None": 2.385, "20|-30": 4.231, "20|-35": 3.712, "20|-40": 3.423, "20|-45": 2.904, "20|-50": 2.615, "20|-55": 2.519, "20|-60": 2.442, "20|-70": 2.385, "35|None": 2.365, "35|-30": 4.231, "35|-35": 3.712, "35|-40": 3.423, "35|-45": 2.904, "35|-50": 2.615, "35|-55": 2.5, "35|-60": 2.423, "35|-70": 2.365}, "reis": {"None|None": 0, "None|-30": 8.115, "None|-35": 6.712, "None|-40": 5.885, "None|-45": 5.077, "None|-50": 4.558, "None|-55": 4.058, "None|-60": 3.769, "None|-70": 3.673, "-10|None": 3.731, "-10|-30": 8.115, "-10|-35": 6.712, "-10|-40": 5.885, "-10|-45": 5.077, "-10|-50": 4.558, "-10|-55": 4.096, "-10|-60": 3.846, "-10|-70": 3.75, "0|None": 3.846, "0|-30": 8.115, "0|-35": 6.712, "0|-40": 5.904, "0|-45": 5.135, "0|-50": 4.615, "0|-55": 4.173, "0|-60": 3.942, "0|-70": 3.846, "5|None": 3.885, "5|-30": 8.115, "5|-35": 6.712, "5|-40": 5.923, "5|-45": 5.154, "5|-50": 4.635, "5|-55": 4.192, "5|-60": 3.981, "5|-70": 3.885, "10|None": 3.962, "10|-30": 8.135, "10|-35": 6.769, "10|-40": 6, "10|-45": 5.212, "10|-50": 4.712, "10|-55": 4.269, "10|-60": 4.058, "10|-70": 3.962, "20|None": 4.019, "20|-30": 8.173, "20|-35": 6.808, "20|-40": 6.058, "20|-45": 5.269, "20|-50": 4.769, "20|-55": 4.327, "20|-60": 4.115, "20|-70": 4.019, "35|None": 4.5, "35|-30": 8.327, "35|-35": 7.077, "35|-40": 6.385, "35|-45": 5.654, "35|-50": 5.173, "35|-55": 4.788, "35|-60": 4.577, "35|-70": 4.5}};
+// Labels for display, and the SAME strings Python used to build the keys. Both
+// axes carry None, and json.dumps writes that as null: joining null with '|' in
+// JS gives "null|-30" while the key is "None|-30", which blanked the entire None
+// row and the entire None column — the two the synergy table is built on. Same
+// trap as the whole-valued q that blanked columns in the earlier sweeps, so the
+// fix is the same: never let JS reconstruct a key.
+const SS = ["None", "-10", "0", "5", "10", "20", "35"];
+const RS = ["None", "-30", "-35", "-40", "-45", "-50", "-55", "-60", "-70"];
+const LIVE = ["10", "None"];
+function render() {
+  const m = document.getElementById('metric').value;
+  const g = DATA[m];
+  const vals = Object.values(g).filter(v => v !== null && v !== undefined);
+  if (!vals.length) return;
+  const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  let h = '<thead><tr><th>median \\ top</th>';
+  RS.forEach(r => { h += '<th>' + r + '</th>'; });
+  h += '</tr></thead><tbody>';
+  SS.forEach(function(s) {
+    h += "<tr><th style='text-align:right'>" + s + '</th>';
+    RS.forEach(function(r) {
+      const v = g[s + '|' + r];
+      if (v === null || v === undefined) {
+        h += "<td style='color:#475569'>&mdash;</td>"; return;
+      }
+      const f = hi === lo ? 0.5 : (v - lo) / (hi - lo);
+      const bg = f >= 0.5
+        ? 'rgba(34,197,94,' + (0.10 + 0.62 * (f - 0.5) * 2).toFixed(2) + ')'
+        : 'rgba(239,68,68,' + (0.10 + 0.62 * (0.5 - f) * 2).toFixed(2) + ')';
+      const dec = (m === 'pairp') ? 3 : (m === 'vote' || m === 'buys'
+                  || m === 'sells' || m === 'reis') ? 1 : 0;
+      const txt = (v >= 0 && m !== 'pairp' ? '+' : '') + v.toFixed(dec);
+      const live = (s === LIVE[0] && r === LIVE[1]);
+      h += "<td style='background:" + bg
+         + (live ? ';outline:2px solid #60a5fa;outline-offset:-2px' : '')
+         + "' title='median " + s + ", top " + r + "'>"
+         + txt + '</td>';
+    });
+    h += '</tr>';
+  });
+  document.getElementById('grid').innerHTML = h + '</tbody>';
+}
+document.getElementById('metric').addEventListener('change', render);
+render();
+</script>
+</body></html>

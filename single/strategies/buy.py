@@ -133,7 +133,7 @@ class BuyMedian1000Strategy(BuyStrategy):
     # on 1000 whatever this is, so the two conditions stop being complementary as
     # soon as it moves — which is what sell_strategy below is for.
     # percentBuy has to move with it: the price's distance from its own median
-    # grows with the window, p95 = 1.29 * w^0.698 (single/median1000/dispersion.py),
+    # grows with the window, p95 = 1.29 * w^0.698 (single/multi_signal/dispersion.py),
     # so 60 blocks nothing at w=50 and about a fifth of days at w=1000.
     medianWindow: int = 1000
     # If set, no buy on a bar where this strategy would sell. The engine runs
@@ -146,6 +146,18 @@ class BuyMedian1000Strategy(BuyStrategy):
     # happens to be high.
     # Untyped to keep buy.py from importing sell.py; only .check() is used.
     sell_strategy: object = None
+
+    # ── the basket, not this symbol ─────────────────────────────────────────
+    # {row_index: median_prem} from breadth_signals: how far the MEDIAN symbol
+    # of the whole basket sits from its own median, in percent. None on
+    # max_breadth switches the gate off and the arm is exactly what it was.
+    #
+    # A gate, not a strategy. It has the same shape as min_signal1 and
+    # min_signal3 -- a map plus a threshold -- and giving it its own class
+    # made "cheap symbol AND cheap market" impossible to express, because a run
+    # could only ever have one buy arm.
+    breadth_map: dict = field(default_factory=dict)
+    max_breadth: float = None
 
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.intervalAmount <= 0:
@@ -160,15 +172,26 @@ class BuyMedian1000Strategy(BuyStrategy):
     def check(self, index, close, pe, cal_range_close) -> bool:
         if index <= self.medianWindow:
             return False
+        # The basket has to agree. A market reading we do not have is not
+        # a reason to act, so an absent value leaves the gate shut.
+        if self.max_breadth is not None:
+            b = self.breadth_map.get(index)
+            if b is None or b > self.max_breadth:
+                return False
         current = pe if self.use_pe else close
         if current is None:
             return False
         if (index not in cal_range_close
                 or self.medianWindow not in cal_range_close[index].rangeDayCloses):
             return False
-        median = cal_range_close[index].rangeDayCloses[self.medianWindow].pct50(self.use_pe)
-        if (current - median) / median * 100 >= self.percentBuy:
-            return False
+        # percentBuy = None switches the PRICE trigger off and leaves the arm
+        # running on its gates alone -- which is what "buy on the market, not on
+        # this symbol" needs. Without it the only way to express that was a
+        # separate class.
+        if self.percentBuy is not None:
+            median = cal_range_close[index].rangeDayCloses[self.medianWindow].pct50(self.use_pe)
+            if (current - median) / median * 100 >= self.percentBuy:
+                return False
         if self.sell_strategy is not None and self.sell_strategy.check(
                 index, close, pe, cal_range_close):
             return False
@@ -197,30 +220,3 @@ class BuyMA1000Strategy(BuyStrategy):
             if (current - localAvg) / localAvg > self.increasedPercentNotBuy / 100:
                 return False
         return True
-
-
-@dataclass
-class BuyBreadthStrategy(BuyStrategy):
-    """
-    Buy while the BASKET is not expensive, whatever this symbol's own price did.
-
-    Every other strategy here asks about one symbol against its own history. This
-    one asks about the market: `breadth_map` holds median_prem, the median
-    distance from median across the whole basket, read from breadth_signals.
-
-    That is the point of it. A symbol can be cheap against itself while the whole
-    market is stretched, and the median1000 family cannot see the difference.
-
-    A row with no breadth value declines rather than buying: a missing market
-    reading is not a reason to act.
-    """
-    breadth_map: dict = field(default_factory=dict)
-    max_breadth: float = 60.0
-
-    def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
-        if self.check(index, close, pe, cal_range_close):
-            Buyer().buy(tracker, tracker.intervalAmount, 0, index, close, isPrint)
-
-    def check(self, index, close, pe, cal_range_close) -> bool:
-        v = self.breadth_map.get(index)
-        return v is not None and v <= self.max_breadth

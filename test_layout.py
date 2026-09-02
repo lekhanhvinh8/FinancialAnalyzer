@@ -23,8 +23,7 @@ CORE = "core"
 
 # One package per method. A method decides; it does not define how to read
 # prices or how a buy moves money.
-METHODS = ["portfolio", "breadth",
-           "single.ma1000", "single.median1000", "single.market_breadth"]
+METHODS = ["portfolio", "breadth", "single.ma1000", "single.multi_signal"]
 
 # Shared inside single/: used by more than one method there.
 SINGLE_SHARED = {"engine", "models", "runner", "sweep", "strategies"}
@@ -80,8 +79,7 @@ def main() -> int:
     # ── no method imports another method ────────────────────────────────────
     # Reports and chart helpers are the deliberate exception and are named here,
     # so a new cross-import has to be argued for rather than appearing.
-    ALLOWED = {("single.market_breadth", "single.median1000"),   # the report
-               ("single.market_breadth", "breadth")}             # add_signal_line
+    ALLOWED = {("single.multi_signal", "breadth")}   # add_signal_line
     for m in METHODS:
         d = ROOT / Path(m.replace(".", "/"))
         for f in d.glob("*.py"):

@@ -1,5 +1,5 @@
 """
-Per-symbol charts, rendered by export/chart.py — the same code single/median1000
+Per-symbol charts, rendered by export/chart.py — the same code single/multi_signal
 calls.
 
 WHY THIS IS AN ADAPTER AND NOT A CHART
@@ -192,7 +192,7 @@ def _render(symbol, series, position, plan, window, out_dir, want_path=False):
     return str(path) if want_path else path.name
 
 
-# Same shapes and colours as single/median1000's, and as the strip the renderer
+# Same shapes and colours as single/multi_signal's, and as the strip the renderer
 # already draws — one legend for the reader, not two.
 _PRICE_MARKS = {
     "buy":      ("Mua (tren gia)",        "rgba(34,197,94,0.9)",  "#15803d", "triangle-up",   10),
@@ -276,7 +276,7 @@ def build_all(result, market, plan, config, out_dir: Path, workers=None,
     embeds the full trend-signal series so the window sliders work offline, and
     walks every bar three times to paint the condition zones — about 30 seconds
     a symbol, which is half an hour for a full universe in sequence. The charts
-    are independent, so this is the same answer single/median1000's run_all
+    are independent, so this is the same answer single/multi_signal's run_all
     reached: one process each.
 
     Failures are caught per symbol rather than aborting: the renderer reaches for

@@ -64,7 +64,7 @@ class WindowStats:
     bottom: np.ndarray
     mean: np.ndarray
     # Quartiles. No rule reads them — they are here because the per-symbol chart
-    # draws the same band single/median1000's does, and a chart that showed a
+    # draws the same band single/multi_signal's does, and a chart that showed a
     # different set of references than the one the reader already knows would be
     # worse than no chart.
     p25: np.ndarray = None

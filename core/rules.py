@@ -217,7 +217,7 @@ class SlopeBelowRule(Rule):
       rest of the decade. Requiring the slope to have flattened first says take
       the profit when the run is OVER, not while it is still happening.
 
-      single/median1000 reached the same gate from the other direction and calls
+      single/multi_signal reached the same gate from the other direction and calls
       it the one sell filter that earns its keep — switching it off costs that
       runner about 21 mean points across its universe.
 

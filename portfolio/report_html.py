@@ -1,7 +1,7 @@
 """
 The HTML report for one portfolio run.
 
-WHY IT IS NOT SHAPED LIKE single/median1000's report_all.html
+WHY IT IS NOT SHAPED LIKE single/multi_signal's report_all.html
 
   That report has one row per symbol because each symbol IS a separate
   experiment there — its own wallet, its own outcome, independent of every other
