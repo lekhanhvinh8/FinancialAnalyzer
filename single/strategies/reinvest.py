@@ -151,12 +151,6 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     def check(self, index, close, pe, cal_range_close) -> bool:
         if index <= 1000:
             return False
-        # The basket has to agree. A market reading we do not have is not
-        # a reason to act, so an absent value leaves the gate shut.
-        if self.max_breadth is not None:
-            b = self.breadth_map.get(index)
-            if b is None or b > self.max_breadth:
-                return False
         current = pe if self.use_pe else close
         if current is None:
             return False
@@ -186,6 +180,17 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             if not top:
                 return False
             if (current - top) / top * 100 > self.percentReinvestTop:
+                return False
+
+        # The basket has to agree too. A market reading we do not have is not a
+        # reason to act, so an absent value leaves the gate shut.
+        #
+        # Placed after the price conditions and before the filters, as on the
+        # sell arm. Every condition here is AND'd, so the order cannot change an
+        # outcome — it is for the reader.
+        if self.max_breadth is not None:
+            b = self.breadth_map.get(index)
+            if b is None or b > self.max_breadth:
                 return False
 
         if self.sell_strategy is not None and self.sell_strategy.check(
