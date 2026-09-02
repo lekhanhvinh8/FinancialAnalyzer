@@ -12,7 +12,7 @@ Quantiles (p25/median/p75) are not used by any strategy and are omitted.
 
 import numpy as np
 import pandas as pd
-from .models import RangeDaysClose, IndexCloses
+from .window_stats import RangeDaysClose, IndexCloses
 
 
 def build_cal_range_close(

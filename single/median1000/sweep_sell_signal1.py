@@ -133,7 +133,7 @@ import numpy as np
 import pandas as pd
 
 import database as db
-from single.models import RangeDaysClose, IndexCloses
+from core.window_stats import RangeDaysClose, IndexCloses
 from single.runner import load_symbol_df, run_estimate
 from single.strategies.buy import BuyIntervalStrategy
 from single.strategies.sell import SellStrategy

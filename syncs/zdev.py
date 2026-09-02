@@ -6,7 +6,7 @@ Sync relative-valuation z_dev into valuation_dev + valuation_zdev.
   sigma = rolling std  of dev, shifted 1 bar  -> valuation_zdev
   z_dev = (dev - mu) / sigma                  -> valuation_zdev
 
-See single/zdev_calc.py for the reasoning behind each term.
+See core/zdev_calc.py for the reasoning behind each term.
 
 Two tables, because dev depends only on median_window. Storing it inside the
 swept table would repeat the same 123k values once per stat window.
@@ -74,7 +74,7 @@ import numpy as np
 import pandas as pd
 
 import database as db
-from single.zdev_calc import compute_dev, zdev_arrays, MEDIAN_WINDOW
+from core.zdev_calc import compute_dev, zdev_arrays, MEDIAN_WINDOW
 from ._helpers import resolve_symbols
 
 STAT_START = 1

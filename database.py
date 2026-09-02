@@ -118,7 +118,7 @@ def init_db():
             );
 
             -- Relative valuation: how far price sits from its own long-term base,
-            -- normalized by that symbol's own history. See single/zdev_calc.py.
+            -- normalized by that symbol's own history. See core/zdev_calc.py.
             -- Windows are in the key so configurations coexist; join to
             -- valuation_dev on (symbol, date, median_window) for dev itself.
             CREATE TABLE IF NOT EXISTS valuation_zdev (
@@ -574,7 +574,7 @@ def load_range_stats(symbol: str, df: pd.DataFrame,
     what callers using windowed strategies (localRangeDays, action.rangeDays)
     need.
     """
-    from single.models import RangeDaysClose, IndexCloses
+    from core.window_stats import RangeDaysClose, IndexCloses
 
     sql = """SELECT date, range_days, direction,
                     local_top, local_avg, local_bottom, p25, median, p75,

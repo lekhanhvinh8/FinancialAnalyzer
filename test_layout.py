@@ -27,8 +27,7 @@ METHODS = ["portfolio", "breadth",
            "single.ma1000", "single.median1000", "single.market_breadth"]
 
 # Shared inside single/: used by more than one method there.
-SINGLE_SHARED = {"engine", "models", "runner", "range_calc", "zdev_calc",
-                 "sweep", "strategies"}
+SINGLE_SHARED = {"engine", "models", "runner", "sweep", "strategies"}
 
 # The money primitives. Written once, in core.ledger, after a second engine
 # reimplemented them and got three accounting bugs in a row.
@@ -102,6 +101,31 @@ def main() -> int:
         for m in METHODS:
             check(f"import {m.split('.')[0]}" not in src.replace("import core", ""),
                   f"core/{f.name} import {m} -> core khong duoc biet chien luoc")
+
+    # ── core imports nothing above it ───────────────────────────────────────
+    # Broader than the method check: core must not reach into single/, syncs/ or
+    # export/ either. range_calc lived in single/ while syncs/ imported it, so
+    # the data layer depended on an investing method -- and moving it up
+    # revealed a second such edge, core.range_calc needing single.models.
+    ABOVE = ("single", "syncs", "export", "portfolio", "breadth")
+    for f in (ROOT / CORE).glob("*.py"):
+        src = f.read_text(encoding="utf-8")
+        for pkg in ABOVE:
+            for form in ("import " + pkg + chr(10), "from " + pkg + " import",
+                         "from " + pkg + "."):
+                check(form not in src,
+                      f"core/{f.name} import {pkg} -> core la tang duoi cung")
+
+    # ── syncs does not import a method ──────────────────────────────────────
+    for f in (ROOT / "syncs").rglob("*.py"):
+        if "__pycache__" in str(f):
+            continue
+        src = f.read_text(encoding="utf-8")
+        for pkg in ("portfolio", "breadth"):
+            check(f"from {pkg}" not in src
+                  and ("import " + pkg + chr(10)) not in src,
+                  f"{f.relative_to(ROOT)} import {pkg} -> tang du lieu khong "
+                  f"duoc phu thuoc chien luoc")
 
     # ── every test module is runnable ───────────────────────────────────────
     tests = sorted(p for p in ROOT.rglob("test_*.py")

@@ -24,6 +24,13 @@ WHAT BELONGS HERE
     rules.py      conditions -- pure, and they never see a wallet
     scoring.py    ranking
     progress.py   the run's progress page
+    range_calc.py rolling window statistics for one price series
+    zdev_calc.py  z_dev: a price against its own history, in its own sigmas
+
+  range_calc and zdev_calc arrived here from single/ because syncs/ imports
+  them: the data layer was depending on an investing method, which is the wrong
+  way round. Both are arithmetic on a price series and know nothing about a
+  wallet.
 
 WHAT DOES NOT
 

@@ -11,8 +11,6 @@ SHARED — every method below uses these
     engine.py       the daily loop and the three executors
     models.py       InvestmentTracker and the trade records
     runner.py       load_symbol_df, run_estimate
-    range_calc.py   rolling statistics per symbol
-    zdev_calc.py    z_dev
     sweep.py        generic 2-D parameter sweep and its plots
     strategies/     the vocabulary: buy, sell and reinvest conditions
 

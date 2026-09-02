@@ -19,7 +19,7 @@ from openpyxl.formatting.rule import ColorScaleRule
 
 import database as db
 from single.engine import estimate
-from single.range_calc import build_cal_range_close
+from core.range_calc import build_cal_range_close
 from single.strategies.buy import BuyMAStrategy
 from single.strategies.sell import SellTopOfMA1000Strategy
 from single.strategies.reinvest import ReInvestUnderMA1000Strategy

@@ -1,45 +1,10 @@
 from dataclasses import dataclass, field
+
+# Re-exported: range statistics live in core now (see
+# core/window_stats.py), and strategies here still name them.
+from core.window_stats import RangeDaysClose, IndexCloses
 from datetime import datetime
 from typing import Optional
-
-
-@dataclass
-class RangeDaysClose:
-    localTop: float
-    localAvg: float
-    localBottom: float
-    p25: float = 0.0
-    median: float = 0.0
-    p75: float = 0.0
-    pe_top: float = 0.0
-    pe_avg: float = 0.0
-    pe_bottom: float = 0.0
-    pe_p25: float = 0.0
-    pe_median: float = 0.0
-    pe_p75: float = 0.0
-
-    def top(self, use_pe: bool = False) -> float:
-        return self.pe_top if use_pe else self.localTop
-
-    def avg(self, use_pe: bool = False) -> float:
-        return self.pe_avg if use_pe else self.localAvg
-
-    def bottom(self, use_pe: bool = False) -> float:
-        return self.pe_bottom if use_pe else self.localBottom
-
-    def pct25(self, use_pe: bool = False) -> float:
-        return self.pe_p25 if use_pe else self.p25
-
-    def pct50(self, use_pe: bool = False) -> float:
-        return self.pe_median if use_pe else self.median
-
-    def pct75(self, use_pe: bool = False) -> float:
-        return self.pe_p75 if use_pe else self.p75
-
-
-@dataclass
-class IndexCloses:
-    rangeDayCloses: dict[int, RangeDaysClose] = field(default_factory=dict)
 
 
 @dataclass
