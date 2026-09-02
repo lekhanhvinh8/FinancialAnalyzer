@@ -225,6 +225,17 @@ class SellMedian1000Strategy(SellStrategy):
             bottom = rc.bottom(self.use_pe)
             if bottom:
                 fired = (current - bottom) / bottom * 100 > self.percentSellBottom
+        # NO PRICE TRIGGER MEANS THE GATES DECIDE. Without this the arm can
+        # never fire on the basket alone: `fired` only ever comes from a price
+        # trigger, so PERCENT_SELL = None with a breadth gate on produced an arm
+        # that never sold -- silently, because a strategy that declines every bar
+        # looks exactly like one whose condition was never met.
+        #
+        # The buy arm has always behaved this way; this makes the sell arm match.
+        if (self.percentSell is None and self.percentSellBottom is None
+                and self.min_breadth is not None):
+            fired = True
+
         if not fired:
             return False
         # Block the sell unless the basket is extended too.

@@ -175,6 +175,13 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             top = rc.top(self.use_pe)
             if top:
                 fired = (current - top) / top * 100 <= self.percentReinvestTop
+        # NO PRICE TRIGGER MEANS THE GATE DECIDES, as on the buy and sell arms.
+        # Without it PERCENT_REINVEST = None with a breadth gate on gave an arm
+        # that never redeployed, silently.
+        if (self.percentReinvest is None and self.percentReinvestTop is None
+                and self.max_breadth is not None):
+            fired = True
+
         if not fired:
             return False
 
