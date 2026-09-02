@@ -3,12 +3,12 @@ Run BuyMAStrategy sweep (localRangeDays x decreasePercent, use_pe=True)
 and save results to Excel heatmap.
 
 Usage:
-    python single/run_sweep.py
+    python -m single.ma1000.run_sweep
 """
 
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import itertools
 import pandas as pd
@@ -185,9 +185,9 @@ def run_one(range_days: int, decrease_percent: float, use_pe: bool = False):
 
 if __name__ == "__main__":
     # Usage:
-    #   python single/run_sweep.py                        -> full sweep (price)
-    #   python single/run_sweep.py 150 1                  -> single run, price
-    #   python single/run_sweep.py 150 1 pe               -> single run, P/E
+    #   python -m single.ma1000.run_sweep                        -> full sweep (price)
+    #   python -m single.ma1000.run_sweep 150 1                  -> single run, price
+    #   python -m single.ma1000.run_sweep 150 1 pe               -> single run, P/E
     args = sys.argv[1:]
 
     if len(args) >= 2:

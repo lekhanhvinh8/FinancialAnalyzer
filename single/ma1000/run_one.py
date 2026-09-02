@@ -2,7 +2,7 @@
 Entry point for the VN30 investment strategy simulator.
 
 Usage:
-    python -m analyze.main
+    python -m single.ma1000.run_one
 """
 
 import sys
@@ -15,10 +15,10 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 
 import database as db
-from .range_calc import build_cal_range_close
-from .engine import estimate
-from .sweep import sweep_2d, plot_heatmap, plot_best
-from .strategies import (
+from ..range_calc import build_cal_range_close
+from ..engine import estimate
+from ..sweep import sweep_2d, plot_heatmap, plot_best
+from ..strategies import (
     BuyIntervalStrategy, BuyMA1000Strategy, BuyMAStrategy,
     SellTopOfMA1000Strategy,
     ReInvestUnderMA1000Strategy, ReInvestUnderMA1000OrMaxHoldTimeStrategy,
