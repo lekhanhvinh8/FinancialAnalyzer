@@ -2,8 +2,14 @@
 Sweep the second sell trigger: PERCENT_SELL_BOTTOM.
 
 Sell when the price is this far above the SELL_MEDIAN_WINDOW LOW. In the strategy
-it is OR'd with the existing test against the median; in this sweep the median
-test is switched OFF in every cell, so the bottom trigger is judged on its own.
+it is AND'd with the existing test against the median; in this sweep the median
+test is switched OFF in every cell, so the bottom condition is judged on its own.
+
+  THIS SWEEP PREDATES THE AND. It ran when the two were OR'd, and the numbers
+  below are still valid because the median test is off in every cell -- with one
+  condition live the join does not apply. What has changed is what the sweep says
+  about the SHIPPED config: adding a bottom threshold now REMOVES sells rather
+  than adding them, so the increment it declined to measure has changed sign.
 
 WHY THE MEDIAN TEST IS OFF IN THE CELLS
 
@@ -14,8 +20,9 @@ WHY THE MEDIAN TEST IS OFF IN THE CELLS
 
   That needed a change in the None convention. PERCENT_SELL = None used to mean
   "replace the arm with SellStrategy and never sell", which would have made the
-  bottom threshold unreachable. The arm now has two price triggers, each switches
-  off independently, and only both being off falls back to the base class. In the
+  bottom threshold unreachable. The arm now has two price conditions, each
+  switches off independently, and only both being off falls back to the base
+  class. In the
   shipped config the bottom trigger is None, so PERCENT_SELL = None still means
   "never sell" there and the all-None engine check is unaffected.
 

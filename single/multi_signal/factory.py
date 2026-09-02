@@ -23,10 +23,10 @@ THE None CONVENTION
       PERCENT_REINVEST = None  ->  ReinvestStrategy      never reinvest
 
       * only while PERCENT_SELL_BOTTOM is also None. The sell arm has two price
-        triggers OR'd together and each switches off on its own; the arm falls
-        back to the base class when both are off. In the shipped config the
-        bottom trigger is None, so PERCENT_SELL = None does mean "never sell"
-        and the engine check below still holds.
+        conditions and each switches off on its own; the arm falls back to the
+        base class when both are off. In the shipped config the bottom condition
+        is None, so PERCENT_SELL = None does mean "never sell" and the engine
+        check below still holds.
 
   Buy looks inverted next to the other two and is not: for the buy arm, doing
   nothing IS buying every interval, because the money has to go somewhere. For
@@ -35,11 +35,17 @@ THE None CONVENTION
   the comparison arm run_all already measures against.
 
   PERCENT_SELL_BOTTOM and PERCENT_REINVEST_TOP are primary conditions too, but
-  SECOND ones rather than the only one: each is OR'd with the arm's first price
-  test, so None removes the extra trigger and leaves the arm intact instead of
-  replacing it. Neither takes a map, so the empty-map idiom the filters use does
-  not apply and the strategy tests them for None itself. An arm falls back to its
-  base class only when BOTH of its price triggers are None.
+  SECOND ones rather than the only one, so None removes the extra condition and
+  leaves the arm intact instead of replacing it. Neither takes a map, so the
+  empty-map idiom the filters use does not apply and the strategy tests them for
+  None itself. An arm falls back to its base class only when BOTH of its price
+  conditions are None.
+
+  THE TWO ARE NOT JOINED THE SAME WAY ON THE TWO ARMS. On sell, every condition
+  is AND'd: PERCENT_SELL_BOTTOM was OR'd with PERCENT_SELL until it became the
+  only OR in a list of ANDs, and a reader had to know which parameters were in
+  the OR group. On reinvest, PERCENT_REINVEST_TOP is still OR'd with
+  PERCENT_REINVEST. Both ship as None, so neither join is exercised.
 
   Setting all three PERCENT_* to None therefore turns the median1000 arm into
   the interval arm, and every symbol's diff must come out at 0.00. That is a

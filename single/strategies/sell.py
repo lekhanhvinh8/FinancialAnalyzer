@@ -208,31 +208,31 @@ class SellMedian1000Strategy(SellStrategy):
             return False
         rc = cal_range_close[index].rangeDayCloses[self.medianWindow]
 
-        # THE PRICE TEST IS A GROUP: percentSell OR percentSellBottom. A group
-        # nobody configured does not get a vote — it neither fires nor blocks,
-        # which is how the buy arm has always read percentBuy = None. That is
-        # what lets this arm run on the basket alone; writing it as a `fired`
-        # flag instead made "no price trigger" mean "never sells", silently.
-        if self.percentSell is not None or self.percentSellBottom is not None:
-            fired = False
-            if self.percentSell is not None:
-                median = rc.pct50(self.use_pe)
-                if median:
-                    fired = (current - median) / median * 100 > self.percentSell
-            # Second way to satisfy the PRICE group, not a bypass of the gates
-            # below: how far the price has run from the window's LOW rather than
-            # from its middle. A symbol can double off its floor while its median
-            # chases it up, leaving the median test quiet the whole way.
-            #
-            # Everything after this point still applies. The gates answer "should
-            # we sell at all", which does not depend on which of the two
-            # conditions noticed the move — letting the new one skip them would
-            # not be a second trigger, it would be a hole.
-            if not fired and self.percentSellBottom is not None:
-                bottom = rc.bottom(self.use_pe)
-                if bottom:
-                    fired = (current - bottom) / bottom * 100 > self.percentSellBottom
-            if not fired:
+        # EVERY CONDITION IS AN AND-GATE, and one left at None does not get a
+        # vote -- it neither fires nor blocks. percentSellBottom used to be an OR
+        # alternative to percentSell, which made this arm the only place in the
+        # project with two joining rules in one condition list; the reader had to
+        # know which parameters were in the OR group and which were not.
+        #
+        # Note that this is STRICTER than the OR it replaces: with both set, the
+        # price now has to be far from the median AND far from the low, where
+        # before either sufficed. Behaviour is unchanged while
+        # PERCENT_SELL_BOTTOM is None, which is how it ships.
+        if self.percentSell is not None:
+            median = rc.pct50(self.use_pe)
+            # No usable median is not a reason to sell, as before.
+            if not median:
+                return False
+            if (current - median) / median * 100 <= self.percentSell:
+                return False
+        # How far the price has run from the window's LOW rather than from its
+        # middle. A symbol can double off its floor while its median chases it
+        # up, leaving the median test quiet the whole way.
+        if self.percentSellBottom is not None:
+            bottom = rc.bottom(self.use_pe)
+            if not bottom:
+                return False
+            if (current - bottom) / bottom * 100 <= self.percentSellBottom:
                 return False
 
         # The basket has to be extended too. Same rule: unset means no vote.
