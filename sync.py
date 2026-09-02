@@ -39,7 +39,7 @@ import database as db
 from syncs import (sync_prices, sync_shares, sync_profit, sync_pe, sync_range_stats,
                    sync_trend_signals, sync_zdev)
 from syncs.trend_signals import WINDOW_STEP as _TW, STEP_DAYS as _TS, MAX_LOOKBACK as _TL
-from progress import SyncProgress
+from core.progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
 ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "trend-signals", "zdev", "outputs"}

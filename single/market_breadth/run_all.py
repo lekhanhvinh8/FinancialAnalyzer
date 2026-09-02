@@ -33,7 +33,7 @@ import pandas as pd
 import database as db
 from breadth.chart import add_signal_line
 from export.chart import save_backtest_chart
-from progress import RunAllProgress
+from core.progress import RunAllProgress
 from single.median1000.run_all import build_report
 from single.market_breadth import config
 from single.market_breadth.breadth_map import build_breadth_map, describe

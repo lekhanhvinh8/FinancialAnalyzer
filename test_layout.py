@@ -127,6 +127,27 @@ def main() -> int:
                   f"{f.relative_to(ROOT)} import {pkg} -> tang du lieu khong "
                   f"duoc phu thuoc chien luoc")
 
+    # ── the project root holds no utilities ─────────────────────────────────
+    # progress.py sat here for a long time and three runners imported it from
+    # the root while a fourth imported a second copy from core. A module at the
+    # root is a module with no owner.
+    ROOT_OK = {"database", "sync", "test_layout"}
+    at_root = {p.stem for p in ROOT.glob("*.py")} - ROOT_OK
+    check(not at_root,
+          f"goc du an co module khong thuoc ve dau: {sorted(at_root)}")
+
+    # ── one implementation per shared concern ───────────────────────────────
+    # Same class name in two packages is fine when the packages are METHODS --
+    # Plan and run_backtest mean different things in portfolio/ and breadth/.
+    # It is not fine for infrastructure.
+    for name in ("RunProgress", "RunAllProgress", "SyncProgress"):
+        homes = [f for f in ROOT.rglob("*.py")
+                 if "__pycache__" not in str(f)
+                 and f"class {name}" in f.read_text(encoding="utf-8", errors="replace")]
+        check(len(homes) == 1,
+              f"{name} dinh nghia o {len(homes)} noi: "
+              f"{[str(h.relative_to(ROOT)) for h in homes]}")
+
     # ── every test module is runnable ───────────────────────────────────────
     tests = sorted(p for p in ROOT.rglob("test_*.py")
                    if "__pycache__" not in str(p) and p != Path(__file__))

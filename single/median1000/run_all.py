@@ -123,7 +123,7 @@ import pandas as pd
 import database as db
 from single.runner import load_symbol_df, run_estimate
 from export.chart import save_backtest_chart
-from progress import RunAllProgress
+from core.progress import RunAllProgress
 from single.median1000 import config
 from single.median1000.factory import (make_median_strategies,
                                         make_interval_strategies, build_pelog_map)
