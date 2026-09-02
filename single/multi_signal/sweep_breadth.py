@@ -90,6 +90,18 @@ ARMS = {
         "grid": [-10, 0, 5, 10, 15, 20, 30, 40, 50, 60, None],
         "sense": "reinvest khi ro &le; nguong, nen NHO hon la CHAT hon",
     },
+    # NOT A BREADTH THRESHOLD, and here anyway. The reinvest sweep showed the
+    # gate controls nothing -- reinvests held at 3.3-3.5 per symbol across a
+    # fivefold change in the threshold -- because this valve releases the reserve
+    # whatever the gate says. So this is the parameter that was actually
+    # deciding, and it belongs in the same tool rather than in a copy of it.
+    #
+    # 0 disables the valve, which is the row that isolates the breadth gate.
+    "timeout": {
+        "param": "REINVEST_TIMEOUT_DAYS", "kw": "reinvest_timeout_days",
+        "grid": [0, 60, 120, 200, 300, 400, 500, 700, 1000, 1500],
+        "sense": "thoi han xa reserve, NHO hon la xa SOM hon; 0 = tat van",
+    },
 }
 
 ARM = "sell"          # replaced by --arm in main(), before any worker starts
