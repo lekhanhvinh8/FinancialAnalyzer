@@ -511,4 +511,4 @@ REINVEST_MAX_BREADTH = None
 # breadth/signals.py::variant.
 BREADTH_UNIVERSE = "all"
 BREADTH_WINDOW = 1000
-BREADTH_SIGNAL = "prem_cap"
+BREADTH_SIGNAL = "median_prem"

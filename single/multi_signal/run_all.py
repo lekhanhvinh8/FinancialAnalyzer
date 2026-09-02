@@ -1157,6 +1157,19 @@ if __name__ == "__main__":
     args    = [a for a in sys.argv[1:] if not a.startswith("--")]
     flags   = [a for a in sys.argv[1:] if a.startswith("--")]
 
+    # AN UNKNOWN FLAG IS AN ERROR, not a no-op. Unrecognised flags used to be
+    # dropped silently, so `--profil=breadth` ran the price profile and reported
+    # nothing wrong -- a whole run measuring something other than what was asked
+    # for. `--all` was in the package docstring and never existed in this file;
+    # it happened to work because running every symbol is the default.
+    KNOWN = ("--profile=", "--workers=", "--all")
+    unknown = [f for f in flags if not f.startswith(KNOWN)]
+    if unknown:
+        raise SystemExit(
+            f"co la: {' '.join(unknown)}\n"
+            f"dung:  python -m single.multi_signal.run_all [MA ...] "
+            f"[--all] [--profile=price|breadth|both] [--workers=N]")
+
     # Applied before anything reads config: factory.py and the report both read
     # the module directly, so the overlay has to be in place first.
     profile = next((f.split("=", 1)[1] for f in flags
@@ -1172,6 +1185,11 @@ if __name__ == "__main__":
     db.init_db()
     CHARTS_DIR.mkdir(exist_ok=True)
 
+    # --all is the explicit spelling of the default. Naming both at once is a
+    # contradiction rather than a preference, so it is refused instead of one
+    # quietly winning.
+    if "--all" in flags and args:
+        raise SystemExit(f"--all va danh sach ma ({' '.join(args)}) loai tru nhau")
     symbols = [s.upper() for s in args] if args else db.list_symbols()
 
     run_dir = CHARTS_DIR / datetime.now().strftime("%Y%m%d_%H%M%S")
