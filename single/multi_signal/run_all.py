@@ -131,7 +131,8 @@ from single.multi_signal.factory import (make_median_strategies,
 CHARTS_DIR = Path(__file__).parent / "charts"
 
 
-def process_symbol(symbol: str, run_dir: Path | None = None, profile: str = "price"
+def process_symbol(symbol: str, run_dir: Path | None = None, profile: str = "price",
+                   signal: str | None = None
                    ) -> tuple[str, dict | None, str | None, float]:
     """
     Returns (symbol, row, skip_reason, duration_s). Exactly one of row and
@@ -149,6 +150,12 @@ def process_symbol(symbol: str, run_dir: Path | None = None, profile: str = "pri
     # line existed.
     from single.multi_signal.profiles import apply as _apply
     _apply(config, profile)
+    # Which breadth line to read, as an ARGUMENT rather than a config edit.
+    # Comparing the three lines meant editing config.py between runs, which makes
+    # them impossible to run at the same time -- the workers re-import the module
+    # and would pick up whichever edit landed last.
+    if signal:
+        config.BREADTH_SIGNAL = signal
 
     t0 = time.time()
     try:
@@ -1183,13 +1190,14 @@ if __name__ == "__main__":
     # nothing wrong -- a whole run measuring something other than what was asked
     # for. `--all` was in the package docstring and never existed in this file;
     # it happened to work because running every symbol is the default.
-    KNOWN = ("--profile=", "--workers=", "--all")
+    KNOWN = ("--profile=", "--workers=", "--signal=", "--all")
     unknown = [f for f in flags if not f.startswith(KNOWN)]
     if unknown:
         raise SystemExit(
             f"co la: {' '.join(unknown)}\n"
             f"dung:  python -m single.multi_signal.run_all [MA ...] "
-            f"[--all] [--profile=price|breadth|both] [--workers=N]")
+            f"[--all] [--profile=price|breadth|both] "
+            f"[--signal=median_prem|prem_trim|prem_cap] [--workers=N]")
 
     # Applied before anything reads config: factory.py and the report both read
     # the module directly, so the overlay has to be in place first.
@@ -1200,6 +1208,12 @@ if __name__ == "__main__":
     if changed:
         print(f"Profile   -> {profile}: "
               + ", ".join(f"{k}={new}" for k, (_old, new) in sorted(changed.items())))
+    signal = next((f.split("=", 1)[1] for f in flags
+                   if f.startswith("--signal=")), None)
+    if signal:
+        config.BREADTH_SIGNAL = signal
+        print(f"Signal    -> {signal}")
+
     workers = next((int(f.split("=", 1)[1]) for f in flags if f.startswith("--workers=")),
                    None)   # None -> ProcessPoolExecutor picks os.cpu_count()
 
@@ -1226,7 +1240,8 @@ if __name__ == "__main__":
     report_rows, skipped, done = [], [], 0
     with ProcessPoolExecutor(max_workers=workers) as ex:
         n_slots = ex._max_workers
-        futures = {ex.submit(process_symbol, s, run_dir, profile): s for s in symbols}
+        futures = {ex.submit(process_symbol, s, run_dir, profile, signal): s
+                   for s in symbols}
 
         # The pool runs submissions FIFO, so the first n_slots symbols are the
         # ones actually in flight. Tracked here rather than reported by the
