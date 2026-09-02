@@ -11,15 +11,11 @@ import pandas as pd
 
 import database as db
 
-# What breadth/ writes by default. Kept here as one place to change rather than
-# spelled out at each call site.
-UNIVERSE = "all"
-WINDOW = 1000
-VARIANT = "trim5-95_slope120_zdev250"
+from . import config
 
 
-def build_breadth_map(df, signal: str = "median_prem", universe: str = UNIVERSE,
-                      window: int = WINDOW, variant: str = VARIANT) -> dict:
+def build_breadth_map(df, signal: str = None, universe: str = None,
+                      window: int = None, variant: str = None) -> dict:
     """
     {row_index: signal value} for the rows of `df` (which needs a `time` column).
 
@@ -31,7 +27,10 @@ def build_breadth_map(df, signal: str = "median_prem", universe: str = UNIVERSE,
     that forgot to run breadth/ gets a strategy that never fires rather than a
     crash -- which run_breadth.py checks for and reports.
     """
-    stored = db.load_breadth(universe, window, variant, [signal])
+    signal = signal or config.SIGNAL
+    stored = db.load_breadth(universe or config.UNIVERSE,
+                             window or config.WINDOW,
+                             variant or config.VARIANT, [signal])
     if stored.empty or signal not in stored:
         return {}
 

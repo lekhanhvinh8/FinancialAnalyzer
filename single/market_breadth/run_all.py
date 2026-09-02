@@ -1,11 +1,10 @@
 """
 The breadth strategy on one symbol, or on a list.
 
-    python -m single.run_breadth              # VN30
-    python -m single.run_breadth FPT HPG      # named symbols
-    python -m single.run_breadth --all        # every stock, in parallel
-    python -m single.run_breadth --all --workers=4
-    python -m single.run_breadth --all        # every stock in the database
+    python -m single.market_breadth.run_all              # VN30
+    python -m single.market_breadth.run_all FPT HPG      # named symbols
+    python -m single.market_breadth.run_all --all        # every stock, parallel
+    python -m single.market_breadth.run_all --all --workers=4
 
 Buy while the basket is not expensive, sell when it is broadly extended AND this
 symbol's own momentum has stopped, reinvest only when the basket is genuinely
@@ -22,7 +21,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 for _s in (sys.stdout, sys.stderr):
     try:
         _s.reconfigure(encoding="utf-8", errors="replace")
@@ -36,24 +35,25 @@ from breadth.chart import add_signal_line
 from export.chart import save_backtest_chart
 from progress import RunAllProgress
 from single.median1000.run_all import build_report
-from single.breadth_map import build_breadth_map, describe
+from single.market_breadth import config
+from single.market_breadth.breadth_map import build_breadth_map, describe
 from single.runner import load_symbol_df, run_estimate
 from single.strategies.buy import BuyBreadthStrategy, BuyIntervalStrategy
 from single.strategies.reinvest import ReInvestBreadthStrategy, ReinvestStrategy
 from single.strategies.sell import SellBreadthStrategy, SellStrategy
 
-CHARTS = Path(__file__).resolve().parent / "charts_breadth"
+CHARTS = Path(__file__).resolve().parent / "charts"
 
-# ── the strategy ─────────────────────────────────────────────────────────────
-BUY_MAX_BREADTH = 60.0        # mua khi median_prem <= 60
-SELL_MIN_BREADTH = 70.0       # ban khi median_prem > 70 ...
-SELL_SIGNAL1_WINDOW = 120     # ... va da cua chinh ma da dung
-SELL_MAX_SIGNAL1 = 0.228
-REINVEST_MAX_BREADTH = 10.0   # reinvest khi median_prem <= 10
-REINVEST_PERCENT = 100.0
-
-INTERVAL_MONEY = 8_000_000
-START_INDEX = 1000            # warmup, matching the 1000-bar reference
+# Names kept local so the body reads the same as median1000's; the values live
+# in config.py, which is also what the report's parameter panel introspects.
+BUY_MAX_BREADTH = config.BUY_MAX_BREADTH
+SELL_MIN_BREADTH = config.SELL_MIN_BREADTH
+SELL_SIGNAL1_WINDOW = config.SELL_SIGNAL1_WINDOW
+SELL_MAX_SIGNAL1 = config.SELL_MAX_SIGNAL1
+REINVEST_MAX_BREADTH = config.REINVEST_MAX_BREADTH
+REINVEST_PERCENT = config.REINVEST_PERCENT
+INTERVAL_MONEY = config.INTERVAL_MONEY
+START_INDEX = config.START_INDEX
 
 
 def _slope_map(symbol, df, window):
@@ -94,11 +94,11 @@ def run_one(symbol: str, chart: bool = True, out_dir: Path = None) -> dict:
     if chart:
         out = out_dir or CHARTS
         out.mkdir(parents=True, exist_ok=True)
-        path = out / f"{symbol.lower()}_breadth.html"
+        path = out / f"{symbol.lower()}_backtest.html"
         save_backtest_chart(
             df, got["buyedInfos"], got["sellInfos"], got["reinvestInfos"],
             path=str(path),
-            title=f"{symbol} — breadth strategy",
+            title=f"{symbol} — market breadth",
             index=symbol.lower(), cal_range_close=cal,
             buy_strategy=buy, sell_strategy=sell, reinvest_strategy=rei,
             result=got, compare_result=base, start_index=START_INDEX,
@@ -166,7 +166,7 @@ def process_symbol(symbol: str, out_dir: Path):
         "median_sells":      p["totalSells"],
         "median_reinvests":  p["totalReinvest"],
         "interval_growth_%": b["allRatioGrowth"],
-        "chart":             f"{symbol.lower()}_breadth.html",
+        "chart":             f"{symbol.lower()}_backtest.html",
         "now_flags":         (_chk(r["buy"]), _chk(r["sell"]), _chk(r["reinvest"])),
         "eval_bars":         len(df) - START_INDEX,
         **rng,
@@ -194,9 +194,9 @@ def main(argv) -> int:
     run_dir = CHARTS / datetime.now().strftime("%Y%m%d_%H%M%S")
     run_dir.mkdir(exist_ok=True)
     print(f"Output   -> {run_dir}")
-    print(f"Progress -> {run_dir / 'run_breadth_progress.html'}\n", flush=True)
+    print(f"Progress -> {run_dir / 'run_all_progress.html'}\n", flush=True)
 
-    prog = RunAllProgress(symbols, out=str(run_dir / "run_breadth_progress.html"))
+    prog = RunAllProgress(symbols, out=str(run_dir / "run_all_progress.html"))
     t0 = time.time()
     rows, skipped, done = [], [], 0
 
@@ -242,8 +242,8 @@ def main(argv) -> int:
         # produced something far thinner, so this passes THIS module as the
         # config so the panel names the right parameters.
         rep = run_dir / "report_all.html"
-        build_report(rows, rep, skipped,
-                     config_module=sys.modules[__name__], title="Breadth")
+        build_report(rows, rep, skipped, config_module=config,
+                     title="MarketBreadth")
         wins = sum(1 for r in rows
                    if r["median_growth_%"] > r["interval_growth_%"])
         print(f"\nthang {wins}/{len(rows)} ma ({wins / len(rows):.0%})")
