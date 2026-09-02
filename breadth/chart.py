@@ -59,25 +59,18 @@ def _arm_signals(config):
                            (config.BUY_NORMAL_BELOW_PCT, "thuong")]
 
 
-def _add_signal(path: Path, breadth, config, dates) -> None:
+def add_signal_line(path: Path, x, series: dict, lines=(), axis_title="") -> None:
     """
-    Draw the deciding signal on the finished chart, on its own right-hand axis.
+    Draw one or more dated series on a finished backtest chart, on their own
+    right-hand axis, with `lines` as dashed thresholds.
 
-    Appended after the renderer has run rather than passed in: export/chart.py
-    is shared with single/ and should not grow a parameter for one package. The
-    axis is added by relayout for the same reason.
+    PUBLIC because single/ needs the same thing. Appended after the renderer has
+    run rather than passed in: export/chart.py is shared and should not grow a
+    parameter for one caller.
+
+    `x` is the chart's dates as ISO strings; `series` is {name: values aligned to
+    x}; `lines` is [(value, label)].
     """
-    names, lines = _arm_signals(config)
-    names = [n for n in names if n in breadth.values]
-    if not names:
-        return
-
-    x = [str(d)[:10] for d in dates]
-    series = {}
-    for n in names:
-        by_date = {str(d)[:10]: v for d, v in zip(breadth.dates, breadth.values[n])}
-        series[n] = [by_date.get(k) for k in x]
-
     vals = [v for ys in series.values() for v in ys if v is not None and v == v]
     if not vals:
         return
@@ -86,27 +79,18 @@ def _add_signal(path: Path, breadth, config, dates) -> None:
 
     # y8. save_backtest_chart already uses y2..y7 -- y3 carries its Buy/Sell
     # markers and y4..y7 are the signal panels underneath -- so anything lower
-    # overwrites one of them. Writing y3 the first time flattened the trade
-    # markers out of sight.
-    # Two colours, one weight. The comparison line was drawn faint and dotted
-    # and simply could not be read against the price chart; a line worth putting
-    # on the chart is worth being able to see.
-    STYLE = [("rgba(147,102,240,0.95)", 1.6, None),      # violet — in use
-             ("rgba(0,176,160,0.95)", 1.6, None)]        # teal   — comparison
+    # overwrites one of them.
+    STYLE = [("rgba(147,102,240,0.95)", 1.6), ("rgba(0,176,160,0.95)", 1.6)]
     traces = []
-    for k, n in enumerate(names):
-        colour, width, dash = STYLE[min(k, len(STYLE) - 1)]
-        line = {"color": colour, "width": width}
-        if dash:
-            line["dash"] = dash
+    for k, (name, ys) in enumerate(series.items()):
+        colour, width = STYLE[min(k, len(STYLE) - 1)]
         traces.append({"type": "scatter", "mode": "lines", "yaxis": "y8",
-                       "name": n + ("" if k == 0 else " (so sanh)"),
-                       "x": x, "y": series[n], "line": line,
-                       "hovertemplate": n + ": %{y:.1f}<extra></extra>"})
+                       "name": name, "x": x, "y": ys,
+                       "line": {"color": colour, "width": width},
+                       "hovertemplate": name + ": %{y:.1f}<extra></extra>"})
     for v, label in lines:
-        traces.append({"type": "scatter", "mode": "lines",
-                       "name": f"{label} ({v:g})", "yaxis": "y8",
-                       "x": [x[0], x[-1]], "y": [v, v],
+        traces.append({"type": "scatter", "mode": "lines", "yaxis": "y8",
+                       "name": f"{label} ({v:g})", "x": [x[0], x[-1]], "y": [v, v],
                        "line": {"color": "rgba(147,102,240,0.5)", "width": 1,
                                 "dash": "dash"},
                        "hoverinfo": "skip"})
@@ -121,7 +105,7 @@ setTimeout(function wait() {{
   Plotly.relayout(gd, {{
     'yaxis8': {{overlaying: 'y', side: 'right', anchor: 'free', position: 1.0,
                 showgrid: false, range: [{lo - pad:.2f}, {hi + pad:.2f}],
-                title: {{text: '{names[0]}', font: {{size: 10}}}},
+                title: {{text: '{axis_title or list(series)[0]}', font: {{size: 10}}}},
                 tickfont: {{size: 9}}, zeroline: false}},
     'xaxis.domain': [0, 0.94]
   }}).then(function() {{ Plotly.addTraces(gd, {json.dumps(traces)}); }});
@@ -130,6 +114,21 @@ setTimeout(function wait() {{
 </body>"""
     html = path.read_text(encoding="utf-8")
     path.write_text(html.replace("</body>", script, 1), encoding="utf-8")
+
+
+def _add_signal(path: Path, breadth, config, dates) -> None:
+    """The deciding signal (and its comparison) for a breadth run."""
+    names, lines = _arm_signals(config)
+    names = [n for n in names if n in breadth.values]
+    if not names:
+        return
+    x = [str(d)[:10] for d in dates]
+    series = {}
+    for k, n in enumerate(names):
+        by_date = {str(d)[:10]: v for d, v in zip(breadth.dates, breadth.values[n])}
+        label = n if k == 0 else f"{n} (so sanh)"
+        series[label] = [by_date.get(t) for t in x]
+    add_signal_line(path, x, series, lines, axis_title=names[0])
 
 
 @dataclasses.dataclass
