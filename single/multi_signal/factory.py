@@ -91,7 +91,10 @@ def make_median_strategies(signal3_map: dict | None = None,
                            reinvest_timeout_days=_FROM_CONFIG,
                            min_signal3=_FROM_CONFIG,
                            min_zdev=_FROM_CONFIG,
-                           min_pelog=_FROM_CONFIG):
+                           min_pelog=_FROM_CONFIG,
+                           buy_max_breadth=_FROM_CONFIG,
+                           sell_min_breadth=_FROM_CONFIG,
+                           reinvest_max_breadth=_FROM_CONFIG):
     """
     Returns (buy, sell, reinvest) built from config, honouring the None
     convention documented at the top of this module.
@@ -136,13 +139,14 @@ def make_median_strategies(signal3_map: dict | None = None,
     # a condition, so a profile that switches the price triggers off and the
     # basket on keeps the arm alive -- which is the whole point of merging the
     # two packages.
-    sell_breadth = getattr(config, "SELL_MIN_BREADTH", None)
+    sell_breadth = (getattr(config, "SELL_MIN_BREADTH", None)
+                    if sell_min_breadth is _FROM_CONFIG else sell_min_breadth)
     if pct_sell is None and pct_sell_bot is None and sell_breadth is None:
         sell = SellStrategy()
     else:
         sell = SellMedian1000Strategy(
             breadth_map=breadth_map or {},
-            min_breadth=getattr(config, 'SELL_MIN_BREADTH', None),
+            min_breadth=sell_breadth,
             percentSell=pct_sell, percentSellBottom=pct_sell_bot,
             use_pe=config.USE_PE, medianWindow=sell_w,
             # An empty map is how each gate is switched off; the strategy's own
@@ -161,13 +165,14 @@ def make_median_strategies(signal3_map: dict | None = None,
     # A no-op SellStrategy never fires, so there is nothing to stand down for.
     sell_ref = sell if isinstance(sell, SellMedian1000Strategy) else None
 
-    buy_breadth = getattr(config, "BUY_MAX_BREADTH", None)
+    buy_breadth = (getattr(config, "BUY_MAX_BREADTH", None)
+                   if buy_max_breadth is _FROM_CONFIG else buy_max_breadth)
     if pct_buy is None and buy_breadth is None:
         buy = BuyIntervalStrategy()
     else:
         buy = BuyMedian1000Strategy(percentBuy=pct_buy, use_pe=config.USE_PE,
                                     breadth_map=breadth_map or {},
-                                    max_breadth=getattr(config, 'BUY_MAX_BREADTH', None),
+                                    max_breadth=buy_breadth,
                                     medianWindow=buy_w, sell_strategy=sell_ref)
 
     pct_ri = (config.PERCENT_REINVEST
@@ -178,7 +183,8 @@ def make_median_strategies(signal3_map: dict | None = None,
     # also drops the timeout valve with it, since that lives on the same class.
     pct_ri_top = (getattr(config, "PERCENT_REINVEST_TOP", None)
                   if percent_reinvest_top is _FROM_CONFIG else percent_reinvest_top)
-    ri_breadth = getattr(config, "REINVEST_MAX_BREADTH", None)
+    ri_breadth = (getattr(config, "REINVEST_MAX_BREADTH", None)
+                  if reinvest_max_breadth is _FROM_CONFIG else reinvest_max_breadth)
     if pct_ri is None and pct_ri_top is None and ri_breadth is None:
         reinvest = ReinvestStrategy()
     else:
@@ -186,7 +192,7 @@ def make_median_strategies(signal3_map: dict | None = None,
                   if reinvest_min_signal1 is _FROM_CONFIG else reinvest_min_signal1)
         reinvest = ReInvestMedian1000Strategy(
             breadth_map=breadth_map or {},
-            max_breadth=getattr(config, 'REINVEST_MAX_BREADTH', None),
+            max_breadth=ri_breadth,
             percentReinvest=pct_ri, percentReinvestTop=pct_ri_top,
             use_pe=config.USE_PE,
             timeoutDays=(config.REINVEST_TIMEOUT_DAYS
