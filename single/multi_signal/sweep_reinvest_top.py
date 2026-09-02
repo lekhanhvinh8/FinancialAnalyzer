@@ -2,9 +2,15 @@
 Sweep the second reinvest trigger: PERCENT_REINVEST_TOP.
 
 Redeploy the reserve once the price has fallen this far from the 1000-bar HIGH.
-In the strategy it is OR'd with the existing test against the median; in this
-sweep the median test is switched OFF in every cell, so the top trigger is judged
-on its own and PERCENT_REINVEST never enters a figure.
+In the strategy it is AND'd with the existing test against the median; in this
+sweep the median test is switched OFF in every cell, so the top condition is
+judged on its own and PERCENT_REINVEST never enters a figure.
+
+  THIS SWEEP PREDATES THE AND. It ran when the two were OR'd, and every figure
+  below is still valid because the median test is off in every cell — with one
+  condition live the join does not apply. What changed is what it implies about
+  the SHIPPED config, where PERCENT_REINVEST is 10: adding a top threshold there
+  now REMOVES reinvests rather than adding them.
 
 SIGN
 

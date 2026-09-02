@@ -41,11 +41,11 @@ THE None CONVENTION
   None itself. An arm falls back to its base class only when BOTH of its price
   conditions are None.
 
-  THE TWO ARE NOT JOINED THE SAME WAY ON THE TWO ARMS. On sell, every condition
-  is AND'd: PERCENT_SELL_BOTTOM was OR'd with PERCENT_SELL until it became the
-  only OR in a list of ANDs, and a reader had to know which parameters were in
-  the OR group. On reinvest, PERCENT_REINVEST_TOP is still OR'd with
-  PERCENT_REINVEST. Both ship as None, so neither join is exercised.
+  EVERY CONDITION ON EVERY ARM IS AND'D. These two were OR'd with the arm's
+  first price test until they became the only ORs in a list of ANDs, and a reader
+  had to know which parameters were in the OR group before the condition list
+  could be read at all. Both ship as None, so the change is unmeasurable — it is
+  a change to what the code says, made while nothing depended on it.
 
   Setting all three PERCENT_* to None therefore turns the median1000 arm into
   the interval arm, and every symbol's diff must come out at 0.00. That is a

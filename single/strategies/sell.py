@@ -129,17 +129,16 @@ class SellMedian1000Strategy(SellStrategy):
       oscillator per symbol, which no portfolio-wide threshold on a single signal
       can do.
     """
-    # None means this trigger never fires, NOT that the arm stops selling — the
-    # arm has two price triggers now and dies only when both are None, which
-    # factory.py decides. Lets a sweep isolate one trigger from the other.
+    # None means this condition has no vote, NOT that the arm stops selling — the
+    # arm has two price conditions and dies only when both are None, which
+    # factory.py decides. Lets a sweep isolate one condition from the other.
     percentSell: float | None = 0
-    # Second price trigger, OR'd with percentSell: sell when the price is this far
-    # above the window's LOW instead of above its median. None switches it off,
-    # leaving the arm exactly as it was.
+    # Second price condition, AND'd with percentSell: sell when the price is this
+    # far above the window's LOW as well as above its median. None switches it
+    # off, leaving the arm exactly as it was.
     #
-    # Unlike every gate on this class this one makes the arm act MORE, not less,
-    # so it is a primary condition rather than a filter — see factory.py, where
-    # the two kinds are distinguished. Worth trying precisely because the three
+    # It was OR'd, which made it the one condition on this class that made the arm
+    # act MORE rather than less. AND'ing it put it back with the others. Worth trying precisely because the three
     # attempts to restrain this arm all lost: if quieting it costs, the question
     # still open is whether loosening it pays.
     percentSellBottom: float | None = None

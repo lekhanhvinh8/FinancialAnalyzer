@@ -79,15 +79,16 @@ class ReInvestPartialStrategy(ReinvestStrategy):
 @dataclass
 class ReInvestMedian1000Strategy(ReinvestStrategy):
     """
-    Redeploy the reserve when the price is attractive. Two price triggers, OR'd,
-    plus a timeout valve that ignores both.
+    Redeploy the reserve when the price is attractive. Two price conditions,
+    AND'd like every other condition on the arm, plus a timeout valve that
+    ignores both.
     """
-    # None means this trigger never fires, NOT that the arm stops reinvesting —
-    # the arm has two price triggers and falls back to the base class only when
+    # None means this condition has no vote, NOT that the arm stops reinvesting —
+    # the arm has two price conditions and falls back to the base class only when
     # both are None, which factory.py decides. Lets a sweep isolate one from the
     # other.
     percentReinvest: float | None = 0
-    # Second price trigger, OR'd with percentReinvest: reinvest once the price has
+    # Second price condition, AND'd with percentReinvest: reinvest once the price has
     # fallen this far from the window HIGH rather than come back to its median.
     # Same comparison direction as percentReinvest — reinvest while dev is BELOW
     # the threshold — but measured against the top, where dev is always <= 0, so
@@ -163,22 +164,28 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return False
         rc = cal_range_close[index].rangeDayCloses[1000]
 
-        # Same grouping as the sell arm: percentReinvest OR percentReinvestTop,
-        # and a group nobody configured does not get a vote.
-        if self.percentReinvest is not None or self.percentReinvestTop is not None:
-            fired = False
-            if self.percentReinvest is not None:
-                median = rc.pct50(self.use_pe)
-                if median:
-                    fired = (current - median) / median * 100 < self.percentReinvest
-            # Second way to satisfy the PRICE group, not a bypass of the guards
-            # below. Both answer "should we redeploy at all", which does not
-            # depend on which condition noticed the opportunity.
-            if not fired and self.percentReinvestTop is not None:
-                top = rc.top(self.use_pe)
-                if top:
-                    fired = (current - top) / top * 100 <= self.percentReinvestTop
-            if not fired:
+        # EVERY CONDITION IS AN AND-GATE, as on the sell arm, and one left at
+        # None does not get a vote. percentReinvestTop used to be OR'd with
+        # percentReinvest, which made these two the only pair in the project
+        # joined differently from everything around them.
+        #
+        # Stricter than the OR it replaces: with both set the price now has to be
+        # below the median AND near the top's floor, where before either
+        # sufficed. Behaviour is unchanged while PERCENT_REINVEST_TOP is None,
+        # which is how it ships.
+        if self.percentReinvest is not None:
+            median = rc.pct50(self.use_pe)
+            # No usable median is not a reason to redeploy, as before.
+            if not median:
+                return False
+            if (current - median) / median * 100 >= self.percentReinvest:
+                return False
+        # Distance from the window's HIGH rather than from its middle.
+        if self.percentReinvestTop is not None:
+            top = rc.top(self.use_pe)
+            if not top:
+                return False
+            if (current - top) / top * 100 > self.percentReinvestTop:
                 return False
 
         if self.sell_strategy is not None and self.sell_strategy.check(

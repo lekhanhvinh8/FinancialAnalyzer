@@ -86,13 +86,13 @@ SELL_MEDIAN_WINDOW = 1000
 # paired against 75 with enough resolution for neighbours to agree or not.
 PERCENT_SELL     = 75
 
-# SellMedian1000: a SECOND way to satisfy the price test, OR'd with PERCENT_SELL —
-# sell when the price is this far above the SELL_MEDIAN_WINDOW LOW rather than
-# above its median. None switches it off and the arm behaves exactly as before.
+# SellMedian1000: a SECOND price condition, AND'd with PERCENT_SELL — sell when
+# the price is this far above the SELL_MEDIAN_WINDOW LOW as well as above its
+# median. None switches it off and the arm behaves exactly as before.
 #
-# Not a filter. Every other knob bolted onto this arm restrains it; this one makes
-# it act more often, so it is a primary condition and None means "no second
-# trigger" rather than "no restriction".
+# It was OR'd until it became the only OR in a list of ANDs. AND'ing it makes the
+# arm act LESS often, not more, so setting it now RESTRAINS the arm — the
+# opposite of what the sweep that introduced it was measuring.
 #
 # The reason to try it is the reason the filters failed. Three separate attempts
 # to quiet this arm — SELL_MIN_ZDEV, PERCENT_SELL x PERCENT_REINVEST, and
@@ -164,9 +164,9 @@ PERCENT_SELL_BOTTOM = None
 # +91 and +428 there and are the two worst long-history losses today.
 PERCENT_REINVEST = 10
 
-# ReInvestMedian1000: a SECOND way to satisfy the reinvest price test, OR'd with
-# PERCENT_REINVEST — redeploy once the price has fallen this far from the
-# 1000-bar HIGH, rather than waiting for it to come back to its median.
+# ReInvestMedian1000: a SECOND price condition, AND'd with PERCENT_REINVEST —
+# redeploy once the price has fallen this far from the 1000-bar HIGH as well as
+# having come back to its median. Was OR'd; see PERCENT_SELL_BOTTOM above.
 #
 # Same comparison direction as PERCENT_REINVEST (reinvest while dev is BELOW the
 # threshold), but measured against the top, where dev is always <= 0. So the
