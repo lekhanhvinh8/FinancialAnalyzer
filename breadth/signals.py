@@ -39,16 +39,21 @@ WHAT IS COMPUTED
     below_pct     share of the basket trading under its own median      0..1
     median_prem   the median distance from median, in percent           %
     p25_prem      the cheap quartile, for how far the tail has gone     %
-    slope_pos     share with positive short-window momentum             0..1
-    mean_slope    average momentum, percent per day                     %
+    prem_q5..q95  the whole shape, every 5%                             %
     spread        p75 minus p25 of premium: agreement or dispersion     %
-    median_zdev   the basket's cheapness in units of its own sigma      sigma
-    spread_zdev   p75 minus p25 of z_dev: falling together, or rotating sigma
-    prem_trim     mean premium after dropping the 5% tails at each end     %
-    prem_trim_sd  its standard deviation, over the same trimmed set        %
-    median_sharpe median signal3_sharpe: momentum divided by volatility
-    sharpe_pos    share of the basket with positive sharpe                0..1
+    prem_trim     mean premium after dropping the 5% tails at each end  %
+    prem_trim_sd  its standard deviation, over the same trimmed set     %
+    prem_cap      the same trimmed mean, weighted by market cap         %
+    mean_slope    average momentum, percent per day                     %
     n             how many symbols the day's figures rest on            count
+
+  prem_trim reads one vote per symbol, prem_cap one vote per dong. They part
+  company exactly when the large caps and the ordinary listings disagree.
+
+  Five more signals lived here and were deleted: slope_pos, median_zdev,
+  spread_zdev, median_sharpe and sharpe_pos. Each was measured against DCA, none
+  beat it, and none was ever read again -- the numbers are kept in
+  breadth/config.py so the deletion is a record rather than a loss.
 
   `n` is not decoration. Early in the run only a handful of symbols are past
   warmup, and a percentage over six symbols is not the same measurement as one
@@ -72,9 +77,10 @@ PREM_QS = tuple(range(5, 100, 5))
 # Tails dropped before the trimmed mean.
 TRIM_LOW, TRIM_HIGH = 5, 95
 
-SIGNALS = (("below_pct", "median_prem", "p25_prem", "slope_pos", "mean_slope",
-            "spread", "median_zdev", "spread_zdev",
-            "median_sharpe", "sharpe_pos")
+# mean_slope is COMPUTED BUT NEVER STORED: breadth/strategy.py reads it from the
+# series in hand, and nothing has ever read it back from the database. Storing it
+# is what kept a "slope120" variant alive in a store where nothing addressed it.
+SIGNALS = (("below_pct", "median_prem", "p25_prem", "mean_slope", "spread")
            + tuple(f"prem_q{q}" for q in PREM_QS)
            + ("prem_trim", "prem_trim_sd", "prem_cap"))
 
@@ -101,34 +107,6 @@ class BreadthSeries:
         return None if v != v else float(v)
 
 
-def _zdev_per_symbol(market, window: int, stat_window: int) -> dict:
-    """
-    z_dev for every symbol: how many of its OWN sigmas the price sits from its
-    own median.
-
-    WHY NOT JUST AVERAGE dev. A percentage from median is not comparable across
-    symbols -- a volatile name is routinely 40% below its median, a stable one
-    rarely 15% -- so a median of raw dev mixes two scales. Dividing by each
-    symbol's own sigma puts them on one.
-    """
-    import pandas as pd
-
-    out = {}
-    for sym in market.symbols:
-        series = market[sym]
-        if series.is_index:
-            continue
-        n = len(series)
-        dev = np.full(n, np.nan)
-        for i in range(n):
-            med = series.median(window, i)
-            if med:
-                dev[i] = (series.closes[i] - med) / med
-        r = pd.Series(dev).rolling(stat_window, min_periods=stat_window)
-        z = (dev - r.mean().to_numpy()) / r.std().to_numpy()
-        out[sym] = z
-    return out
-
 
 def _cap_weighted(prem, caps, trim_mask) -> float:
     """
@@ -145,10 +123,8 @@ def _cap_weighted(prem, caps, trim_mask) -> float:
     return float((prem[m] * caps[m]).sum() / caps[m].sum())
 
 
-def compute(market, window: int, slope_window: int,
-            zdev_stat_window: int = 250) -> BreadthSeries:
+def compute(market, window: int, slope_window: int) -> BreadthSeries:
     """Walk the calendar once and reduce each day to a handful of numbers."""
-    zdev = _zdev_per_symbol(market, window, zdev_stat_window)
 
     dates, counts = [], []
     cols = {k: [] for k in SIGNALS}
@@ -157,8 +133,7 @@ def compute(market, window: int, slope_window: int,
         cols[key].append(fn(values) if len(values) else np.nan)
 
     for day in market.days():
-        prem, slopes, zs, sh = [], [], [], []
-        caps = []
+        prem, slopes, caps = [], [], []
         for symbol, bar in day.bars.items():
             series = market[symbol]
             if series.is_index:
@@ -174,12 +149,6 @@ def compute(market, window: int, slope_window: int,
             sl = series.slope(slope_window, bar.index)
             if sl is not None:
                 slopes.append(sl)
-            s3 = series.sharpe(slope_window, bar.index)
-            if s3 is not None:
-                sh.append(s3)
-            z = zdev.get(symbol)
-            if z is not None and bar.index < len(z) and z[bar.index] == z[bar.index]:
-                zs.append(float(z[bar.index]))
 
         dates.append(day.date)
         counts.append(len(prem))
@@ -223,17 +192,7 @@ def compute(market, window: int, slope_window: int,
         cols["prem_cap"].append(_cap_weighted(a, w, _trim_mask))
 
         b = np.asarray(slopes)
-        push("slope_pos", b, lambda v: float((v > 0).mean()))
         push("mean_slope", b, lambda v: float(v.mean()))
-
-        d = np.asarray(sh)
-        push("median_sharpe", d, lambda v: float(np.median(v)))
-        push("sharpe_pos", d, lambda v: float((v > 0).mean()))
-
-        c = np.asarray(zs)
-        push("median_zdev", c, lambda v: float(np.median(v)))
-        push("spread_zdev", c,
-             lambda v: float(np.percentile(v, 75) - np.percentile(v, 25)))
 
     return BreadthSeries(
         dates=dates,
@@ -309,11 +268,14 @@ def load(path):
 #
 # A signal is now named by what it reads, and nothing else.
 _TRIM  = ("prem_trim", "prem_trim_sd", "prem_cap")
-_SLOPE = ("slope_pos", "mean_slope", "median_sharpe", "sharpe_pos")
-_ZDEV  = ("median_zdev", "spread_zdev")
+_SLOPE = ("mean_slope",)
+
+# What actually reaches the database. mean_slope is the one computed signal left
+# out: see SIGNALS above.
+STORED = tuple(x for x in SIGNALS if x not in _SLOPE)
 
 
-def variant(signal: str, slope_window: int, zdev_stat: int) -> str:
+def variant(signal: str, slope_window: int) -> str:
     """
     The settings that change THIS signal, other than window_days.
 
@@ -325,18 +287,18 @@ def variant(signal: str, slope_window: int, zdev_stat: int) -> str:
         return f"trim{TRIM_LOW}-{TRIM_HIGH}"
     if signal in _SLOPE:
         return f"slope{slope_window}"
-    if signal in _ZDEV:
-        return f"zdev{zdev_stat}"
     return "base"
 
 
 def save_to_db(breadth: BreadthSeries, universe: str, window: int,
-               slope_window: int, zdev_stat: int) -> dict:
-    """Write each signal under its own variant. Returns rows written per variant."""
+               slope_window: int) -> dict:
+    """Write each STORED signal under its own variant. Rows written per variant."""
     import database as db
     groups = {}
     for name, series in breadth.values.items():
-        groups.setdefault(variant(name, slope_window, zdev_stat), {})[name] = series
+        if name not in STORED:
+            continue
+        groups.setdefault(variant(name, slope_window), {})[name] = series
     out = {}
     for v, vals in sorted(groups.items()):
         r = db.save_breadth(universe, window, v, breadth.dates, vals, breadth.counts)
@@ -344,18 +306,17 @@ def save_to_db(breadth: BreadthSeries, universe: str, window: int,
     return out
 
 
-def load_from_db(universe: str, window: int, slope_window: int, zdev_stat: int):
+def load_from_db(universe: str, window: int, slope_window: int):
     """
     A stored run as a BreadthSeries, or None if nothing was stored for it.
 
-    Reassembles the four variants a run is now spread across; a variant that was
-    never written simply contributes no columns, so a partial store reads back as
-    the signals it has rather than as nothing.
+    Reassembles the variants a run is spread across; one never written simply
+    contributes no columns, so a partial store reads back as the signals it has
+    rather than as nothing. mean_slope is not among them -- it is never stored.
     """
     import database as db
     import pandas as pd
-    wanted = {variant(n, slope_window, zdev_stat)
-              for n in ("median_prem", *_TRIM, *_SLOPE, *_ZDEV)}
+    wanted = {variant(n, slope_window) for n in STORED}
     frames = [f for f in (db.load_breadth(universe, window, v) for v in sorted(wanted))
               if not f.empty]
     if not frames:

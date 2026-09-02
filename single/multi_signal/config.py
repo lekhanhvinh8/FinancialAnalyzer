@@ -511,10 +511,8 @@ REINVEST_MAX_BREADTH = None
 # breadth/signals.py::variant.
 BREADTH_UNIVERSE = "all"
 BREADTH_WINDOW = 1000
-# Only needed for a signal that actually reads them: the slope and sharpe
-# signals, and the z_dev ones. BREADTH_SIGNAL = "median_prem" reads neither, so
-# these two are inert as shipped. They exist so that switching BREADTH_SIGNAL to
-# one that does read them addresses the right stored rows.
+# Only needed for a signal that reads it. Every STORED signal today is under
+# "base" or "trim5-95", so this is inert -- it exists so that a future signal
+# keyed on the slope window addresses the right rows.
 BREADTH_SLOPE_WINDOW = 120
-BREADTH_ZDEV_WINDOW = 250
 BREADTH_SIGNAL = "median_prem"

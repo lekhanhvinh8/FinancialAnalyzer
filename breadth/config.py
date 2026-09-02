@@ -90,10 +90,13 @@ SLOPE_WINDOW = 120
 # reserve, and those lose in proportion to what they held. Same pattern as the
 # below_pct sweep: the reserve explains the result, the signal does not.
 #
-# The signals are computed and cached anyway -- they cost 3 seconds and they are
-# the right measure to reach for if a future rule needs cheapness on a
-# comparable scale.
-ZDEV_STAT_WINDOW = 250
+# REMOVED. median_zdev, spread_zdev, median_sharpe, sharpe_pos and slope_pos
+# were kept "in case a future rule needs them" and no rule ever did; they cost a
+# per-symbol rolling pass on every run and two variants in a store nothing
+# addressed. The numbers above stay as the record of what was measured -- that is
+# what makes deleting the code safe rather than forgetful.
+#
+# To bring one back: add it to SIGNALS in signals.py and give it a variant.
 
 # ── The pace ──────────────────────────────────────────────────────────────────
 

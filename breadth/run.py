@@ -67,7 +67,7 @@ def main(argv) -> int:
     # safely. The load it avoids is eight minutes; the compute it avoids is one
     # second. --fresh forces the long way round.
     cpath = cache_path(config.UNIVERSE, config.WINDOW,
-                       f"{config.SLOPE_WINDOW}z{config.ZDEV_STAT_WINDOW}sqt")
+                       f"{config.SLOPE_WINDOW}sqt")
     breadth = None if "--fresh" in argv else load_cache(cpath)
     if breadth is not None:
         print(f"Breadth: {len(breadth)} ngay (cache)")
@@ -96,13 +96,12 @@ def main(argv) -> int:
     print(f"\n{market.summary()}   ({time.time() - t0:.0f}s)\n", flush=True)
 
     t1 = time.time()
-    breadth = compute(market, config.WINDOW, config.SLOPE_WINDOW,
-                      config.ZDEV_STAT_WINDOW)
+    breadth = compute(market, config.WINDOW, config.SLOPE_WINDOW)
     print(f"Breadth: {len(breadth)} ngay  ({time.time() - t1:.1f}s)")
     save_cache(breadth, cpath)
     print(f"Cache -> {cpath}")
     info = save_to_db(breadth, config.UNIVERSE, config.WINDOW,
-                      config.SLOPE_WINDOW, config.ZDEV_STAT_WINDOW)
+                      config.SLOPE_WINDOW)
     # One line per variant: a signal is stored under the parameters it reads,
     # so a run now writes several groups rather than one batch.
     for v, r in sorted(info.items()):
