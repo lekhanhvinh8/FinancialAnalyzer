@@ -268,37 +268,36 @@ def load(path):
 #
 # A signal is now named by what it reads, and nothing else.
 _TRIM  = ("prem_trim", "prem_trim_sd", "prem_cap")
-_SLOPE = ("mean_slope",)
+# COMPUTED BUT NOT STORED. breadth/strategy.py reads mean_slope from the series
+# in hand; nothing has ever read it back from the database.
+_NOT_STORED = ("mean_slope",)
 
-# What actually reaches the database. mean_slope is the one computed signal left
-# out: see SIGNALS above.
-STORED = tuple(x for x in SIGNALS if x not in _SLOPE)
+STORED = tuple(x for x in SIGNALS if x not in _NOT_STORED)
 
 
-def variant(signal: str, slope_window: int) -> str:
+def variant(signal: str) -> str:
     """
     The settings that change THIS signal, other than window_days.
 
     "base" for a signal that reads only the premium and the window: median_prem,
     the quantiles, below_pct, spread, p25_prem. Not the empty string, because the
     variant is part of a primary key and an empty key segment is a trap.
+
+    Takes no window arguments any more. It took a slope window and a z_dev window
+    while signals keyed on those existed; after they were deleted the parameters
+    stayed behind, addressing nothing, in three config files.
     """
-    if signal in _TRIM:
-        return f"trim{TRIM_LOW}-{TRIM_HIGH}"
-    if signal in _SLOPE:
-        return f"slope{slope_window}"
-    return "base"
+    return f"trim{TRIM_LOW}-{TRIM_HIGH}" if signal in _TRIM else "base"
 
 
-def save_to_db(breadth: BreadthSeries, universe: str, window: int,
-               slope_window: int) -> dict:
+def save_to_db(breadth: BreadthSeries, universe: str, window: int) -> dict:
     """Write each STORED signal under its own variant. Rows written per variant."""
     import database as db
     groups = {}
     for name, series in breadth.values.items():
         if name not in STORED:
             continue
-        groups.setdefault(variant(name, slope_window), {})[name] = series
+        groups.setdefault(variant(name), {})[name] = series
     out = {}
     for v, vals in sorted(groups.items()):
         r = db.save_breadth(universe, window, v, breadth.dates, vals, breadth.counts)
@@ -306,7 +305,7 @@ def save_to_db(breadth: BreadthSeries, universe: str, window: int,
     return out
 
 
-def load_from_db(universe: str, window: int, slope_window: int):
+def load_from_db(universe: str, window: int):
     """
     A stored run as a BreadthSeries, or None if nothing was stored for it.
 
@@ -316,7 +315,7 @@ def load_from_db(universe: str, window: int, slope_window: int):
     """
     import database as db
     import pandas as pd
-    wanted = {variant(n, slope_window) for n in STORED}
+    wanted = {variant(n) for n in STORED}
     frames = [f for f in (db.load_breadth(universe, window, v) for v in sorted(wanted))
               if not f.empty]
     if not frames:

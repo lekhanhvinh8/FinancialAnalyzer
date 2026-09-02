@@ -511,8 +511,4 @@ REINVEST_MAX_BREADTH = None
 # breadth/signals.py::variant.
 BREADTH_UNIVERSE = "all"
 BREADTH_WINDOW = 1000
-# Only needed for a signal that reads it. Every STORED signal today is under
-# "base" or "trim5-95", so this is inert -- it exists so that a future signal
-# keyed on the slope window addresses the right rows.
-BREADTH_SLOPE_WINDOW = 120
-BREADTH_SIGNAL = "median_prem"
+BREADTH_SIGNAL = "prem_cap"

@@ -100,8 +100,7 @@ def main(argv) -> int:
     print(f"Breadth: {len(breadth)} ngay  ({time.time() - t1:.1f}s)")
     save_cache(breadth, cpath)
     print(f"Cache -> {cpath}")
-    info = save_to_db(breadth, config.UNIVERSE, config.WINDOW,
-                      config.SLOPE_WINDOW)
+    info = save_to_db(breadth, config.UNIVERSE, config.WINDOW)
     # One line per variant: a signal is stored under the parameters it reads,
     # so a run now writes several groups rather than one batch.
     for v, r in sorted(info.items()):

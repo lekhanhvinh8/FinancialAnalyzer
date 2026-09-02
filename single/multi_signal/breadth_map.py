@@ -33,7 +33,7 @@ def build_breadth_map(df, signal: str = None, universe: str = None,
     # had to keep in step with breadth/ by hand, and that named parameters the
     # signal does not read -- median_prem was stored under a name promising a
     # 120-bar slope and a 250-bar z_dev it never touches.
-    variant = variant or breadth_variant(signal, config.BREADTH_SLOPE_WINDOW)
+    variant = variant or breadth_variant(signal)
     stored = db.load_breadth(universe or config.BREADTH_UNIVERSE,
                              window or config.BREADTH_WINDOW, variant, [signal])
     if stored.empty or signal not in stored:

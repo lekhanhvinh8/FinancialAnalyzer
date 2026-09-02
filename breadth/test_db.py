@@ -10,9 +10,10 @@ import numpy as np
 import pandas as pd
 
 import database as db
-from breadth.signals import BreadthSeries, load_from_db, save_to_db, variant
+from breadth.signals import (BreadthSeries, STORED, load_from_db,
+                             save_to_db, variant)
 
-UNI, WIN, SLOPE = "__test__", 7, 3
+UNI, WIN = "__test__", 7
 
 
 def main() -> int:
@@ -27,7 +28,7 @@ def main() -> int:
         dates=dates,
         values={"median_prem": np.array([1.5, np.nan, -3.25]),   # -> base
                 "prem_trim":   np.array([2.0, 2.5, -1.0]),       # -> trim5-95
-                "mean_slope":  np.array([0.1, 0.2, 0.3])},       # -> slope3
+                "mean_slope":  np.array([0.1, 0.2, 0.3])},       # -> khong luu
         counts=np.array([40.0, 41.0, 42.0]),
         row_of={d: i for i, d in enumerate(dates)},
     )
@@ -35,14 +36,15 @@ def main() -> int:
     # A SIGNAL IS NAMED BY WHAT IT READS. median_prem reads neither the slope
     # window nor the z_dev one, so it must not be filed under a name that
     # mentions them -- the bug this test was written for.
-    check(variant("median_prem", SLOPE) == "base",
-          f"median_prem phai la 'base', duoc {variant('median_prem', SLOPE)}")
-    check(variant("prem_trim", SLOPE) == "trim5-95", "prem_trim sai ten")
-    check(variant("mean_slope", SLOPE) == f"slope{SLOPE}", "mean_slope sai ten")
+    check(variant("median_prem") == "base",
+          f"median_prem phai la 'base', duoc {variant('median_prem')}")
+    check(variant("prem_trim") == "trim5-95", "prem_trim sai ten")
+    # Not stored, so it has no home of its own -- and must not invent one.
+    check("mean_slope" not in STORED, "mean_slope khong duoc nam trong STORED")
 
     for v in ("base", "trim5-95"):
         db.delete_breadth(UNI, WIN, v)
-    info = save_to_db(b, UNI, WIN, SLOPE)
+    info = save_to_db(b, UNI, WIN)
     # mean_slope is computed but NOT stored, so two variants and 6 rows, not
     # three and 9. Nothing reads it back from the database; storing it kept a
     # variant alive in a store that nothing addressed.
@@ -52,7 +54,7 @@ def main() -> int:
           f"phai ghi 2x3 = 6 dong, ghi {sum(r['saved'] for r in info.values())}")
 
     # Read back: the three variants reassemble into one series.
-    got = load_from_db(UNI, WIN, SLOPE)
+    got = load_from_db(UNI, WIN)
     check(got is not None, "khong doc lai duoc")
     if got:
         check([str(d)[:10] for d in got.dates] == ["2020-01-01", "2020-01-02",
@@ -67,14 +69,14 @@ def main() -> int:
               "mean_slope khong duoc luu vao DB")
 
     # Re-saving overwrites rather than duplicating.
-    save_to_db(b, UNI, WIN, SLOPE)
+    save_to_db(b, UNI, WIN)
     check(len(db.load_breadth(UNI, WIN, "base")) == 3, "ghi lai phai de len")
 
     # MOVING A PARAMETER MOVES ONLY WHAT READS IT. Nothing stored today reads
     # the slope window, so changing it must not create a variant at all -- 2829
     # identical rows used to be rewritten under a new name every time an
     # unrelated window moved.
-    save_to_db(b, UNI, WIN, SLOPE + 1)
+    save_to_db(b, UNI, WIN)
     v = db.breadth_variants()
     mine = set(v[v["universe"] == UNI]["variant"])
     check(mine == {"base", "trim5-95"},
@@ -84,7 +86,7 @@ def main() -> int:
           "doi slope khong duoc dong toi median_prem")
 
     # Asking for a config that was never written is empty, not an error.
-    check(load_from_db(UNI, 999, SLOPE) is None,
+    check(load_from_db(UNI, 999) is None,
           "config chua co phai tra ve None")
 
     for vv in ("base", "trim5-95"):
