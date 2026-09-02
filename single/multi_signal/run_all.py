@@ -300,6 +300,27 @@ def process_symbol(symbol: str, run_dir: Path | None = None, profile: str = "pri
             zdev_window=config.SELL_ZDEV_WINDOW,
         )
 
+        # THE LINE THE DECISIONS WERE MADE ON. Without it a breadth run shows
+        # sells with nothing on the chart that explains them -- the reason lives
+        # in the basket, not in this symbol's price.
+        #
+        # Lost when median1000 and market_breadth were merged: the old package
+        # drew it here and the merged runner did not, so every chart since has
+        # been missing the one series that explains a breadth decision. Nothing
+        # failed, because a missing overlay looks exactly like a chart.
+        if breadth_map:
+            from breadth.chart import add_signal_line
+            x = [str(t)[:10] for t in df["time"]]
+            add_signal_line(
+                chart_path, x,
+                {config.BREADTH_SIGNAL: [breadth_map.get(i) for i in range(len(x))]},
+                [(v, lbl) for v, lbl in
+                 ((config.BUY_MAX_BREADTH, "mua"),
+                  (config.SELL_MIN_BREADTH, "ban"),
+                  (config.REINVEST_MAX_BREADTH, "reinvest"))
+                 if v is not None],
+                axis_title=config.BREADTH_SIGNAL)
+
         # Current state of the three conditions at the latest bar — the same
         # check() calls the backtest chart uses to paint its condition zones.
         # Note reinvest.check() covers only the price path; the timeout fallback
