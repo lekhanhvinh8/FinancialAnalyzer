@@ -207,38 +207,35 @@ class SellMedian1000Strategy(SellStrategy):
                 or self.medianWindow not in cal_range_close[index].rangeDayCloses):
             return False
         rc = cal_range_close[index].rangeDayCloses[self.medianWindow]
-        fired = False
-        if self.percentSell is not None:
-            median = rc.pct50(self.use_pe)
-            if median:
-                fired = (current - median) / median * 100 > self.percentSell
-        # Second way to satisfy the PRICE test, not a bypass of the gates below:
-        # how far the price has run from the window's LOW rather than from its
-        # middle. A symbol can double off its floor while its median chases it up,
-        # leaving the median test quiet the whole way.
-        #
-        # Everything after this point still applies. The gates answer "should we
-        # sell at all", which does not depend on which of the two conditions
-        # noticed the move — letting the new one skip them would not be a second
-        # trigger, it would be a hole.
-        if not fired and self.percentSellBottom is not None:
-            bottom = rc.bottom(self.use_pe)
-            if bottom:
-                fired = (current - bottom) / bottom * 100 > self.percentSellBottom
-        # NO PRICE TRIGGER MEANS THE GATES DECIDE. Without this the arm can
-        # never fire on the basket alone: `fired` only ever comes from a price
-        # trigger, so PERCENT_SELL = None with a breadth gate on produced an arm
-        # that never sold -- silently, because a strategy that declines every bar
-        # looks exactly like one whose condition was never met.
-        #
-        # The buy arm has always behaved this way; this makes the sell arm match.
-        if (self.percentSell is None and self.percentSellBottom is None
-                and self.min_breadth is not None):
-            fired = True
 
-        if not fired:
-            return False
-        # Block the sell unless the basket is extended too.
+        # THE PRICE TEST IS A GROUP: percentSell OR percentSellBottom. A group
+        # nobody configured does not get a vote — it neither fires nor blocks,
+        # which is how the buy arm has always read percentBuy = None. That is
+        # what lets this arm run on the basket alone; writing it as a `fired`
+        # flag instead made "no price trigger" mean "never sells", silently.
+        if self.percentSell is not None or self.percentSellBottom is not None:
+            fired = False
+            if self.percentSell is not None:
+                median = rc.pct50(self.use_pe)
+                if median:
+                    fired = (current - median) / median * 100 > self.percentSell
+            # Second way to satisfy the PRICE group, not a bypass of the gates
+            # below: how far the price has run from the window's LOW rather than
+            # from its middle. A symbol can double off its floor while its median
+            # chases it up, leaving the median test quiet the whole way.
+            #
+            # Everything after this point still applies. The gates answer "should
+            # we sell at all", which does not depend on which of the two
+            # conditions noticed the move — letting the new one skip them would
+            # not be a second trigger, it would be a hole.
+            if not fired and self.percentSellBottom is not None:
+                bottom = rc.bottom(self.use_pe)
+                if bottom:
+                    fired = (current - bottom) / bottom * 100 > self.percentSellBottom
+            if not fired:
+                return False
+
+        # The basket has to be extended too. Same rule: unset means no vote.
         if self.min_breadth is not None:
             b = self.breadth_map.get(index)
             if b is None or b <= self.min_breadth:

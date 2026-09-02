@@ -163,27 +163,23 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return False
         rc = cal_range_close[index].rangeDayCloses[1000]
 
-        fired = False
-        if self.percentReinvest is not None:
-            median = rc.pct50(self.use_pe)
-            if median:
-                fired = (current - median) / median * 100 < self.percentReinvest
-        # Second way to satisfy the PRICE test, not a bypass of the guards below.
-        # Both of them answer "should we redeploy at all", which does not depend
-        # on which condition noticed the opportunity.
-        if not fired and self.percentReinvestTop is not None:
-            top = rc.top(self.use_pe)
-            if top:
-                fired = (current - top) / top * 100 <= self.percentReinvestTop
-        # NO PRICE TRIGGER MEANS THE GATE DECIDES, as on the buy and sell arms.
-        # Without it PERCENT_REINVEST = None with a breadth gate on gave an arm
-        # that never redeployed, silently.
-        if (self.percentReinvest is None and self.percentReinvestTop is None
-                and self.max_breadth is not None):
-            fired = True
-
-        if not fired:
-            return False
+        # Same grouping as the sell arm: percentReinvest OR percentReinvestTop,
+        # and a group nobody configured does not get a vote.
+        if self.percentReinvest is not None or self.percentReinvestTop is not None:
+            fired = False
+            if self.percentReinvest is not None:
+                median = rc.pct50(self.use_pe)
+                if median:
+                    fired = (current - median) / median * 100 < self.percentReinvest
+            # Second way to satisfy the PRICE group, not a bypass of the guards
+            # below. Both answer "should we redeploy at all", which does not
+            # depend on which condition noticed the opportunity.
+            if not fired and self.percentReinvestTop is not None:
+                top = rc.top(self.use_pe)
+                if top:
+                    fired = (current - top) / top * 100 <= self.percentReinvestTop
+            if not fired:
+                return False
 
         if self.sell_strategy is not None and self.sell_strategy.check(
                 index, close, pe, cal_range_close):
