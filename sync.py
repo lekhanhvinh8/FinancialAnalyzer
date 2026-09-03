@@ -42,7 +42,8 @@ from syncs.trend_signals import WINDOW_STEP as _TW, STEP_DAYS as _TS, MAX_LOOKBA
 from core.progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
-ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "trend-signals", "zdev", "outputs"}
+ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "trend-signals",
+             "zdev", "breadth", "outputs"}
 
 
 def _all_members() -> list[str]:
@@ -130,6 +131,9 @@ def main():
     if "range-stats"    in steps: p.set_totals("range-stats",    len(stocks) + len(indices))
     if "trend-signals"  in steps: p.set_totals("trend-signals",  len(stocks) + len(indices))
     if "zdev"           in steps: p.set_totals("zdev",           len(stocks) + len(indices))
+    # One unit, not one per symbol: breadth is a statistic OVER the basket, so
+    # there is no per-symbol progress to report.
+    if "breadth"        in steps: p.set_totals("breadth",        1)
     if "outputs"        in steps: p.set_totals("outputs",        len(indices) + len(stocks))
 
     print("Progress: sync_progress.html")
@@ -326,6 +330,24 @@ def main():
                 p.end("zdev", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("zdev", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
+
+    # ── Breadth ───────────────────────────────────────────────────────────────
+    # After every per-symbol step, because a row is a statistic over the whole
+    # basket and reads each symbol's range_stats. Runs once, and skips itself
+    # when no input series changed -- see syncs/breadth.py for why the check is
+    # a fingerprint of the inputs rather than the output's last date.
+    if "breadth" in steps:
+        t0 = time.time()
+        p.begin("breadth", "breadth", "basket")
+        try:
+            from syncs.breadth import sync_breadth
+            r = sync_breadth(override=force)
+            note = (f"{r['rows']:,} rows to {r['last_date']}"
+                    if r["status"] == "rebuilt" else "inputs unchanged")
+            p.end("breadth", "breadth", "basket", time.time() - t0, note=note)
+        except Exception as e:
+            p.end("breadth", "breadth", "basket", time.time() - t0,
+                  status="error", note=str(e)[:100])
 
     # ── Outputs ───────────────────────────────────────────────────────────────
     if "outputs" in steps:

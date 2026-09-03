@@ -1,6 +1,18 @@
 """
 The basket, reduced to one series per day.
 
+WHY THIS IS IN core/ AND NOT IN breadth/
+
+  It computes a number from prices; it decides nothing. Three consumers read it
+  now -- breadth/ trades on it, single/multi_signal/ gates on it, and syncs/
+  keeps it current -- and the data layer is not allowed to import a method, so
+  a calculation that syncs/ must call cannot live inside one.
+
+  range_calc.py and zdev_calc.py moved out of single/ for exactly this reason
+  and the same mistake was repeated here: this file sat in breadth/ while the
+  table it fills went unsynced, because the sync could not legally reach it.
+
+
 THE INVERSION THAT MAKES THIS A DIFFERENT METHOD
 
   portfolio/ treats the other fifty-three symbols as COMPETITORS: they are the
@@ -214,26 +226,68 @@ import numpy as _np
 from pathlib import Path as _Path
 
 
-def cache_path(universe, window: int, slope_window: int) -> _Path:
+def fingerprint(symbols, window: int) -> str:
+    """
+    A hash of every input a breadth run reads: the window, and each symbol's
+    close series.
+
+    ONE RULE FOR TWO CACHES. The database copy and the npz copy go stale for
+    exactly the same reasons, so they ask the same question:
+
+        a series was revised   -> that symbol's hash changes
+        a series grew          -> that symbol's hash changes
+        the universe changed   -> the list of names changes
+
+    Symbols are sorted, so the same universe in a different order hashes the
+    same; each name is hashed with its series, so two symbols swapping histories
+    cannot cancel out.
+    """
+    import hashlib
+    import database as db
+    h = hashlib.sha256()
+    h.update(f"w{window}|".encode())
+    for sym in sorted(symbols):
+        closes = db.load_daily_prices(sym)
+        arr = (closes["close"].to_numpy(dtype=float) if not closes.empty
+               else _np.empty(0))
+        h.update(sym.encode())
+        h.update(hashlib.sha256(arr.tobytes()).digest())
+    return h.hexdigest()
+
+
+def cache_path(base, universe, window: int, slope_window) -> _Path:
+    """
+    Where a run may cache its computed series.
+
+    `base` is the caller's directory, passed in rather than derived from
+    __file__: this module lives in core/ now, and a cache is a convenience of
+    the thing doing the running, not of the calculation.
+    """
     tag = universe if isinstance(universe, str) else "list"
-    return (_Path(__file__).resolve().parent / "cache"
-            / f"breadth_{tag}_{window}_{slope_window}.npz")
+    return _Path(base) / "cache" / f"breadth_{tag}_{window}_{slope_window}.npz"
 
 
-def save(breadth: BreadthSeries, path) -> None:
+def save(breadth: BreadthSeries, path, fp: str = "") -> None:
+    """`fp` is the fingerprint of the inputs, stored so load() can check it."""
     path = _Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     _np.savez_compressed(
         path,
         dates=_np.array([str(d)[:10] for d in breadth.dates]),
         counts=breadth.counts,
+        fingerprint=_np.array([fp]),
         **{f"v_{k}": v for k, v in breadth.values.items()},
     )
 
 
-def load(path):
+def load(path, fp: str = None):
     """
     The cached series, or None if it is not there. Never raises on a miss.
+
+    A STALE CACHE IS A MISS. Pass `fp` (from fingerprint()) and a cache built
+    from different prices is refused. Without that check a run kept using a
+    cache sixteen trading days behind the price table and reported success --
+    the same failure the database copy had, from the same cause.
 
     A CACHE MISSING A SIGNAL IS A MISS, not a partial hit. Adding prem_cap to
     SIGNALS left a cache on disk that predated it, and the run reused that cache,
@@ -253,6 +307,12 @@ def load(path):
     if missing:
         print(f"  [cache] bo qua {path.name}: thieu {', '.join(missing)}")
         return None
+    if fp is not None:
+        stored = str(z["fingerprint"][0]) if "fingerprint" in z.files else ""
+        if stored != fp:
+            why = "khong co van tay" if not stored else "du lieu gia da doi"
+            print(f"  [cache] bo qua {path.name}: {why}")
+            return None
     return BreadthSeries(dates=dates, values=values, counts=z["counts"],
                          row_of={d: i for i, d in enumerate(dates)})
 
@@ -290,8 +350,15 @@ def variant(signal: str) -> str:
     return f"trim{TRIM_LOW}-{TRIM_HIGH}" if signal in _TRIM else "base"
 
 
-def save_to_db(breadth: BreadthSeries, universe: str, window: int) -> dict:
-    """Write each STORED signal under its own variant. Rows written per variant."""
+def save_to_db(breadth: BreadthSeries, universe: str, window: int,
+               override: bool = True) -> dict:
+    """
+    Write each STORED signal under its own variant. Rows written per variant.
+
+    override=False only inserts dates that are not there yet, which is wrong for
+    a rebuild -- a changed input can move any row, not only the new ones -- so
+    the sync passes True explicitly rather than relying on the default.
+    """
     import database as db
     groups = {}
     for name, series in breadth.values.items():
@@ -300,7 +367,8 @@ def save_to_db(breadth: BreadthSeries, universe: str, window: int) -> dict:
         groups.setdefault(variant(name), {})[name] = series
     out = {}
     for v, vals in sorted(groups.items()):
-        r = db.save_breadth(universe, window, v, breadth.dates, vals, breadth.counts)
+        r = db.save_breadth(universe, window, v, breadth.dates, vals,
+                            breadth.counts, override=override)
         out[v] = r
     return out
 

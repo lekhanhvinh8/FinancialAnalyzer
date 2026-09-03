@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 
 import database as db
-from breadth.signals import (BreadthSeries, STORED, load_from_db,
-                             save_to_db, variant)
+from core.breadth_calc import (BreadthSeries, STORED, load_from_db,
+                               save_to_db, variant)
 
 UNI, WIN = "__test__", 7
 

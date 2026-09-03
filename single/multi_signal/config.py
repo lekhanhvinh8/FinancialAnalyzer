@@ -498,7 +498,7 @@ REINVEST_MIN_SIGNAL1    = None
 #
 # Gates on all three arms, read from the breadth_signals table. None switches a
 # gate off, which is the default: config.py alone is the "price" profile.
-# profiles.py turns them on. See breadth/signals.py for how the number is built.
+# profiles.py turns them on. See core/breadth_calc.py for how the number is built.
 #
 # BUY_MAX_BREADTH      buy only while the basket's median_prem is at or below
 # SELL_MIN_BREADTH     sell only when it is above
@@ -514,7 +514,7 @@ REINVEST_MAX_BREADTH = None
 REINVEST_JOIN_OR = False
 
 # Which stored breadth run to read. Must match what breadth/ wrote; see
-# breadth/signals.py::variant.
+# core/breadth_calc.py::variant.
 BREADTH_UNIVERSE = "all"
 BREADTH_WINDOW = 1000
 BREADTH_SIGNAL = "median_prem"

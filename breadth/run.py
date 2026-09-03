@@ -24,8 +24,8 @@ for _s in (sys.stdout, sys.stderr):
 
 from breadth import config
 from breadth.engine import run_backtest
-from breadth.signals import (cache_path, compute, load as load_cache,
-                             save as save_cache, save_to_db)
+from core.breadth_calc import (cache_path, compute, fingerprint,
+                               load as load_cache, save as save_cache)
 from breadth.strategy import build_baseline, build_plan
 from breadth import chart as chartmod
 from breadth import report_html
@@ -66,9 +66,14 @@ def main(argv) -> int:
     # Breadth is a pure function of the market and the two windows, so it caches
     # safely. The load it avoids is eight minutes; the compute it avoids is one
     # second. --fresh forces the long way round.
-    cpath = cache_path(config.UNIVERSE, config.WINDOW,
+    cpath = cache_path(Path(__file__).resolve().parent,
+                       config.UNIVERSE, config.WINDOW,
                        f"{config.SLOPE_WINDOW}sqt")
-    breadth = None if "--fresh" in argv else load_cache(cpath)
+    # The cache is keyed on the prices it was built from, not only on its path:
+    # a run that reuses a cache built before the last price sync is measuring
+    # yesterday's market.
+    fp = fingerprint(universe, config.WINDOW)
+    breadth = None if "--fresh" in argv else load_cache(cpath, fp)
     if breadth is not None:
         print(f"Breadth: {len(breadth)} ngay (cache)")
         market = None
@@ -98,14 +103,16 @@ def main(argv) -> int:
     t1 = time.time()
     breadth = compute(market, config.WINDOW, config.SLOPE_WINDOW)
     print(f"Breadth: {len(breadth)} ngay  ({time.time() - t1:.1f}s)")
-    save_cache(breadth, cpath)
+    save_cache(breadth, cpath, fp)
     print(f"Cache -> {cpath}")
-    info = save_to_db(breadth, config.UNIVERSE, config.WINDOW)
-    # One line per variant: a signal is stored under the parameters it reads,
-    # so a run now writes several groups rather than one batch.
-    for v, r in sorted(info.items()):
-        print(f"DB    -> breadth_signals[{v}]: {r['saved']:,} dong "
-              f"({r['signals']} tin hieu x {r['dates']} ngay)")
+    # DOES NOT WRITE breadth_signals. syncs/breadth.py owns that table, like
+    # every other table in the database. This used to write it, and the write
+    # sat behind the cache check above -- so a cache hit returned early, the run
+    # reported success, and the table silently fell sixteen trading days behind
+    # the prices it is derived from.
+    #
+    # Run `python sync.py --breadth` to refresh it. That step skips itself when
+    # no input series changed, so calling it is cheap.
     prog.end("breadth", f"{len(breadth)} ngay")
     return _report(config, plan, base, breadth, market, prog)
 

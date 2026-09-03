@@ -21,7 +21,7 @@ import numpy as np
 
 from breadth.engine import buy_multiple, run_backtest
 from core.ledger import execute_sell
-from breadth.signals import SIGNALS, BreadthSeries, compute
+from core.breadth_calc import SIGNALS, BreadthSeries, compute
 from breadth.strategy import Plan
 from core.rules import ValueAboveRule, ValueBelowRule
 

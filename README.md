@@ -26,6 +26,7 @@ syncs/               DATA PIPELINE — fills and checks the database
   range_stats.py     rolling window statistics cache
   trend_signals.py   rolling trend classification
   zdev.py            valuation z-scores
+  breadth.py         the whole basket as one row per day (cross-sectional)
   calculate.py       aggregate P/E calculation engine
   migrate.py         schema migrations
   audit_data.py      checks stored data against the source, repairs with --fix
@@ -38,6 +39,7 @@ core/                SHARED — reading the market and moving the money
   data.py            the database into one shape every method reads
   market.py          one calendar across many symbols
   ledger.py          execute_buy / execute_sell / execute_reinvest, written once
+  breadth_calc.py    the basket reduced to one number a day (used by syncs/breadth.py)
   range_calc.py      rolling statistics builder (used by syncs/range_stats.py)
   zdev_calc.py       z_dev builder (used by syncs/zdev.py)
   rules.py           who is eligible today (used by portfolio/)
@@ -54,7 +56,6 @@ single/              METHOD 1 — one wallet per symbol
   ma1000/            the plain moving-average variant
 
 breadth/             METHOD 3 — trade VN30 on what the whole basket is doing
-  signals.py         the basket reduced to one number per day, stored in the DB
   strategy.py        the three arms as breadth conditions
   engine.py          the daily loop (money from core.ledger)
 

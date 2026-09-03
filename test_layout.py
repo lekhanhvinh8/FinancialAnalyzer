@@ -33,6 +33,29 @@ SINGLE_SHARED = {"engine", "models", "runner", "sweep", "strategies"}
 LEDGER = {"execute_buy", "execute_sell", "execute_reinvest", "CASH_EPSILON"}
 
 
+def imported_packages(src: str) -> set:
+    """
+    Top-level packages a module actually imports.
+
+    PARSED, NOT GREPPED. These rules used to be substring checks, and a comment
+    reading "kept here rather than imported from breadth/config.py" failed the
+    "syncs must not import a method" rule. A test that a comment can break
+    teaches you to reword comments, which is the opposite of what it is for.
+    """
+    import ast
+    try:
+        tree = ast.parse(src)
+    except SyntaxError:
+        return set()
+    out = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            out.update(a.name.split(".")[0] for a in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            out.add(node.module.split(".")[0])
+    return out
+
+
 def main() -> int:
     fails = []
 
@@ -83,13 +106,12 @@ def main() -> int:
     for m in METHODS:
         d = ROOT / Path(m.replace(".", "/"))
         for f in d.glob("*.py"):
-            src = f.read_text(encoding="utf-8")
+            pkgs = imported_packages(f.read_text(encoding="utf-8"))
             for other in METHODS:
-                if other == m or (m, other) in ALLOWED:
-                    continue
                 top = other.split(".")[0]
-                needle = f"from {other}" if "." in other else f"from {top} import"
-                check(needle not in src,
+                if top == m.split(".")[0] or (m, other) in ALLOWED:
+                    continue
+                check(top not in pkgs,
                       f"{f.relative_to(ROOT)} import {other} "
                       f"-> hai phuong phap khong duoc phu thuoc nhau")
 
@@ -107,21 +129,18 @@ def main() -> int:
     # revealed a second such edge, core.range_calc needing single.models.
     ABOVE = ("single", "syncs", "export", "portfolio", "breadth")
     for f in (ROOT / CORE).glob("*.py"):
-        src = f.read_text(encoding="utf-8")
+        pkgs = imported_packages(f.read_text(encoding="utf-8"))
         for pkg in ABOVE:
-            for form in ("import " + pkg + chr(10), "from " + pkg + " import",
-                         "from " + pkg + "."):
-                check(form not in src,
-                      f"core/{f.name} import {pkg} -> core la tang duoi cung")
+            check(pkg not in pkgs,
+                  f"core/{f.name} import {pkg} -> core la tang duoi cung")
 
     # ── syncs does not import a method ──────────────────────────────────────
     for f in (ROOT / "syncs").rglob("*.py"):
         if "__pycache__" in str(f):
             continue
-        src = f.read_text(encoding="utf-8")
-        for pkg in ("portfolio", "breadth"):
-            check(f"from {pkg}" not in src
-                  and ("import " + pkg + chr(10)) not in src,
+        pkgs = imported_packages(f.read_text(encoding="utf-8"))
+        for pkg in ("portfolio", "breadth", "single"):
+            check(pkg not in pkgs,
                   f"{f.relative_to(ROOT)} import {pkg} -> tang du lieu khong "
                   f"duoc phu thuoc chien luoc")
 

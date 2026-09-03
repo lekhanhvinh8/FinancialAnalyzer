@@ -10,7 +10,7 @@ DATE and handed over as {row_index: value}. That join is all this module does.
 import pandas as pd
 
 import database as db
-from breadth.signals import variant as breadth_variant
+from core.breadth_calc import variant as breadth_variant
 
 from . import config
 
