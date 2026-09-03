@@ -158,46 +158,40 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return False
         rc = cal_range_close[index].rangeDayCloses[1000]
 
-        # PRICE OR BASKET, not price AND basket. The two say different things
-        # about the same question -- is this a moment to put the reserve back to
-        # work -- and requiring both means the reserve waits for this symbol to
-        # be cheap AND the whole market to be cheap at the same time, which on
-        # eleven years of data happens a handful of times. The timeout valve
-        # existed to paper over exactly that.
+        # EVERY CONDITION IS AN AND-GATE, as on the sell arm, and one left at
+        # None does not get a vote. percentReinvestTop used to be OR'd with
+        # percentReinvest, which made these two the only pair in the project
+        # joined differently from everything around them.
         #
-        # Only the two SOURCES are OR'd. Inside the price source the two
-        # thresholds stay AND'd, as on the sell arm; and everything after this
-        # block (the churn guard, the momentum gate) still applies to whichever
-        # source fired, because those answer "should we act at all".
+        # Stricter than the OR it replaces: with both set the price now has to be
+        # below the median AND near the top's floor, where before either
+        # sufficed. Behaviour is unchanged while PERCENT_REINVEST_TOP is None,
+        # which is how it ships.
+        if self.percentReinvest is not None:
+            median = rc.pct50(self.use_pe)
+            # No usable median is not a reason to redeploy, as before.
+            if not median:
+                return False
+            if (current - median) / median * 100 >= self.percentReinvest:
+                return False
+        # Distance from the window's HIGH rather than from its middle.
+        if self.percentReinvestTop is not None:
+            top = rc.top(self.use_pe)
+            if not top:
+                return False
+            if (current - top) / top * 100 > self.percentReinvestTop:
+                return False
+
+        # The basket has to agree too. A market reading we do not have is not a
+        # reason to act, so an absent value leaves the gate shut.
         #
-        # A source nobody configured has no vote and cannot satisfy the OR --
-        # otherwise switching a source off would make the arm fire on every bar.
-        price_on = (self.percentReinvest is not None
-                    or self.percentReinvestTop is not None)
-        breadth_on = self.max_breadth is not None
-
-        price_ok = False
-        if price_on:
-            price_ok = True
-            if self.percentReinvest is not None:
-                median = rc.pct50(self.use_pe)
-                # No usable median is not a reason to redeploy, as before.
-                if not median or (current - median) / median * 100 >= self.percentReinvest:
-                    price_ok = False
-            # Distance from the window's HIGH rather than from its middle.
-            if price_ok and self.percentReinvestTop is not None:
-                top = rc.top(self.use_pe)
-                if not top or (current - top) / top * 100 > self.percentReinvestTop:
-                    price_ok = False
-
-        breadth_ok = False
-        if breadth_on:
+        # Placed after the price conditions and before the filters, as on the
+        # sell arm. Every condition here is AND'd, so the order cannot change an
+        # outcome — it is for the reader.
+        if self.max_breadth is not None:
             b = self.breadth_map.get(index)
-            # A market reading we do not have is not a reason to act.
-            breadth_ok = b is not None and b <= self.max_breadth
-
-        if not (price_ok or breadth_ok):
-            return False
+            if b is None or b > self.max_breadth:
+                return False
 
         if self.sell_strategy is not None and self.sell_strategy.check(
                 index, close, pe, cal_range_close):
