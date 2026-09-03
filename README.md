@@ -34,47 +34,71 @@ syncs/               DATA PIPELINE — fills and checks the database
   collectors/        first-time bulk collection
   probes/            one-off source investigation scripts
 
+core/                SHARED — reading the market and moving the money
+  data.py            the database into one shape every method reads
+  market.py          one calendar across many symbols
+  ledger.py          execute_buy / execute_sell / execute_reinvest, written once
+  range_calc.py      rolling statistics builder (used by syncs/range_stats.py)
+  zdev_calc.py       z_dev builder (used by syncs/zdev.py)
+  rules.py           who is eligible today (used by portfolio/)
+  scoring.py         in what order they deserve the money
+  models.py          window_stats.py  universe.py  progress.py
+
 single/              METHOD 1 — one wallet per symbol
   engine.py          the per-symbol backtest loop
   models.py          InvestmentTracker and friends
   strategies/        buy / sell / reinvest conditions
-  median1000/        the tuned configuration, its runners and ~20 sweeps
-  range_calc.py      rolling statistics builder (used by syncs/range_stats.py)
-  zdev_calc.py       z_dev builder (used by syncs/zdev.py)
+  runner.py sweep.py shared by the methods below
+  multi_signal/      the tuned configuration, its runners and ~20 sweeps
+                     CONCLUSIONS.md — which profile won, and what it is not
+  ma1000/            the plain moving-average variant
+
+breadth/             METHOD 3 — trade VN30 on what the whole basket is doing
+  signals.py         the basket reduced to one number per day, stored in the DB
+  strategy.py        the three arms as breadth conditions
+  engine.py          the daily loop (money from core.ledger)
 
 portfolio/           METHOD 2 — one wallet, the whole basket
-  rules.py           who is eligible today
-  scoring.py         in what order they deserve the money
-  allocator.py       how much each one gets
+  allocator.py       how much each eligible symbol gets
   strategy.py        Plan — the three arms plus the allocator
   engine.py          the daily loop over a shared calendar
-  market.py          one calendar across many symbols
-  data.py            reads the database into this package's own shapes
+  report.py          report_html.py  symbol_chart.py  overlay_chart.py
   run.py             CLI
+  CONCLUSIONS.md     where this strand stopped, and why
 ```
 
-### How the two methods relate
+### How the three methods relate
 
 `single/` asks "does this rule beat buy-and-hold on FPT", once per symbol, with a
 separate wallet each time. `portfolio/` asks "given one monthly contribution and
 the whole basket to choose from, where should it go" — which is not a loop over
 the first question, because the money is shared and the symbols compete for it.
+`breadth/` asks a third: reduce the whole basket to one number per day and trade
+VN30 on it.
 
-They share the database and nothing else. `portfolio/` imports nothing from
-`single/`, so an experiment in one cannot move a result in the other.
+No method imports another. The one deliberate exception is named in
+`test_layout.py`: `single/multi_signal/` reads the stored breadth signal, and
+borrows `breadth.chart.add_signal_line` to draw it. Everything shared lives in
+`core/` — reading the market, and the three functions that move money.
 
-One coupling runs the other way and is worth knowing about: `syncs/range_stats.py`
-and `syncs/zdev.py` import their maths from `single/range_calc.py` and
-`single/zdev_calc.py`. Those two modules are data computation rather than
-strategy and belong in `syncs/`; `range_calc.py` cannot move yet because it
-returns objects defined in `single/models.py`.
+`test_layout.py` asserts that shape rather than describing it, because layout
+rules rot silently: a module in the wrong package still imports and still runs.
+
+### Which configuration won
+
+`single/multi_signal/CONCLUSIONS.md`. Short version, 52 symbols against DCA: the
+basket profile beats the per-symbol price profile, +92.33 against +46.75 on
+average and +12.78 on the paired median (32/52, p = 0.063). That document also
+records what the advantage is *not*, which took more work than finding it.
 
 ### Running a backtest
 
 ```bash
-python single/median1000/run_one.py FPT      # one symbol, one wallet
-python single/median1000/run_all.py          # every symbol, a wallet each
-python -m portfolio.run                      # one wallet, the whole basket
+python -m single.multi_signal.run_one FPT              # one symbol, one wallet
+python -m single.multi_signal.run_all --all           # every symbol, price profile
+python -m single.multi_signal.run_all --all --profile=breadth   # the winner
+python -m breadth.run                                 # VN30 on the basket signal
+python -m portfolio.run                               # one wallet, whole basket
 python -m portfolio.run --top-k=5
 ```
 
