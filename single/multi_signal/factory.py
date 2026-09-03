@@ -193,6 +193,7 @@ def make_median_strategies(signal3_map: dict | None = None,
         reinvest = ReInvestMedian1000Strategy(
             breadth_map=breadth_map or {},
             max_breadth=ri_breadth,
+            join_or=bool(getattr(config, 'REINVEST_JOIN_OR', False)),
             percentReinvest=pct_ri, percentReinvestTop=pct_ri_top,
             use_pe=config.USE_PE,
             timeoutDays=(config.REINVEST_TIMEOUT_DAYS

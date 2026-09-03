@@ -507,6 +507,12 @@ BUY_MAX_BREADTH = None
 SELL_MIN_BREADTH = None
 REINVEST_MAX_BREADTH = None
 
+# Reinvest: join the price source and the basket source with OR instead of AND.
+# Measured and rejected (see the class comment); kept switchable because the
+# result -- that AND is doing the work of a rate limiter -- is worth being able
+# to re-test rather than take on faith.
+REINVEST_JOIN_OR = False
+
 # Which stored breadth run to read. Must match what breadth/ wrote; see
 # breadth/signals.py::variant.
 BREADTH_UNIVERSE = "all"

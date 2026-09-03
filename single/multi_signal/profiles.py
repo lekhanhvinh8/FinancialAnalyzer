@@ -70,6 +70,16 @@ PROFILES = {
         "SELL_SIGNAL1_WINDOW": 120,
     },
 
+    # "both", with the reinvest arm's two sources OR'd instead of AND'd.
+    # Measured and rejected; kept so the comparison can be re-run in one command
+    # instead of by editing a strategy class twice.
+    "both_or": {
+        "BUY_MAX_BREADTH": 60.0,
+        "SELL_MIN_BREADTH": 70.0,
+        "REINVEST_MAX_BREADTH": 10.0,
+        "REINVEST_JOIN_OR": True,
+    },
+
     # DIAGNOSTIC, not a strategy. "price" carries four gates that "breadth"
     # switches off, so comparing the two measures the gates and the signal at
     # once. This is "price" with the same gates off, which isolates the signal.

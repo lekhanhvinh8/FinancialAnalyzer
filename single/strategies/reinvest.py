@@ -126,6 +126,13 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     # it off. Same shape as the other gates on this class.
     breadth_map: dict = field(default_factory=dict)
     max_breadth: float = None
+    # HOW THE PRICE SOURCE AND THE BASKET SOURCE JOIN. False (AND) is what
+    # ships. True was measured on 52 symbols and lost: it took reinvests from
+    # 204 to 526 and cost 18.6 mean / 4.9 median against the breadth profile
+    # (19/52, p=0.98). It is a switch rather than a deleted branch because AND
+    # turned out to work as a RATE LIMITER, not just as a condition, and that is
+    # a claim a later reader should be able to re-measure instead of trust.
+    join_or: bool = False
 
     def considerReinvest(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalReserveFinal <= 0:
@@ -158,39 +165,38 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
             return False
         rc = cal_range_close[index].rangeDayCloses[1000]
 
-        # EVERY CONDITION IS AN AND-GATE, as on the sell arm, and one left at
-        # None does not get a vote. percentReinvestTop used to be OR'd with
-        # percentReinvest, which made these two the only pair in the project
-        # joined differently from everything around them.
-        #
-        # Stricter than the OR it replaces: with both set the price now has to be
-        # below the median AND near the top's floor, where before either
-        # sufficed. Behaviour is unchanged while PERCENT_REINVEST_TOP is None,
-        # which is how it ships.
+        # Two SOURCES: the symbol's own price, and the basket. Inside the price
+        # source its two thresholds are always AND'd; join_or decides only how
+        # the two sources meet. A source left unconfigured has no vote either
+        # way -- under OR it must not be able to satisfy the arm, or switching a
+        # source off would make it fire on every bar.
+        price_on = (self.percentReinvest is not None
+                    or self.percentReinvestTop is not None)
+        breadth_on = self.max_breadth is not None
+
+        price_ok = price_on
         if self.percentReinvest is not None:
             median = rc.pct50(self.use_pe)
-            # No usable median is not a reason to redeploy, as before.
-            if not median:
-                return False
-            if (current - median) / median * 100 >= self.percentReinvest:
-                return False
+            # No usable median is not a reason to redeploy.
+            if not median or (current - median) / median * 100 >= self.percentReinvest:
+                price_ok = False
         # Distance from the window's HIGH rather than from its middle.
-        if self.percentReinvestTop is not None:
+        if price_ok and self.percentReinvestTop is not None:
             top = rc.top(self.use_pe)
-            if not top:
-                return False
-            if (current - top) / top * 100 > self.percentReinvestTop:
-                return False
+            if not top or (current - top) / top * 100 > self.percentReinvestTop:
+                price_ok = False
 
-        # The basket has to agree too. A market reading we do not have is not a
-        # reason to act, so an absent value leaves the gate shut.
-        #
-        # Placed after the price conditions and before the filters, as on the
-        # sell arm. Every condition here is AND'd, so the order cannot change an
-        # outcome — it is for the reader.
-        if self.max_breadth is not None:
+        breadth_ok = breadth_on
+        if breadth_on:
             b = self.breadth_map.get(index)
-            if b is None or b > self.max_breadth:
+            # A market reading we do not have is not a reason to act.
+            breadth_ok = b is not None and b <= self.max_breadth
+
+        if self.join_or:
+            if not (price_ok or breadth_ok):
+                return False
+        else:
+            if (price_on and not price_ok) or (breadth_on and not breadth_ok):
                 return False
 
         if self.sell_strategy is not None and self.sell_strategy.check(
