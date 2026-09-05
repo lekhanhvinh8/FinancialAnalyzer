@@ -437,14 +437,21 @@ def build_report(rows: list[dict], out_path: Path,
     # from one a profile wrote over it -- and BREADTH_SIGNAL reads "median_prem"
     # on a price run that never touches the basket, which looks like the basket
     # is involved.
-    profile = getattr(config, "PROFILE", None) or "price"
-    try:
-        from single.multi_signal.profiles import PROFILES
-        overridden = set(PROFILES.get(profile, {}))
-    except Exception:
-        overridden = set()
+    # No PROFILE attribute means no overlay was applied, which is its own case --
+    # not the "price" profile. Defaulting to "price" here printed that name on a
+    # run that had applied nothing, which is exactly the confusion this panel was
+    # added to remove.
+    profile = getattr(config, "PROFILE", None)
+    overridden = set()
+    if profile:
+        try:
+            from single.multi_signal.profiles import PROFILES
+            overridden = set(PROFILES.get(profile, {}))
+        except Exception:
+            overridden = set()
+    profile_label = profile or "(mac dinh)"
     profile_note = (
-        "mac dinh — config.py nguyen van" if not overridden else
+        "config.py nguyen van, khong ghi de gi" if not overridden else
         f"ghi de {len(overridden)} gia tri, danh dau ben duoi")
 
     cfg_cells = "".join(
@@ -459,7 +466,7 @@ def build_report(rows: list[dict], out_path: Path,
         "border:1px solid #1e293b;border-radius:8px;font-size:12px'>"
         "<div style='color:#94a3b8;font-weight:700;margin-bottom:6px'>"
         "Configuration used for this run &nbsp;"
-        f"<span style='color:#f59e0b'>profile = {profile}</span> "
+        f"<span style='color:#f59e0b'>profile = {profile_label}</span> "
         f"<span style='color:#64748b;font-weight:400'>({profile_note})</span></div>"
         "<div style='display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));"
         f"gap:2px 18px'>{cfg_cells}</div></div>"
