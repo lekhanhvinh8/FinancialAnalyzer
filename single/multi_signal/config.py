@@ -497,14 +497,28 @@ REINVEST_MIN_SIGNAL1    = None
 # ── The basket, as a signal source ────────────────────────────────────────────
 #
 # Gates on all three arms, read from the breadth_signals table. None switches a
-# gate off, which is the default: config.py alone is the "price" profile.
-# profiles.py turns them on. See core/breadth_calc.py for how the number is built.
+# gate off. See core/breadth_calc.py for how the number is built.
 #
-# BUY_MAX_BREADTH      buy only while the basket's median_prem is at or below
+# BUY_MAX_BREADTH      buy only while the basket's BREADTH_SIGNAL is at or below
 # SELL_MIN_BREADTH     sell only when it is above
 # REINVEST_MAX_BREADTH put the reserve back only when it is at or below
+#
+# THE SELL GATE IS ON BY DEFAULT and the other two are not. That is a deliberate
+# asymmetry, and the sweeps are what chose it: the sell gate is worth +108
+# (turning it off takes the breadth profile from +117.7 to +9.0), while the buy
+# gate is worth +1.1 and shows no structure at all across its whole grid --
+# from 55 to off, the mean sits in a three-point band. So the arm the basket
+# helps is the one that sells, and the ones it does not help stay on price.
+#
+# 70 sits inside a flat 70-90 plateau on median_prem. Everything above 90 scored
+# better on this history by catching two dates, one of which is the single bar
+# 2022-04-06, and is a fit to those dates rather than a setting.
+#
+# NOTE THIS CHANGES WHAT config.py ALONE MEANS. It used to be the "price"
+# profile by definition; that profile now pins SELL_MIN_BREADTH back to None so
+# the measurements in CONCLUSIONS.md stay reproducible.
 BUY_MAX_BREADTH = None
-SELL_MIN_BREADTH = None
+SELL_MIN_BREADTH = 70.0
 REINVEST_MAX_BREADTH = None
 
 # Reinvest: join the price source and the basket source with OR instead of AND.

@@ -46,7 +46,12 @@ Apply with `--profile=NAME` on run_all, or `apply(config, "breadth")`.
 
 PROFILES = {
     "price": {
-        # Nothing overridden: config.py as it stands is this profile.
+        # The symbol's own price and nothing else. This used to be an empty
+        # overlay, because config.py held no breadth gate; the shipped config
+        # now switches the SELL one on, so "price" has to pin it back off or
+        # every figure in CONCLUSIONS.md measured under this name would quietly
+        # stop being reproducible.
+        "SELL_MIN_BREADTH": None,
     },
 
     "breadth": {

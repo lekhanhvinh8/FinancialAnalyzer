@@ -131,7 +131,7 @@ from single.multi_signal.factory import (make_median_strategies,
 CHARTS_DIR = Path(__file__).parent / "charts"
 
 
-def process_symbol(symbol: str, run_dir: Path | None = None, profile: str = "price",
+def process_symbol(symbol: str, run_dir: Path | None = None, profile: str | None = None,
                    signal: str | None = None
                    ) -> tuple[str, dict | None, str | None, float]:
     """
@@ -149,7 +149,12 @@ def process_symbol(symbol: str, run_dir: Path | None = None, profile: str = "pri
     # breadth profile ran and produced the price profile's numbers until this
     # line existed.
     from single.multi_signal.profiles import apply as _apply
-    _apply(config, profile)
+    # None means NO OVERLAY: config.py exactly as written. It used to default to
+    # "price", and once "price" started pinning SELL_MIN_BREADTH back to None,
+    # a no-argument run silently undid the very setting config.py had just
+    # switched on -- 52 symbols, zero difference, no warning.
+    if profile:
+        _apply(config, profile)
     # Which breadth line to read, as an ARGUMENT rather than a config edit.
     # Comparing the three lines meant editing config.py between runs, which makes
     # them impossible to run at the same time -- the workers re-import the module
@@ -1222,12 +1227,15 @@ if __name__ == "__main__":
     # Applied before anything reads config: factory.py and the report both read
     # the module directly, so the overlay has to be in place first.
     profile = next((f.split("=", 1)[1] for f in flags
-                    if f.startswith("--profile=")), "price")
+                    if f.startswith("--profile=")), None)
     from single.multi_signal.profiles import apply as apply_profile
-    changed = apply_profile(config, profile)
-    if changed:
-        print(f"Profile   -> {profile}: "
-              + ", ".join(f"{k}={new}" for k, (_old, new) in sorted(changed.items())))
+    if profile:
+        changed = apply_profile(config, profile)
+        print(f"Profile   -> {profile}"
+              + (": " + ", ".join(f"{k}={new}" for k, (_old, new) in sorted(changed.items()))
+                 if changed else ""))
+    else:
+        print("Profile   -> (mac dinh) config.py nguyen van")
     signal = next((f.split("=", 1)[1] for f in flags
                    if f.startswith("--signal=")), None)
     if signal:
