@@ -425,17 +425,37 @@ def build_report(rows: list[dict], out_path: Path,
     # than listed so a parameter added later cannot silently go unreported — the
     # whole point is that a saved report says what produced it.
     cfg = {k: getattr(config, k) for k in dir(config)
-           if k.isupper() and not k.startswith("_")}
+           if k.isupper() and not k.startswith("_") and k != "PROFILE"}
+
+    # WHICH PROFILE, AND WHICH VALUES IT REPLACED. The panel used to show final
+    # values only, so a reader could not tell a number that came from config.py
+    # from one a profile wrote over it -- and BREADTH_SIGNAL reads "median_prem"
+    # on a price run that never touches the basket, which looks like the basket
+    # is involved.
+    profile = getattr(config, "PROFILE", None) or "price"
+    try:
+        from single.multi_signal.profiles import PROFILES
+        overridden = set(PROFILES.get(profile, {}))
+    except Exception:
+        overridden = set()
+    profile_note = (
+        "mac dinh — config.py nguyen van" if not overridden else
+        f"ghi de {len(overridden)} gia tri, danh dau ben duoi")
+
     cfg_cells = "".join(
-        f"<div><span style='color:#64748b'>{k}</span> "
-        f"<span style='color:#e2e8f0;font-weight:600'>{v}</span></div>"
+        f"<div><span style='color:{'#f59e0b' if k in overridden else '#64748b'}'>{k}"
+        f"{' *' if k in overridden else ''}</span> "
+        f"<span style='color:{'#fbbf24' if k in overridden else '#e2e8f0'};"
+        f"font-weight:600'>{v}</span></div>"
         for k, v in sorted(cfg.items())
     )
     config_html = (
         "<div style='margin:10px 0;padding:10px 14px;background:#0f172a;"
         "border:1px solid #1e293b;border-radius:8px;font-size:12px'>"
         "<div style='color:#94a3b8;font-weight:700;margin-bottom:6px'>"
-        "Configuration used for this run</div>"
+        "Configuration used for this run &nbsp;"
+        f"<span style='color:#f59e0b'>profile = {profile}</span> "
+        f"<span style='color:#64748b;font-weight:400'>({profile_note})</span></div>"
         "<div style='display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));"
         f"gap:2px 18px'>{cfg_cells}</div></div>"
     )
