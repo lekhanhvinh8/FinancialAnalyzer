@@ -45,7 +45,7 @@ BUY_MEDIAN_WINDOW = 1000
 # alone at w=1000 it was the best of 19 settings on both mean and vote; swept
 # again as part of the 2D window x threshold grid, every one of the top ten cells
 # is the column 60 sits in. See sweep_buy_window.py.
-PERCENT_BUY      = 60
+PERCENT_BUY      = None
 
 # SellMedian1000: which median the sell arm measures the price against. The
 # reinvest arm is still fixed at 1000 and does not follow this — which is also
@@ -162,7 +162,7 @@ PERCENT_SELL_BOTTOM = None
 # better: at reinvest=60, 15 symbols improve and 34 decline, paired median -4.85.
 # The band is protecting the portfolio. What it costs is FPT and GMD, which gain
 # +91 and +428 there and are the two worst long-history losses today.
-PERCENT_REINVEST = 10
+PERCENT_REINVEST = None
 
 # ReInvestMedian1000: a SECOND price condition, AND'd with PERCENT_REINVEST —
 # redeploy once the price has fallen this far from the 1000-bar HIGH as well as
@@ -503,23 +503,28 @@ REINVEST_MIN_SIGNAL1    = None
 # SELL_MIN_BREADTH     sell only when it is above
 # REINVEST_MAX_BREADTH put the reserve back only when it is at or below
 #
-# THE SELL GATE IS ON BY DEFAULT and the other two are not. That is a deliberate
-# asymmetry, and the sweeps are what chose it: the sell gate is worth +108
-# (turning it off takes the breadth profile from +117.7 to +9.0), while the buy
-# gate is worth +1.1 and shows no structure at all across its whole grid --
-# from 55 to off, the mean sits in a three-point band. So the arm the basket
-# helps is the one that sells, and the ones it does not help stay on price.
+# ALL THREE ARE ON. The buy and reinvest arms run on the basket ALONE --
+# PERCENT_BUY and PERCENT_REINVEST are None, so those arms have no price
+# condition left and the gate below is their whole test. That is the "breadth"
+# profile for those two arms.
 #
-# 70 sits inside a flat 70-90 plateau on median_prem. Everything above 90 scored
-# better on this history by catching two dates, one of which is the single bar
+# THE SELL ARM IS THE EXCEPTION and keeps both: the symbol's own price above its
+# median by PERCENT_SELL, AND the basket above SELL_MIN_BREADTH, AND the signal1
+# and signal3 gates. It is the arm the sweeps found the basket helps most (+108,
+# against +1.1 on the buy arm), and the one place where asking the symbol as
+# well is worth the extra condition.
+#
+# 70 sits inside a flat 70-90 plateau on median_prem; everything above 90 scored
+# better on this history by catching two dates, one of them the single bar
 # 2022-04-06, and is a fit to those dates rather than a setting.
 #
 # NOTE THIS CHANGES WHAT config.py ALONE MEANS. It used to be the "price"
-# profile by definition; that profile now pins SELL_MIN_BREADTH back to None so
-# the measurements in CONCLUSIONS.md stay reproducible.
-BUY_MAX_BREADTH = None
+# profile by definition; that profile now spells out the whole price
+# configuration so the measurements in CONCLUSIONS.md stay reproducible under
+# that name whatever the shipped default becomes.
+BUY_MAX_BREADTH = 60.0
 SELL_MIN_BREADTH = 70.0
-REINVEST_MAX_BREADTH = None
+REINVEST_MAX_BREADTH = 10.0
 
 # Reinvest: join the price source and the basket source with OR instead of AND.
 # Measured and rejected (see the class comment); kept switchable because the

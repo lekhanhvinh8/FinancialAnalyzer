@@ -46,12 +46,19 @@ Apply with `--profile=NAME` on run_all, or `apply(config, "breadth")`.
 
 PROFILES = {
     "price": {
-        # The symbol's own price and nothing else. This used to be an empty
-        # overlay, because config.py held no breadth gate; the shipped config
-        # now switches the SELL one on, so "price" has to pin it back off or
-        # every figure in CONCLUSIONS.md measured under this name would quietly
-        # stop being reproducible.
+        # The symbol's own price and nothing else.
+        #
+        # SPELLED OUT RATHER THAN LEFT EMPTY. It began as an empty overlay
+        # meaning "config.py as it stands", which worked only while the shipped
+        # config happened to be this. It no longer is -- the default runs the
+        # buy and reinvest arms on the basket -- and an empty overlay would have
+        # made every figure recorded under this name unreproducible without
+        # anything failing. A named baseline states its own values.
+        "PERCENT_BUY": 60,
+        "PERCENT_REINVEST": 10,
+        "BUY_MAX_BREADTH": None,
         "SELL_MIN_BREADTH": None,
+        "REINVEST_MAX_BREADTH": None,
     },
 
     "breadth": {
@@ -79,6 +86,9 @@ PROFILES = {
     # Measured and rejected; kept so the comparison can be re-run in one command
     # instead of by editing a strategy class twice.
     "both_or": {
+        "PERCENT_BUY": 60,
+        "PERCENT_SELL": 75,
+        "PERCENT_REINVEST": 10,
         "BUY_MAX_BREADTH": 60.0,
         "SELL_MIN_BREADTH": 70.0,
         "REINVEST_MAX_BREADTH": 10.0,
@@ -89,12 +99,27 @@ PROFILES = {
     # switches off, so comparing the two measures the gates and the signal at
     # once. This is "price" with the same gates off, which isolates the signal.
     "price_nogates": {
+        # PRICE plus the three gates off, so it carries price's values too:
+        # inheriting them made this "the default with three gates off", a
+        # different experiment under the same name.
+        "PERCENT_BUY": 60,
+        "PERCENT_REINVEST": 10,
+        "BUY_MAX_BREADTH": None,
+        "SELL_MIN_BREADTH": None,
+        "REINVEST_MAX_BREADTH": None,
         "MIN_SIGNAL3": None,
         "SELL_MIN_ZDEV": None,
         "SELL_MIN_PELOG": None,
     },
 
+    # Both sources on every arm. The price half is spelled out for the same
+    # reason "price" is: inheriting it from config.py made this profile an exact
+    # copy of the default the moment the default's buy and reinvest arms moved
+    # to the basket -- two names, one configuration, and nothing said so.
     "both": {
+        "PERCENT_BUY": 60,
+        "PERCENT_SELL": 75,
+        "PERCENT_REINVEST": 10,
         "BUY_MAX_BREADTH": 60.0,
         "SELL_MIN_BREADTH": 70.0,
         "REINVEST_MAX_BREADTH": 10.0,
