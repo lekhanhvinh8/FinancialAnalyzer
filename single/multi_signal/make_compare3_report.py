@@ -1,19 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Three-way comparison report: price, breadth, hybrid.
-
-Reads data3.json -- per-symbol results from three run_all reports, the replayed
-trade lists (replay_trades.py) and weekly price series -- and writes
-SO_SANH_3_cau_hinh.html beside this file.
-
-WHY THE MARKERS SIT IN THREE ROWS rather than on the price line. Drawn on the
-line, the three colours overlap exactly on the dates worth looking at, which are
-the dates the whole report is about. On separate rows the reader compares by
-COLUMN: a column with three marks is where all three agree, a gap in one row is
-where that configuration passed.
-
-Triangle = sell, diamond = reinvest, one colour per configuration.
-"""
+"""Bao cao so sanh ba cau hinh: price, breadth, hybrid."""
 import json
 import statistics as st
 from math import comb
@@ -131,20 +117,46 @@ for r in cases_order:
         "{sp2}{tl}</div>".format(sym=sym, dca=r["dca"], cells=cells,
                                  sp=r["spread"], sp2=spark(sym), tl=trade_lines(sym)))
 
+for r in rows:
+    r["hb"] = round(r["hybrid"] - r["breadth"], 1)
+
+# data-v tren moi o: gia tri THO de JS sap xep. Sap xep theo text hien thi se
+# hong ngay o cot dau tien -- "1,146.2" dung truoc "364.0" theo thu tu chuoi.
 TABLE = ""
 for r in rows:
     best = max(PROFS, key=lambda p: r[p[1]])[1]
     tds = ""
     for lab, key, col in PROFS:
         w = "font-weight:700;color:%s" % col if key == best else "color:#e2e8f0"
-        tds += "<td class=n style='%s'>%s</td>" % (w, "{:,.1f}".format(r[key]))
-    TABLE += ("<tr><td><b>{s}</b></td><td class=n>{dca:,.1f}</td>{tds}"
-              "<td class=n style='color:#94a3b8'>{sp:,.1f}</td>"
-              "<td class=s>{a}</td><td class=s>{b}</td><td class=s>{c}</td></tr>"
+        tds += ("<td class=n data-v='%s' style='%s'>%s</td>"
+                % (r[key], w, "{:,.1f}".format(r[key])))
+    hb = r["hb"]
+    hbc = "#4ade80" if hb > 50 else "#f87171" if hb < -50 else "#94a3b8"
+    hbw = "font-weight:700" if abs(hb) > 50 else ""
+    TABLE += ("<tr><td data-v='{s}'><b>{s}</b></td>"
+              "<td class=n data-v='{dca}'>{dca:,.1f}</td>{tds}"
+              "<td class=n data-v='{hb}' style='color:{hbc};{hbw}'>{hb:+,.1f}</td>"
+              "<td class=n data-v='{sp}' style='color:#94a3b8'>{sp:,.1f}</td>"
+              "<td class=s data-v='{ps}'>{a}</td><td class=s data-v='{bs}'>{b}</td>"
+              "<td class=s data-v='{hs}'>{c}</td></tr>"
               .format(s=r["sym"], dca=r["dca"], tds=tds, sp=r["spread"],
+                      hb=hb, hbc=hbc, hbw=hbw,
+                      ps=r["price_s"], bs=r["breadth_s"], hs=r["hybrid_s"],
                       a="%d/%d/%d" % (r["price_b"], r["price_s"], r["price_r"]),
                       b="%d/%d/%d" % (r["breadth_b"], r["breadth_s"], r["breadth_r"]),
                       c="%d/%d/%d" % (r["hybrid_b"], r["hybrid_s"], r["hybrid_r"])))
+
+hbs = sorted(((r["hb"], r["sym"]) for r in rows), reverse=True)
+HB_BIG = [(v, sy) for v, sy in hbs if abs(v) > 50]
+hb_same = sum(1 for v, _ in hbs if abs(v) <= 1e-9)
+hb_mid = sum(1 for v, _ in hbs if 10 < abs(v) <= 50)
+hb_pos = sum(v for v, _ in hbs if v > 0)
+hb_neg = sum(v for v, _ in hbs if v < 0)
+hb_absmean = st.mean(abs(v) for v, _ in hbs)
+hb_absmed = st.median(abs(v) for v, _ in hbs)
+HB_ROWS = "".join(
+    "<tr><td><b>{sy}</b></td><td class=n style='color:{c}'>{v:+,.0f}</td></tr>"
+    .format(sy=sy, v=v, c="#4ade80" if v > 0 else "#f87171") for v, sy in HB_BIG)
 
 KPI = ""
 for lab, key, col in PROFS:
@@ -254,14 +266,69 @@ cần nhìn rõ. Đọc theo <b>cột dọc</b>: nơi cả ba hàng cùng có d�
 hình đồng ý.</p>
 {CASES_HTML}
 
-<h2>Bảng đầy đủ, theo thứ tự chữ cái</h2>
-<p class=note>Ô in đậm là cấu hình tốt nhất của mã đó. Ba cột cuối là số lệnh
-mua/bán/reinvest.</p>
-<table><thead><tr><th>mã</th><th>DCA</th>
+<h2>breadth và hybrid khác nhau đến đâu</h2>
+<p class=note>Trên tổng thể hai cấu hình gần như không phân biệt được: trung vị
+chênh <b>0.00</b>, 17/39, p = 0.832. Nhưng đó là kết quả của <b>triệt tiêu</b>,
+không phải của <b>giống nhau</b>.</p>
+<div class=box><div class=kpi>
+<div><span class=lab>giống hệt nhau</span><span class=val>{hb_same}</span>
+ <span class=lab>trên 52 mã</span></div>
+<div><span class=lab>lệch 10–50 điểm</span><span class=val>{hb_mid}</span></div>
+<div><span class=lab>lệch trên 50 điểm</span>
+ <span class=val style='color:#facc15'>{hb_nbig}</span></div>
+<div><span class=lab>|chênh| mỗi mã</span><span class=val>{hb_absmean:.1f}</span>
+ <span class=lab>trung vị {hb_absmed:.1f}</span></div>
+</div></div>
+<p class=note>Cộng riêng từng chiều: <b style='color:#4ade80'>+{hb_pos:,.0f}</b>
+ở các mã hybrid thắng và <b style='color:#f87171'>{hb_neg:,.0f}</b> ở các mã
+hybrid thua, còn lại {hb_tot:+,.0f}. <b>{hb_nbig} mã lệch trên 50 điểm</b> — nên
+“chỉ VCS là ngoại lệ” không đúng: VCS chỉ đứng thứ hai từ dưới.</p>
+<table style='max-width:330px'><thead><tr><th style='text-align:left'>mã</th>
+<th>hybrid − breadth</th></tr></thead><tbody>{HB_ROWS}</tbody></table>
+<p class=note><b>Vì sao phải phân biệt hai chuyện này.</b> Nếu hai cấu hình thật
+sự giống nhau thì chọn cái nào cũng được. Thực tế chúng khác nhau nhiều ở từng
+mã nhưng vừa vặn cân bằng nhau <i>trên đúng 52 mã này</i> — và sự cân bằng đó là
+tính chất của <b>mẫu</b>, không phải của chiến lược. Đổi rổ hoặc đổi giai đoạn
+thì hai chiều không có lý do gì phải tiếp tục triệt tiêu.</p>
+
+<h2>Bảng đầy đủ</h2>
+<p class=note>Mặc định theo thứ tự chữ cái. <b>Bấm tiêu đề cột bất kỳ để sắp
+xếp</b>, bấm lần nữa để đảo chiều. Ô in đậm là cấu hình tốt nhất của mã đó; cột
+<b>hybrid−breadth</b> in đậm khi lệch quá 50 điểm. Ba cột cuối là số lệnh
+mua/bán/reinvest — sắp xếp theo chúng là sắp xếp theo số lệnh bán.</p>
+<table id=full><thead><tr><th>mã</th><th>DCA</th>
 <th style='color:#60a5fa'>price</th><th style='color:#f472b6'>breadth</th>
-<th style='color:#facc15'>hybrid</th><th>chênh</th>
+<th style='color:#facc15'>hybrid</th><th>hybrid−breadth</th><th>chênh 3 bên</th>
 <th>b/s/r price</th><th>b/s/r breadth</th><th>b/s/r hybrid</th>
 </tr></thead><tbody>{TABLE}</tbody></table>
+<script>
+(function () {{
+  var tb = document.querySelector('#full tbody');
+  var ths = Array.prototype.slice.call(document.querySelectorAll('#full th'));
+  var last = -1, asc = false;
+  ths.forEach(function (th, i) {{
+    th.style.cursor = 'pointer';
+    th.title = 'bam de sap xep';
+    th.onclick = function () {{
+      asc = (last === i) ? !asc : (i === 0);
+      last = i;
+      var rs = Array.prototype.slice.call(tb.rows);
+      rs.sort(function (a, b) {{
+        var x = a.cells[i].dataset.v, y = b.cells[i].dataset.v;
+        var nx = parseFloat(x), ny = parseFloat(y), c;
+        if (!isNaN(nx) && !isNaN(ny)) {{ c = nx - ny; }}
+        else {{ c = String(x).localeCompare(String(y)); }}
+        return asc ? c : -c;
+      }});
+      rs.forEach(function (r) {{ tb.appendChild(r); }});
+      ths.forEach(function (t) {{
+        t.innerHTML = t.innerHTML.replace(/ (\u25B2|\u25BC)$/, '');
+      }});
+      th.innerHTML += asc ? ' \u25B2' : ' \u25BC';
+    }};
+  }});
+}})();
+</script>
 
 <h2>Kết luận</h2>
 <p class=note><b>1. hybrid không phải là "tốt hơn cả hai" — nó là bảo thủ hơn
@@ -287,7 +354,10 @@ mã" áp dụng cho cả hai, không riêng breadth.</p>
 </div></body></html>""".format(
     KPI=KPI, PAIRS=PAIRS, CASES_HTML=CASES_HTML, TABLE=TABLE,
     hw=agg("hybrid")[2], hmed=agg("hybrid")[1],
-    wp=wins["price"], wb=wins["breadth"], wh=wins["hybrid"])
+    wp=wins["price"], wb=wins["breadth"], wh=wins["hybrid"],
+    hb_same=hb_same, hb_mid=hb_mid, hb_nbig=len(HB_BIG), hb_absmean=hb_absmean,
+    hb_absmed=hb_absmed, hb_pos=hb_pos, hb_neg=hb_neg, hb_tot=hb_pos + hb_neg,
+    HB_ROWS=HB_ROWS)
 
 out = (Path(r"C:\projects\Stock_Analyzer\PriceToEarn_v2\single\multi_signal")
        / "SO_SANH_3_cau_hinh.html")
