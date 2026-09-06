@@ -37,7 +37,8 @@ for i, date in enumerate(D["dates"]):
             "<td class='m mm' data-v='0'></td>"
             "<td class='m mt' data-v='0'></td>"
             "<td class='m mc' data-v='0'></td>"
-            "<td class=s data-v='{why}'>{why}</td></tr>".format(
+            "<td class='s why' data-v='{why}' data-base='{why}'>{why}</td>"
+            "</tr>".format(
                 i=i, sym=r["sym"], inb=inb.replace("'", "&#39;"),
                 ok=1 if r["ok"] else 0, bars=r["bars"],
                 close="—" if r["close"] is None else "{:,.1f}".format(r["close"]),
@@ -157,10 +158,14 @@ ba vào một cột nên không thể hiện được.
 <div class=note style='margin-top:6px'>
 <code>all</code> là toàn bộ {nall} mã. <code>all-VIC-VIX</code> là {nex} mã,
 bỏ VIC và VIX — đây là rổ mà mọi số liệu trong CONCLUSIONS.md được đo trên, nên
-nó là mặc định của trang này.<br>
-Đổi rổ bằng nút chọn ở mỗi mục. <b>VIC và VIX vẫn luôn là dòng trong bảng</b>,
-chỉ khác ở chỗ có được tick sẵn hay không — bản trước không liệt kê chúng nên
-đọc bảng không thể biết chúng tồn tại.
+nó là mặc định của trang này.<br><br>
+<b>Dấu tick nghĩa là “mã này nằm trong rổ đang đo”, không phải “mã này tồn
+tại”.</b> Nên ở rổ mặc định, VIC và VIX là dòng đầy đủ với giá, median, prem,
+vốn hoá — nhưng <b>không được tick</b>, ba cột median/trim/cap bỏ trống, và cột
+ghi chú nói rõ <i>không thuộc rổ all-VIC-VIX</i>. Bấm <code>all</code> để đưa
+chúng vào và xem ba con số đổi thế nào.<br>
+Bạn cũng có thể tick tay một mã ngoài rổ — khi đó ghi chú đổi thành “ngoài rổ,
+bạn đã tick thêm”, để con số hiện ra không bị nhầm là con số của rổ chuẩn.
 </div></div>
 
 <div class=box>
@@ -207,6 +212,25 @@ function recalc(i) {{
       td.textContent = ''; td.style.color = '';
     }});
     r.querySelector('td.wt').textContent = '';
+    // MOT DONG KHONG DUOC TINH PHAI NOI RA VI SAO. Truoc day o ghi chu cua VIC
+    // chi hien "—" trong khi dong bi lam mo va ba cot bo trong -- doc nhu the
+    // la "ma nay khong lien quan", chu khong phai "ro ban dang chon khong co
+    // no".
+    var why = r.querySelector('td.why');
+    var inb = JSON.parse(r.dataset.in);
+    if (r.dataset.ok !== '1') {{
+      why.textContent = why.dataset.base;
+      why.style.color = '';
+    }} else if (!on) {{
+      why.textContent = inb[basket] ? 'bạn đã bỏ tick' : 'không thuộc rổ ' + basket;
+      why.style.color = '#facc15';
+    }} else if (!inb[basket]) {{
+      why.textContent = 'ngoài rổ ' + basket + ', bạn đã tick thêm';
+      why.style.color = '#60a5fa';
+    }} else {{
+      why.textContent = '—';
+      why.style.color = '';
+    }}
     if (on && r.dataset.ok === '1') live.push(r);
   }});
   var set = function (id, v) {{
