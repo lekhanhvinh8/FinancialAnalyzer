@@ -42,6 +42,35 @@ def _all_data(run_dir):
     return {r["sym"]: r for r in json.loads(m.group(1))}
 
 
+def _config(run_dir):
+    """
+    Bang tham so o dau report_all.html, doc thanh dict.
+
+    DOC CHU KHONG GO LAI. Bang "ba cau hinh khac nhau o cho nao" truoc day go
+    tay "gia > 75" va "ro > 70"; hai nguong do sau thanh 55 va 80, con bao cao
+    van noi 75 va 70 -- mo ta sai chinh ba lan chay dat ngay ben duoi no.
+    """
+    import re
+    t = (CHARTS / run_dir / "report_all.html").read_text(encoding="utf-8")
+    out = {}
+    # Mau khong co dinh: mot gia tri bi profile ghi de duoc to hoi hac va them
+    # dau *, nen khoa mau vao regex la bo qua dung nhung dong quan trong nhat.
+    # Lan dau viet the that, va bang in ra toan dau gach cho ca price lan breadth.
+    for k, v in re.findall(
+            r"<span style='color:#[0-9a-f]{6}'>([A-Z_0-9]+) ?\*?</span>\s*"
+            r"<span style='color:#[0-9a-f]{6};font-weight:600'>([^<]*)</span>", t):
+        v = v.strip()
+        out[k] = (None if v == "None" else
+                  float(v) if re.fullmatch(r"-?\d+\.\d+", v) else
+                  int(v) if re.fullmatch(r"-?\d+", v) else v)
+    need = {"PERCENT_BUY", "PERCENT_SELL", "PERCENT_REINVEST", "BUY_MAX_BREADTH",
+            "SELL_MIN_BREADTH", "REINVEST_MAX_BREADTH"}
+    if not need <= set(out):
+        raise SystemExit(f"{run_dir}: khong doc duoc tham so "
+                         f"{sorted(need - set(out))} tu report_all.html")
+    return out
+
+
 def build_data(price_dir, breadth_dir, hybrid_dir):
     """Doc ba report, chay lai cac ma mau, lay chuoi gia -- roi ghi data3.json."""
     import pandas as pd
@@ -82,7 +111,9 @@ def build_data(price_dir, breadth_dir, hybrid_dir):
 
     data = {"rows": rows, "cases": cases, "series": series,
             "dirs": {"price": price_dir, "breadth": breadth_dir,
-                     "hybrid": hybrid_dir}}
+                     "hybrid": hybrid_dir},
+            "cfg": {"price": _config(price_dir), "breadth": _config(breadth_dir),
+                    "hybrid": _config(hybrid_dir)}}
     DATA.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
     print(f"  du lieu -> {DATA}")
     return data
@@ -101,7 +132,7 @@ else:
     raise SystemExit("dung: make_compare3_report [price_dir breadth_dir hybrid_dir]")
 
 rows, cases, series = D["rows"], D["cases"], D["series"]
-DIRS = D.get("dirs", {})
+DIRS, CFG = D.get("dirs", {}), D.get("cfg", {})
 
 # ten hien thi, khoa trong du lieu, mau
 PROFS = [("price", "price", "#60a5fa"),
@@ -302,6 +333,42 @@ else:
                             if t[4] >= 0.05)
                 + ".")
 
+# Bang "khac nhau o cho nao" dung tu CFG, khong go tay mot nguong nao.
+COLOR = {"price": "#60a5fa", "breadth": "#f472b6", "hybrid": "#facc15"}
+ARMS = (("mua",      "PERCENT_BUY",      "&lt;", "BUY_MAX_BREADTH",      "&le;"),
+        ("bán",      "PERCENT_SELL",     "&gt;", "SELL_MIN_BREADTH",     "&gt;"),
+        ("reinvest", "PERCENT_REINVEST", "&lt;", "REINVEST_MAX_BREADTH", "&le;"))
+
+
+def _arm(cfg, pkey, pop, bkey, bop):
+    """Mot o cua bang: dieu kien gia va dieu kien ro, AND lai."""
+    parts = []
+    if cfg.get(pkey) is not None:
+        parts.append(f"giá {pop} {cfg[pkey]:g}")
+    if cfg.get(bkey) is not None:
+        parts.append(f"rổ {bop} {cfg[bkey]:g}")
+    txt = " VÀ ".join(parts) if parts else "&mdash;"
+    return f"<b>{txt}</b>" if len(parts) > 1 else txt
+
+
+if CFG:
+    CFGROWS = "".join(
+        f"<tr><td style='color:{COLOR[n]}'><b>{n}</b></td>"
+        + "".join(f"<td>{_arm(CFG[n], pk, po, bk, bo)}</td>"
+                  for _, pk, po, bk, bo in ARMS)
+        + "</tr>"
+        for n in ("price", "breadth", "hybrid"))
+    _g = [k for k in ("MIN_SIGNAL3", "SELL_MIN_SIGNAL1", "SELL_MIN_ZDEV",
+                      "SELL_MIN_PELOG")
+          if any(CFG[n].get(k) is not None for n in CFG)]
+    CFGNOTE = ("hybrid chính là <code>config.py</code> mặc định hiện tại. "
+               + ("Các cổng lọc còn bật ở ít nhất một cấu hình: "
+                  + ", ".join(f"<code>{k}</code>" for k in _g) + "."
+                  if _g else "Không cấu hình nào còn bật cổng lọc phụ."))
+else:
+    CFGROWS = "<tr><td colspan=4>data3.json cũ, không có bảng tham số</td></tr>"
+    CFGNOTE = "Dựng lại từ ba thư mục run để có bảng tham số."
+
 HTML = """<!DOCTYPE html><html lang=vi><head><meta charset=utf-8>
 <title>price vs breadth vs hybrid</title><style>
 *{{box-sizing:border-box}}
@@ -343,16 +410,9 @@ price = {dp} · breadth = {db} · hybrid = {dh}</div>
 <table style='margin-top:8px'><thead><tr><th style='text-align:left'>cấu hình</th>
 <th style='text-align:left'>mua</th><th style='text-align:left'>bán</th>
 <th style='text-align:left'>reinvest</th></tr></thead><tbody>
-<tr><td style='color:#60a5fa'><b>price</b></td><td>giá &lt; 60</td>
-<td>giá &gt; 75</td><td>giá &lt; 10</td></tr>
-<tr><td style='color:#f472b6'><b>breadth</b></td><td>rổ ≤ 60</td>
-<td>rổ &gt; 70</td><td>rổ ≤ 10</td></tr>
-<tr><td style='color:#facc15'><b>hybrid</b></td><td>rổ ≤ 60</td>
-<td><b>giá &gt; 75 VÀ rổ &gt; 70</b></td><td>rổ ≤ 10</td></tr>
+{cfgrows}
 </tbody></table>
-<p class=note style='margin-bottom:0'>hybrid chính là <code>config.py</code> mặc
-định hiện tại. Lưu ý ngưỡng giá ở arm bán là <b>75</b> chứ không phải 70 — cả ba
-arm còn giữ nguyên các cổng signal1 và signal3.</p>
+<p class=note style='margin-bottom:0'>{cfgnote}</p>
 </div>
 
 <div class=box><div class=kpi>{KPI}</div></div>
@@ -478,6 +538,7 @@ mã" áp dụng cho cả hai, không riêng breadth.</p>
     sb=SELLS["breadth"], sh=SELLS["hybrid"], sigline=SIG_LINE,
     bpp=BP[4], hpp=HP[4], hbp=HB[4], hbmean=HB[0], hbmed=HB[1],
     hbk=HB[2], hbdec=HB[3], hbup=HB_UP, hbdown=HB_DOWN,
+    cfgrows=CFGROWS, cfgnote=CFGNOTE,
     dp=DIRS.get("price", "?"), db=DIRS.get("breadth", "?"),
     dh=DIRS.get("hybrid", "?"),
     wp=wins["price"], wb=wins["breadth"], wh=wins["hybrid"],
