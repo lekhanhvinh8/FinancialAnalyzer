@@ -1,13 +1,107 @@
 # -*- coding: utf-8 -*-
-"""Bao cao so sanh ba cau hinh: price, breadth, hybrid."""
+"""
+Bao cao so sanh ba cau hinh, dung tu ba thu muc run cua run_all.
+
+    python -m single.multi_signal.make_compare3_report \
+        20260905_154540 20260905_160146 20260905_145624
+
+Thu tu: price, breadth, hybrid. Moi thu muc la mot lan chay run_all da co
+report_all.html. Khong truyen gi thi lay lai data3.json da dung lan truoc.
+
+TU DUNG LAY DU LIEU. Ban dau script nay doc mot data3.json duoc tao boi mot
+lenh roi, va lenh do khong bao gio duoc luu -- nen bao cao khong the dung lai
+duoc. Gio no tu doc ba report, tu chay lai tung ma de lay danh sach lenh, va tu
+lay chuoi gia; data3.json chi con la cache.
+"""
 import json
 import statistics as st
+import subprocess
+import sys
 from math import comb
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 S = Path(__file__).parent
-D = json.load(open(S / "data3.json", encoding="utf-8"))
+CHARTS = S / "charts"
+DATA = S / "data3.json"
+
+# Ma dua vao phan "xem tan mat". Chon truoc de khoi phai chay lai ca 52 ma:
+# moi ma ton ~15 giay x 3 cau hinh.
+CASE_SYMS = ["SHB", "STB", "VND", "HCM", "SSI", "GMD", "LPB", "VCS", "HPG",
+             "FPT", "EIB", "REE", "VHC"]
+
+
+def _all_data(run_dir):
+    import re
+    p = CHARTS / run_dir / "report_all.html"
+    if not p.exists():
+        raise SystemExit(f"khong thay {p}")
+    m = re.search(r"const ALL_DATA\s*=\s*(\[.*?\]);",
+                  p.read_text(encoding="utf-8"), re.S)
+    return {r["sym"]: r for r in json.loads(m.group(1))}
+
+
+def build_data(price_dir, breadth_dir, hybrid_dir):
+    """Doc ba report, chay lai cac ma mau, lay chuoi gia -- roi ghi data3.json."""
+    import pandas as pd
+    import database as db
+
+    R = {"price": _all_data(price_dir), "breadth": _all_data(breadth_dir),
+         "hybrid": _all_data(hybrid_dir)}
+    syms = sorted(set.intersection(*(set(v) for v in R.values())))
+    print(f"  {len(syms)} ma chung tu ba report")
+
+    # Danh sach lenh: chay lai tung ma duoi ca ba cau hinh.
+    print(f"  chay lai {len(CASE_SYMS)} ma de lay tung lenh ...", flush=True)
+    out = subprocess.run(
+        [sys.executable, "-m", "single.multi_signal.replay_trades"] + CASE_SYMS,
+        cwd=str(Path(__file__).resolve().parents[2]),
+        capture_output=True, text=True, encoding="utf-8")
+    if out.returncode:
+        raise SystemExit("replay_trades that bai:\n" + (out.stderr or "")[-2000:])
+    cases = json.loads(out.stdout.strip().splitlines()[-1])
+
+    series = {}
+    for sym in cases:
+        d = db.load_daily_prices(sym)["close"]
+        d.index = pd.to_datetime(d.index)
+        w = d.resample("W").last().dropna()
+        w = w[w.index >= "2015-01-01"]
+        series[sym] = [[str(t)[:10], round(float(v), 1)] for t, v in w.items()]
+
+    rows = []
+    for s in syms:
+        r = {"sym": s, "dca": R["price"][s]["i"], "eb": R["price"][s]["eb"]}
+        for k in R:
+            r[k] = R[k][s]["m"]
+            r[k + "_b"] = R[k][s]["b"]
+            r[k + "_s"] = R[k][s]["s"]
+            r[k + "_r"] = R[k][s]["r"]
+        rows.append(r)
+
+    data = {"rows": rows, "cases": cases, "series": series,
+            "dirs": {"price": price_dir, "breadth": breadth_dir,
+                     "hybrid": hybrid_dir}}
+    DATA.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    print(f"  du lieu -> {DATA}")
+    return data
+
+
+if len(sys.argv) == 4:
+    D = build_data(*sys.argv[1:])
+elif len(sys.argv) == 1:
+    if not DATA.exists():
+        raise SystemExit(
+            "chua co data3.json. Chay:\n"
+            "  python -m single.multi_signal.make_compare3_report "
+            "<thu-muc-price> <thu-muc-breadth> <thu-muc-hybrid>")
+    D = json.load(open(DATA, encoding="utf-8"))
+else:
+    raise SystemExit("dung: make_compare3_report [price_dir breadth_dir hybrid_dir]")
+
 rows, cases, series = D["rows"], D["cases"], D["series"]
+DIRS = D.get("dirs", {})
 
 # ten hien thi, khoa trong du lieu, mau
 PROFS = [("price", "price", "#60a5fa"),
@@ -213,8 +307,8 @@ td.s{{text-align:right;color:#64748b;font-size:11.5px}}
 </style></head><body><div class=wrap>
 
 <h1>price vs breadth vs hybrid — so sánh từng mã</h1>
-<div class=sub>52 mã · cùng mốc DCA, cùng khoảng đánh giá<br>
-price = 20260905_154540 · breadth = 20260905_160146 · hybrid = 20260905_145624</div>
+<div class=sub>{nsym} mã · cùng mốc DCA, cùng khoảng đánh giá<br>
+price = {dp} · breadth = {db} · hybrid = {dh}</div>
 
 <div class=box>
 <b>Ba cấu hình khác nhau ở chỗ nào</b>
@@ -353,13 +447,14 @@ mã" áp dụng cho cả hai, không riêng breadth.</p>
 
 </div></body></html>""".format(
     KPI=KPI, PAIRS=PAIRS, CASES_HTML=CASES_HTML, TABLE=TABLE,
-    hw=agg("hybrid")[2], hmed=agg("hybrid")[1],
+    hw=agg("hybrid")[2], hmed=agg("hybrid")[1], nsym=len(rows),
+    dp=DIRS.get("price", "?"), db=DIRS.get("breadth", "?"),
+    dh=DIRS.get("hybrid", "?"),
     wp=wins["price"], wb=wins["breadth"], wh=wins["hybrid"],
     hb_same=hb_same, hb_mid=hb_mid, hb_nbig=len(HB_BIG), hb_absmean=hb_absmean,
     hb_absmed=hb_absmed, hb_pos=hb_pos, hb_neg=hb_neg, hb_tot=hb_pos + hb_neg,
     HB_ROWS=HB_ROWS)
 
-out = (Path(r"C:\projects\Stock_Analyzer\PriceToEarn_v2\single\multi_signal")
-       / "SO_SANH_3_cau_hinh.html")
+out = S / "SO_SANH_3_cau_hinh.html"
 out.write_text(HTML, encoding="utf-8")
 print(out)
