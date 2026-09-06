@@ -23,6 +23,7 @@ table.full th:first-child,table.full th:nth-child(2){text-align:left}
 table.full td:nth-child(2){text-align:left}
 td.n{text-align:right;font-variant-numeric:tabular-nums}
 td.s{color:#64748b;font-size:11.5px}
+td.det{color:#94a3b8;font-size:12px;background:#0d1526}
 td.trim{text-align:center}
 tr.off{opacity:.4} tr.hide{display:none}
 tr.out td.trim{color:#f87171}
@@ -41,7 +42,7 @@ code{background:#111c30;padding:1px 5px;border-radius:4px;font-size:12px}
 <div class=sub>54 mã trong rổ · cửa sổ median 1000 phiên · cắt đuôi
 5–95 · dữ liệu tính lại từ giá thô, không đọc bảng breadth_signals</div>
 <div class="nav sub">Nhảy tới: <a href='#d0'>2018-01-23</a><a href='#d1'>2022-01-04</a>
-<a href='#d2'>2026-08-04</a></div>
+<a href='#excl'>VIC / VIX bị loại</a><a href='#d2'>2026-08-04</a></div>
 
 <div class=box>
 <b>Ba đường được tính thế nào</b>
@@ -63,6 +64,50 @@ giữ nguyên vùng cắt cũ thì kết quả không còn là “con số nếu
 này”, mà là một thứ lai không có ý nghĩa.<br>
 Dòng “đã lưu” là giá trị đang nằm trong bảng <code>breadth_signals</code>. Khi
 tick đủ cả rổ, ba con số phải khớp — đó là phép kiểm tra.</div></div>
+
+
+<h2 id=excl>Hai mã KHÔNG có trong bảng: VIC và VIX</h2>
+<p class=note>Rổ là <b>54 mã</b>, không phải toàn bộ sàn. <code>VIC</code> và
+<code>VIX</code> bị loại bởi <code>EXCLUDE</code> trong
+<code>syncs/breadth.py</code>. Một báo cáo kiểm tra mà không nói ra điều này là
+thiếu sót — mục này bổ sung.</p>
+<div class=box>
+<b>Lý do được ghi lại, và vì sao nó đáng ngờ ở đây</b>
+<div class=note style='margin-top:6px'>
+Lý do gốc nằm ở <code>single/multi_signal/config.py</code>: VIX từng chiếm ~30%
+tổng lợi nhuận của mọi lần chạy nên trung bình bám theo nó chứ không bám theo
+chiến lược; VIC là trường hợp đối xứng ở phía lỗ (−458 trong một lần chạy, lớn
+hơn cả tổng ròng), nên bỏ mỗi mã thắng đậm sẽ làm lệch kết quả.<br><br>
+<b>Nhưng lý do đó viết cho việc TỔNG HỢP KẾT QUẢ, không phải cho việc ĐO RỔ.</b>
+Ở đó câu hỏi là “mã này có bóp méo trung bình của 52 kết quả không”. Ở đây câu
+hỏi khác hẳn: “mã này có phải một phần của thị trường không”. Danh sách
+<code>EXCLUDE</code> được sao chép nguyên si từ <code>portfolio/</code> sang
+<code>breadth/</code> rồi sang <code>syncs/breadth.py</code> mà không có lý do
+riêng nào được viết ra cho lần sao chép đó.<br><br>
+Điều này đáng lưu ý nhất với <code>prem_cap</code>: VIC là một trong những
+doanh nghiệp vốn hoá lớn nhất sàn — ngày 2026-08-04 vốn hoá của nó là
+<b>1.685.901 tỷ</b> — mà một đường “trung bình theo trọng số vốn hoá” lại không
+có nó.
+</div></div>
+
+<p class=note>Đo cụ thể, nếu thêm cả hai mã vào rổ:</p>
+<table class=full style='font-size:12.5px'><thead><tr>
+<th style='text-align:left'>ngày</th><th>n</th>
+<th>median_prem</th><th>prem_trim</th><th>prem_cap</th>
+</tr></thead><tbody><tr><td><b>2018-01-23</b></td><td class=n>32 → 34</td><td class=n>80.20 → 80.20 <b style='color:#94a3b8'>+0.00</b></td><td class=n>85.64 → 86.38 <b style='color:#facc15'>+0.75</b></td><td class=n>97.81 → 102.98 <b style='color:#facc15'>+5.18</b></td></tr><tr><td colspan=5 class=det><div>VIX: prem <b>+40.9%</b>, vốn hoá 2,374 tỷ — <b style='color:#4ade80'>nằm trong vùng cắt</b></div><div>VIC: prem <b>+152.8%</b>, vốn hoá 121,089 tỷ — <b style='color:#4ade80'>nằm trong vùng cắt</b></div></td></tr><tr><td><b>2022-01-04</b></td><td class=n>44 → 46</td><td class=n>101.67 → 101.67 <b style='color:#94a3b8'>+0.00</b></td><td class=n>103.89 → 105.50 <b style='color:#facc15'>+1.61</b></td><td class=n>91.92 → 89.40 <b style='color:#facc15'>-2.51</b></td></tr><tr><td colspan=5 class=det><div>VIX: prem <b>+656.5%</b>, vốn hoá 18,653 tỷ — <b style='color:#f87171'>bị vùng cắt loại</b></div><div>VIC: prem <b>+7.6%</b>, vốn hoá 184,233 tỷ — <b style='color:#4ade80'>nằm trong vùng cắt</b></div></td></tr><tr><td><b>2026-08-04</b></td><td class=n>53 → 55</td><td class=n>6.20 → 6.25 <b style='color:#94a3b8'>+0.05</b></td><td class=n>16.80 → 19.48 <b style='color:#facc15'>+2.68</b></td><td class=n>21.63 → 26.14 <b style='color:#facc15'>+4.52</b></td></tr><tr><td colspan=5 class=det><div>VIX: prem <b>+32.3%</b>, vốn hoá 32,442 tỷ — <b style='color:#4ade80'>nằm trong vùng cắt</b></div><div>VIC: prem <b>+702.9%</b>, vốn hoá 1,685,901 tỷ — <b style='color:#f87171'>bị vùng cắt loại</b></div></td></tr></tbody></table>
+
+<p class=note><b>Điều bất ngờ: ảnh hưởng nhỏ, và chính phần cắt đuôi là thứ giữ
+cho nó nhỏ.</b> <code>median_prem</code> gần như không nhúc nhích (0.00 / 0.00 /
++0.05) vì trung vị bỏ qua độ lớn. Hai đường kia dịch nhiều nhất +5.18 điểm — và
+lý do không dịch mạnh hơn là ở mỗi ngày, mã cực đoan lại rơi <i>ra ngoài</i>
+vùng cắt 5–95: VIX +656.5% bị loại ngày 2022-01-04, VIC +702.9% bị loại ngày
+2026-08-04. Nói cách khác, cơ chế cắt đuôi vốn đã tự xử lý đúng cái rủi ro mà
+danh sách <code>EXCLUDE</code> được lập ra để tránh.</p>
+<p class=note><b>Khuyến nghị:</b> bỏ <code>EXCLUDE</code> khỏi
+<code>syncs/breadth.py</code> để rổ đúng nghĩa là thị trường, và giữ nó ở
+<code>single/multi_signal/config.py</code> nơi nó có lý do riêng. Tôi chưa làm
+vì việc đó thay đổi toàn bộ 2838 ngày dữ liệu và mọi kết quả đo trước đó — cần
+bạn quyết.</p>
 
 <h2 id=d0>2018-01-23</h2>
 <div class=box><div class=kpi><div><span class=lab>median_prem</span><span class=val id='out-0-median_prem'>80.2022</span><span class=lab>đã lưu 80.2022 · <b style='color:#4ade80'>khớp</b></span></div><div><span class=lab>prem_trim</span><span class=val id='out-0-prem_trim'>85.6370</span><span class=lab>đã lưu 85.637 · <b style='color:#4ade80'>khớp</b></span></div><div><span class=lab>prem_cap</span><span class=val id='out-0-prem_cap'>97.8053</span><span class=lab>đã lưu 97.8053 · <b style='color:#4ade80'>khớp</b></span></div>
