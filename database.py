@@ -1040,6 +1040,25 @@ def load_breadth(universe: str, window_days: int, variant: str,
     return wide.sort_index()
 
 
+def breadth_available() -> dict:
+    """
+    {universe: sorted signals} for everything the table actually holds.
+
+    Exists so a caller can REFUSE a name it does not have. Asking for a signal
+    that was never stored returns an empty map, every breadth gate then stays
+    shut, and the run finishes reporting success on a strategy that never acted
+    -- one typo in --signal and the numbers are meaningless with nothing to say
+    so.
+    """
+    with _conn() as con:
+        rows = con.execute(
+            "SELECT DISTINCT universe, signal FROM breadth_signals").fetchall()
+    out = {}
+    for uni, sig in rows:
+        out.setdefault(uni, set()).add(sig)
+    return {k: sorted(v) for k, v in sorted(out.items())}
+
+
 def breadth_variants() -> pd.DataFrame:
     """Every stored configuration, with its date range and signal count."""
     with _conn() as con:

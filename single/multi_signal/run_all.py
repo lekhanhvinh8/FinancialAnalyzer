@@ -1260,6 +1260,24 @@ if __name__ == "__main__":
         config.BREADTH_UNIVERSE = universe
         print(f"Universe  -> {universe}")
 
+    # A NAME THE DATABASE DOES NOT HAVE IS AN ERROR, not an empty result. Both
+    # of these reach the strategies through a lookup that returns {} on a miss,
+    # so every breadth gate stays shut and the run reports success on a
+    # configuration that never acted. --signal=prem_medain produced a full
+    # report and a valid-looking number.
+    avail = db.breadth_available()
+    uni_now = universe or getattr(config, "BREADTH_UNIVERSE", None)
+    sig_now = signal or getattr(config, "BREADTH_SIGNAL", None)
+    if avail and (universe or signal):
+        if uni_now not in avail:
+            raise SystemExit(f"universe khong co trong DB: {uni_now}\n"
+                             f"dang co: {', '.join(avail)}")
+        if sig_now not in avail[uni_now]:
+            raise SystemExit(f"signal khong co trong DB: {sig_now}\n"
+                             f"dang co o {uni_now}: "
+                             + ", ".join(s for s in avail[uni_now]
+                                         if s.startswith("prem_")))
+
     workers = next((int(f.split("=", 1)[1]) for f in flags if f.startswith("--workers=")),
                    None)   # None -> ProcessPoolExecutor picks os.cpu_count()
 

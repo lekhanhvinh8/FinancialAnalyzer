@@ -496,6 +496,16 @@ def main():
         print("Override -> " + ", ".join(f"{k}={v}" for k, v in OVERRIDES.items()))
 
     _apply_all()
+    # Same guard as run_all: a signal the database does not hold leaves every
+    # gate shut, and the sweep then measures nothing while every cell looks
+    # like a real number.
+    avail = db.breadth_available()
+    _uni = getattr(config, "BREADTH_UNIVERSE", None)
+    _sig = getattr(config, "BREADTH_SIGNAL", None)
+    if avail and _uni in avail and _sig not in avail[_uni]:
+        raise SystemExit("signal khong co trong DB: " + str(_sig) + chr(10)
+                         + "dang co o " + str(_uni) + ": "
+                         + ", ".join(x for x in avail[_uni] if x.startswith("prem_")))
     OUT, RAW, PROG = _paths(ARM)
 
     if "--rescore" in flags:
