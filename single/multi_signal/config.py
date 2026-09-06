@@ -532,8 +532,17 @@ REINVEST_MAX_BREADTH = 10.0
 # to re-test rather than take on faith.
 REINVEST_JOIN_OR = False
 
-# Which stored breadth run to read. Must match what breadth/ wrote; see
-# core/breadth_calc.py::variant.
-BREADTH_UNIVERSE = "all"
+# Which stored breadth run to read. Must match what syncs/breadth.py wrote; see
+# core/breadth_calc.py::variant and ::universe_key.
+#
+# THE BASKET NAME SAYS WHAT IS IN IT. "all" is every stock; "all-VIC-VIX" is
+# every stock without those two. Both are stored, so switching is a config
+# change rather than a re-sync.
+#
+# "all-VIC-VIX" is the shipped value because it is what every measurement in
+# CONCLUSIONS.md was taken on -- those rows used to be filed under the name
+# "all", which was wrong. Pointing at the true "all" is a legitimate choice and
+# a different experiment; it is not the same numbers under a tidier name.
+BREADTH_UNIVERSE = "all-VIC-VIX"
 BREADTH_WINDOW = 1000
 BREADTH_SIGNAL = "median_prem"

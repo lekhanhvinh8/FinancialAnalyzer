@@ -80,7 +80,7 @@ def main() -> int:
     # ── the skip path ───────────────────────────────────────────────────────
     # Stored fingerprint matching the inputs means current; anything else does
     # not. Written under the test universe name so the real row is untouched.
-    real_variant = sb._fingerprint_variant()
+    real_variant = sb._fp_variant()
     saved = db.load_sync_fingerprint("breadth", "__T_UNI__", real_variant)
     db.save_sync_fingerprint("breadth", "__T_UNI__", real_variant, f4)
     got = db.load_sync_fingerprint("breadth", "__T_UNI__", real_variant)
@@ -94,6 +94,36 @@ def main() -> int:
     check("mean_slope" not in STORED, "mean_slope khong duoc luu")
     check({variant(s) for s in STORED} == {"base", "trim5-95"},
           f"chi hai variant duoc ghi, dang co {sorted({variant(s) for s in STORED})}")
+
+    # ── a basket's NAME describes the basket ────────────────────────────────
+    # The old name lied: rows computed without VIC and VIX were filed under
+    # "all", so asking the database for the market returned a basket missing two
+    # of the largest companies on it. A name that cannot say what it holds is
+    # how that goes unnoticed for as long as it did.
+    from core.breadth_calc import universe_key
+    check(universe_key("all") == "all", "khong loai ai thi ten giu nguyen")
+    check(universe_key("all", ["VIC", "VIX"]) == "all-VIC-VIX", "ten phai ke ma bi loai")
+    check(universe_key("all", ["VIX", "VIC"]) == "all-VIC-VIX",
+          "thu tu ma bi loai khong duoc lam doi ten")
+    check(universe_key("vn30", ["VIC"]) == "vn30-VIC", "phai chay voi ro bat ky")
+
+    # Every basket the sync maintains has a distinct name, and every name is
+    # derived rather than typed -- two baskets sharing a name would overwrite
+    # each other silently, which is the failure this whole rename fixes.
+    bs = sb.baskets()
+    check(len(bs) == len(sb.BASKETS),
+          f"{len(sb.BASKETS)} ro nhung chi {len(bs)} ten -> co ten trung")
+    check("all" in bs, f"phai co ro 'all', dang co: {sorted(bs)}")
+    for name, syms in bs.items():
+        check(len(syms) > 0, f"ro {name} rong")
+        check(name == "all" or len(syms) < len(bs["all"]),
+              f"ro {name} phai nho hon 'all'")
+
+    # skip= leaves symbols out of the basket without a second load.
+    import inspect
+    from core.breadth_calc import compute as _compute
+    check("skip" in inspect.signature(_compute).parameters,
+          "compute() phai nhan skip= de mot lan nap phuc vu nhieu ro")
 
     # ── the sync must not import a strategy ─────────────────────────────────
     from pathlib import Path
@@ -117,8 +147,8 @@ def main() -> int:
         for f in fails:
             print("  -", f)
         return 1
-    print("OK — fingerprint doi khi lich su sua, khi co phien moi, khi ro doi thanh vien; "
-          "va chi ghi tin hieu trong STORED")
+    print(f"OK — fingerprint doi dung 3 truong hop, {len(sb.BASKETS)} ro co ten "
+          f"tu mo ta, va chi ghi tin hieu trong STORED")
     return 0
 
 

@@ -132,7 +132,7 @@ CHARTS_DIR = Path(__file__).parent / "charts"
 
 
 def process_symbol(symbol: str, run_dir: Path | None = None, profile: str | None = None,
-                   signal: str | None = None
+                   signal: str | None = None, universe: str | None = None
                    ) -> tuple[str, dict | None, str | None, float]:
     """
     Returns (symbol, row, skip_reason, duration_s). Exactly one of row and
@@ -161,6 +161,10 @@ def process_symbol(symbol: str, run_dir: Path | None = None, profile: str | None
     # and would pick up whichever edit landed last.
     if signal:
         config.BREADTH_SIGNAL = signal
+    # Which stored basket to read. Same reason as `signal`: a worker re-imports
+    # config, so a value set only in the parent never arrives here.
+    if universe:
+        config.BREADTH_UNIVERSE = universe
 
     t0 = time.time()
     try:
@@ -1222,14 +1226,15 @@ if __name__ == "__main__":
     # nothing wrong -- a whole run measuring something other than what was asked
     # for. `--all` was in the package docstring and never existed in this file;
     # it happened to work because running every symbol is the default.
-    KNOWN = ("--profile=", "--workers=", "--signal=", "--all")
+    KNOWN = ("--profile=", "--workers=", "--signal=", "--universe=", "--all")
     unknown = [f for f in flags if not f.startswith(KNOWN)]
     if unknown:
         raise SystemExit(
             f"co la: {' '.join(unknown)}\n"
             f"dung:  python -m single.multi_signal.run_all [MA ...] "
             f"[--all] [--profile=price|breadth|both] "
-            f"[--signal=median_prem|prem_trim|prem_cap] [--workers=N]")
+            f"[--signal=median_prem|prem_trim|prem_cap] "
+            f"[--universe=all|all-VIC-VIX] [--workers=N]")
 
     # Applied before anything reads config: factory.py and the report both read
     # the module directly, so the overlay has to be in place first.
@@ -1248,6 +1253,12 @@ if __name__ == "__main__":
     if signal:
         config.BREADTH_SIGNAL = signal
         print(f"Signal    -> {signal}")
+
+    universe = next((f.split("=", 1)[1] for f in flags
+                     if f.startswith("--universe=")), None)
+    if universe:
+        config.BREADTH_UNIVERSE = universe
+        print(f"Universe  -> {universe}")
 
     workers = next((int(f.split("=", 1)[1]) for f in flags if f.startswith("--workers=")),
                    None)   # None -> ProcessPoolExecutor picks os.cpu_count()
@@ -1275,8 +1286,8 @@ if __name__ == "__main__":
     report_rows, skipped, done = [], [], 0
     with ProcessPoolExecutor(max_workers=workers) as ex:
         n_slots = ex._max_workers
-        futures = {ex.submit(process_symbol, s, run_dir, profile, signal): s
-                   for s in symbols}
+        futures = {ex.submit(process_symbol, s, run_dir, profile, signal,
+                             universe): s for s in symbols}
 
         # The pool runs submissions FIFO, so the first n_slots symbols are the
         # ones actually in flight. Tracked here rather than reported by the

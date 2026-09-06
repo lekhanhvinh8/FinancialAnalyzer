@@ -135,8 +135,35 @@ def _cap_weighted(prem, caps, trim_mask) -> float:
     return float((prem[m] * caps[m]).sum() / caps[m].sum())
 
 
-def compute(market, window: int, slope_window: int) -> BreadthSeries:
-    """Walk the calendar once and reduce each day to a handful of numbers."""
+def universe_key(spec: str, exclude=()) -> str:
+    """
+    The name a basket is stored under, built from what the basket IS.
+
+    "all" means every stock. A basket that drops names says so:
+
+        universe_key("all")                  -> "all"
+        universe_key("all", ["VIC", "VIX"])  -> "all-VIC-VIX"
+
+    NAMED THIS WAY AFTER THE OLD NAME LIED. Rows computed over 54 symbols, with
+    VIC and VIX deliberately removed, were stored under "all" -- so a reader
+    asking the database for the market got a basket missing two of the largest
+    companies on it, with nothing in the name to say so. Excluded symbols are
+    sorted, so the same basket always produces the same key.
+    """
+    if not exclude:
+        return spec
+    return spec + "".join("-" + s.upper() for s in sorted(set(exclude)))
+
+
+def compute(market, window: int, slope_window: int, skip=()) -> BreadthSeries:
+    """
+    Walk the calendar once and reduce each day to a handful of numbers.
+
+    `skip` leaves symbols out of the basket without leaving them out of the
+    LOAD, so two baskets that differ by a few names cost one load and two
+    walks -- the load is four minutes, the walk twelve seconds.
+    """
+    skip = {s.upper() for s in skip}
 
     dates, counts = [], []
     cols = {k: [] for k in SIGNALS}
@@ -147,6 +174,8 @@ def compute(market, window: int, slope_window: int) -> BreadthSeries:
     for day in market.days():
         prem, slopes, caps = [], [], []
         for symbol, bar in day.bars.items():
+            if symbol.upper() in skip:
+                continue
             series = market[symbol]
             if series.is_index:
                 continue
