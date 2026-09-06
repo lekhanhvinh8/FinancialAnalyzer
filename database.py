@@ -151,7 +151,7 @@ def init_db():
                 window_days INTEGER  NOT NULL,  -- the per-symbol reference window
                 variant     TEXT     NOT NULL,  -- other windows that change the output
                 date        TEXT     NOT NULL,  -- ISO date: YYYY-MM-DD
-                signal      TEXT     NOT NULL,  -- 'median_prem', 'prem_trim', ...
+                signal      TEXT     NOT NULL,  -- 'prem_median', 'prem_trim', ...
                 value       REAL,
                 n_symbols   INTEGER,            -- symbols behind this day's figure
                 -- Config pinned first, then signal, then date: a read asks for
@@ -177,7 +177,7 @@ def init_db():
                 universe    TEXT     NOT NULL,  -- 'all', 'vn30', ... what was measured
                 window_days INTEGER  NOT NULL,  -- per-symbol reference window
                 variant     TEXT     NOT NULL,  -- other settings that change the output
-                signal      TEXT     NOT NULL,  -- 'median_prem', 'prem_trim', ...
+                signal      TEXT     NOT NULL,  -- 'prem_median', 'prem_trim', ...
                 date        TEXT     NOT NULL,  -- ISO date: YYYY-MM-DD
                 value       REAL,               -- percent, not a ratio
                 n_symbols   INTEGER,            -- symbols behind this day's figure

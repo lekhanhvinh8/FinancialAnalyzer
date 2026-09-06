@@ -438,7 +438,7 @@ def build_report(rows: list[dict], out_path: Path,
 
     # WHICH PROFILE, AND WHICH VALUES IT REPLACED. The panel used to show final
     # values only, so a reader could not tell a number that came from config.py
-    # from one a profile wrote over it -- and BREADTH_SIGNAL reads "median_prem"
+    # from one a profile wrote over it -- and BREADTH_SIGNAL reads "prem_median"
     # on a price run that never touches the basket, which looks like the basket
     # is involved.
     # No PROFILE attribute means no overlay was applied, which is its own case --
@@ -1233,7 +1233,7 @@ if __name__ == "__main__":
             f"co la: {' '.join(unknown)}\n"
             f"dung:  python -m single.multi_signal.run_all [MA ...] "
             f"[--all] [--profile=price|breadth|both] "
-            f"[--signal=median_prem|prem_trim|prem_cap] "
+            f"[--signal=prem_median|prem_trim|prem_trim_cap] "
             f"[--universe=all|all-VIC-VIX] [--workers=N]")
 
     # Applied before anything reads config: factory.py and the report both read

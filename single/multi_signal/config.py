@@ -514,7 +514,7 @@ REINVEST_MIN_SIGNAL1    = None
 # against +1.1 on the buy arm), and the one place where asking the symbol as
 # well is worth the extra condition.
 #
-# 70 sits inside a flat 70-90 plateau on median_prem; everything above 90 scored
+# 70 sits inside a flat 70-90 plateau on prem_median; everything above 90 scored
 # better on this history by catching two dates, one of them the single bar
 # 2022-04-06, and is a fit to those dates rather than a setting.
 #
@@ -545,4 +545,4 @@ REINVEST_JOIN_OR = False
 # a different experiment; it is not the same numbers under a tidier name.
 BREADTH_UNIVERSE = "all-VIC-VIX"
 BREADTH_WINDOW = 1000
-BREADTH_SIGNAL = "median_prem"
+BREADTH_SIGNAL = "prem_median"

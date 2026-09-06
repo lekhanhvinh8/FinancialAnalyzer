@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Bao cao kiem tra doc lap ba duong prem, hai ro, moi ma mot dong."""
+"""Bao cao kiem tra doc lap nam duong prem, hai ro, moi ma mot dong."""
 import json
 from pathlib import Path
 
@@ -33,8 +33,11 @@ for i, date in enumerate(D["dates"]):
             "<td class=n data-v='{med}'>{med}</td>"
             "<td class=n data-v='{prem}' style='color:{pc}'>{premtxt}</td>"
             "<td class=n data-v='{cap}'>{captxt}</td>"
-            "<td class='n wt' data-v='0'></td>"
+            "<td class='n wt1' data-v='0'></td>"
+            "<td class='n wt2' data-v='0'></td>"
             "<td class='m mm' data-v='0'></td>"
+            "<td class='m me' data-v='0'></td>"
+            "<td class='m mec' data-v='0'></td>"
             "<td class='m mt' data-v='0'></td>"
             "<td class='m mc' data-v='0'></td>"
             "<td class='s why' data-v='{why}' data-base='{why}'>{why}</td>"
@@ -54,21 +57,29 @@ for i, date in enumerate(D["dates"]):
     SECTIONS += """
 <h2 id=d{i}>{date}</h2>
 <div class=basket>rổ: {radios}</div>
-<div class=box><div class=kpi>
-<div><span class=lab>median_prem</span>
- <span class=val id='o{i}-median_prem'>—</span>
- <span class=lab id='s{i}-median_prem'></span>
- <span class=lab><b id='n{i}-median_prem'>0</b> mã tham gia</span></div>
-<div><span class=lab>prem_trim</span>
+<div class=box><div class=kpi5>
+<div><span class=lab>prem_median</span>
+ <span class=val id='o{i}-prem_median'>—</span>
+ <span class=lab id='s{i}-prem_median'></span>
+ <span class=lab><b id='n{i}-prem_median'>0</b> mã</span></div>
+<div><span class=lab>prem_mean <span class=tagn>không cắt</span></span>
+ <span class=val id='o{i}-prem_mean'>—</span>
+ <span class=lab id='s{i}-prem_mean'></span>
+ <span class=lab><b id='n{i}-prem_mean'>0</b> mã</span></div>
+<div><span class=lab>prem_mean_cap <span class=tagn>không cắt</span></span>
+ <span class=val id='o{i}-prem_mean_cap'>—</span>
+ <span class=lab id='s{i}-prem_mean_cap'></span>
+ <span class=lab><b id='n{i}-prem_mean_cap'>0</b> mã</span></div>
+<div><span class=lab>prem_trim <span class=tagt>cắt 5–95</span></span>
  <span class=val id='o{i}-prem_trim'>—</span>
  <span class=lab id='s{i}-prem_trim'></span>
- <span class=lab><b id='n{i}-prem_trim'>0</b> mã tham gia</span></div>
-<div><span class=lab>prem_cap</span>
- <span class=val id='o{i}-prem_cap'>—</span>
- <span class=lab id='s{i}-prem_cap'></span>
- <span class=lab><b id='n{i}-prem_cap'>0</b> mã tham gia</span></div>
+ <span class=lab><b id='n{i}-prem_trim'>0</b> mã</span></div>
+<div><span class=lab>prem_trim_cap <span class=tagt>cắt 5–95</span></span>
+ <span class=val id='o{i}-prem_trim_cap'>—</span>
+ <span class=lab id='s{i}-prem_trim_cap'></span>
+ <span class=lab><b id='n{i}-prem_trim_cap'>0</b> mã</span></div>
 <div><span class=lab>vùng cắt 5–95</span>
- <span class=val style='font-size:16px' id='band{i}'>—</span>
+ <span class=val style='font-size:15px' id='band{i}'>—</span>
  <span class=lab>tính trên các mã đang tick</span></div>
 </div></div>
 
@@ -82,15 +93,16 @@ for i, date in enumerate(D["dates"]):
 
 <table class=full id='t{i}' data-stored='{st}'><thead><tr>
 <th></th><th>mã</th><th>số phiên</th><th>giá</th><th>median 1000</th>
-<th>prem %</th><th>vốn hoá (tỷ)</th><th>trọng số</th>
-<th class=cm>median</th><th class=cm>trim</th><th class=cm>cap</th>
+<th>prem %</th><th>vốn hoá (tỷ)</th><th>tt mean_cap</th><th>tt trim_cap</th>
+<th class=cm>median</th><th class=cm>mean</th><th class=cm>mean_cap</th>
+<th class=cm>trim</th><th class=cm>trim_cap</th>
 <th>ghi chú</th>
 </tr></thead><tbody>{body}</tbody></table>
 """.format(i=i, date=date, radios=radios, body=body,
            st=st_json.replace("'", "&#39;"))
 
 HTML = """<!DOCTYPE html><html lang=vi><head><meta charset=utf-8>
-<title>Kiểm tra độc lập ba đường prem</title><style>
+<title>Kiểm tra độc lập năm đường prem</title><style>
 *{{box-sizing:border-box}}
 body{{font-family:system-ui,Segoe UI,sans-serif;background:#0b1220;color:#e2e8f0;
  margin:0;padding:26px;line-height:1.6}}
@@ -103,6 +115,14 @@ h2{{font-size:18px;margin:36px 0 8px;border-bottom:1px solid #1e293b;
 .box{{background:#0f172a;border:1px solid #1e293b;border-radius:8px;
  padding:14px 18px;margin:10px 0}}
 .kpi{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}}
+.kpi5{{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}}
+.kpi5 span{{display:block}} .kpi5 .lab{{color:#64748b;font-size:12px}}
+.kpi5 .val{{font-size:19px;font-weight:700;line-height:1.25;
+ font-variant-numeric:tabular-nums}}
+.tagn{{display:inline!important;background:#1e293b;color:#94a3b8;
+ border-radius:3px;padding:0 4px;font-size:10px}}
+.tagt{{display:inline!important;background:#3b2f14;color:#facc15;
+ border-radius:3px;padding:0 4px;font-size:10px}}
 .kpi span{{display:block}} .kpi .lab{{color:#64748b;font-size:12px}}
 .kpi .val{{font-size:21px;font-weight:700;line-height:1.25;
  font-variant-numeric:tabular-nums}}
@@ -131,26 +151,38 @@ tr.noteligible td{{color:#475569}}
 code{{background:#111c30;padding:1px 5px;border-radius:4px;font-size:12px}}
 </style></head><body><div class=wrap>
 
-<h1>Kiểm tra độc lập ba đường prem</h1>
+<h1>Kiểm tra độc lập năm đường prem</h1>
 <div class=sub>{nall} mã · cửa sổ median {window} phiên · cắt đuôi {t0}–{t1} ·
 tính lại từ giá thô, không đọc bảng breadth_signals</div>
 <div class="nav sub">Nhảy tới: <a href='#d0'>{d0}</a><a href='#d1'>{d1}</a>
 <a href='#d2'>{d2}</a></div>
 
 <div class=box>
-<b>Mỗi đường có một tập mã riêng — đó là chỗ dễ hiểu nhầm nhất</b>
+<b>Năm đường, mỗi đường một tập mã riêng — chỗ dễ hiểu nhầm nhất</b>
 <div class=note style='margin-top:6px'>
 Một mã có thể được tính vào đường này mà bị loại khỏi đường kia. Ba cột
 <b>median · trim · cap</b> ở cuối bảng nói rõ từng đường một:<br><br>
-<b>median</b> ✓ khi mã đủ {window} phiên, có giao dịch phiên đó, và nằm trong rổ.
-Trung vị không quan tâm mã đó lệch bao nhiêu.<br>
-<b>trim</b> ✓ khi thêm điều kiện prem nằm trong phân vị 5–95. Mã cực đoan bị
-loại khỏi riêng đường này.<br>
-<b>cap</b> ✓ khi vừa qua được trim vừa có số liệu vốn hoá.<br><br>
-<b>VIC ngày 2026-08-04 là ví dụ đúng của chuyện này</b>: prem +702.9% nên nó
-được tính vào <code>median_prem</code> nhưng bị vùng cắt loại khỏi
-<code>prem_trim</code> và <code>prem_cap</code> — bản trước của báo cáo gộp cả
-ba vào một cột nên không thể hiện được.
+<b>median</b> và <b>mean</b> ✓ khi mã đủ {window} phiên, có giao dịch phiên đó,
+và nằm trong rổ. Hai đường này không loại bỏ ai.<br>
+<b>mean_cap</b> ✓ khi thêm điều kiện có số liệu vốn hoá — vẫn không cắt đuôi.<br>
+<b>trim</b> ✓ khi prem nằm trong phân vị 5–95. Mã cực đoan bị loại.<br>
+<b>trim_cap</b> ✓ khi vừa qua trim vừa có vốn hoá — chặt nhất trong năm đường.<br><br>
+Hai cột <b>tt mean_cap</b> và <b>tt trim_cap</b> là tỉ trọng vốn hoá của mã
+trong từng đường — hai đường chia cho hai tổng khác nhau nên cùng một mã có hai
+tỉ trọng khác nhau. Ô tô vàng là mã chiếm từ 25% trở lên: một mình nó quyết định
+đường đó.<br><br>
+<b>Đọc theo cặp thì rõ nhất:</b> <code>prem_mean</code> so với
+<code>prem_trim</code> cho biết phần cắt đuôi đáng bao nhiêu;
+<code>prem_mean_cap</code> so với <code>prem_trim_cap</code> cho biết điều đó ở
+phiên bản có trọng số. Chênh lệch chính là mức độ rổ đang bị vài mã cực đoan
+kéo đi.<br><br>
+<b>VIC ngày 2026-08-04 là ví dụ đúng của chuyện này</b>: prem +702.9%, vốn hoá
+1.685.901 tỷ. Nó được tính vào <code>prem_median</code>, <code>prem_mean</code>
+và <code>prem_mean_cap</code>, nhưng bị vùng cắt loại khỏi
+<code>prem_trim</code> và <code>prem_trim_cap</code>. Ở rổ <code>all</code>, một
+mình nó đẩy <code>prem_mean_cap</code> lên <b>221.2</b> trong khi
+<code>prem_trim_cap</code> chỉ <b>26.1</b> — đó là toàn bộ ý nghĩa của phần cắt
+đuôi, hiện ra thành một con số.
 </div></div>
 
 <div class=box>
@@ -207,11 +239,12 @@ function recalc(i) {{
     var on = r.querySelector('input').checked;
     r.classList.toggle('outb', !on);
     r.classList.toggle('noteligible', r.dataset.ok !== '1');
-    ['mm', 'mt', 'mc'].forEach(function (c) {{
+    ['mm', 'me', 'mec', 'mt', 'mc'].forEach(function (c) {{
       var td = r.querySelector('td.' + c);
       td.textContent = ''; td.style.color = '';
     }});
-    r.querySelector('td.wt').textContent = '';
+    r.querySelector('td.wt1').textContent = '';
+    r.querySelector('td.wt2').textContent = '';
     // MOT DONG KHONG DUOC TINH PHAI NOI RA VI SAO. Truoc day o ghi chu cua VIC
     // chi hien "—" trong khi dong bi lam mo va ba cot bo trong -- doc nhu the
     // la "ma nay khong lien quan", chu khong phai "ro ban dang chon khong co
@@ -237,7 +270,8 @@ function recalc(i) {{
     var el = document.getElementById(id); if (el) el.textContent = v;
   }};
   if (!live.length) {{
-    ['median_prem', 'prem_trim', 'prem_cap'].forEach(function (k) {{
+    ['prem_median', 'prem_mean', 'prem_mean_cap', 'prem_trim',
+     'prem_trim_cap'].forEach(function (k) {{
       set('o' + i + '-' + k, '—'); set('n' + i + '-' + k, 0); set('s' + i + '-' + k, '');
     }});
     set('band' + i, '—');
@@ -247,28 +281,51 @@ function recalc(i) {{
   var s = prem.slice().sort(function (a, b) {{ return a - b; }});
   var med = pct(s, 50), lo = pct(s, 5), hi = pct(s, 95);
   var keep = [], capNum = 0, capDen = 0, nCap = 0, capRows = [];
+  var sum = 0, mcNum = 0, mcDen = 0, nMeanCap = 0, meanCapRows = [];
+  var tick = function (td, on) {{
+    td.textContent = on ? '\\u2713' : '\\u2717';
+    td.style.color = on ? '#4ade80' : '#f87171';
+  }};
   live.forEach(function (r) {{
     var p = parseFloat(r.dataset.prem), cap = parseFloat(r.dataset.cap);
-    var inTrim = p >= lo && p <= hi;
-    var mm = r.querySelector('td.mm'), mt = r.querySelector('td.mt'),
-        mc = r.querySelector('td.mc');
-    mm.textContent = '\\u2713'; mm.style.color = '#4ade80';
-    mt.textContent = inTrim ? '\\u2713' : '\\u2717';
-    mt.style.color = inTrim ? '#4ade80' : '#f87171';
-    var inCap = inTrim && cap > 0;
-    mc.textContent = inCap ? '\\u2713' : '\\u2717';
-    mc.style.color = inCap ? '#4ade80' : '#f87171';
+    var inTrim = p >= lo && p <= hi, hasCap = cap > 0;
+    tick(r.querySelector('td.mm'), true);      // median: moi ma hop le
+    tick(r.querySelector('td.me'), true);      // mean: cung vay
+    tick(r.querySelector('td.mec'), hasCap);   // mean_cap: chi can co von hoa
+    tick(r.querySelector('td.mt'), inTrim);
+    var inCap = inTrim && hasCap;
+    tick(r.querySelector('td.mc'), inCap);
+    sum += p;
+    if (hasCap) {{ mcNum += p * cap; mcDen += cap; nMeanCap++;
+                   meanCapRows.push([r, cap]); }}
     if (inTrim) keep.push(p);
     if (inCap) {{ capNum += p * cap; capDen += cap; nCap++; capRows.push([r, cap]); }}
   }});
+  // HAI TRONG SO, KHONG PHAI MOT. prem_mean_cap va prem_trim_cap chia cho hai
+  // tong khac nhau, nen mot ma co hai ti trong khac nhau -- va khoang cach giua
+  // chung la thu giai thich vi sao hai duong xa nhau den the. VIC ngay
+  // 2026-08-04 nam o cot trai voi ti trong ap dao, con cot phai bo trong vi no
+  // da bi vung cat loai.
+  meanCapRows.forEach(function (x) {{
+    var w = x[1] / mcDen * 100;
+    var td = x[0].querySelector('td.wt1');
+    td.textContent = w.toFixed(2) + '%';
+    if (w >= 25) {{ td.style.color = '#facc15'; td.style.fontWeight = '700'; }}
+    else {{ td.style.color = ''; td.style.fontWeight = ''; }}
+  }});
   capRows.forEach(function (x) {{
-    x[0].querySelector('td.wt').textContent = (x[1] / capDen * 100).toFixed(2) + '%';
+    x[0].querySelector('td.wt2').textContent = (x[1] / capDen * 100).toFixed(2) + '%';
   }});
   var mean = keep.length ? keep.reduce(function (a, b) {{ return a + b; }}, 0) / keep.length : NaN;
-  var vals = {{median_prem: med, prem_trim: mean,
-               prem_cap: capDen > 0 ? capNum / capDen : NaN}};
-  var ns = {{median_prem: live.length, prem_trim: keep.length, prem_cap: nCap}};
-  ['median_prem', 'prem_trim', 'prem_cap'].forEach(function (k) {{
+  var vals = {{prem_median: med, prem_mean: sum / live.length,
+               prem_mean_cap: mcDen > 0 ? mcNum / mcDen : NaN,
+               prem_trim: mean,
+               prem_trim_cap: capDen > 0 ? capNum / capDen : NaN}};
+  var ns = {{prem_median: live.length, prem_mean: live.length,
+             prem_mean_cap: nMeanCap, prem_trim: keep.length,
+             prem_trim_cap: nCap}};
+  ['prem_median', 'prem_mean', 'prem_mean_cap', 'prem_trim',
+   'prem_trim_cap'].forEach(function (k) {{
     set('o' + i + '-' + k, isNaN(vals[k]) ? '—' : vals[k].toFixed(4));
     set('n' + i + '-' + k, ns[k]);
     var el = document.getElementById('s' + i + '-' + k);

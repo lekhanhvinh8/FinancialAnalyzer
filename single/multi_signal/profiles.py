@@ -17,7 +17,7 @@ WHY PROFILES AND NOT TWO PACKAGES
               with the momentum, sharpe, zdev and pelog gates as configured.
               Reproduces what median1000 measured.
 
-    breadth   the price triggers off, the basket's median_prem on.
+    breadth   the price triggers off, the basket's prem_median on.
 
               NOT BIT-IDENTICAL to the old market_breadth package, and the
               difference is real rather than a porting slip. That package had

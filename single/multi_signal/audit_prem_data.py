@@ -45,8 +45,9 @@ for s in ALL:
 
 def stored(uni, date):
     out = {}
-    for variant, sig in (("base", "median_prem"), ("trim5-95", "prem_trim"),
-                         ("trim5-95", "prem_cap")):
+    for variant, sig in (("base", "prem_median"), ("base", "prem_mean"),
+                         ("base", "prem_mean_cap"), ("trim5-95", "prem_trim"),
+                         ("trim5-95", "prem_trim_cap")):
         df = db.load_breadth(uni, W, variant, [sig])
         if df.empty or sig not in df:
             continue
@@ -97,10 +98,15 @@ def compute(rows, basket):
     keep = (p >= lo) & (p <= hi)
     w = np.array([(r["cap"] if r["cap"] else np.nan) for r in live], dtype=float)
     mc = keep & ~np.isnan(w)
-    return {"median_prem": round(float(np.median(p)), 4),
+    allcap = ~np.isnan(w)
+    return {"prem_median": round(float(np.median(p)), 4),
+            "prem_mean": round(float(p.mean()), 4),
+            "prem_mean_cap": round(float((p[allcap] * w[allcap]).sum()
+                                         / w[allcap].sum()), 4),
             "prem_trim": round(float(p[keep].mean()), 4),
-            "prem_cap": round(float((p[mc] * w[mc]).sum() / w[mc].sum()), 4),
+            "prem_trim_cap": round(float((p[mc] * w[mc]).sum() / w[mc].sum()), 4),
             "n": int(len(p)), "n_trim": int(keep.sum()), "n_cap": int(mc.sum()),
+            "n_meancap": int(allcap.sum()),
             "lo": round(float(lo), 4), "hi": round(float(hi), 4)}
 
 
@@ -116,10 +122,12 @@ for d in DATES:
     }
     for b in BASKETS:
         m, s2 = out["sections"][d]["mine"][b], out["sections"][d]["stored"][b]
-        ok = all(s2.get(k) is not None and abs(m[k] - s2[k]) < 5e-4
-                 for k in ("median_prem", "prem_trim", "prem_cap"))
-        print("%s %-12s n=%2d  %.4f %.4f %.4f  %s"
-              % (d, b, m["n"], m["median_prem"], m["prem_trim"], m["prem_cap"],
-                 "KHOP" if ok else "LECH " + str(s2)), file=sys.stderr)
+        KEYS = ("prem_median", "prem_mean", "prem_mean_cap",
+                "prem_trim", "prem_trim_cap")
+        bad = [k for k in KEYS
+               if s2.get(k) is None or abs(m[k] - s2[k]) >= 5e-4]
+        print("%s %-12s n=%2d  %s  %s"
+              % (d, b, m["n"], " ".join("%.4f" % m[k] for k in KEYS),
+                 "KHOP" if not bad else "LECH " + str(bad)), file=sys.stderr)
 
 print(json.dumps(out, ensure_ascii=False))

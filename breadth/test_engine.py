@@ -282,12 +282,12 @@ def main() -> int:
     check(br.counts[0] == 2, f"chi so phai bi loai, dem duoc {br.counts[0]}")
     check(abs(br.at("below_pct", 0) - 0.5) < 1e-9,
           f"1 trong 2 ma duoi median -> 0.5, duoc {br.at('below_pct', 0)}")
-    check(abs(br.at("median_prem", 0)) < 1e-9,
-          f"-10% va +10% -> trung vi 0, duoc {br.at('median_prem', 0)}")
+    check(abs(br.at("prem_median", 0)) < 1e-9,
+          f"-10% va +10% -> trung vi 0, duoc {br.at('prem_median', 0)}")
     # (-10 x 1 + 10 x 9) / 10 = +8. The median says 0 because it counts heads;
     # this counts money, and nine tenths of the money is in B.
-    check(abs(br.at("prem_cap", 0) - 8.0) < 1e-9,
-          f"von hoa 1:9 -> +8.0, duoc {br.at('prem_cap', 0)}")
+    check(abs(br.at("prem_trim_cap", 0) - 8.0) < 1e-9,
+          f"von hoa 1:9 -> +8.0, duoc {br.at('prem_trim_cap', 0)}")
 
     # ── interest is profit, never capital ───────────────────────────────────
     # With a deposit rate on, the reserve grows without anyone paying anything

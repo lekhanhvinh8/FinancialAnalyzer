@@ -121,7 +121,7 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
         return self.signal1_map.get(index, 0.0) >= self.min_signal1
 
     # ── the basket, not this symbol ─────────────────────────────────────────
-    # {row_index: median_prem} from breadth_signals. The reserve goes back to
+    # {row_index: prem_median} from breadth_signals. The reserve goes back to
     # work only when the whole market is at or below max_breadth. None switches
     # it off. Same shape as the other gates on this class.
     breadth_map: dict = field(default_factory=dict)

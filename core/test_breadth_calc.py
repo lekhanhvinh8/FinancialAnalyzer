@@ -26,18 +26,18 @@ def main() -> int:
     dates = [pd.Timestamp("2020-01-0%d" % d) for d in (1, 2, 3)]
     b = BreadthSeries(
         dates=dates,
-        values={"median_prem": np.array([1.5, np.nan, -3.25]),   # -> base
+        values={"prem_median": np.array([1.5, np.nan, -3.25]),   # -> base
                 "prem_trim":   np.array([2.0, 2.5, -1.0]),       # -> trim5-95
                 "mean_slope":  np.array([0.1, 0.2, 0.3])},       # -> khong luu
         counts=np.array([40.0, 41.0, 42.0]),
         row_of={d: i for i, d in enumerate(dates)},
     )
 
-    # A SIGNAL IS NAMED BY WHAT IT READS. median_prem reads neither the slope
+    # A SIGNAL IS NAMED BY WHAT IT READS. prem_median reads neither the slope
     # window nor the z_dev one, so it must not be filed under a name that
     # mentions them -- the bug this test was written for.
-    check(variant("median_prem") == "base",
-          f"median_prem phai la 'base', duoc {variant('median_prem')}")
+    check(variant("prem_median") == "base",
+          f"prem_median phai la 'base', duoc {variant('prem_median')}")
     check(variant("prem_trim") == "trim5-95", "prem_trim sai ten")
     # Not stored, so it has no home of its own -- and must not invent one.
     check("mean_slope" not in STORED, "mean_slope khong duoc nam trong STORED")
@@ -60,10 +60,10 @@ def main() -> int:
         check([str(d)[:10] for d in got.dates] == ["2020-01-01", "2020-01-02",
                                                    "2020-01-03"], "ngay sai")
         check(list(got.counts) == [40, 41, 42], f"n_symbols sai: {got.counts}")
-        check(got.at("median_prem", 0) == 1.5, "gia tri sai")
+        check(got.at("prem_median", 0) == 1.5, "gia tri sai")
         # NaN must survive as "no data", not become 0.
-        check(got.at("median_prem", 1) is None,
-              f"NaN phai ve None, duoc {got.at('median_prem', 1)}")
+        check(got.at("prem_median", 1) is None,
+              f"NaN phai ve None, duoc {got.at('prem_median', 1)}")
         check(got.at("prem_trim", 2) == -1.0, "prem_trim sai")
         check("mean_slope" not in got.values,
               "mean_slope khong duoc luu vao DB")
@@ -82,8 +82,8 @@ def main() -> int:
     check(mine == {"base", "trim5-95"},
           f"doi slope khong duoc de ra variant moi, co: {sorted(mine)}")
     base_rows = db.load_breadth(UNI, WIN, "base")
-    check(len(base_rows) == 3 and "median_prem" in base_rows,
-          "doi slope khong duoc dong toi median_prem")
+    check(len(base_rows) == 3 and "prem_median" in base_rows,
+          "doi slope khong duoc dong toi prem_median")
 
     # Asking for a config that was never written is empty, not an error.
     check(load_from_db(UNI, 999) is None,

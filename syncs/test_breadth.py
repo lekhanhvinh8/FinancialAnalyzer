@@ -92,6 +92,14 @@ def main() -> int:
     from core.breadth_calc import STORED, SIGNALS, variant
     check(set(STORED) < set(SIGNALS), "STORED phai la tap con that su cua SIGNALS")
     check("mean_slope" not in STORED, "mean_slope khong duoc luu")
+    # Ten phai noi ra phep tinh: co cat duoi hay khong, co trong so hay khong.
+    for name in ("prem_median", "prem_mean", "prem_mean_cap",
+                 "prem_trim", "prem_trim_cap"):
+        check(name in STORED, f"thieu tin hieu {name}")
+    check(variant("prem_mean") == "base" and variant("prem_mean_cap") == "base",
+          "duong khong cat khong duoc phu thuoc nguong cat")
+    check(variant("prem_trim") == "trim5-95" and variant("prem_trim_cap") == "trim5-95",
+          "duong co cat phai nam duoi variant trim")
     check({variant(s) for s in STORED} == {"base", "trim5-95"},
           f"chi hai variant duoc ghi, dang co {sorted({variant(s) for s in STORED})}")
 

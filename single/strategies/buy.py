@@ -148,7 +148,7 @@ class BuyMedian1000Strategy(BuyStrategy):
     sell_strategy: object = None
 
     # ── the basket, not this symbol ─────────────────────────────────────────
-    # {row_index: median_prem} from breadth_signals: how far the MEDIAN symbol
+    # {row_index: prem_median} from breadth_signals: how far the MEDIAN symbol
     # of the whole basket sits from its own median, in percent. None on
     # max_breadth switches the gate off and the arm is exactly what it was.
     #

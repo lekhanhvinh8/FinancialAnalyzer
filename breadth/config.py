@@ -194,15 +194,15 @@ BUY_WEAK_MULT = 0.8
 SELL_BELOW_PCT = None        # e.g. 0.25 -- fewer than a quarter still cheap
 SELL_MAX_SLOPE = -0.10       # and average momentum clearly negative
 
-# ── Three arms on median_prem ─────────────────────────────────────────────────
+# ── Three arms on prem_median ─────────────────────────────────────────────────
 #
-# median_prem is the median distance from median across the basket, so
-# "median_prem <= -60" IS "half the basket is at least 60% below its own median".
+# prem_median is the median distance from median across the basket, so
+# "prem_median <= -60" IS "half the basket is at least 60% below its own median".
 # One number expresses both halves of that sentence.
 #
 # None on any of the three switches that arm off.
 #
-# MIND THE RANGE. median_prem has never been below -28.5% in this history and its
+# MIND THE RANGE. prem_median has never been below -28.5% in this history and its
 # median day is +24.8%: the market rose, so the typical symbol sits ABOVE its own
 # 1000-bar median. A buy threshold of -60 fires on 0.0% of days.
 #
@@ -222,7 +222,7 @@ SELL_MAX_SLOPE = -0.10       # and average momentum clearly negative
 #
 # READ THE LAST TWO COLUMNS FIRST.
 #
-# The -60 row ends 98% IN CASH: the buy arm never fires (median_prem has never
+# The -60 row ends 98% IN CASH: the buy arm never fires (prem_median has never
 # been below -28.5%), the sell arm fires on 29% of days, and the reinvest arm at
 # -10 fires on 1.6% -- so money leaves the market and does not come back. A third
 # of its profit is deposit interest, and at 0% it drops from 151% to 101%. That
@@ -270,7 +270,7 @@ USE_PREM_ARMS = True
 #
 #     threshold      40     50     60     70     80     90    100
 #     prem_trim    71.8   81.7  101.1  108.2  132.5  132.6  143.4
-#     median_prem 150.9  189.9  201.8  219.1  224.9  229.0  240.2
+#     prem_median 150.9  189.9  201.8  219.1  224.9  229.0  240.2
 #     sells (both)    9      6      7      3    3-5    2-3      4
 #
 # The two fire on nearly the same days -- the sell counts match almost cell for

@@ -3,7 +3,7 @@ Sweep one breadth threshold at a time: BUY_MAX_BREADTH, SELL_MIN_BREADTH or
 REINVEST_MAX_BREADTH, on whichever line BREADTH_SIGNAL names.
 
     python -m single.multi_signal.sweep_breadth --arm=sell
-    python -m single.multi_signal.sweep_breadth --arm=buy --signal=prem_cap
+    python -m single.multi_signal.sweep_breadth --arm=buy --signal=prem_trim_cap
     python -m single.multi_signal.sweep_breadth --arm=reinvest FPT STB
     python -m single.multi_signal.sweep_breadth --arm=sell --rescore
 
@@ -22,7 +22,7 @@ WHAT IS HELD FIXED
   a grid where everything moves at once.
 
   BREADTH_SIGNAL is a sweep input because the three lines sit on different
-  scales: 60 is the 86th percentile of median_prem and the 78th of prem_cap. A
+  scales: 60 is the 86th percentile of prem_median and the 78th of prem_trim_cap. A
   threshold quoted without the line it was measured on means nothing.
 
 THE REFERENCE ROW IS THE PROFILE'S OWN VALUE
@@ -66,7 +66,7 @@ from single.multi_signal.profiles import apply as apply_profile
 
 # ── what differs between the three arms ─────────────────────────────────────
 # The grids are placed off the measured distribution of the line rather than on
-# round numbers: prem_cap runs 10 to 16 points above median_prem, so 40/50/60
+# round numbers: prem_trim_cap runs 10 to 16 points above prem_median, so 40/50/60
 # would sit in a different part of the distribution for each signal. Wide enough
 # that the ends are clearly wrong, which is how a plateau becomes visible AS a
 # plateau rather than as the top of a slope.
@@ -80,7 +80,7 @@ ARMS = {
         "param": "SELL_MIN_BREADTH", "kw": "sell_min_breadth",
         # Extended past 100 after the first run put its best cell on the grid
         # edge, which says nothing about whether the edge is a peak or a slope.
-        # prem_cap tops out at 124.8, so 120 still fires occasionally and 130
+        # prem_trim_cap tops out at 124.8, so 120 still fires occasionally and 130
         # never does -- the grid now contains its own "off" end.
         "grid": [40, 50, 60, 70, 75, 80, 85, 90, 95, 100, 105, 110, 120, 130, None],
         "sense": "ban khi ro &gt; nguong, nen LON hon la CHAT hon",
@@ -121,8 +121,8 @@ def _apply_all(arm=None, profile=None, signal=None, overrides=None):
     TAKES ARGUMENTS BECAUSE A WORKER IS A FRESH PROCESS. It re-imports this
     module, so ARM, SIGNAL and OVERRIDES come back as their defaults and
     whatever main() assigned in the parent never arrives. The first run of this
-    file swept the sell arm on median_prem while the report said buy on
-    prem_cap: every number was real, every label was wrong, and the two sweeps
+    file swept the sell arm on prem_median while the report said buy on
+    prem_trim_cap: every number was real, every label was wrong, and the two sweeps
     were byte-identical -- which is the only reason it was caught.
     """
     global ARM, PROFILE, SIGNAL, OVERRIDES

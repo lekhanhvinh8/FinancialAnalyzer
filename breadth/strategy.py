@@ -128,8 +128,8 @@ def prem_signal(fraction: float) -> str:
 
 def _prem_plan(config) -> Plan:
     """
-    Three arms on median_prem: buy deep, reinvest on mild weakness, sell on
-    broad strength. `median_prem <= -60` reads as "half the basket is at least
+    Three arms on prem_median: buy deep, reinvest on mild weakness, sell on
+    broad strength. `prem_median <= -60` reads as "half the basket is at least
     60% below its own median".
     """
     # The trimmed mean is ONE number, so a fraction has no meaning for it: the

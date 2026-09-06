@@ -52,8 +52,8 @@ def _arm_signals(config):
         lines = [(config.BUY_PREM_MAX, "mua"),
                  (config.REINVEST_PREM_MAX, "reinvest"),
                  (config.SELL_PREM_MIN, "ban")]
-        used = "prem_trim" if getattr(config, "USE_TRIM_MEAN", False) else "median_prem"
-        other = "median_prem" if used == "prem_trim" else "prem_trim"
+        used = "prem_trim" if getattr(config, "USE_TRIM_MEAN", False) else "prem_median"
+        other = "prem_median" if used == "prem_trim" else "prem_trim"
         return [used, other], [(v, n) for v, n in lines if v is not None]
     return ["below_pct"], [(config.BUY_STRONG_BELOW_PCT, "manh"),
                            (config.BUY_NORMAL_BELOW_PCT, "thuong")]

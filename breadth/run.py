@@ -141,7 +141,7 @@ def _report(config, plan, base, breadth, market, prog) -> int:
     alt_plan.attach(breadth)
     alt = run_backtest(market, breadth, alt_plan, config.CONTRIBUTION,
                        deposit_rate=config.DEPOSIT_RATE, track=True)
-    alt_label = "prem_trim" if not was else "median_prem"
+    alt_label = "prem_trim" if not was else "prem_median"
 
     w = 22
     print(f"\n{'':<{w}}{plan.name[:18]:>18}{base.name[:20]:>20}")
@@ -166,7 +166,7 @@ def _report(config, plan, base, breadth, market, prog) -> int:
     print(f"\n{'so sanh hai thong ke':<24}{'tang truong':>12}{'mua':>7}"
           f"{'tai':>6}{'ban':>6}")
     print("-" * 55)
-    used = "prem_trim" if was else "median_prem"
+    used = "prem_trim" if was else "prem_median"
     for lab, r in ((used + " (dang dung)", result), (alt_label, alt)):
         print(f"{lab:<24}{r['growth_%']:>11.2f}%{r['buys']:>7}"
               f"{r.get('reinvests', 0):>6}{r['sells']:>6}")

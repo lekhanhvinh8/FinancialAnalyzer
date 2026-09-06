@@ -205,7 +205,7 @@ def run_backtest(market, breadth_series, plan, contribution: float,
                 "holdings": held,
                 "cash": wallet.reserve,
                 "below_pct": breadth_series.at("below_pct", i),
-                "median_prem": breadth_series.at("median_prem", i),
+                "prem_median": breadth_series.at("prem_median", i),
                 "n": float(support),
             }
 

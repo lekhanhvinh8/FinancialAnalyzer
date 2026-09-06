@@ -49,17 +49,19 @@ WHAT IS COMPUTED
   aggregates.
 
     below_pct     share of the basket trading under its own median      0..1
-    median_prem   the median distance from median, in percent           %
+    prem_median   the median distance from median, in percent           %
     p25_prem      the cheap quartile, for how far the tail has gone     %
     prem_q5..q95  the whole shape, every 5%                             %
     spread        p75 minus p25 of premium: agreement or dispersion     %
+    prem_mean     plain mean premium, nothing dropped                   %
+    prem_mean_cap the same, weighted by market cap                      %
     prem_trim     mean premium after dropping the 5% tails at each end  %
     prem_trim_sd  its standard deviation, over the same trimmed set     %
-    prem_cap      the same trimmed mean, weighted by market cap         %
+    prem_trim_cap the same trimmed mean, weighted by market cap         %
     mean_slope    average momentum, percent per day                     %
     n             how many symbols the day's figures rest on            count
 
-  prem_trim reads one vote per symbol, prem_cap one vote per dong. They part
+  prem_trim reads one vote per symbol, prem_trim_cap one vote per dong. They part
   company exactly when the large caps and the ordinary listings disagree.
 
   Five more signals lived here and were deleted: slope_pos, median_zdev,
@@ -92,9 +94,24 @@ TRIM_LOW, TRIM_HIGH = 5, 95
 # mean_slope is COMPUTED BUT NEVER STORED: breadth/strategy.py reads it from the
 # series in hand, and nothing has ever read it back from the database. Storing it
 # is what kept a "slope120" variant alive in a store where nothing addressed it.
-SIGNALS = (("below_pct", "median_prem", "p25_prem", "mean_slope", "spread")
+# NAMES SAY WHAT THE NUMBER IS: prem_<how it is aggregated>[_cap if weighted].
+#
+#   prem_median     the median. Ignores magnitude entirely.
+#   prem_mean       the plain mean. Every symbol counts, tails included.
+#   prem_mean_cap   the plain mean, weighted by market cap.
+#   prem_trim       the mean after dropping the 5% tails at each end.
+#   prem_trim_cap   that, weighted by market cap.
+#   prem_trim_sd    the standard deviation over the same trimmed set.
+#
+# THE OLD NAMES HID THE TRIM. "prem_cap" said nothing about being trimmed, so a
+# reader asking why VIC was missing from it had to read this file to find out --
+# the trim drops VIC at +702% and the name gave no hint. "median_prem" put the
+# statistic first while every other name put it last. Both are fixed here; the
+# stored rows were renamed with them.
+SIGNALS = (("below_pct", "p25_prem", "mean_slope", "spread")
            + tuple(f"prem_q{q}" for q in PREM_QS)
-           + ("prem_trim", "prem_trim_sd", "prem_cap"))
+           + ("prem_median", "prem_mean", "prem_mean_cap",
+              "prem_trim", "prem_trim_sd", "prem_trim_cap"))
 
 
 @dataclass
@@ -196,7 +213,7 @@ def compute(market, window: int, slope_window: int, skip=()) -> BreadthSeries:
 
         a = np.asarray(prem)
         push("below_pct", a, lambda v: float((v < 0).mean()))
-        push("median_prem", a, lambda v: float(np.median(v)))
+        push("prem_median", a, lambda v: float(np.median(v)))
         push("p25_prem", a, lambda v: float(np.percentile(v, 25)))
         push("spread", a, lambda v: float(np.percentile(v, 75) - np.percentile(v, 25)))
         for q in PREM_QS:
@@ -206,6 +223,10 @@ def compute(market, window: int, slope_window: int, skip=()) -> BreadthSeries:
         # A plain mean is dragged by a handful of names that ran 300% or
         # collapsed; the median ignores magnitude entirely. Trimming keeps the
         # magnitude of the ordinary 90% and discards only the tails.
+        def _no_trim(v):
+            """Keeps everything -- the untrimmed lines reuse _cap_weighted."""
+            return np.ones(len(v), dtype=bool)
+
         def _trim_mask(v):
             lo, hi = np.percentile(v, [TRIM_LOW, TRIM_HIGH])
             m = (v >= lo) & (v <= hi)
@@ -230,7 +251,17 @@ def compute(market, window: int, slope_window: int, skip=()) -> BreadthSeries:
         # extreme moves, not extreme sizes. A symbol with no cap reading drops
         # out of this signal only; it still counts in every other one.
         w = np.asarray(caps)
-        cols["prem_cap"].append(_cap_weighted(a, w, _trim_mask))
+        cols["prem_trim_cap"].append(_cap_weighted(a, w, _trim_mask))
+
+        # THE SAME TWO LINES WITHOUT THE TRIM, so the trim's effect can be read
+        # off rather than argued about. On a day when one symbol is 700% above
+        # its median, prem_mean and prem_trim are far apart and the gap IS the
+        # answer to "how much is this basket being carried by its extremes".
+        #
+        # Both are cheap -- the premiums are already in hand -- and having them
+        # stored means a question about the trim never needs a rerun.
+        cols["prem_mean"].append(float(a.mean()) if len(a) else np.nan)
+        cols["prem_mean_cap"].append(_cap_weighted(a, w, _no_trim))
 
         b = np.asarray(slopes)
         push("mean_slope", b, lambda v: float(v.mean()))
@@ -318,8 +349,8 @@ def load(path, fp: str = None):
     cache sixteen trading days behind the price table and reported success --
     the same failure the database copy had, from the same cause.
 
-    A CACHE MISSING A SIGNAL IS A MISS, not a partial hit. Adding prem_cap to
-    SIGNALS left a cache on disk that predated it, and the run reused that cache,
+    A CACHE MISSING A SIGNAL IS A MISS, not a partial hit. Adding a signal
+    (prem_trim_cap, then called prem_cap) left a cache on disk that predated it, and the run reused that cache,
     reported "2829 ngay (cache)" and stored everything EXCEPT the new signal --
     silently, because nothing compared what was asked for with what came back.
     Recomputing costs a few minutes; a silently absent signal costs an
@@ -349,14 +380,15 @@ def load(path, fp: str = None):
 # WHICH PARAMETERS EACH SIGNAL ACTUALLY USES
 #
 # The variant string used to name the whole BATCH: every signal computed in one
-# call got "trim5-95_slope120_zdev250", including median_prem, which reads none
+# call got "trim5-95_slope120_zdev250", including prem_median (then called
+# median_prem), which reads none
 # of those three. That is a lie a reader cannot check -- it says the decision
 # line depends on a 120-bar slope when it depends only on window_days -- and it
 # forced a pointless rewrite of 2829 identical rows every time an unrelated
 # parameter moved.
 #
 # A signal is now named by what it reads, and nothing else.
-_TRIM  = ("prem_trim", "prem_trim_sd", "prem_cap")
+_TRIM  = ("prem_trim", "prem_trim_sd", "prem_trim_cap")
 # COMPUTED BUT NOT STORED. breadth/strategy.py reads mean_slope from the series
 # in hand; nothing has ever read it back from the database.
 _NOT_STORED = ("mean_slope",)
@@ -368,9 +400,10 @@ def variant(signal: str) -> str:
     """
     The settings that change THIS signal, other than window_days.
 
-    "base" for a signal that reads only the premium and the window: median_prem,
-    the quantiles, below_pct, spread, p25_prem. Not the empty string, because the
-    variant is part of a primary key and an empty key segment is a trap.
+    "base" for a signal that reads only the premium and the window: prem_median,
+    prem_mean, prem_mean_cap, the quantiles, below_pct, spread, p25_prem. Not the
+    empty string, because the variant is part of a primary key and an empty key
+    segment is a trap.
 
     Takes no window arguments any more. It took a slope window and a z_dev window
     while signals keyed on those existed; after they were deleted the parameters

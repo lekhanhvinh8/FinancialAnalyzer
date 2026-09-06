@@ -182,7 +182,7 @@ class SellMedian1000Strategy(SellStrategy):
     min_pelog: float = 0.0
 
     # ── the basket, not this symbol ─────────────────────────────────────────
-    # {row_index: median_prem} from breadth_signals. Blocks the sell unless the
+    # {row_index: prem_median} from breadth_signals. Blocks the sell unless the
     # WHOLE MARKET is extended by at least min_breadth percent. None switches it
     # off. A gate like min_signal1, not a strategy of its own: with it here,
     # "this symbol is 75% above its median AND the market is dear" is one arm,
