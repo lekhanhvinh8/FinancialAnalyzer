@@ -170,6 +170,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 SELLS  = [60, 65, 70, 75, 80, 85, 90]                              # 7
 SLOPES = [None, 0.0, 0.1, 0.15, 0.183, 0.21, 0.228, 0.25, 0.274,
@@ -426,7 +427,12 @@ def interaction(per_symbol: dict) -> list:
         # saying so is the honest output. Reported rather than hidden behind the
         # tie-break above, which only picks the least bad of a flat row.
         flat = all(abs(t[1]) < 1e-9 for t in scored)
-        row_vs_live = med_of_diff(row_live, live_k)[0]
+        # Cot cuoi do hang nay voi O LIVE CUA LUOI. O do co the khong nam trong
+        # luoi: config doi sau khi sweep chay (PERCENT_SELL 75 -> 50) va o
+        # 50|0.228 chua bao gio duoc quet. Truoc day day la KeyError lam ca
+        # --rescore chet, nen bao cao khong dung lai duoc chi vi mot con so phu.
+        row_vs_live = (med_of_diff(row_live, live_k)[0]
+                       if live_k in per_symbol[syms[0]] else None)
         out.append((ps, best_r, g, up, dn, p, row_vs_live, mn, flat))
     return out
 
@@ -515,7 +521,8 @@ def build_html(grids, per_symbol, n_syms, skipped, elapsed):
         f"<td style='color:{'#4ade80' if g > 0 and p < 0.05 else '#f87171' if g < 0 else '#e2e8f0'}"
         f";font-weight:600'>{g:+.2f}</td>"
         f"<td style='color:#64748b'>{up}/{up+dn}  p={p:.3f}</td>"
-        f"<td style='color:#94a3b8'>{rl:+.2f}</td></tr>"
+        f"<td style='color:#94a3b8'>"
+        f"{'&mdash;' if rl is None else format(rl, '+.2f')}</td></tr>"
         for ps, br, g, up, dn, p, rl, mn, flat in inter)
     n_picks = len({r[1] for r in inter})
 
@@ -647,6 +654,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -685,7 +693,7 @@ def _report(per_symbol, skipped, elapsed):
           f"{'p':>8}{'row live vs grid live':>23}")
     for ps, br, g, up, dn, pv, rl, mn, flat in inter:
         print(f"{ps:>6}{str(br):>12}{g:>+18.2f}{f'{up}/{up+dn}':>9}{pv:>8.3f}"
-              f"{rl:>+23.2f}{'   FLAT (every slope medians to 0.00)' if flat else ''}")
+              f"{'—' if rl is None else format(rl, '+.2f'):>23}{'   FLAT (every slope medians to 0.00)' if flat else ''}")
     picks = {r[1] for r in inter}
     print(f"\n  distinct best-slope values across the {len(inter)} rows: "
           f"{len(picks)} — {sorted(picks, key=lambda v: (v is not None, v))}")

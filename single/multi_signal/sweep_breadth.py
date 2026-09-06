@@ -62,6 +62,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 from single.multi_signal.profiles import apply as apply_profile
 
 # ── what differs between the three arms ─────────────────────────────────────
@@ -441,7 +442,8 @@ document.querySelectorAll('tbody tr').forEach(function(tr) {{
   tr.onclick = function() {{ render(tr.dataset.row); }};
 }});
 render({json.dumps(live)});
-</script></body></html>"""
+</script>{matrix_html(per_symbol)}
+</body></html>"""
 
 
 def _report(per_symbol, skipped, elapsed):

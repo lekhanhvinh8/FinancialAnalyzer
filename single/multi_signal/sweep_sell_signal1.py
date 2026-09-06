@@ -140,6 +140,7 @@ from single.strategies.sell import SellStrategy
 from single.strategies.reinvest import ReinvestStrategy
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 WINDOWS = list(range(10, 201, 10))                      # 20
 KS      = [round(-4.0 + 0.5 * i, 1) for i in range(17)]   # -4.0 .. 4.0, 17 values
@@ -412,7 +413,10 @@ def _cell_color(v, lo, hi):
     return f"rgba(239,68,68,{0.12 + 0.55*f:.2f})", "#fee2e2"
 
 
-def build_html(grids, n_syms, elapsed, skipped):
+def build_html(grids, per_symbol, elapsed, skipped):
+    # per_symbol thay cho n_syms: ma tran ghep cap o cuoi trang can du
+    # lieu tung ma, khong chi so luong ma.
+    n_syms = len(per_symbol)
     live_k = config.SELL_MIN_SIGNAL1 * math.sqrt(config.SELL_SIGNAL1_WINDOW)
 
     rows = ""
@@ -532,6 +536,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -574,7 +579,7 @@ def _report(per_symbol, skipped, score, elapsed):
         print("every symbol was excluded — nothing to report")
         return
     grids = aggregate(per_symbol)
-    OUT.write_text(build_html(grids, len(per_symbol), elapsed, skipped),
+    OUT.write_text(build_html(grids, per_symbol, elapsed, skipped),
                    encoding="utf-8")
 
     grid = grids[score]

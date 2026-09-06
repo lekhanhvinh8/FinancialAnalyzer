@@ -79,6 +79,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 MEDS = [None, -10, 0, 5, 10, 20, 35]                    # 7
 TOPS = [None, -30, -35, -40, -45, -50, -55, -60, -70]   # 9
@@ -494,6 +495,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 

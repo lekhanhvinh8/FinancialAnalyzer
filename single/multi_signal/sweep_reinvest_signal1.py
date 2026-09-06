@@ -70,6 +70,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 WINDOWS = list(range(10, 201, 10))                        # 20
 KS      = [round(-4.0 + 0.5 * i, 1) for i in range(17)]   # -4.0 .. 4.0
@@ -242,7 +243,10 @@ body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
 <p class="k">{note}</p></body></html>""", encoding="utf-8")
 
 
-def build_html(grids, n_syms, skipped, elapsed):
+def build_html(grids, per_symbol, skipped, elapsed):
+    # per_symbol thay cho n_syms: ma tran ghep cap o cuoi trang can du
+    # lieu tung ma, khong chi so luong ma.
+    n_syms = len(per_symbol)
     live_w = config.REINVEST_SIGNAL1_WINDOW
     live_k = ((config.REINVEST_MIN_SIGNAL1 * math.sqrt(live_w))
               if config.REINVEST_MIN_SIGNAL1 is not None else None)
@@ -344,6 +348,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -352,7 +357,7 @@ def _report(per_symbol, skipped, elapsed):
     if not per_symbol:
         print("every symbol was excluded"); return
     grids = aggregate(per_symbol)
-    OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
+    OUT.write_text(build_html(grids, per_symbol, skipped, elapsed),
                    encoding="utf-8")
 
     g = grids["mean"]

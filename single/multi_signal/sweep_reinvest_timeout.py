@@ -103,6 +103,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 # Log-spaced, see the header. 0 first because it is the off value: no valve at
 # all, which also removes the free first release the other settings get.
@@ -434,6 +435,7 @@ document.querySelectorAll('tr[data-row]').forEach(function(tr) {{
 }});
 recompute();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 

@@ -91,6 +91,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 # Placed off the measured Sharpe distribution at w=1000, see the header. None
 # last: it is the only value that removes the gate rather than loosening it.
@@ -427,6 +428,7 @@ document.querySelectorAll('tr[data-row]').forEach(function(tr) {{
 }});
 recompute();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 

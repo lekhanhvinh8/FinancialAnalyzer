@@ -18,8 +18,8 @@ select{background:#111c30;color:#e2e8f0;border:1px solid #334155;padding:6px 10p
 <code>PERCENT_BUY = q &times; 1.29 &times; w^0.698</code>, so a column is
 roughly constant strictness at every window &mdash; q=1.0 is that window's 95th
 percentile of price-to-median distance, q=0 is &ldquo;only buy below the
-median&rdquo;.<br>Live: <b>w=1000, PERCENT_BUY=60</b>
-(q &asymp; 0.37).</p>
+median&rdquo;.<br>Live: <b>w=1000, PERCENT_BUY=None</b>
+(q &asymp; 0.00).</p>
 <p class='note'>Skipped: MSB (only 403 bars after warmup), NAB (only 450 bars after warmup), OCB (only 378 bars after warmup), SSB (only 344 bars after warmup), VPL (only 314 rows)</p>
 <div class="card"><b>What each metric prefers</b>
 <table><thead><tr><th>metric</th><th>best cell</th><th>threshold</th>
@@ -73,4 +73,5 @@ function render() {
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+<p class=note>Ma trận ghép cặp không vẽ: lưới 500 ô là 124,750 cặp, quá lớn để đọc.</p>
 </body></html>

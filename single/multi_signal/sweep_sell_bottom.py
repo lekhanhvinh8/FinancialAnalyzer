@@ -182,6 +182,7 @@ from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import (make_median_strategies,
                                         make_interval_strategies, build_pelog_map)
+from single.multi_signal.sweep_matrix import matrix_html
 
 # Coarse at the edges, dense through the middle, one near-inert anchor at the top
 # — the same shape sweep_percent_sell uses, and dense over the same thing: the
@@ -563,7 +564,9 @@ recompute();
     script = (script.replace("__DIFFS__", json.dumps(diffs))
                     .replace("__KEYS__", json.dumps([str(k) for k in keys]))
                     .replace("__NONE__", json.dumps(NOSELL_KEY)))
-    return head + script
+    # script la chuoi thuong (JS dung { }), nen ghep ma tran o day
+    return head + script.replace(
+        "</body></html>", matrix_html(per_symbol) + "</body></html>")
 
 
 def _report(per_symbol, skipped, elapsed):

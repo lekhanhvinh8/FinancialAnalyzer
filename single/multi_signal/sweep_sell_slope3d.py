@@ -181,6 +181,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 SELLS = [30, 40, 50, 60, 70, 80, 85, 90, 100]                 # 9 panels
 WINS  = [10, 20, 30, 50, 70, 100, 140, 200]                   # 8 rows
@@ -433,7 +434,10 @@ body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
 </body></html>""", encoding="utf-8")
 
 
-def build_html(grids, n_syms, skipped, elapsed):
+def build_html(grids, per_symbol, skipped, elapsed):
+    # per_symbol thay cho n_syms: ma tran ghep cap o cuoi trang can du
+    # lieu tung ma, khong chi so luong ma.
+    n_syms = len(per_symbol)
     n = len(SELLS) * len(WINS) * len(KS)
     rows = ""
     for m, (label, unit, direction) in METRICS.items():
@@ -454,7 +458,11 @@ def build_html(grids, n_syms, skipped, elapsed):
                 for k, v in (grids.get(m) or {}).items()} for m in METRICS}
     opts = "".join(f"<option value='{m}'{' selected' if m == 'dec' else ''}>{lbl}</option>"
                    for m, (lbl, _, _) in METRICS.items())
-    overlap = [s for s in SELLS if s < getattr(config, "PERCENT_BUY", 60)]
+    # PERCENT_BUY co the la None (arm mua chay bang ro, khong bang gia):
+    # khi do khong co vung chong lan nao ca. getattr(..., 60) khong cuu
+    # duoc vi thuoc tinh VAN TON TAI, chi la mang gia tri None.
+    pbuy = getattr(config, "PERCENT_BUY", None)
+    overlap = [s for s in SELLS if pbuy is not None and s < pbuy]
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
 <title>sell x slope x window sweep</title><style>
@@ -493,8 +501,9 @@ reads zero.<br>
 believe a single best cell; check <i>Neighbours agreeing</i>, which counts how
 many of a cell's 26 three-dimensional neighbours also beat live on the sign
 test.<br>
-<b>Panels {', '.join(str(s) for s in overlap)} run a different mechanism.</b>
-PERCENT_BUY = {getattr(config, 'PERCENT_BUY', 60)}, so below that the sell zone
+<b>{'Panels ' + ', '.join(str(s) for s in overlap) + ' run a different mechanism.'
+   if overlap else 'No panel runs the overlap mechanism.'}</b>
+PERCENT_BUY = {pbuy}, so below that the sell zone
 sits inside the buy zone, both conditions are true on the same bar, and the churn
 guard starts biting — the buy arm stands down wherever the sell fires. Those
 panels are outlined and are not on the same footing as the rest.<br>
@@ -560,6 +569,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -597,7 +607,7 @@ def _report(per_symbol, skipped, elapsed):
         s, w, k = bk.split("|")
         print(f"  {label:<24} sell={s:<5} w={w:<5} k={k:<6} -> {bv:+.2f}{unit}")
 
-    OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
+    OUT.write_text(build_html(grids, per_symbol, skipped, elapsed),
                    encoding="utf-8")
     print(f"\nreport -> {OUT}")
 

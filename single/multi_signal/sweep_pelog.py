@@ -138,6 +138,7 @@ from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import (make_median_strategies,
                                         make_interval_strategies, build_pelog_map)
+from single.multi_signal.sweep_matrix import matrix_html
 
 QS = [-0.80, -0.60, -0.40, -0.30, -0.20, -0.10, 0.00, 0.10,
       0.20, 0.25, 0.30, 0.35, 0.40, 0.50, 0.70, 0.90]        # 16
@@ -336,7 +337,10 @@ body{{font-family:sans-serif;background:#0b1220;color:#e2e8f0;padding:24px}}
 <p class="k">{note}</p></body></html>""", encoding="utf-8")
 
 
-def build_html(grids, n_syms, skipped, elapsed):
+def build_html(grids, per_symbol, skipped, elapsed):
+    # per_symbol thay cho n_syms: ma tran ghep cap o cuoi trang can du
+    # lieu tung ma, khong chi so luong ma.
+    n_syms = len(per_symbol)
     pe_w = getattr(config, "PE_MEDIAN_WINDOW", 500)
     rows = ""
     for k in [OFF_KEY] + [_key(q) for q in QS]:
@@ -395,6 +399,7 @@ With {len(QS)} cells about one reaches p&lt;0.05 by chance, so check <b>nb</b>:
 an isolated winner between two losers is noise, two agreeing neighbours is a
 plateau. Watch <b>sells</b> too &mdash; a cell that wins by never selling has not
 found anything, it has just switched the arm off.</p>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -430,7 +435,7 @@ def _report(per_symbol, skipped, elapsed):
     print(f"  cells whose paired median is exactly 0.00: "
           f"{sum(1 for q in QS if abs(pr[_key(q)]) < 1e-9)}/{len(QS)}")
 
-    OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
+    OUT.write_text(build_html(grids, per_symbol, skipped, elapsed),
                    encoding="utf-8")
     print(f"\nreport -> {OUT}")
 

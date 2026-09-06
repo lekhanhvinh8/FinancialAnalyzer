@@ -157,6 +157,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 SELLS = [60, 65, 70, 75, 80, 85, 90]                   # 7
 REIS  = [-10, 0, 10, 20, 30, 40, 50, 60, 70, 80]       # 10
@@ -417,7 +418,10 @@ METRICS = {
 }
 
 
-def build_html(grids, n_syms, skipped, elapsed):
+def build_html(grids, per_symbol, skipped, elapsed):
+    # per_symbol thay cho n_syms: ma tran ghep cap o cuoi trang can du
+    # lieu tung ma, khong chi so luong ma.
+    n_syms = len(per_symbol)
     rows = ""
     for m, (label, unit, direction) in METRICS.items():
         g = grids.get(m) or {}
@@ -469,8 +473,10 @@ configured value; only these two move, and neither of them touches the warmup, s
 every cell is judged on identical bars.<br>
 <b>Why this pair.</b> The sell arm releases at PERCENT_SELL above the median and
 the reinvest arm may only return within PERCENT_REINVEST of it, so the gap
-between them is a zone the money cannot come back through. Live that gap is
-{LIVE[0]} &minus; {LIVE[1]} = <b>{LIVE[0] - LIVE[1]} points</b>, and on a
+between them is a zone the money cannot come back through. {'Live that gap is ' + str(LIVE[0]) + ' &minus; ' + str(LIVE[1]) + ' = <b>'
+   + str(LIVE[0] - LIVE[1]) + ' points</b>' if None not in LIVE else
+   'Cau hinh dang chay khong co vung nay: PERCENT_REINVEST = None, arm tai dau '
+   'tu chay bang ro chu khong bang gia'}, and on a
 compounder the price never closes it: FPT took 538 to 1101 bars to fall back
 within +10% of its median, while REINVEST_TIMEOUT_DAYS is 400. Five of the seven
 FPT and GMD re-entries are that timeout firing, each buying back higher than it
@@ -545,6 +551,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -556,8 +563,10 @@ def _report(per_symbol, skipped, elapsed):
     pr, pp, nb = grids["paired"], grids["pairp"], grids["nb"]
     live_k = _key(*LIVE)
 
+    # Khong tru thang: mot trong hai co the la None khi arm do chay bang ro.
+    gap = f"gap {LIVE[0]-LIVE[1]}" if None not in LIVE else "khong co gap"
     print(f"\nlive cell  PERCENT_SELL={LIVE[0]}, PERCENT_REINVEST={LIVE[1]}  "
-          f"(gap {LIVE[0]-LIVE[1]})   mean {grids['mean'].get(live_k, float('nan')):+.2f}  "
+          f"({gap})   mean {grids['mean'].get(live_k, float('nan')):+.2f}  "
           f"sells {grids['sells'].get(live_k, float('nan')):.2f}  "
           f"reinvests {grids['reis'].get(live_k, float('nan')):.2f}")
 
@@ -600,7 +609,7 @@ def _report(per_symbol, skipped, elapsed):
         print(f"  {label:<20} sell={s:<4} reinvest={r:<5} gap={int(s)-int(r):<4}"
               f" -> {bv:+.2f}{unit}")
 
-    OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
+    OUT.write_text(build_html(grids, per_symbol, skipped, elapsed),
                    encoding="utf-8")
     print(f"\nreport -> {OUT}")
 

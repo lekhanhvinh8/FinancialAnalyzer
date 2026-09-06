@@ -94,6 +94,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 WINDOWS = [50, 100, 150, 200, 300, 400]                    # 6
 QS      = [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0,
@@ -344,7 +345,10 @@ METRICS = {
 }
 
 
-def build_html(grids, n_syms, skipped, elapsed):
+def build_html(grids, per_symbol, skipped, elapsed):
+    # per_symbol thay cho n_syms: ma tran ghep cap o cuoi trang can du
+    # lieu tung ma, khong chi so luong ma.
+    n_syms = len(per_symbol)
     live_w = getattr(config, "SELL_ZDEV_WINDOW", 700)
 
     rows = ""
@@ -449,6 +453,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -477,7 +482,7 @@ def _report(per_symbol, skipped, elapsed):
         print(f"  with 4+ agreeing neighbours: {len(solid)}"
               f"{' — ' + ', '.join(solid[:6]) if solid else ' (none: isolated cells only)'}")
 
-    OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
+    OUT.write_text(build_html(grids, per_symbol, skipped, elapsed),
                    encoding="utf-8")
 
     g = grids["mean"]

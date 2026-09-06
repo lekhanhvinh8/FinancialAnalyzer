@@ -35,13 +35,13 @@ reads zero.<br>
 believe a single best cell; check <i>Neighbours agreeing</i>, which counts how
 many of a cell's 26 three-dimensional neighbours also beat live on the sign
 test.<br>
-<b>Panels 30, 40, 50 run a different mechanism.</b>
-PERCENT_BUY = 60, so below that the sell zone
+<b>No panel runs the overlap mechanism.</b>
+PERCENT_BUY = None, so below that the sell zone
 sits inside the buy zone, both conditions are true on the same bar, and the churn
 guard starts biting — the buy arm stands down wherever the sell fires. Those
 panels are outlined and are not on the same footing as the rest.<br>
 Every cell is paired against the shipped configuration
-(PERCENT_SELL=75, window=120, k=2.5 &rarr;
+(PERCENT_SELL=50, window=120, k=2.5 &rarr;
 SELL_MIN_SIGNAL1=0.228), run once per symbol as its own entry.
 Window 120 is not on the ladder, so no grid cell is the live cell and none
 is outlined as one.</p>
@@ -65,7 +65,7 @@ const DATA = {"paired": {"30|10|None": -11.996, "30|10|-1.0": -4.092, "30|10|-0.
 const SS = ["30", "40", "50", "60", "70", "80", "85", "90", "100"];
 const WS = ["10", "20", "30", "50", "70", "100", "140", "200"];
 const KKS = ["None", "-1.0", "-0.5", "0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0"];
-const OVERLAP = ["30", "40", "50"];
+const OVERLAP = [];
 
 function render() {
   const m = document.getElementById('metric').value;
@@ -102,4 +102,5 @@ function render() {
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+<p class=note>Ma trận ghép cặp không vẽ: lưới 865 ô là 373,680 cặp, quá lớn để đọc.</p>
 </body></html>

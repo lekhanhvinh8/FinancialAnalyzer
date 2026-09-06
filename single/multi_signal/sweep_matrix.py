@@ -1,9 +1,20 @@
 """
 Every pairwise comparison in every sweep, as one matrix per sweep.
 
+matrix_html() is the piece that matters: every sweep calls it at the end of its
+own build_html, so running a sweep puts the matrix in that sweep's own report,
+with no second command to remember. That is the whole point -- the numbers are
+there the moment the sweep finishes.
+
+This file also renders one page holding every sweep at once, for reading them
+side by side:
+
     python -m single.multi_signal.sweep_matrix
     python -m single.multi_signal.sweep_matrix percent_sell breadth_sell
     python -m single.multi_signal.sweep_matrix --keep-excluded
+
+It reads the *_raw.json files, so it shows the last run of each sweep and can go
+stale; a sweep's own report cannot.
 
 WHY THIS EXISTS
 
@@ -63,7 +74,10 @@ DIFF = 0
 
 # Luoi lon hon nguong nay khong ve: 40 o la 1560 cap, da la muc kho doc; mot vai
 # sweep 2D co toi 500 o, tuc 250 nghin cap.
-MAX_KEYS = 40
+# Tran cua ma tran. Hai sweep 2 chieu co 63 va 77 o -- van ve duoc, chi la
+# phai bo tooltip (xem TIP_KEYS). Tren nua thi trang khong con doc duoc.
+MAX_KEYS = 80
+TIP_KEYS = 40
 
 METRICS = [
     ("median", "trung vị của các hiệu", "Mã điển hình được lợi bao nhiêu điểm."),
@@ -117,7 +131,10 @@ def pair(per, a, b):
             "up": up, "dec": dec, "n": len(d), "p": p}
 
 
-def cell_html(c, metric):
+def cell_html(c, metric, tip=True):
+    # tip=False cho luoi 2 chieu: o do title chiem hon nua so byte cua trang,
+    # va 5.929 o x 5 chi so voi tooltip la hon 3 MB HTML. Bo tooltip thi con
+    # doc duoc; doi tab van thay du ca nam chi so.
     if c is None:
         return "<td class=na></td>"
     if metric == "win":
@@ -133,9 +150,115 @@ def cell_html(c, metric):
     sig = c["p"] < 0.05
     col = "#4ade80" if v > 0 else "#f87171" if v < 0 else "#64748b"
     w = ";font-weight:700" if sig else ""
-    tip = (f"TV {c['median']:+.2f} · TB {c['mean']:+.1f} · tổng {c['total']:+,.0f}"
-           f" · {c['up']}/{c['dec']} · p={c['p']:.3f}")
-    return f"<td style='color:{col}{w}' title='{tip}'>{txt}</td>"
+    if not tip:
+        return f"<td style='color:{col}{w}'>{txt}</td>"
+    t = (f"TV {c['median']:+.2f} · TB {c['mean']:+.1f} · tổng {c['total']:+,.0f}"
+         f" · {c['up']}/{c['dec']} · p={c['p']:.3f}")
+    return f"<td style='color:{col}{w}' title='{t}'>{txt}</td>"
+
+
+def keys_of(per):
+    """Cac o co mat o phan lon so ma, sap theo gia tri so."""
+    seen = {}
+    for v in per.values():
+        for k in v:
+            seen[k] = seen.get(k, 0) + 1
+    keys = [k for k, n in seen.items() if n >= len(per) * 0.5]
+    keys.sort(key=lambda k: (k == "none", _num(k)))
+    return keys
+
+
+def matrix_html(per, keys=None, drop_excluded=True):
+    """
+    Khoi HTML doc lap: ma tran ghep cap moi cap o, nam cach do.
+
+    Duoc goi tu cuoi build_html cua tung sweep, nen mot lan chay sweep la co
+    ngay so tai cho -- khong phai chay them cong cu nao. Tu chua style va
+    script; khong dung id trung voi phan con lai cua trang.
+    """
+    if not per:
+        return ""
+    if drop_excluded:
+        skip = {x.upper() for x in getattr(config, "EXCLUDE_SYMBOLS", [])}
+        per = {k: v for k, v in per.items() if k.upper() not in skip}
+    keys = keys or keys_of(per)
+    if len(keys) < 2:
+        return ""
+    if len(keys) > MAX_KEYS:
+        return (f"<p class=note>Ma trận ghép cặp không vẽ: lưới {len(keys)} ô "
+                f"là {len(keys)*(len(keys)-1)//2:,} cặp, quá lớn để đọc.</p>")
+
+    # Moi cap tinh MOT lan roi dung lai cho ca nam chi so. Truoc do pair() bi
+    # goi lai o moi tab, tuc 5 lan cho moi o -- 30.000 lan tren luoi 77 o.
+    P = {}
+    for a in keys:
+        for b in keys:
+            if a != b:
+                P[(a, b)] = pair(per, a, b)
+    tot = sum(1 for i, a in enumerate(keys) for b in keys[i + 1:] if P[(a, b)])
+    sig = sum(1 for i, a in enumerate(keys) for b in keys[i + 1:]
+              if P[(a, b)] and P[(a, b)]["p"] < 0.05)
+    tip = len(keys) <= TIP_KEYS
+    grids = ""
+    for mi, (metric, label, note) in enumerate(METRICS):
+        rows = ""
+        for a in keys:
+            cells = "".join("<td class=mxdiag></td>" if a == b
+                            else cell_html(P[(a, b)], metric, tip)
+                            for b in keys)
+            rows += f"<tr><th class=mxrh>{a}</th>{cells}</tr>"
+        head = "".join(f"<th>{b}</th>" for b in keys)
+        grids += (f"<div class=mxgrid data-m='{metric}' "
+                  f"style='display:{'block' if mi == 0 else 'none'}'>"
+                  f"<div class=mxnote><b>{label}</b> — {note}</div>"
+                  f"<div class=mxscroll><table class=mx><thead><tr><th></th>"
+                  f"{head}</tr></thead><tbody>{rows}</tbody></table></div></div>")
+    tabs = "".join(
+        "<button class='mxtab%s' data-m='%s'>%s</button>"
+        % (" on" if i == 0 else "", m, m)
+        for i, (m, _, _) in enumerate(METRICS))
+    tiptxt = (" Rê chuột lên ô để xem đủ năm chỉ số." if tip else
+              f" Lưới {len(keys)} ô nên không có tooltip: đổi tab để đọc từng"
+              " chỉ số.")
+    return f"""
+<h3 style='margin:26px 0 4px;color:#facc15;font-size:15px'>Ma trận ghép cặp —
+mọi cặp ô</h3>
+<p class=note style='margin:2px 0'>Ô là <b>dòng trừ cột</b>, ghép cặp trên từng
+mã: xanh nghĩa là dòng hơn cột. Bảng <code>vs</code> ở trên chỉ hiện một mốc mỗi
+lần; bảng này hiện tất cả, nên nhìn được <b>hình dạng</b> — ô thắng có nối thành
+vùng liền hay chỉ rải rác.<br>
+{len(per)} mã · {len(keys)} ô · <b>{tot}</b> cặp · <b>{sig}</b> cặp có
+p&lt;0.05, ngẫu nhiên sẽ có khoảng <b>{tot*0.05:.0f}</b> — nên vài ô đậm lẻ tẻ
+không nói lên gì, chỉ một khối đậm liền nhau mới đáng đọc.<br>
+<b>Trung vị và tổng có thể trái dấu</b>: một ngưỡng thắng ở nhiều mã hơn vẫn có
+thể lỗ tổng, nếu một mã lệch rất lớn. Đổi tab để thấy cả hai.{tiptxt}</p>
+<div class=mxtabs>{tabs}</div>{grids}
+<style>
+.mxtabs{{margin:6px 0}}
+.mxtab{{background:#1e293b;border:1px solid #334155;color:#94a3b8;
+ border-radius:5px;padding:2px 10px;cursor:pointer;font-size:12px;margin-right:5px}}
+.mxtab.on{{background:#334155;color:#e2e8f0;font-weight:700}}
+.mxnote{{color:#94a3b8;font-size:12px;margin:4px 0}}
+.mxscroll{{overflow-x:auto;max-width:100%}}
+table.mx{{border-collapse:collapse;font-size:11px;
+ font-variant-numeric:tabular-nums;margin:0}}
+table.mx th,table.mx td{{border:1px solid #1e293b;padding:1px 5px;
+ text-align:right;white-space:nowrap}}
+table.mx thead th{{background:#111c30;color:#94a3b8}}
+table.mx th.mxrh{{background:#111c30;color:#94a3b8;text-align:left}}
+td.mxdiag{{background:#1e293b}} td.na{{background:#0d1526}}
+table.mx tbody tr:hover td{{background:#16203a}}
+</style>
+<script>
+document.querySelectorAll('.mxtab').forEach(function (b) {{
+  b.onclick = function () {{
+    document.querySelectorAll('.mxtab').forEach(function (x) {{
+      x.classList.toggle('on', x === b); }});
+    document.querySelectorAll('.mxgrid').forEach(function (g) {{
+      g.style.display = g.dataset.m === b.dataset.m ? 'block' : 'none'; }});
+  }};
+}});
+</script>"""
 
 
 def section(name, data, idx):

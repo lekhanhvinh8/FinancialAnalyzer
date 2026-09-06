@@ -99,6 +99,7 @@ import database as db
 from single.runner import load_symbol_df, run_estimate
 from single.multi_signal import config
 from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.sweep_matrix import matrix_html
 
 WINDOWS = list(range(20, 1001, 20))                        # 50
 QS      = [round(-0.2 + 0.2 * i, 1) for i in range(10)]    # -0.2 .. 1.6
@@ -279,7 +280,10 @@ METRICS = {
 }
 
 
-def build_html(grids, n_syms, skipped, elapsed):
+def build_html(grids, per_symbol, skipped, elapsed):
+    # per_symbol thay cho n_syms: ma tran ghep cap o cuoi trang can du
+    # lieu tung ma, khong chi so luong ma.
+    n_syms = len(per_symbol)
     live_w = getattr(config, "BUY_MEDIAN_WINDOW", 1000)
     live_q = config.PERCENT_BUY / (P95_C * live_w ** P95_A) if config.PERCENT_BUY else 0.0
 
@@ -379,6 +383,7 @@ function render() {{
 document.getElementById('metric').addEventListener('change', render);
 render();
 </script>
+{matrix_html(per_symbol)}
 </body></html>"""
 
 
@@ -387,7 +392,7 @@ def _report(per_symbol, skipped, elapsed):
     if not per_symbol:
         print("every symbol was excluded"); return
     grids = aggregate(per_symbol)
-    OUT.write_text(build_html(grids, len(per_symbol), skipped, elapsed),
+    OUT.write_text(build_html(grids, per_symbol, skipped, elapsed),
                    encoding="utf-8")
 
     g = grids["mean"]
@@ -407,8 +412,12 @@ def _report(per_symbol, skipped, elapsed):
               f"PERCENT_BUY={percent_buy(float(q), int(w)):7.1f}  -> {bv:+.2f}{unit}")
 
     live_w = getattr(config, "BUY_MEDIAN_WINDOW", 1000)
-    lq = min(QS, key=lambda q: abs(percent_buy(q, live_w) - config.PERCENT_BUY))
-    lk = _key(live_w, lq)
+    # PERCENT_BUY = None nghia la arm mua khong doc gia, nen khong o nao la
+    # "gan cau hinh dang chay" -- bo qua thay vi tru voi None va lam chet ca
+    # bao cao chi vi mot dong phu.
+    lq = (min(QS, key=lambda q: abs(percent_buy(q, live_w) - config.PERCENT_BUY))
+          if config.PERCENT_BUY is not None else None)
+    lk = _key(live_w, lq) if lq is not None else None
     if lk in g:
         print(f"\nnearest cell to live (w={live_w}, PERCENT_BUY={config.PERCENT_BUY}): "
               f"q={lq} -> mean {g[lk]:+.1f}, vote {grids['vote'][lk]}")
