@@ -274,6 +274,34 @@ for a, b in (("breadth", "price"), ("hybrid", "price"), ("hybrid", "breadth")):
 
 wins = {lab: sum(1 for r in rows if r["best"] == lab) for lab, _, _ in PROFS}
 
+# CAC CON SO TRONG PHAN CHU CUNG SINH TU DU LIEU. Ban dau chung duoc go tay, va
+# lan dung lai dau tien voi du lieu moi thi chu van noi "cat tu 79 xuong 43" khi
+# so that la 50, va van noi hybrid-price khong dat y nghia khi no da dat. Mot
+# bao cao co the tao lai nhung chu thi khong -- day la cung mot loi voi
+# data3.json, o mot lop khac.
+SELLS = {k: sum(r[k + "_s"] for r in rows) for _, k, _ in PROFS}
+BP = sign_test("breadth", "price")
+HP = sign_test("hybrid", "price")
+HB = sign_test("hybrid", "breadth")
+_hb = sorted(((r["hybrid"] - r["breadth"], r["sym"]) for r in rows), reverse=True)
+HB_UP = ", ".join("%s %+.0f" % (sy, v) for v, sy in _hb[:4])
+HB_DOWN = ", ".join("%s %+.0f" % (sy, v) for v, sy in _hb[-4:][::-1])
+_sig = [(a, b, t) for a, b, t in (("breadth", "price", BP), ("hybrid", "price", HP),
+                                  ("hybrid", "breadth", HB)) if t[4] < 0.05]
+if not _sig:
+    SIG_LINE = "Không cặp nào đạt p &lt; 0.05."
+else:
+    SIG_LINE = ("Đạt p &lt; 0.05: "
+                + "; ".join("<b>%s − %s</b> (p = %.3f)" % (a, b, t[4])
+                            for a, b, t in _sig)
+                + ". Còn lại: "
+                + "; ".join("%s − %s p = %.3f" % (a, b, t[4])
+                            for a, b, t in (("breadth", "price", BP),
+                                            ("hybrid", "price", HP),
+                                            ("hybrid", "breadth", HB))
+                            if t[4] >= 0.05)
+                + ".")
+
 HTML = """<!DOCTYPE html><html lang=vi><head><meta charset=utf-8>
 <title>price vs breadth vs hybrid</title><style>
 *{{box-sizing:border-box}}
@@ -330,21 +358,20 @@ arm còn giữ nguyên các cổng signal1 và signal3.</p>
 <div class=box><div class=kpi>{KPI}</div></div>
 
 <p class=note><b>Ba con số nói ba chuyện khác nhau.</b> breadth cao nhất về
-trung bình, hybrid cao nhất về <b>tỉ lệ thắng DCA</b> ({hw}/52), còn price cao
-nhất về <b>trung vị</b>. Thêm điều kiện giá vào arm bán cắt số lệnh bán từ 79
-xuống 43 — hybrid là cấu hình bán ít nhất trong ba.</p>
+trung bình, hybrid cao nhất về <b>tỉ lệ thắng DCA</b> ({hw}/{nsym}), còn price
+cao nhất về <b>trung vị</b>. Thêm điều kiện giá vào arm bán cắt số lệnh bán từ
+{sb} xuống {sh} — hybrid là cấu hình bán ít nhất trong ba.</p>
 
 <div class=box>
 <b>Ghép cặp từng mã</b> — cách so duy nhất hợp lệ giữa hai cấu hình.
 <table style='margin-top:8px'><thead><tr><th style='text-align:left'>so sánh</th>
 <th>TB</th><th>trung vị</th><th>thắng</th><th>p</th></tr></thead>
 <tbody>{PAIRS}</tbody></table>
-<p class=note style='margin-bottom:0'><b>breadth − price đạt p = 0.046</b>,
-qua được mốc 0.05 — nhưng chỉ vừa đủ, và chỉ khi loại mã hoà (VNDIAMOND) theo
-đúng cách kiểm định dấu làm. Nếu đếm cả mã hoà thì 32/52 cho p = 0.063. Một mã
-đổi phe là đủ lật kết luận, nên đây là bằng chứng yếu chứ không phải bằng chứng
-mạnh. Hai cặp còn lại không đạt: hybrid − price p = 0.080, hybrid − breadth
-p = 0.832.<br>Số mã tốt nhất chia cho: price {wp}, breadth {wb}, hybrid {wh}.</p>
+<p class=note style='margin-bottom:0'>{sigline} Các p-value này loại
+mã hoà theo đúng cách kiểm định dấu làm; đếm cả mã hoà thì mẫu số là {nsym} và
+p lớn hơn. Ở cỡ mẫu này một vài mã đổi phe là đủ lật kết luận, nên đây là bằng
+chứng yếu chứ không phải bằng chứng mạnh.<br>Số mã tốt nhất chia cho:
+price {wp}, breadth {wb}, hybrid {wh}.</p>
 </div>
 
 <h2>Xem tận mắt: mười mã chênh lệch lớn nhất</h2>
@@ -362,8 +389,8 @@ hình đồng ý.</p>
 
 <h2>breadth và hybrid khác nhau đến đâu</h2>
 <p class=note>Trên tổng thể hai cấu hình gần như không phân biệt được: trung vị
-chênh <b>0.00</b>, 17/39, p = 0.832. Nhưng đó là kết quả của <b>triệt tiêu</b>,
-không phải của <b>giống nhau</b>.</p>
+chênh <b>{hbmed:+.2f}</b>, {hbk}/{hbdec}, p = {hbp:.3f}. Nhưng đó là kết quả
+của <b>triệt tiêu</b>, không phải của <b>giống nhau</b>.</p>
 <div class=box><div class=kpi>
 <div><span class=lab>giống hệt nhau</span><span class=val>{hb_same}</span>
  <span class=lab>trên 52 mã</span></div>
@@ -426,20 +453,20 @@ mua/bán/reinvest — sắp xếp theo chúng là sắp xếp theo số lệnh b
 
 <h2>Kết luận</h2>
 <p class=note><b>1. hybrid không phải là "tốt hơn cả hai" — nó là bảo thủ hơn
-cả hai.</b> Bắt arm bán thoả cả giá lẫn rổ khiến số lệnh bán giảm còn 43, ít
+cả hai.</b> Bắt arm bán thoả cả giá lẫn rổ khiến số lệnh bán giảm còn {sh}, ít
 nhất trong ba cấu hình. Hệ quả: tỉ lệ thắng DCA cao nhất (47/52) vì hiếm khi
 bán sai, nhưng trung vị thấp nhất ({hmed:+.1f}) vì cũng hiếm khi bán đúng.</p>
 <p class=note><b>2. So với breadth, hybrid ăn thua đúng ở chỗ lệnh bán bị
-loại là lệnh tốt hay lệnh xấu.</b> Được nhiều nhất: SHB +157, SSI +86, VHC +81,
-VND +77. Mất nhiều nhất: STB −130, VCS −118, HPG −107, VN30 −96. Nhìn ba hàng
-dấu sẽ thấy ngay — ở những mã hybrid thua, hàng vàng thiếu đúng một tam giác mà
-hàng hồng có. Cộng lại thì hai chiều gần triệt tiêu nhau: trung bình −5.63,
-trung vị 0.00, 17/39.</p>
+loại là lệnh tốt hay lệnh xấu.</b> Được nhiều nhất: {hbup}. Mất nhiều nhất:
+{hbdown}. Nhìn ba hàng dấu sẽ thấy ngay — ở những mã hybrid thua, hàng vàng
+thiếu đúng một tam giác mà hàng hồng có. Cộng lại thì hai chiều gần triệt tiêu
+nhau: trung bình {hbmean:+.2f}, trung vị {hbmed:+.2f}, {hbk}/{hbdec}.</p>
 <p class=note><b>3. Chỉ một trong ba cặp đạt ý nghĩa, và vừa sát mốc.</b>
-breadth hơn price với p = 0.046; hybrid không hơn được cặp nào (0.080 và 0.832).
-Số mã "tốt nhất" chia {wp}/{wb}/{wh}. Trên dữ liệu này, chọn giữa breadth và
-hybrid là chọn theo <i>tính chất</i> mong muốn — bán nhiều hay ít, chấp nhận sai
-nhiều lần nhỏ hay sai ít lần lớn — chứ không phải theo bằng chứng thống kê.</p>
+breadth − price p = {bpp:.3f}, hybrid − price p = {hpp:.3f}, hybrid − breadth
+p = {hbp:.3f}. Số mã "tốt nhất" chia {wp}/{wb}/{wh}. Trên dữ liệu này, chọn giữa
+breadth và hybrid là chọn theo <i>tính chất</i> mong muốn — bán nhiều hay ít,
+chấp nhận sai nhiều lần nhỏ hay sai ít lần lớn — chứ không phải theo bằng chứng
+thống kê.</p>
 <p class=note><b>4. Cả breadth lẫn hybrid vẫn dùng chung một lịch thị trường.</b>
 Ba hàng dấu cho thấy: hàng hồng và hàng vàng luôn thẳng cột với nhau ở cùng vài
 ngày, chỉ khác ở chỗ hàng vàng thưa hơn. Nên rủi ro "sai đồng loạt trên cả 52
@@ -448,6 +475,9 @@ mã" áp dụng cho cả hai, không riêng breadth.</p>
 </div></body></html>""".format(
     KPI=KPI, PAIRS=PAIRS, CASES_HTML=CASES_HTML, TABLE=TABLE,
     hw=agg("hybrid")[2], hmed=agg("hybrid")[1], nsym=len(rows),
+    sb=SELLS["breadth"], sh=SELLS["hybrid"], sigline=SIG_LINE,
+    bpp=BP[4], hpp=HP[4], hbp=HB[4], hbmean=HB[0], hbmed=HB[1],
+    hbk=HB[2], hbdec=HB[3], hbup=HB_UP, hbdown=HB_DOWN,
     dp=DIRS.get("price", "?"), db=DIRS.get("breadth", "?"),
     dh=DIRS.get("hybrid", "?"),
     wp=wins["price"], wb=wins["breadth"], wh=wins["hybrid"],
