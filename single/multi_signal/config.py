@@ -84,7 +84,7 @@ SELL_MEDIAN_WINDOW = 1000
 # chain. median(85-60) is not median(85-75) + median(75-60), so 85 can fail
 # against 60 and win against 75 at the same time. Settling this needs a grid
 # paired against 75 with enough resolution for neighbours to agree or not.
-PERCENT_SELL     = 75
+PERCENT_SELL     = 55
 
 # SellMedian1000: a SECOND price condition, AND'd with PERCENT_SELL — sell when
 # the price is this far above the SELL_MEDIAN_WINDOW LOW as well as above its
@@ -531,16 +531,39 @@ REINVEST_MIN_SIGNAL1    = None
 # against +1.1 on the buy arm), and the one place where asking the symbol as
 # well is worth the extra condition.
 #
-# 70 sits inside a flat 70-90 plateau on prem_median; everything above 90 scored
-# better on this history by catching two dates, one of them the single bar
-# 2022-04-06, and is a fit to those dates rather than a setting.
+# 80 IS THE TOP OF A 80-85 PLATEAU, AND 90 WAS A HOLE. Swept twice on
+# prem_median over the all-VIC-VIX basket, 52 symbols, once with PERCENT_SELL=55
+# and once with it off, because a threshold measured with the price condition
+# removed says nothing about the same threshold when the two are AND'd:
+#
+#     vs 90        PERCENT_SELL=55            PERCENT_SELL=None
+#     80        +1,102  20/29  p=0.031     +1,248  31/42  p=0.001
+#     85          +890  20/28  p=0.018     +1,144  29/39  p=0.002
+#
+# Both runs agree, so 90 was the wrong pick -- it sat between two better regions
+# rather than on a plateau. 80 then tops the grid on mean and total in both runs,
+# but the sign test does not separate it from any neighbour (85 is +4.1 and +2.0
+# behind at p=0.42 and p=0.56): 80 wins on size, not on count, and 85 would be
+# the same setting by any honest reading.
+#
+# WHAT THE PRICE CONDITION DOES TO THIS GRID. With PERCENT_SELL=55 the paired
+# median against 90 is exactly 0.00 at EVERY threshold, and only 28 of 52
+# symbols move at all; with it off, 39 move. The price condition already blocks
+# most sells, so the basket gate only reaches a minority and the whole effect
+# lives there. Comparing 55 against None directly at each threshold gives p from
+# 0.79 to 1.00 with a paired median of exactly 0.00 -- on this history the extra
+# price condition on the sell arm does not distinguish itself either way.
+#
+# Everything from 110 up is not a threshold at all: prem_median never reaches it
+# on this basket, sells fall to 0.0 and mean collapses to +9.4. That is the arm
+# switched off, and it is why the grid ends there.
 #
 # NOTE THIS CHANGES WHAT config.py ALONE MEANS. It used to be the "price"
 # profile by definition; that profile now spells out the whole price
 # configuration so the measurements in CONCLUSIONS.md stay reproducible under
 # that name whatever the shipped default becomes.
 BUY_MAX_BREADTH = 60.0
-SELL_MIN_BREADTH = 70.0
+SELL_MIN_BREADTH = 80.0
 REINVEST_MAX_BREADTH = 10.0
 
 # Reinvest: join the price source and the basket source with OR instead of AND.

@@ -80,7 +80,7 @@ PROFILES = {
         "SELL_MIN_PELOG": None,
         # The basket decides instead.
         "BUY_MAX_BREADTH": 60.0,
-        "SELL_MIN_BREADTH": 70.0,
+        "SELL_MIN_BREADTH": 80.0,
         "REINVEST_MAX_BREADTH": 10.0,
         # Kept: market_breadth measured with this momentum gate on the sell arm.
         "SELL_MIN_SIGNAL1": 0.228,
