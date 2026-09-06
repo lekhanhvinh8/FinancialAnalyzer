@@ -135,7 +135,12 @@ def _apply_all(arm=None, profile=None, signal=None, overrides=None):
         SIGNAL = signal
     if overrides is not None:
         OVERRIDES = dict(overrides)
-    apply_profile(config, PROFILE)
+    # PROFILE = None nghia la KHONG overlay: config.py nguyen van, dung nhu
+    # run_all chay khong tham so. Can co, vi ngưỡng do duoc tren profile
+    # breadth khong noi gi ve cung nguong do o cau hinh mac dinh, noi arm
+    # ban con phai thoa dieu kien gia nua.
+    if PROFILE:
+        apply_profile(config, PROFILE)
     if SIGNAL:
         config.BREADTH_SIGNAL = SIGNAL
     for k, v in OVERRIDES.items():
@@ -143,10 +148,26 @@ def _apply_all(arm=None, profile=None, signal=None, overrides=None):
 
 
 def _paths(arm):
+    """
+    Duong dan bao cao, CO KEM CAU HINH trong ten.
+
+    Hai lan sweep cung mot arm nhung khac profile hay khac --set la hai phep do
+    khac nhau; neu chung ghi de len nhau thi cai con lai tren dia khong con noi
+    duoc no do cai gi. Ten mac dinh (profile breadth, khong override) giu nguyen
+    de cac bao cao cu van dung duong dan cu.
+    """
     d = Path(__file__).parent
-    return (d / f"sweep_breadth_{arm}.html",
-            d / f"sweep_breadth_{arm}_raw.json",
-            d / f"sweep_breadth_{arm}_progress.html")
+    tag = ""
+    if PROFILE != "breadth" or OVERRIDES or SIGNAL:
+        bits = [PROFILE or "nodefault"]
+        if SIGNAL:
+            bits.append(SIGNAL)
+        bits += [f"{k}{'none' if v is None else f'{v:g}'}"
+                 for k, v in sorted(OVERRIDES.items())]
+        tag = "_" + "_".join(bits).replace(".", "")
+    base = f"sweep_breadth_{arm}{tag}"
+    return (d / f"{base}.html", d / f"{base}_raw.json",
+            d / f"{base}_progress.html")
 
 
 def _key(v):
@@ -488,12 +509,15 @@ def main():
         raise SystemExit(f"--arm phai la: {', '.join(ARMS)}")
     PROFILE = next((f.split("=", 1)[1] for f in flags
                     if f.startswith("--profile=")), PROFILE)
+    if PROFILE in ("", "none"):
+        PROFILE = None
     SIGNAL = next((f.split("=", 1)[1] for f in flags
                    if f.startswith("--signal=")), SIGNAL)
     for f in flags:
         if f.startswith("--set="):
             k, _, v = f[len("--set="):].partition("=")
-            OVERRIDES[k] = None if v.lower() == "none" else float(v)
+            f = None if v.lower() == "none" else float(v)
+            OVERRIDES[k] = int(f) if f is not None and f == int(f) else f
     if OVERRIDES:
         print("Override -> " + ", ".join(f"{k}={v}" for k, v in OVERRIDES.items()))
 
