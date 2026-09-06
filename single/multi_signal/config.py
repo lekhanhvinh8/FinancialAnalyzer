@@ -399,7 +399,24 @@ EXCLUDE_SYMBOLS = ["VIX", "VIC"]
 # throughout. Adding MIN_SIGNAL3_WINDOW would change that — Sharpe narrows sharply
 # with the window, p95 = 124.6 * w^-0.654 (dispersion.py) — so normalise before
 # ever sweeping the window.
-MIN_SIGNAL3 = 1.1
+# OFF BY DEFAULT AS OF THIS CHANGE, at the reader's request, and the case that
+# prompted it is worth recording. VCS peaked around 76,000 in December 2017 at
+# +587% over its own 1000-bar median -- nearly eight times the sell threshold --
+# and the arm never sold. Three gates blocked it, and they never cleared
+# together: the basket reached 70 in January 2018, signal1 fell below 0.228 in
+# February, and signal3 stayed between 2.7 and 3.6 until 30 December 2019.
+# Across the whole of VCS's history, ZERO days satisfied all four conditions.
+#
+# That is the gate working as designed -- "do not sell a symbol whose 1000-bar
+# Sharpe is still high, let it run" -- and on VCS the design was wrong: the
+# price fell for years afterwards. It is also why VCS was the worst symbol for
+# the hybrid configuration against breadth, -118 points, since breadth switches
+# this gate off and could therefore sell.
+#
+# The measurements below were taken with the gate ON and are kept as the record
+# of what it was worth then. Re-measure before trusting them now.
+#
+MIN_SIGNAL3 = None
 
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
 SELL_SIGNAL1_WINDOW = 120    # trading days for the slope window

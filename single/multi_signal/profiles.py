@@ -59,6 +59,11 @@ PROFILES = {
         "BUY_MAX_BREADTH": None,
         "SELL_MIN_BREADTH": None,
         "REINVEST_MAX_BREADTH": None,
+        # Pinned because config.py switched this gate off. Without the pin
+        # this profile would have silently become a different experiment,
+        # which is how "price", "both" and "price_nogates" each drifted
+        # once already.
+        "MIN_SIGNAL3": 1.1,
     },
 
     "breadth": {
@@ -89,6 +94,11 @@ PROFILES = {
         "PERCENT_BUY": 60,
         "PERCENT_SELL": 75,
         "PERCENT_REINVEST": 10,
+        # Pinned because config.py switched this gate off. Without the pin
+        # this profile would have silently become a different experiment,
+        # which is how "price", "both" and "price_nogates" each drifted
+        # once already.
+        "MIN_SIGNAL3": 1.1,
         "BUY_MAX_BREADTH": 60.0,
         "SELL_MIN_BREADTH": 70.0,
         "REINVEST_MAX_BREADTH": 10.0,
@@ -120,6 +130,11 @@ PROFILES = {
         "PERCENT_BUY": 60,
         "PERCENT_SELL": 75,
         "PERCENT_REINVEST": 10,
+        # Pinned because config.py switched this gate off. Without the pin
+        # this profile would have silently become a different experiment,
+        # which is how "price", "both" and "price_nogates" each drifted
+        # once already.
+        "MIN_SIGNAL3": 1.1,
         "BUY_MAX_BREADTH": 60.0,
         "SELL_MIN_BREADTH": 70.0,
         "REINVEST_MAX_BREADTH": 10.0,

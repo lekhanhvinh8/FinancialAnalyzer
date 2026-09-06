@@ -53,6 +53,18 @@ EXPECTED = {
 # buy and reinvest arms run on the basket alone; its sell arm reads both.
 EXPECTED_DEFAULT = {"buy": "B", "sell": "PB", "reinvest": "B"}
 
+# Cong loc, tach rieng khoi ba arm: chung khong quyet dinh arm nao doc gi, nhung
+# bat/tat mot cai la doi han hanh vi. MIN_SIGNAL3 tung bi tat o config va ba
+# profile thua ke gia tri do ma khong ai nhan ra.
+GATES = {
+    "price":         {"MIN_SIGNAL3": True},
+    "breadth":       {"MIN_SIGNAL3": False},
+    "both":          {"MIN_SIGNAL3": True},
+    "both_or":       {"MIN_SIGNAL3": True},
+    "price_nogates": {"MIN_SIGNAL3": False},
+}
+GATES_DEFAULT = {"MIN_SIGNAL3": False}
+
 ARMS = {
     "buy":      (("PERCENT_BUY",), "BUY_MAX_BREADTH"),
     "sell":     (("PERCENT_SELL", "PERCENT_SELL_BOTTOM"), "SELL_MIN_BREADTH"),
@@ -76,16 +88,24 @@ def main() -> int:
         if not cond:
             fails.append(msg)
 
+    def _gates(cfg):
+        return {k: getattr(cfg, k, None) is not None for k in GATES_DEFAULT}
+
     importlib.reload(config)
     got = _shape(config)
     check(got == EXPECTED_DEFAULT,
           f"mac dinh (khong profile): mong {EXPECTED_DEFAULT}, duoc {got}")
+    g = _gates(config)
+    check(g == GATES_DEFAULT, f"cong cua mac dinh: mong {GATES_DEFAULT}, duoc {g}")
 
     for name, want in EXPECTED.items():
         importlib.reload(config)
         apply(config, name)
         got = _shape(config)
         check(got == want, f"profile {name}: mong {want}, duoc {got}")
+        g = _gates(config)
+        check(g == GATES[name],
+              f"profile {name} cong loc: mong {GATES[name]}, duoc {g}")
 
     # Every profile that exists must be pinned here, or a new one could be added
     # and drift without this test noticing.
@@ -113,8 +133,8 @@ def main() -> int:
         for f in fails:
             print("  -", f)
         return 1
-    print(f"OK — {len(EXPECTED)} profile va mac dinh giu dung y nghia, "
-          f"khong hai cai nao trung nhau")
+    print(f"OK — {len(EXPECTED)} profile va mac dinh giu dung y nghia va dung "
+          f"cong loc, khong hai cai nao trung nhau")
     return 0
 
 
