@@ -101,6 +101,20 @@ for i, date in enumerate(D["dates"]):
 """.format(i=i, date=date, radios=radios, body=body,
            st=st_json.replace("'", "&#39;"))
 
+# Ba cong doc THANG tu config.py chu khong go lai: bieu do ma ve sai cong
+# thi no chi con la mot buc tranh dep. Bang "ba cau hinh" ben SO_SANH da muc
+# dung kieu nay mot lan roi.
+from single.multi_signal import config as _cfg
+GATES = [(k, float(getattr(_cfg, k)), c) for k, c in
+         (("SELL_MIN_BREADTH", "#f87171"), ("BUY_MAX_BREADTH", "#38bdf8"),
+          ("REINVEST_MAX_BREADTH", "#a78bfa"))
+         if getattr(_cfg, k, None) is not None]
+CRADIOS = "".join(
+    "<label><input type=radio name=cb value='{b}' {chk}> {b} "
+    "<span class=dim>({n} mã)</span></label>".format(
+        b=b, n=D["baskets"][b], chk="checked" if b == DEFAULT else "")
+    for b in BK)
+
 HTML = """<!DOCTYPE html><html lang=vi><head><meta charset=utf-8>
 <title>Kiểm tra độc lập năm đường prem</title><style>
 *{{box-sizing:border-box}}
@@ -149,6 +163,28 @@ tr.noteligible td{{color:#475569}}
 .hint{{color:#64748b;font-size:12px}}
 .nav a{{color:#60a5fa;text-decoration:none;margin-right:14px}}
 code{{background:#111c30;padding:1px 5px;border-radius:4px;font-size:12px}}
+#chart{{width:100%;height:420px;display:block}}
+#chart .grid{{stroke:#1e293b;stroke-width:1}}
+#chart .zero{{stroke:#475569;stroke-width:1}}
+#chart .gate{{stroke-dasharray:5 4;stroke-width:1}}
+#chart .mark{{stroke:#64748b;stroke-dasharray:3 3;stroke-width:1}}
+#chart text{{fill:#64748b;font-size:11px;font-family:system-ui,sans-serif}}
+#chart .ln{{fill:none;stroke-width:.9;stroke-opacity:.9;
+ stroke-linejoin:round}}
+#chart .ln.off{{display:none}}
+#chart.solo .ln{{stroke-opacity:.12}}
+#chart.solo .ln.hi{{stroke-opacity:1;stroke-width:1.7}}
+.legend{{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}}
+.legend button{{background:#0f172a;border:1px solid #334155;border-radius:5px;
+ padding:2px 9px;cursor:pointer;font-size:12px;color:#e2e8f0;
+ display:flex;align-items:center;gap:6px}}
+.legend button.off{{color:#475569}}
+.legend .sw{{width:12px;height:3px;border-radius:2px}}
+.legend button.off .sw{{opacity:.25}}
+#tip{{position:absolute;background:#0f172a;border:1px solid #334155;
+ border-radius:6px;padding:6px 9px;font-size:12px;pointer-events:none;
+ display:none;font-variant-numeric:tabular-nums;z-index:5;white-space:nowrap}}
+#tip b{{color:#e2e8f0}} #tip .r{{display:flex;gap:8px;justify-content:space-between}}
 </style></head><body><div class=wrap>
 
 <h1>Kiểm tra độc lập năm đường prem</h1>
@@ -199,6 +235,22 @@ chúng vào và xem ba con số đổi thế nào.<br>
 Bạn cũng có thể tick tay một mã ngoài rổ — khi đó ghi chú đổi thành “ngoài rổ,
 bạn đã tick thêm”, để con số hiện ra không bị nhầm là con số của rổ chuẩn.
 </div></div>
+
+<div class=box>
+<div class=box style='position:relative'>
+<b>Năm đường trên cùng một biểu đồ</b>
+<div class=note style='margin-top:6px'>Ba ngày ở dưới trả lời “số này có đúng
+không”; ba điểm thì không cho thấy <b>hình dạng</b>. Đây là toàn bộ lịch sử của
+cả năm đường, đọc thẳng từ bảng <code>breadth_signals</code> — tức đúng con số
+mà chiến lược thật sự dùng, chứ không phải bản tính lại.<br>
+Ba đường đứt màu xám là ba ngày được kiểm ở dưới. Ba đường ngang là ba cổng
+đang chạy trong <code>config.py</code>: bán khi rổ vượt <b>{gs:g}</b>, mua khi rổ
+ở hoặc dưới <b>{gb:g}</b>, tái đầu tư khi ở hoặc dưới <b>{gr:g}</b>. Rê chuột để
+đọc cả năm giá trị tại một phiên; rê chuột lên <b>tên đường</b> để làm mờ bốn đường kia, bấm để ẩn hẳn.</div>
+<div class=basket style='margin-top:10px'>rổ: {cradios}</div>
+<div class=legend id=leg></div>
+<svg id=chart></svg><div id=tip></div>
+</div>
 
 <div class=box>
 <b>Cách dùng</b>
@@ -376,12 +428,177 @@ document.querySelectorAll('table.full').forEach(function (t) {{
     }};
   }});
 }});
+
+/* ── Nam duong tren mot bieu do ─────────────────────────────────────────
+   SVG tu ve, khong thu vien: trang nay mo bang file:// nen mot CDN se lam
+   bieu do trong rong khi may khong co mang, va do la thu duy nhat trong bao
+   cao khong the tu kiem chung duoc.                                        */
+var SER = {SER}, CDATES = {CDATES}, GATES = {GATES};
+var LN = [["prem_median", "#60a5fa"], ["prem_mean", "#f472b6"],
+          ["prem_mean_cap", "#fb923c"], ["prem_trim", "#4ade80"],
+          ["prem_trim_cap", "#facc15"]];
+var CB = '{DEFB}', OFF = {{}};
+
+document.getElementById('leg').innerHTML = LN.map(function (l) {{
+  return "<button data-k='" + l[0] + "'><span class=sw style='background:"
+       + l[1] + "'></span>" + l[0] + "</button>";
+}}).join('');
+document.querySelectorAll('#leg button').forEach(function (b) {{
+  /* Nam duong bam sat nhau gan het lich su, nen chi lam mong thoi khong du:
+     re chuot len ten duong la mo han bon duong con lai. */
+  b.onmouseenter = function () {{
+    var c = document.getElementById('chart');
+    c.classList.add('solo');
+    c.querySelectorAll('path.ln').forEach(function (p) {{
+      p.classList.toggle('hi', p.dataset.k === b.dataset.k); }});
+  }};
+  b.onmouseleave = function () {{
+    document.getElementById('chart').classList.remove('solo'); }};
+  b.onclick = function () {{
+    OFF[b.dataset.k] = !OFF[b.dataset.k];
+    b.classList.toggle('off', !!OFF[b.dataset.k]);
+    drawChart();
+  }};
+}});
+document.querySelectorAll("input[name=cb]").forEach(function (r) {{
+  r.onchange = function () {{ CB = r.value; drawChart(); }};
+}});
+
+var CX = null;   /* toa do de tra ve khi re chuot */
+
+function drawChart() {{
+  var svg = document.getElementById('chart'), S = SER[CB];
+  var W = svg.clientWidth || 1100, H = 420, L = 46, R = 12, T = 12, B = 26;
+  var n = S.dates.length, iw = W - L - R, ih = H - T - B;
+
+  var vals = [];
+  LN.forEach(function (l) {{
+    if (OFF[l[0]]) return;
+    (S.lines[l[0]] || []).forEach(function (v) {{ if (v !== null) vals.push(v); }});
+  }});
+  GATES.forEach(function (g) {{ vals.push(g[1]); }});
+  if (!vals.length) vals = [0, 1];
+  var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  var pad = (hi - lo) * 0.06 || 1; lo -= pad; hi += pad;
+
+  var X = function (i) {{ return L + (n < 2 ? 0 : i * iw / (n - 1)); }};
+  var Y = function (v) {{ return T + ih - (v - lo) / (hi - lo) * ih; }};
+  CX = {{X: X, Y: Y, n: n, L: L, iw: iw}};
+
+  var o = '';
+  /* luoi ngang + nhan truc y */
+  var step = Math.pow(10, Math.floor(Math.log10((hi - lo) / 5)));
+  [1, 2, 5, 10].some(function (m) {{
+    if ((hi - lo) / (step * m) <= 7) {{ step *= m; return true; }} }});
+  for (var v = Math.ceil(lo / step) * step; v <= hi; v += step) {{
+    o += "<line class=grid x1='" + L + "' x2='" + (W - R) + "' y1='" + Y(v).toFixed(1)
+       + "' y2='" + Y(v).toFixed(1) + "'/>"
+       + "<text x='" + (L - 6) + "' y='" + (Y(v) + 4).toFixed(1)
+       + "' text-anchor=end>" + Math.round(v) + "</text>";
+  }}
+  if (lo < 0 && hi > 0)
+    o += "<line class=zero x1='" + L + "' x2='" + (W - R)
+       + "' y1='" + Y(0).toFixed(1) + "' y2='" + Y(0).toFixed(1) + "'/>";
+
+  /* ba cong dang chay */
+  GATES.forEach(function (g) {{
+    if (g[1] < lo || g[1] > hi) return;
+    o += "<line class=gate stroke='" + g[2] + "' x1='" + L + "' x2='" + (W - R)
+       + "' y1='" + Y(g[1]).toFixed(1) + "' y2='" + Y(g[1]).toFixed(1) + "'/>"
+       + "<rect x='" + (W - R - 118) + "' y='" + (Y(g[1]) - 16).toFixed(1)
+       + "' width='116' height='14' fill='#0b1220' rx='3'/>"
+       + "<text x='" + (W - R - 3) + "' y='" + (Y(g[1]) - 5).toFixed(1)
+       + "' text-anchor=end fill='" + g[2] + "'>" + g[0] + " " + g[1] + "</text>";
+  }});
+
+  /* ba ngay duoc kiem o duoi */
+  CDATES.forEach(function (d) {{
+    var i = S.dates.indexOf(d);
+    if (i < 0) return;
+    o += "<line class=mark x1='" + X(i).toFixed(1) + "' x2='" + X(i).toFixed(1)
+       + "' y1='" + T + "' y2='" + (T + ih) + "'/>"
+       + "<text x='" + (X(i) + (X(i) > W - R - 70 ? -4 : 4)).toFixed(1)
+       + "' y='" + (T + 11) + "' text-anchor='"
+       + (X(i) > W - R - 70 ? 'end' : 'start') + "'>" + d + "</text>";
+  }});
+
+  /* Nhan cong ve SAU cac duong, con net ke thi ve TRUOC: nguoc lai thi mot
+     doan du lieu day dac se xoa mat chu, va cai bien mat chinh la nguong. */
+  var gateLabels = o.match(/<rect[^>]*\/><text[^>]*<\/text>/g) || [];
+  gateLabels.forEach(function (t) {{ o = o.replace(t, ''); }});
+
+  /* nam duong */
+  LN.forEach(function (l) {{
+    if (OFF[l[0]]) return;
+    var a = S.lines[l[0]] || [], d = '', up = true;
+    for (var i = 0; i < a.length; i++) {{
+      if (a[i] === null) {{ up = true; continue; }}
+      d += (up ? 'M' : 'L') + X(i).toFixed(1) + ' ' + Y(a[i]).toFixed(1) + ' ';
+      up = false;
+    }}
+    o += "<path class=ln data-k='" + l[0] + "' stroke='" + l[1]
+       + "' d='" + d + "'/>";
+  }});
+
+  /* nhan truc x: mot moc moi nam */
+  var seen = {{}};
+  S.dates.forEach(function (d, i) {{
+    var y = d.slice(0, 4);
+    if (seen[y] || i === 0) {{ seen[y] = 1; return; }}
+    seen[y] = 1;
+    o += "<text x='" + X(i).toFixed(1) + "' y='" + (H - 8) + "' text-anchor=middle>"
+       + y + "</text>";
+  }});
+  o += gateLabels.join('');
+  o += "<line class=cross stroke='#94a3b8' stroke-dasharray='2 3' y1='" + T
+     + "' y2='" + (T + ih) + "' x1='-9' x2='-9' id='cross'/>";
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.innerHTML = o;
+}}
+
+document.getElementById('chart').addEventListener('mousemove', function (e) {{
+  if (!CX) return;
+  var svg = this, b = svg.getBoundingClientRect(), tip = document.getElementById('tip');
+  var sc = (svg.viewBox.baseVal.width || b.width) / b.width;
+  var x = (e.clientX - b.left) * sc;
+  var i = Math.round((x - CX.L) / (CX.iw || 1) * (CX.n - 1));
+  if (i < 0 || i >= CX.n) {{ tip.style.display = 'none'; return; }}
+  var S = SER[CB], cr = svg.querySelector('#cross');
+  if (cr) {{ cr.setAttribute('x1', CX.X(i)); cr.setAttribute('x2', CX.X(i)); }}
+  var h = "<b>" + S.dates[i] + "</b>";
+  LN.forEach(function (l) {{
+    if (OFF[l[0]]) return;
+    var v = (S.lines[l[0]] || [])[i];
+    h += "<div class=r><span style='color:" + l[1] + "'>" + l[0] + "</span>"
+       + "<b>" + (v === null || v === undefined ? '—' : v.toFixed(2)) + "</b></div>";
+  }});
+  tip.innerHTML = h;
+  tip.style.display = 'block';
+  var box = svg.parentNode.getBoundingClientRect();
+  var lx = e.clientX - box.left + 14;
+  if (lx + tip.offsetWidth > box.width) lx = e.clientX - box.left - tip.offsetWidth - 14;
+  tip.style.left = lx + 'px';
+  tip.style.top = (e.clientY - box.top + 12) + 'px';
+}});
+document.getElementById('chart').addEventListener('mouseleave', function () {{
+  document.getElementById('tip').style.display = 'none';
+}});
+window.addEventListener('resize', drawChart);
+drawChart();
+
 [0, 1, 2].forEach(setBasket);
 </script>
 </div></body></html>""".format(
     nall=D["baskets"]["all"], nex=D["baskets"]["all-VIC-VIX"],
     window=D["window"], t0=D["trim"][0], t1=D["trim"][1],
-    d0=D["dates"][0], d1=D["dates"][1], d2=D["dates"][2], SECTIONS=SECTIONS)
+    d0=D["dates"][0], d1=D["dates"][1], d2=D["dates"][2], SECTIONS=SECTIONS,
+    cradios=CRADIOS, DEFB=DEFAULT,
+    gs=dict((g[0], g[1]) for g in GATES).get("SELL_MIN_BREADTH", 0),
+    gb=dict((g[0], g[1]) for g in GATES).get("BUY_MAX_BREADTH", 0),
+    gr=dict((g[0], g[1]) for g in GATES).get("REINVEST_MAX_BREADTH", 0),
+    SER=json.dumps(D["series"], separators=(",", ":")),
+    CDATES=json.dumps(D["dates"]),
+    GATES=json.dumps([[g[0].replace("_BREADTH", ""), g[1], g[2]] for g in GATES]))
 
 out = (Path(r"C:\projects\Stock_Analyzer\PriceToEarn_v2\single\multi_signal")
        / "KIEM_TRA_prem.html")

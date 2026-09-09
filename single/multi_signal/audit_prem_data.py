@@ -110,7 +110,32 @@ def compute(rows, basket):
             "lo": round(float(lo), 4), "hi": round(float(hi), 4)}
 
 
+def series(uni):
+    """
+    Ca lich su cua nam duong tren mot ro, de ve chung mot bieu do.
+
+    Bang ba ngay tra loi "so nay dung khong"; no khong tra loi duoc "nam duong
+    nay khac nhau the nao" -- ba diem thi khong thay duoc hinh dang. Doc tu
+    breadth_signals chu khong tinh lai: phan tinh lai da duoc ba ngay kia doi
+    chung roi, nen cho nay lay dung cai ma chien luoc that su doc.
+    """
+    cols, idx = {}, None
+    for variant, sig in (("base", "prem_median"), ("base", "prem_mean"),
+                         ("base", "prem_mean_cap"), ("trim5-95", "prem_trim"),
+                         ("trim5-95", "prem_trim_cap")):
+        df = db.load_breadth(uni, W, variant, [sig])
+        if df.empty or sig not in df:
+            continue
+        d = df[sig]
+        d.index = [str(i)[:10] for i in d.index]
+        if idx is None:
+            idx = list(d.index)
+        cols[sig] = [None if v != v else round(float(v), 2) for v in d]
+    return {"dates": idx or [], "lines": cols}
+
+
 out = {"dates": DATES, "window": W, "trim": [TRIM_LO, TRIM_HI],
+       "series": {b: series(b) for b in BASKETS},
        "baskets": {k: len(v) for k, v in BASKETS.items()},
        "basket_members": BASKETS, "sections": {}}
 for d in DATES:
