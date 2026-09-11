@@ -344,8 +344,10 @@ def main():
         try:
             from syncs.breadth import sync_breadth
             r = sync_breadth(override=force)
-            note = (f"{r['rows']:,} rows to {r['last_date']}"
-                    if r["status"] == "rebuilt" else "inputs unchanged")
+            b = r["baskets"].values()
+            note = (f"{sum(x['rows'] for x in b):,} rows to "
+                    f"{max(x['last_date'] for x in b)}"
+                    if r["status"] == "rebuilt" and b else "inputs unchanged")
             p.end("breadth", "breadth", "basket", time.time() - t0, note=note)
         except Exception as e:
             p.end("breadth", "breadth", "basket", time.time() - t0,
