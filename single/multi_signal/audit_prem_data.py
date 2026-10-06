@@ -23,7 +23,7 @@ from core.breadth_calc import universe_key
 from core.universe import resolve
 import syncs.breadth as sb
 
-DATES = ["2018-01-23", "2022-01-04", "2026-08-04"]
+DATES = ["2018-01-23", "2022-01-04", "2026-09-18"]
 W = sb.WINDOW
 TRIM_LO, TRIM_HI = 5, 95
 
