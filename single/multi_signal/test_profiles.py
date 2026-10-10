@@ -63,7 +63,7 @@ GATES = {
     "both_or":       {"MIN_SIGNAL3": True},
     "price_nogates": {"MIN_SIGNAL3": False},
 }
-GATES_DEFAULT = {"MIN_SIGNAL3": False}
+GATES_DEFAULT = {"MIN_SIGNAL3": True}
 
 ARMS = {
     "buy":      (("PERCENT_BUY",), "BUY_MAX_BREADTH"),

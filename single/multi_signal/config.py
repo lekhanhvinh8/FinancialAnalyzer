@@ -399,8 +399,9 @@ EXCLUDE_SYMBOLS = ["VIX", "VIC"]
 # throughout. Adding MIN_SIGNAL3_WINDOW would change that — Sharpe narrows sharply
 # with the window, p95 = 124.6 * w^-0.654 (dispersion.py) — so normalise before
 # ever sweeping the window.
-# OFF BY DEFAULT AS OF THIS CHANGE, at the reader's request, and the case that
-# prompted it is worth recording. VCS peaked around 76,000 in December 2017 at
+# ON AGAIN BY DEFAULT since 2026-10-10, at the reader's request. It was switched
+# off by default in 457121a; the case that prompted that is kept below.
+# VCS peaked around 76,000 in December 2017 at
 # +587% over its own 1000-bar median -- nearly eight times the sell threshold --
 # and the arm never sold. Three gates blocked it, and they never cleared
 # together: the basket reached 70 in January 2018, signal1 fell below 0.228 in
@@ -416,7 +417,7 @@ EXCLUDE_SYMBOLS = ["VIX", "VIC"]
 # The measurements below were taken with the gate ON and are kept as the record
 # of what it was worth then. Re-measure before trusting them now.
 #
-MIN_SIGNAL3 = None
+MIN_SIGNAL3 = 1.1
 
 # SellMedian1000: block sell when short-term momentum slope (signal1) is above this — momentum still up → hold
 SELL_SIGNAL1_WINDOW = 120    # trading days for the slope window
