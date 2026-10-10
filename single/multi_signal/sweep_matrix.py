@@ -1,8 +1,8 @@
 """
 Every pairwise comparison in every sweep, as one matrix per sweep.
 
-matrix_html() is the piece that matters: every sweep calls it at the end of its
-own build_html, so running a sweep puts the matrix in that sweep's own report,
+matrix_html() is the piece that matters: sweep_runner calls it at the end of
+every report, so running a sweep puts the matrix in that sweep's own report,
 with no second command to remember. That is the whole point -- the numbers are
 there the moment the sweep finishes.
 
@@ -63,7 +63,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from single.multi_signal import config
 
-HERE = Path(__file__).parent
+HERE = Path(__file__).parent / "charts" / "sweeps"   # where sweep_runner writes
 OUT = HERE / "SWEEP_MATRIX.html"
 
 # diff is index 0 in every sweep's cell tuple. The rest of the tuple is ordered

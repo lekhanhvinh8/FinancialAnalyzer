@@ -44,14 +44,14 @@ BUY_MEDIAN_WINDOW = 1000
 # Confirmed twice, and this one does matter unlike the window beside it. Swept
 # alone at w=1000 it was the best of 19 settings on both mean and vote; swept
 # again as part of the 2D window x threshold grid, every one of the top ten cells
-# is the column 60 sits in. See sweep_buy_window.py.
+# is the column 60 sits in. See SWEEPS.md, buy_window.
 PERCENT_BUY      = None
 
 # SellMedian1000: which median the sell arm measures the price against. The
 # reinvest arm is still fixed at 1000 and does not follow this — which is also
 # what keeps the backtest start index from moving when this drops below 1000.
 # PERCENT_SELL below is not transferable across values of this; see dispersion.py.
-# Swept 20..1000 against 15 thresholds, 750 cells (sweep_sell_window.py). The
+# Swept 20..1000 against 15 thresholds, 750 cells (SWEEPS.md, sell_window). The
 # window contributes nothing: the only five cells that beat live are five
 # different windows all landing on the same THRESHOLD band, 73 to 78. Same
 # conclusion the buy window reached.
@@ -109,7 +109,7 @@ PERCENT_SELL     = 55
 # already does.
 #
 # SWEPT ON ITS OWN, with the median trigger off so PERCENT_SELL took no part
-# (sweep_sell_bottom.py). It is a real signal: 3 of 18 thresholds beat having no
+# (SWEEPS.md, sell_bottom). It is a real signal: 3 of 18 thresholds beat having no
 # trigger at all with p<0.05, and at its best it lifts the mean from +5.17 to
 # +51.4. That is more than the four previous attempts on this arm managed between
 # them, and 225 is the only cell in any of them with both neighbours agreeing.
@@ -133,7 +133,7 @@ PERCENT_SELL_BOTTOM = None
 
 # ReInvestMedian1000: reinvest while price is BELOW median x (1 + PERCENT_REINVEST/100).
 # Same sign as PERCENT_BUY, not "below the median": 10 means "up to 10% ABOVE it".
-# Swept over 14 settings and 52 symbols (sweep_percent_reinvest.py). 10 is the
+# Swept over 14 settings and 52 symbols (SWEEPS.md, percent_reinvest). 10 is the
 # peak of a cleanly unimodal median curve and also wins the mean and the win rate.
 # The safe region is wide, -5 to +35 all give a median of 16 to 21, so this does
 # not need to be right to the point. Above +50 it collapses: redeploying
@@ -150,7 +150,7 @@ PERCENT_SELL_BOTTOM = None
 # sweep_reinvest_top puts it first on 23 head-to-head wins, with 23 of the other
 # 34 losing to it significantly.
 #
-# Re-tested JOINTLY with PERCENT_SELL (sweep_sell_reinvest.py), because the two
+# Re-tested JOINTLY with PERCENT_SELL (SWEEPS.md, sell_reinvest), because the two
 # are coupled: the distance between them is a band the money cannot return
 # through, and 10 was chosen while PERCENT_SELL was still 60. Widening that band
 # to 65 turned out not to matter — 10 survives at the new sell level, and every
@@ -235,7 +235,7 @@ PERCENT_REINVEST_TOP = None
 # release the reserve using a looser threshold, on the same scale as
 # PERCENT_REINVEST above (so -10 = only if 10%+ BELOW the median).
 #
-# Swept over 14 settings and 52 symbols (sweep_reinvest_timeout.py). Nothing beats
+# Swept over 14 settings and 52 symbols (SWEEPS.md, reinvest_timeout). Nothing beats
 # 400 and there is only one way to get it wrong: too short. At 20 days the arm
 # loses 17 paired points on 13/49 symbols, with releases at 27.3 and sells at 12.1
 # — constant redeployment means holding more shares, which triggers more selling.
@@ -278,7 +278,7 @@ USE_PE = False   # use P/E-adjusted median instead of price median
 # and the P/E one on 217.
 #
 # SWEPT, AND IT LOSES. 52 symbols, 16 thresholds against the gate being off
-# (sweep_pelog.py). Not one beats it, and 13 of the 16 have a paired median of
+# (SWEEPS.md, pelog). Not one beats it, and 13 of the 16 have a paired median of
 # exactly 0.00.
 #
 # The mechanism is not in doubt — at a threshold of 0.30 it does precisely what it
@@ -378,7 +378,7 @@ EXCLUDE_SYMBOLS = ["VIX", "VIC"]
 # stable/trending regime, so let it run. Higher blocks fewer days and sells MORE,
 # the same polarity as the signal1 sell gate.
 #
-# Swept at last: 16 settings, 52 symbols (sweep_min_signal3.py). Nothing beats
+# Swept at last: 16 settings, 52 symbols (SWEEPS.md, min_signal3). Nothing beats
 # 1.1 and it is the mean peak (+52.4). The old figure of -2.50 was signal3 and
 # z_dev measured together, and z_dev has been off since 73b7ce6, so it never said
 # anything about this gate alone.
@@ -464,7 +464,7 @@ SELL_MIN_SIGNAL1   = 0.228   # % per day, = k/sqrt(window) with k=2.5 at window 
 # window at all, six with too few bars left afterwards. A quarter of the universe
 # spent on one gate.
 #
-# Now measured on its own, which it never had been (sweep_zdev.py). The -2.50
+# Now measured on its own, which it never had been (SWEEPS.md, zdev). The -2.50
 # once written here was signal3 AND z_dev together, and signal3 alone has since
 # measured at +6.04, so that figure said nothing about this gate.
 #
@@ -495,7 +495,7 @@ SELL_MIN_ZDEV    = None
 # is only ALLOWED once momentum is up.
 #
 # OFF, and its premise is what the sweep rejected. 340 cells over 52 symbols
-# (sweep_reinvest_signal1.py): not one beats switching the gate off, and the mean
+# (SWEEPS.md, reinvest_signal1): not one beats switching the gate off, and the mean
 # falls monotonically as the gate gets stricter — at w=100, k=-4 scores 45.9 and
 # k=+4 scores 16.4. "Wait for momentum to turn before redeploying" costs 29 points
 # across the grid. Redeploying immediately is better; idle cash earns nothing.

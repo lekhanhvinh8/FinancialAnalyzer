@@ -51,7 +51,9 @@ single/              METHOD 1 — one wallet per symbol
   models.py          InvestmentTracker and friends
   strategies/        buy / sell / reinvest conditions
   runner.py sweep.py shared by the methods below
-  multi_signal/      the tuned configuration, its runners and ~20 sweeps
+  multi_signal/      the tuned configuration and its runners
+                     sweep_runner.py + sweep_specs.py — every parameter sweep
+                     SWEEPS.md — what each sweep found
                      CONCLUSIONS.md — which profile won, and what it is not
   ma1000/            the plain moving-average variant
 

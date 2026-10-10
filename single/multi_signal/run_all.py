@@ -121,12 +121,12 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 import pandas as pd
 import database as db
-from single.runner import load_symbol_df, run_estimate
+from single.runner import run_estimate
 from export.chart import save_backtest_chart
 from core.progress import RunAllProgress
 from single.multi_signal import config
-from single.multi_signal.factory import (make_median_strategies,
-                                        make_interval_strategies, build_pelog_map)
+from single.multi_signal.factory import make_median_strategies, make_interval_strategies
+from single.multi_signal.inputs import SymbolInputs, windows_for
 
 CHARTS_DIR = Path(__file__).parent / "charts"
 
@@ -171,107 +171,22 @@ def process_symbol(symbol: str, run_dir: Path | None = None, profile: str | None
         if symbol.upper() in {s.upper() for s in getattr(config, "EXCLUDE_SYMBOLS", [])}:
             return symbol, None, "excluded by EXCLUDE_SYMBOLS", time.time() - t0
 
-        df = load_symbol_df(symbol)
+        # What the strategies read, loaded by the same code the sweeps use --
+        # see inputs.py for why there is exactly one copy of it.
+        inp = SymbolInputs(symbol)
+        df = inp.df
         if len(df) < 1010:
             return symbol, None, f"only {len(df)} rows", time.time() - t0
-
-        # Only the windows actually read: the sell and reinvest arms are fixed at
-        # 1000, the buy arm uses BUY_MEDIAN_WINDOW. Loading all ~1500 was the
-        # slowest step in the run. The chart only forwards this to strategy.check(),
-        # so it needs nothing more.
-        buy_w  = getattr(config, "BUY_MEDIAN_WINDOW", 1000)
-        sell_w = getattr(config, "SELL_MEDIAN_WINDOW", 1000)
-        # The P/E median comes out of range_stats too, so its window has to be
-        # requested here or build_pelog_map finds nothing to read.
-        pe_w   = getattr(config, "PE_MEDIAN_WINDOW", 500)
-        windows = {1000, buy_w, sell_w}
-        if config.SELL_MIN_PELOG is not None:
-            windows.add(pe_w)
-        cal_range_close = db.load_range_stats(symbol, df, range_days=windows)
-        if cal_range_close is None:
+        if not inp.load_range_stats(windows_for(config)):
             return symbol, None, "no range_stats in DB", time.time() - t0
+        cal_range_close = inp.crc
+        maps, available, why = inp.maps(config)
+        if why:
+            return symbol, None, why, time.time() - t0
+        breadth_map = maps["breadth_map"]
 
-        date_to_idx = {pd.Timestamp(row["time"]): i for i, row in df.iterrows()}
-
-        # A gate set to None is not loaded at all. This is not just saved work:
-        # an unused signal must not appear in first_idx below, or its warmup would
-        # keep pushing the start index forward and keep costing symbols for a
-        # filter that is switched off.
-        def _slope_map(window: int) -> dict:
-            d = db.load_trend_signals(symbol, window_days=window)
-            out: dict = {}
-            if not d.empty:
-                for date, v in d["signal1_slope"].items():
-                    idx = date_to_idx.get(pd.Timestamp(date))
-                    if idx is not None:
-                        out[idx] = float(v)
-            return out
-
-        # signal3 map: {row_index → signal3_sharpe} for window=1000
-        signal3_map: dict = {}
-        if config.MIN_SIGNAL3 is not None:
-            sig3_df = db.load_trend_signals(symbol, window_days=1000)
-            if not sig3_df.empty:
-                for date, s3 in sig3_df["signal3_sharpe"].items():
-                    idx = date_to_idx.get(pd.Timestamp(date))
-                    if idx is not None:
-                        signal3_map[idx] = float(s3)
-
-        # signal1 map for the sell gate
-        signal1_map: dict = {}
-        if config.SELL_MIN_SIGNAL1 is not None:
-            signal1_map = _slope_map(config.SELL_SIGNAL1_WINDOW)
-
-        # Reinvest slope map — reuse signal1_map when the window matches, else load it
-        reinvest_signal1_map: dict = {}
-        if config.REINVEST_MIN_SIGNAL1 is not None:
-            reinvest_signal1_map = (
-                signal1_map
-                if (signal1_map
-                    and config.REINVEST_SIGNAL1_WINDOW == config.SELL_SIGNAL1_WINDOW)
-                else _slope_map(config.REINVEST_SIGNAL1_WINDOW))
-
-        # z_dev map for the sell filter — {row_index: z_dev} at the configured stat window
-        zdev_map: dict = {}
-        if config.SELL_MIN_ZDEV is not None:
-            zd = db.load_zdev(symbol, 1000, config.SELL_ZDEV_WINDOW)
-            for date, z in zd["z_dev"].items() if not zd.empty else []:
-                idx = date_to_idx.get(pd.Timestamp(date))
-                if idx is not None and z is not None:
-                    zdev_map[idx] = float(z)
-
-        # ln(P/E / its own median) for the sell gate. build_pelog_map owns the
-        # warmup rule — see factory.py; it is not "skip the first pe_w rows".
-        pelog_map: dict = {}
-        if config.SELL_MIN_PELOG is not None:
-            pelog_map = build_pelog_map(symbol, df, cal_range_close, pe_w)
-            if not pelog_map:
-                return (symbol, None,
-                        f"no usable P/E at window={pe_w}", time.time() - t0)
-
-        # Start once EVERY input the strategies read is available — the latest
-        # first-appearance wins. Before that point the early period would be running
-        # a different strategy than the later one, because whichever inputs are still
-        # missing simply do not filter. Adding a signal means adding a line here;
-        # nothing else needs to know the arithmetic.
-        #
         # Applied to BOTH arms. Moving only the treatment's start would hand the
         # interval arm extra years of compounding and invalidate the comparison.
-        first_idx = {
-            # The reinvest arm still guards on index > 1000; buy and sell each
-            # guard on their own window, so the longest of the three sets the floor.
-            "median1000":       max(1000, buy_w, sell_w),
-            "signal1":          min(signal1_map)          if signal1_map          else None,
-            "signal3":          min(signal3_map)          if signal3_map          else None,
-            "reinvest_signal1": min(reinvest_signal1_map) if reinvest_signal1_map else None,
-            "zdev":             min(zdev_map)             if zdev_map             else None,
-            "pelog":            min(pelog_map)            if pelog_map            else None,
-        }
-        if config.SELL_MIN_ZDEV is not None and not zdev_map:
-            return (symbol, None,
-                    f"no z_dev at stat_window={config.SELL_ZDEV_WINDOW}",
-                    time.time() - t0)
-        available = {k: v for k, v in first_idx.items() if v is not None}
         start_idx = max(available.values())
         binding   = max(available, key=available.get)
 
@@ -280,18 +195,7 @@ def process_symbol(symbol: str, run_dir: Path | None = None, profile: str | None
             msg = f"only {eval_bars} bars after warmup (start {start_idx}, bound by {binding})"
             return symbol, None, msg, time.time() - t0
 
-        # The basket, joined to this symbol's rows. Empty unless the profile
-        # switched a breadth gate on, and an empty map with a None threshold is
-        # the arm exactly as it was.
-        breadth_map = {}
-        if any(getattr(config, k, None) is not None for k in
-               ("BUY_MAX_BREADTH", "SELL_MIN_BREADTH", "REINVEST_MAX_BREADTH")):
-            from single.multi_signal.breadth_map import build_breadth_map
-            breadth_map = build_breadth_map(df)
-
-        buy1, sell1, ri1 = make_median_strategies(signal3_map, signal1_map,
-                                                  reinvest_signal1_map, zdev_map,
-                                                  pelog_map, breadth_map)
+        buy1, sell1, ri1 = make_median_strategies(**maps)
         r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1,
                           cal_range_close, start_index=start_idx)
 

@@ -109,8 +109,8 @@ claim can be re-measured rather than believed.
 python -m single.multi_signal.run_all --all --profile=price
 python -m single.multi_signal.run_all --all --profile=breadth
 python -m single.multi_signal.run_all --all --profile=both_or
-python -m single.multi_signal.sweep_breadth --arm=sell --signal=prem_cap
-python -m single.multi_signal.sweep_breadth --arm=timeout --signal=prem_cap
+python -m single.multi_signal.sweep_runner breadth_sell --set=BREADTH_SIGNAL=prem_trim_cap
+python -m single.multi_signal.sweep_runner breadth_timeout --set=BREADTH_SIGNAL=prem_trim_cap
 ```
 
 Three runs fit concurrently on eight cores at `--workers=3`.

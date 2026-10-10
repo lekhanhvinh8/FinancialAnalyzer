@@ -107,7 +107,7 @@ RESULTS SO FAR
          Two departures from a unit normal, both mattering when placing a grid:
          it is WIDER (+-2.3 rather than +-1.64) and its centre sits slightly
          below zero. So SELL_MIN_ZDEV is directly comparable across stat windows
-         and sweep_zdev.py sweeps the raw threshold — no k/sqrt(w), no q.
+         and the zdev sweep (sweep_specs.py) sweeps the raw threshold — no k/sqrt(w), no q.
 
   pelog  p95 = 0.094 * w^0.360     R2 = 0.9895
          59 symbols, w in 250..1000, 171,277 observations per window
