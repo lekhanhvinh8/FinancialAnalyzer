@@ -126,6 +126,14 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
     # it off. Same shape as the other gates on this class.
     breadth_map: dict = field(default_factory=dict)
     max_breadth: float = None
+
+    # ── the market's trend, read from the index ─────────────────────────────
+    # {row_index: value} from trend_map.py: the index against its 200-bar MA, or
+    # its 12-1 momentum, in percent. None switches the gate off. Absent means
+    # do not act, as with the basket. Reinvests only while it
+    # is at or above min_trend. Always AND'd, whatever join_or says.
+    trend_map: dict = field(default_factory=dict)
+    min_trend: float = None
     # HOW THE PRICE SOURCE AND THE BASKET SOURCE JOIN. False (AND) is what
     # ships. True was measured on 52 symbols and lost: it took reinvests from
     # 204 to 526 and cost 18.6 mean / 4.9 median against the breadth profile
@@ -197,6 +205,10 @@ class ReInvestMedian1000Strategy(ReinvestStrategy):
                 return False
         else:
             if (price_on and not price_ok) or (breadth_on and not breadth_ok):
+                return False
+        if self.min_trend is not None:
+            t = self.trend_map.get(index)
+            if t is None or t < self.min_trend:
                 return False
 
         if self.sell_strategy is not None and self.sell_strategy.check(

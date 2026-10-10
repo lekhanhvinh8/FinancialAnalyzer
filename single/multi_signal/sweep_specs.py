@@ -190,3 +190,49 @@ _add(one("breadth_reinvest", "REINVEST_MAX_BREADTH — reinvest while the basket
 _add(one("breadth_timeout", "REINVEST_TIMEOUT_DAYS on the breadth profile",
          "REINVEST_TIMEOUT_DAYS", [0, 60, 120, 200, 300, 400, 500, 700, 1000, 1500],
          note=_BREADTH_NOTE, profile="breadth"))
+
+
+# ── The index trend ───────────────────────────────────────────────────────────
+
+def _as_profile(name: str | None) -> dict:
+    """
+    Overrides that turn the trend profile back into `name` (None: config.py as
+    written), so the configurations it is measured against run in the same
+    sweep, on the same symbols and from the same start index. Undo the trend
+    profile key by key to config's own values, then apply the other profile.
+    """
+    from single.multi_signal import config
+    from single.multi_signal.profiles import PROFILES
+    out = {k: getattr(config, k) for k in PROFILES["trend"]}
+    out.update(PROFILES[name] if name else {})
+    return out
+
+
+_add(grid("trend", "The index trend filter: in while the reading is >= X, out below",
+          {"TREND_SIGNAL": ["ma200", "mom12_1"], "X": [-5, -2, 0, 2, 5]},
+          lambda sig, x: {"TREND_SIGNAL": sig, "BUY_MIN_TREND": x,
+                          "SELL_MAX_TREND": x, "REINVEST_MIN_TREND": x},
+          extra={"price": _as_profile("price"), "breadth": _as_profile("breadth"),
+                 "default": _as_profile(None)},
+          profile="trend",
+          note="live is the textbook rule: VN30 above its 200-bar MA. The price, "
+               "breadth and default cells are those configurations, run beside it "
+               "so every comparison is paired on the same symbols and start."))
+
+_add(grid("trend_gate", "SELL_MAX_TREND on top of the breadth profile: sell only while the trend reading is below X",
+          {"TREND_SIGNAL": ["ma200", "mom12_1"], "SELL_MAX_TREND": [0, 5, 10, 20, 30, 50]},
+          lambda sig, x: {"TREND_SIGNAL": sig, "SELL_MAX_TREND": x},
+          profile="breadth",
+          note="live is the breadth profile without the gate. The gate only ever "
+               "removes sells: it asks that the basket is dear AND the index trend "
+               "has cooled below X."))
+
+_add(grid("trend_band", "The trend filter with a band: out below -x, the reserve back only above +x",
+          {"TREND_SIGNAL": ["ma200", "mom12_1"], "x": [1, 2, 3, 5, 8]},
+          lambda sig, x: {"TREND_SIGNAL": sig, "SELL_MAX_TREND": -x,
+                          "BUY_MIN_TREND": -x, "REINVEST_MIN_TREND": x},
+          extra={"breadth": _as_profile("breadth")},
+          profile="trend",
+          note="The plain rule flips VN30 in and out 62 times since 2016 on ma200, "
+               "44 of the spells shorter than 20 bars. The band is the usual cure: "
+               "monthly money still buys above -x, but what was sold waits for +x."))

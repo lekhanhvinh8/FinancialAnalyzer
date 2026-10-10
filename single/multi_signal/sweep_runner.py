@@ -111,14 +111,16 @@ def eval_symbol(sym: str, spec_name: str, base: dict):
 
             b0, s0, r0 = make_interval_strategies()
             dca = run_estimate(sym, inp.df, config.INTERVAL_MONEY, b0, s0, r0,
-                               inp.crc, start_index=start_idx)["allRatioGrowth"]
+                               inp.crc, start_index=start_idx,
+                               buy_cost=config.BUY_COST_PCT / 100, sell_cost=config.SELL_COST_PCT / 100)["allRatioGrowth"]
 
             out = {}
             for key, c, maps in prepared:
                 with overrides(c):
                     buy, sell, rei = make_median_strategies(**maps)
                     r = run_estimate(sym, inp.df, config.INTERVAL_MONEY, buy, sell,
-                                     rei, inp.crc, start_index=start_idx)
+                                     rei, inp.crc, start_index=start_idx,
+                                     buy_cost=config.BUY_COST_PCT / 100, sell_cost=config.SELL_COST_PCT / 100)
                 out[key] = (round(r["allRatioGrowth"] - dca, 4), r["totalReinvest"],
                             r["totalBuys"], r["totalSells"])
         return sym, out, None

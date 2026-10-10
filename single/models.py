@@ -92,6 +92,10 @@ class InvestmentTracker:
         self.lastSellIndex = 0
         self.lastReinvestIndex = 0
 
+        # Fractions of each trade lost to fees and tax; set by estimate().
+        self.buyCost = 0.0
+        self.sellCost = 0.0
+
     def add_sell_info(self, info: SellInfo):
         self.sellInfos.append(info)
 

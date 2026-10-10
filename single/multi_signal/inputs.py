@@ -35,6 +35,11 @@ def windows_for(cfg) -> set:
     return w
 
 
+def trend_on(cfg) -> bool:
+    return any(getattr(cfg, k, None) is not None for k in
+               ("BUY_MIN_TREND", "SELL_MAX_TREND", "REINVEST_MIN_TREND"))
+
+
 def breadth_on(cfg) -> bool:
     return any(getattr(cfg, k, None) is not None for k in
                ("BUY_MAX_BREADTH", "SELL_MIN_BREADTH", "REINVEST_MAX_BREADTH"))
@@ -89,6 +94,12 @@ class SymbolInputs:
                                                       universe=universe,
                                                       window=window))
 
+    def index_trend(self, signal: str, index: str) -> dict:
+        """The index's trend reading (trend_map.py), {row: value}."""
+        from single.multi_signal.trend_map import build_trend_map
+        return self._cached(("trend_idx", signal, index),
+                            lambda: build_trend_map(self.df, signal, index))
+
     def maps(self, cfg):
         """
         (maps, first_idx, skip_reason) for one configuration.
@@ -101,8 +112,10 @@ class SymbolInputs:
         `first_idx` is the row each input becomes available, by name. The start
         of evaluation is the latest of them -- before that the early period
         would run a different strategy than the later one, because whichever
-        inputs are missing simply do not filter. The breadth line is left out on
-        purpose here; see run_all for why that is a known open question.
+        inputs are missing simply do not filter. The breadth line is left out,
+        as run_all always left it out: before it starts, a breadth gate stays
+        shut and the strategy holds cash while DCA buys. Whether it should
+        count is an open question, kept as it was so no recorded number moves.
         """
         buy_w = getattr(cfg, "BUY_MEDIAN_WINDOW", 1000)
         sell_w = getattr(cfg, "SELL_MEDIAN_WINDOW", 1000)
@@ -127,6 +140,7 @@ class SymbolInputs:
                 return None, None, f"no usable P/E at window={pe_w}"
         bm = (self.breadth(cfg.BREADTH_SIGNAL, cfg.BREADTH_UNIVERSE, cfg.BREADTH_WINDOW)
               if breadth_on(cfg) else {})
+        tm = (self.index_trend(cfg.TREND_SIGNAL, cfg.TREND_INDEX) if trend_on(cfg) else {})
 
         first_idx = {
             # The reinvest arm still guards on index > 1000; buy and sell each
@@ -137,7 +151,9 @@ class SymbolInputs:
             "reinvest_signal1": min(ri) if ri else None,
             "zdev":             min(z) if z else None,
             "pelog":            min(pl) if pl else None,
+            "trend":            min(tm) if tm else None,
         }
         maps = dict(signal3_map=s3, signal1_map=s1, reinvest_signal1_map=ri,
-                    zdev_map=z, pelog_map=pl, breadth_map=bm)
+                    zdev_map=z, pelog_map=pl, breadth_map=bm,
+                    trend_map=tm)
         return maps, {k: v for k, v in first_idx.items() if v is not None}, None

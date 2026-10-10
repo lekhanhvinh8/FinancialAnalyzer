@@ -18,7 +18,8 @@ class Sellor:
 
         tracker.totalReserveShare   += sellShare
         tracker.totalReserveCapital += sellCapital
-        tracker.totalReserveFinal   += sellFinal
+        # Brokerage and the sale tax come out of the proceeds.
+        tracker.totalReserveFinal   += sellFinal * (1 - tracker.sellCost)
 
         tracker.totalShare          -= sellShare
         tracker.totalCapital        -= sellCapital
@@ -51,7 +52,7 @@ class Reinvestor:
 
         tracker.totalCapital        += reInvestCapital
         tracker.totalCurrentCapital += reInvestFinal
-        tracker.totalShare          += reInvestFinal / close
+        tracker.totalShare          += reInvestFinal * (1 - tracker.buyCost) / close
 
         tracker.add_reinvest_info(ReinvestInfo(
             index=index, close=close,
@@ -72,7 +73,7 @@ class Buyer:
             tracker.intervalAmount  -= finalBuy
             tracker.totalCapital        += finalBuy
             tracker.totalCurrentCapital += finalBuy
-            tracker.totalShare          += finalBuy / close
+            tracker.totalShare          += finalBuy * (1 - tracker.buyCost) / close
             tracker.add_buyed_info(BuyedInfo(
                 index=index, close=close,
                 finalBuy=finalBuy, numberOfShareCanBy=finalBuy / close,
@@ -102,8 +103,16 @@ def estimate(
     cal_range_close: dict,
     isPrint: bool = False,
     start_index: int = 0,
+    buy_cost: float = 0.0,
+    sell_cost: float = 0.0,
 ) -> tuple:
+    """
+    buy_cost / sell_cost are fractions of each trade lost to fees and tax (0.0015
+    is 0.15%). They default to zero, which is how every recorded result here was
+    measured; the DCA arm pays buy_cost on every monthly purchase too.
+    """
     tracker = InvestmentTracker()
+    tracker.buyCost, tracker.sellCost = buy_cost, sell_cost
     finalClose = df['close'].iloc[-1] * 1000
 
     for index, row in df.iterrows():

@@ -122,6 +122,31 @@ PROFILES = {
         "SELL_MIN_PELOG": None,
     },
 
+    # The textbook trend filter and nothing else: in while the index is above
+    # its 200-bar MA, out while it is below. Every other condition is spelled out
+    # as off, including the timeout valve -- it would redeploy the reserve while
+    # the trend is still down, which is not the rule being measured.
+    "trend": {
+        "PERCENT_BUY": None,
+        "PERCENT_SELL": None,
+        "PERCENT_SELL_BOTTOM": None,
+        "PERCENT_REINVEST": None,
+        "PERCENT_REINVEST_TOP": None,
+        "BUY_MAX_BREADTH": None,
+        "SELL_MIN_BREADTH": None,
+        "REINVEST_MAX_BREADTH": None,
+        "MIN_SIGNAL3": None,
+        "SELL_MIN_SIGNAL1": None,
+        "SELL_MIN_ZDEV": None,
+        "SELL_MIN_PELOG": None,
+        "REINVEST_MIN_SIGNAL1": None,
+        "REINVEST_TIMEOUT_DAYS": 0,
+        "TREND_SIGNAL": "ma200",
+        "BUY_MIN_TREND": 0.0,
+        "SELL_MAX_TREND": 0.0,
+        "REINVEST_MIN_TREND": 0.0,
+    },
+
     # Both sources on every arm. The price half is spelled out for the same
     # reason "price" is: inheriting it from config.py made this profile an exact
     # copy of the default the moment the default's buy and reinvest arms moved

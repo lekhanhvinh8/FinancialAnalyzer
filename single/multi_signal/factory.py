@@ -79,6 +79,7 @@ def make_median_strategies(signal3_map: dict | None = None,
                            zdev_map: dict | None = None,
                            pelog_map: dict | None = None,
                            breadth_map: dict | None = None,
+                           trend_map: dict | None = None,
                            min_signal1=_FROM_CONFIG,
                            percent_buy=_FROM_CONFIG,
                            buy_window=_FROM_CONFIG,
@@ -141,12 +142,20 @@ def make_median_strategies(signal3_map: dict | None = None,
     # two packages.
     sell_breadth = (getattr(config, "SELL_MIN_BREADTH", None)
                     if sell_min_breadth is _FROM_CONFIG else sell_min_breadth)
-    if pct_sell is None and pct_sell_bot is None and sell_breadth is None:
+    # The index trend gates (trend_map.py) are read from config only; a sweep
+    # varies them through config overrides like everything else now.
+    sell_trend = getattr(config, "SELL_MAX_TREND", None)
+    buy_trend = getattr(config, "BUY_MIN_TREND", None)
+    ri_trend = getattr(config, "REINVEST_MIN_TREND", None)
+    if (pct_sell is None and pct_sell_bot is None and sell_breadth is None
+            and sell_trend is None):
         sell = SellStrategy()
     else:
         sell = SellMedian1000Strategy(
             breadth_map=breadth_map or {},
             min_breadth=sell_breadth,
+            trend_map=trend_map or {},
+            max_trend=sell_trend,
             percentSell=pct_sell, percentSellBottom=pct_sell_bot,
             use_pe=config.USE_PE, medianWindow=sell_w,
             # An empty map is how each gate is switched off; the strategy's own
@@ -167,12 +176,14 @@ def make_median_strategies(signal3_map: dict | None = None,
 
     buy_breadth = (getattr(config, "BUY_MAX_BREADTH", None)
                    if buy_max_breadth is _FROM_CONFIG else buy_max_breadth)
-    if pct_buy is None and buy_breadth is None:
+    if pct_buy is None and buy_breadth is None and buy_trend is None:
         buy = BuyIntervalStrategy()
     else:
         buy = BuyMedian1000Strategy(percentBuy=pct_buy, use_pe=config.USE_PE,
                                     breadth_map=breadth_map or {},
                                     max_breadth=buy_breadth,
+                                    trend_map=trend_map or {},
+                                    min_trend=buy_trend,
                                     medianWindow=buy_w, sell_strategy=sell_ref)
 
     pct_ri = (config.PERCENT_REINVEST
@@ -185,7 +196,7 @@ def make_median_strategies(signal3_map: dict | None = None,
                   if percent_reinvest_top is _FROM_CONFIG else percent_reinvest_top)
     ri_breadth = (getattr(config, "REINVEST_MAX_BREADTH", None)
                   if reinvest_max_breadth is _FROM_CONFIG else reinvest_max_breadth)
-    if pct_ri is None and pct_ri_top is None and ri_breadth is None:
+    if pct_ri is None and pct_ri_top is None and ri_breadth is None and ri_trend is None:
         reinvest = ReinvestStrategy()
     else:
         ri_min = (config.REINVEST_MIN_SIGNAL1
@@ -193,6 +204,8 @@ def make_median_strategies(signal3_map: dict | None = None,
         reinvest = ReInvestMedian1000Strategy(
             breadth_map=breadth_map or {},
             max_breadth=ri_breadth,
+            trend_map=trend_map or {},
+            min_trend=ri_trend,
             join_or=bool(getattr(config, 'REINVEST_JOIN_OR', False)),
             percentReinvest=pct_ri, percentReinvestTop=pct_ri_top,
             use_pe=config.USE_PE,

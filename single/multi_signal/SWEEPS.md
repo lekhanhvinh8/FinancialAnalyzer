@@ -1901,3 +1901,60 @@ Usage:
     python single/multi_signal/sweep_zdev.py FPT STB     # a subset
     python single/multi_signal/sweep_zdev.py --rescore
 ```
+
+## trend, trend_band, trend_gate
+
+Measured 2026-10-10, 52 symbols (VIC, VIX excluded), through `sweep_runner`.
+Numbers are per-symbol growth minus DCA in points; "paired" is the median
+per-symbol difference against the named cell, with symbols up / changed and the
+sign-test p.
+
+```text
+THE CLASSIC TREND FILTER LOSES TO DCA, AND TO EVERYTHING ELSE HERE
+
+  trend (profile "trend": VN30 vs its 200-bar MA, in above 0, out below)
+
+      cell              mean   median  beats DCA  sells/sym
+      trend ma200 0     +2.8     -8.3     44%        28.7
+      price            +59.8    +20.9     73%         5.1
+      breadth          +92.9    +26.2     88%         1.4
+      default          +80.7    +15.0     88%         0.9
+
+      breadth - trend   paired +34.88   42/52   p=0.000
+
+  No cell of either signal beats DCA on the median: ma200 at -5..+5 runs
+  -17.6..-3.4, mom12_1 -9.6..-3.3. The plain rule flips in and out of VN30 62
+  times since 2016 on ma200 (42 on mom12_1), 44 of the spells under 20 bars,
+  and each flip sells low and buys back higher.
+
+  trend_band (out below -x, the reserve back only above +x) cuts the sells
+  from 29 to 9-19 per symbol and still loses: best median -2.5 (mom12_1, x=3),
+  paired against the plain rule never significant. ma200 x=5 is -36.4, which
+  says the band is fitting a handful of episodes, not curing whipsaw.
+
+  WITH COSTS (--set=BUY_COST_PCT=0.15 --set=SELL_COST_PCT=0.25)
+
+      cell        mean, no cost   mean, with cost
+      trend ma200      +2.8          -11.5   (median -13.9, 33% beat DCA)
+      price           +59.8          +57.9
+      breadth         +92.9          +91.7
+      default         +80.7          +79.7
+
+  The useful by-product: the existing strategies trade rarely enough that
+  realistic costs move them by one to two points. Costs only matter for a rule
+  that trades every few weeks -- which is this one.
+
+AS A GATE ON THE BREADTH SELL (trend_gate: sell only while the trend reading
+is below X, on top of "basket above 80")
+
+  Every threshold lowers the mean (92.9 -> 43.8..74.2) and none raises the
+  median; the paired median against breadth is 0.00 or negative at every
+  cell, best p=0.121. On the default config the same: 80.7 -> 30.2..69.3.
+  A basket above 80 coincides with a strong index trend, so "and the trend has
+  broken" removes exactly the sells near the top that earn breadth its edge.
+  Same lesson as SELL_MIN_ZDEV and SELL_MIN_PELOG: restraining this arm costs.
+
+Not adopted. The trend gates stay in config.py, off, so this can be re-run.
+Caveat that applies to all of it: one market, 2015-2026, and the 52 symbols
+share one timing signal, so the 52 are far from independent observations.
+```

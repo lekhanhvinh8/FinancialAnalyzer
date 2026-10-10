@@ -21,6 +21,13 @@ interval arm, so every diff must come out at 0.00 — a cheap engine check.
 
 INTERVAL_MONEY = 8_000_000   # VND invested per interval
 
+# Trading costs, in percent of each trade. Zero is how every number recorded in
+# this package was measured, so it stays the default. Realistic for HOSE is about
+# 0.15 on a buy (brokerage) and 0.25 on a sell (brokerage plus the 0.1% tax).
+# The DCA arm pays the buy cost on every monthly purchase as well.
+BUY_COST_PCT = 0.0
+SELL_COST_PCT = 0.0
+
 # BuyMedian1000: which median the buy arm measures the price against. The sell arm
 # has its own (SELL_MEDIAN_WINDOW below); reinvest is still fixed at 1000. Not a
 # condition, so the None convention does not apply — it is a size.
@@ -587,3 +594,30 @@ REINVEST_JOIN_OR = False
 BREADTH_UNIVERSE = "all-VIC-VIX"
 BREADTH_WINDOW = 1000
 BREADTH_SIGNAL = "prem_median"
+
+
+# ── The index trend, as a signal source ───────────────────────────────────────
+#
+# The classic trend filter, read from the index rather than from the symbol:
+# see trend_map.py. Gates on all three arms, each switched off by None, so the
+# shipped config and every profile that does not name them are unchanged.
+#
+# TREND_SIGNAL   "ma200"   index close vs its 200-bar MA, in percent
+#                "mom12_1" index return from 252 to 21 bars ago, in percent
+#
+# BUY_MIN_TREND       buy only while the reading is at or above this
+# SELL_MAX_TREND      sell only while it is BELOW this -- the trend has broken
+# REINVEST_MIN_TREND  reinvest only while it is at or above this
+#
+# 0 / 0 / 0 is the textbook rule: in while the index is above its MA (or up
+# over the year), out while it is below. The "trend" profile runs exactly that.
+#
+# MEASURED AND NOT ADOPTED (SWEEPS.md, trend). The textbook rule loses to DCA:
+# median -8.3 on ma200, 44% of symbols beat DCA, 29 sells per symbol, and -13.9
+# once costs are charged. As a gate on the breadth sell it lowers the mean at
+# every threshold. All three stay off.
+TREND_INDEX = "VN30"
+TREND_SIGNAL = "ma200"
+BUY_MIN_TREND = None
+SELL_MAX_TREND = None
+REINVEST_MIN_TREND = None

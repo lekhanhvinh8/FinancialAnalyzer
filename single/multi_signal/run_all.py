@@ -197,11 +197,13 @@ def process_symbol(symbol: str, run_dir: Path | None = None, profile: str | None
 
         buy1, sell1, ri1 = make_median_strategies(**maps)
         r1 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy1, sell1, ri1,
-                          cal_range_close, start_index=start_idx)
+                          cal_range_close, start_index=start_idx,
+                          buy_cost=config.BUY_COST_PCT / 100, sell_cost=config.SELL_COST_PCT / 100)
 
         buy2, sell2, ri2 = make_interval_strategies()
         r2 = run_estimate(symbol, df, config.INTERVAL_MONEY, buy2, sell2, ri2,
-                          cal_range_close, start_index=start_idx)
+                          cal_range_close, start_index=start_idx,
+                          buy_cost=config.BUY_COST_PCT / 100, sell_cost=config.SELL_COST_PCT / 100)
 
         out_dir = run_dir if run_dir is not None else CHARTS_DIR
         chart_path = out_dir / f"{symbol.lower()}_backtest.html"

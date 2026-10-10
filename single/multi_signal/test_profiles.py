@@ -40,13 +40,15 @@ from single.multi_signal.profiles import PROFILES, apply
 
 # (price condition on?, breadth gate on?) per arm -- the identity of a profile,
 # independent of the exact thresholds, which sweeps are free to move.
-#   P = reads this symbol's price   B = reads the basket   PB = both   -- = neither
+#   P = reads this symbol's price   B = reads the basket   T = reads the index
+#   trend   letters combine (PB = both)   -- = neither
 EXPECTED = {
     "price":         {"buy": "P",  "sell": "P",  "reinvest": "P"},
     "breadth":       {"buy": "B",  "sell": "B",  "reinvest": "B"},
     "both":          {"buy": "PB", "sell": "PB", "reinvest": "PB"},
     "both_or":       {"buy": "PB", "sell": "PB", "reinvest": "PB"},
     "price_nogates": {"buy": "P",  "sell": "P",  "reinvest": "P"},
+    "trend":         {"buy": "T",  "sell": "T",  "reinvest": "T"},
 }
 
 # The shipped default is a profile in all but name, so it is pinned too. Its
@@ -62,22 +64,26 @@ GATES = {
     "both":          {"MIN_SIGNAL3": True},
     "both_or":       {"MIN_SIGNAL3": True},
     "price_nogates": {"MIN_SIGNAL3": False},
+    "trend":         {"MIN_SIGNAL3": False},
 }
 GATES_DEFAULT = {"MIN_SIGNAL3": True}
 
 ARMS = {
-    "buy":      (("PERCENT_BUY",), "BUY_MAX_BREADTH"),
-    "sell":     (("PERCENT_SELL", "PERCENT_SELL_BOTTOM"), "SELL_MIN_BREADTH"),
-    "reinvest": (("PERCENT_REINVEST", "PERCENT_REINVEST_TOP"), "REINVEST_MAX_BREADTH"),
+    "buy":      (("PERCENT_BUY",), "BUY_MAX_BREADTH", "BUY_MIN_TREND"),
+    "sell":     (("PERCENT_SELL", "PERCENT_SELL_BOTTOM"), "SELL_MIN_BREADTH",
+                 "SELL_MAX_TREND"),
+    "reinvest": (("PERCENT_REINVEST", "PERCENT_REINVEST_TOP"), "REINVEST_MAX_BREADTH",
+                 "REINVEST_MIN_TREND"),
 }
 
 
 def _shape(cfg) -> dict:
     out = {}
-    for arm, (price_keys, breadth_key) in ARMS.items():
+    for arm, (price_keys, breadth_key, trend_key) in ARMS.items():
         p = any(getattr(cfg, k, None) is not None for k in price_keys)
         b = getattr(cfg, breadth_key, None) is not None
-        out[arm] = ("PB" if p and b else "P" if p else "B" if b else "--")
+        t = getattr(cfg, trend_key, None) is not None
+        out[arm] = ("P" * p + "B" * b + "T" * t) or "--"
     return out
 
 

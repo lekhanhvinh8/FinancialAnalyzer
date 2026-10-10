@@ -159,6 +159,14 @@ class BuyMedian1000Strategy(BuyStrategy):
     breadth_map: dict = field(default_factory=dict)
     max_breadth: float = None
 
+    # ── the market's trend, read from the index ─────────────────────────────
+    # {row_index: value} from trend_map.py: the index against its 200-bar MA, or
+    # its 12-1 momentum, in percent. None switches the gate off. Absent means
+    # do not act, as with the basket. Buys only while it is at
+    # or above min_trend.
+    trend_map: dict = field(default_factory=dict)
+    min_trend: float = None
+
     def considerBuy(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.intervalAmount <= 0:
             return
@@ -195,6 +203,10 @@ class BuyMedian1000Strategy(BuyStrategy):
         if self.max_breadth is not None:
             b = self.breadth_map.get(index)
             if b is None or b > self.max_breadth:
+                return False
+        if self.min_trend is not None:
+            t = self.trend_map.get(index)
+            if t is None or t < self.min_trend:
                 return False
 
         if self.sell_strategy is not None and self.sell_strategy.check(

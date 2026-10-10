@@ -19,7 +19,8 @@ def load_symbol_df(symbol: str) -> pd.DataFrame:
 
 def run_estimate(symbol: str, df: pd.DataFrame, interval_money: int,
                  buy_strategy, sell_strategy, reinvest_strategy,
-                 cal_range_close: dict, start_index: int = 1000) -> dict:
+                 cal_range_close: dict, start_index: int = 1000,
+                 buy_cost: float = 0.0, sell_cost: float = 0.0) -> dict:
     """
     Run one estimate pass and return a flat result dict.
     """
@@ -28,6 +29,7 @@ def run_estimate(symbol: str, df: pd.DataFrame, interval_money: int,
      extra) = estimate(
         df, interval_money, buy_strategy, sell_strategy, reinvest_strategy,
         cal_range_close, isPrint=False, start_index=start_index,
+        buy_cost=buy_cost, sell_cost=sell_cost,
     )
     return {
         "symbol":               symbol,

@@ -190,6 +190,14 @@ class SellMedian1000Strategy(SellStrategy):
     breadth_map: dict = field(default_factory=dict)
     min_breadth: float = None
 
+    # ── the market's trend, read from the index ─────────────────────────────
+    # {row_index: value} from trend_map.py: the index against its 200-bar MA, or
+    # its 12-1 momentum, in percent. None switches the gate off. Absent means
+    # do not act, as with the basket. Sells only while it is
+    # BELOW max_trend: the trend has to have broken.
+    trend_map: dict = field(default_factory=dict)
+    max_trend: float = None
+
     def considerSell(self, tracker: InvestmentTracker, index, close, pe, cal_range_close, isPrint):
         if tracker.totalCurrentCapital <= 0 or tracker.totalShare <= 0:
             return
@@ -238,6 +246,10 @@ class SellMedian1000Strategy(SellStrategy):
         if self.min_breadth is not None:
             b = self.breadth_map.get(index)
             if b is None or b <= self.min_breadth:
+                return False
+        if self.max_trend is not None:
+            t = self.trend_map.get(index)
+            if t is None or t >= self.max_trend:
                 return False
 
         # Block sell when short-term momentum (linear regression slope) is still strong — let it run
