@@ -4,7 +4,7 @@ import database as db
 from syncs import calculate
 from ._helpers import resolve_symbols
 
-_KNOWN_INDICES = {"vn30", "vndiamond", "vnfinlead"}
+_KNOWN_INDICES = {"vn30", "vn30exvic", "vndiamond", "vnfinlead"}
 
 
 def sync_pe(
@@ -19,7 +19,8 @@ def sync_pe(
     index="vn30"     → aggregate VN30 P/E (+ per-member P/E as side effect)
     symbols=["VN30"] → individual P/E for each VN30 member stock
     symbols=["FPT"]  → individual FPT P/E
-    both None        → aggregate P/E for all three indices
+    index="vn30exvic" → aggregate VN30 P/E without VIC
+    both None        → aggregate P/E for all indices
 
     from_date : recalculate only from this date onward; None = full history
     override  : reserved for future use (save verb control)

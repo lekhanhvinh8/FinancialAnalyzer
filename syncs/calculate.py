@@ -30,8 +30,16 @@ import database as db
 
 import functools
 
+
+def _load_vn30_ex_vic(as_of: str | None = None) -> pd.DataFrame:
+    """VN30 members without VIC — a P/E-only view, not a traded index."""
+    m = db.load_index_members("vn30", as_of=as_of)
+    return m[m["symbol"] != "VIC"]
+
+
 _MEMBER_LOADERS = {
     "vn30":      functools.partial(db.load_index_members, "vn30"),
+    "vn30exvic": _load_vn30_ex_vic,
     "vndiamond": functools.partial(db.load_index_members, "vndiamond"),
     "vnfinlead": functools.partial(db.load_index_members, "vnfinlead"),
 }
@@ -45,12 +53,14 @@ _MEMBER_LOADERS = {
 # joined on symbol without normalising.
 _PE_SAVERS = {
     "vn30":      functools.partial(db.save_pe_ratios, "VN30"),
+    "vn30exvic": functools.partial(db.save_pe_ratios, "VN30EXVIC"),
     "vndiamond": functools.partial(db.save_pe_ratios, "VNDIAMOND"),
     "vnfinlead": functools.partial(db.save_pe_ratios, "VNFINLEAD"),
 }
 
 _PE_LOADERS = {
     "vn30":      functools.partial(db.load_pe_ratios, "VN30"),
+    "vn30exvic": functools.partial(db.load_pe_ratios, "VN30EXVIC"),
     "vndiamond": functools.partial(db.load_pe_ratios, "VNDIAMOND"),
     "vnfinlead": functools.partial(db.load_pe_ratios, "VNFINLEAD"),
 }
@@ -160,7 +170,7 @@ def calc_pe_history(
     """
     Calculate daily aggregate P/E for `index` over [start, end].
 
-    index        : "vn30", "vndiamond", or "vnfinlead"
+    index        : "vn30", "vn30exvic", "vndiamond", or "vnfinlead"
     emit_members : if True, also save per-member daily P/E to pe_members table
 
     Returns a DataFrame with columns:

@@ -29,12 +29,14 @@ _PE_LOADERS = {
     # Key is the internal index id (lowercase); the bound symbol is how it is
     # stored, which is uppercase like every other table. See syncs/calculate.py.
     "vn30":      functools.partial(db.load_pe_ratios, "VN30"),
+    "vn30exvic": functools.partial(db.load_pe_ratios, "VN30EXVIC"),
     "vndiamond": functools.partial(db.load_pe_ratios, "VNDIAMOND"),
     "vnfinlead": functools.partial(db.load_pe_ratios, "VNFINLEAD"),
 }
 
 _INDEX_LABELS = {
     "vn30":       "VN30",
+    "vn30exvic":  "VN30 ex-VIC",
     "vndiamond":  "VN Diamond",
     "vnfinlead":  "VN Fin Lead",
 }
@@ -48,6 +50,10 @@ _INDEX_PRICE_SYMBOL = {
 # Price-line colors/labels per P/E zone (cheap → expensive). The hover anchor
 # feeds these per point as customdata, so the tooltip's dot and label match the
 # line segment under the cursor.
+# Extra P/E series drawn as a plain line on an index's chart, for comparison.
+# These have no chart of their own: without index weights there is no price.
+_PE_OVERLAYS = {"vn30": "vn30exvic"}
+
 _ZONE_COLORS   = ["#2ca02c", "#f0c040", "#ff7f0e", "#d62728"]
 _ZONE_LABELS   = ["Cheap", "Fair", "High", "Exp."]
 _NO_ZONE_COLOR = "#888888"
@@ -284,6 +290,20 @@ def pe_chart(
                 "%{customdata[1]}: %{y:,.0f} pts<extra></extra>"
             ),
         ))
+
+    # ── P/E overlay (e.g. VN30 ex-VIC on VN30) ────────────────────────────────
+    # Inserted before the P/E line: save_chart finds that line at n - 2.
+    overlay = _PE_OVERLAYS.get(index)
+    if overlay:
+        ov = load_pe(overlay, start, end, min_members)
+        if not ov.empty:
+            ov_label = _INDEX_LABELS[overlay]
+            fig.add_trace(go.Scatter(
+                x=ov["date"], y=ov["pe_ratio"],
+                mode="lines", name=f"{ov_label} P/E",
+                line=dict(color="#17becf", width=1.5), yaxis="y1",
+                hovertemplate=f"{ov_label}: %{{y:.2f}}x<extra></extra>",
+            ))
 
     # ── P/E line ──────────────────────────────────────────────────────────────
     fig.add_trace(go.Scatter(

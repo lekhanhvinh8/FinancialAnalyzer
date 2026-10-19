@@ -5,6 +5,7 @@ Usage:
     python sync.py                   # all stocks (deduplicated) then all indices
     python sync.py vnindex           # all member stocks only, no index series
     python sync.py vn30              # VN30 index series only (prices, P/E, range-stats)
+    python sync.py vn30exvic         # VN30 P/E without VIC (P/E only, shown on the VN30 chart)
     python sync.py VN30              # all member stocks of VN30
     python sync.py FPT               # FPT stock only
     python sync.py vn30 FPT          # VN30 index + FPT stock
@@ -42,6 +43,10 @@ from syncs.trend_signals import WINDOW_STEP as _TW, STEP_DAYS as _TS, MAX_LOOKBA
 from core.progress import SyncProgress
 
 INDICES   = ["vn30", "vndiamond", "vnfinlead"]
+# P/E-only views over an index's members. There are no weights to build a price
+# series from, so only the pe step applies; the series is drawn on the chart of
+# the index it maps to.
+PE_VIEWS  = {"vn30exvic": "vn30"}
 ALL_STEPS = {"prices", "shares", "profit", "pe", "range-stats", "trend-signals",
              "zdev", "breadth", "outputs"}
 
@@ -99,7 +104,9 @@ def main():
     # lowercase vn30 = index series; uppercase VN30 = expand to members
     indices        = [] if stocks_only else [t.lower() for t in (args or INDICES) if t.lower() in known_indices and t not in index_symbols]
     member_targets = [t for t in args if t in index_symbols]
-    explicit_stocks = [t.upper() for t in args if t.lower() not in known_indices and t != "vnindex"]
+    views          = [] if stocks_only else [t.lower() for t in (args or PE_VIEWS) if t.lower() in PE_VIEWS]
+    explicit_stocks = [t.upper() for t in args
+                       if t.lower() not in known_indices | PE_VIEWS.keys() and t != "vnindex"]
 
     # build deduplicated stocks list
     seen   = set(explicit_stocks)
@@ -127,7 +134,7 @@ def main():
     if "prices"         in steps: p.set_totals("prices",         len(stocks) + len(indices))
     if "shares"         in steps: p.set_totals("shares",         len(stocks))
     if "profit"         in steps: p.set_totals("profit",         len(stocks))
-    if "pe"             in steps: p.set_totals("pe",             len(stocks) + len(indices))
+    if "pe"             in steps: p.set_totals("pe",             len(stocks) + len(indices) + len(views))
     if "range-stats"    in steps: p.set_totals("range-stats",    len(stocks) + len(indices))
     if "trend-signals"  in steps: p.set_totals("trend-signals",  len(stocks) + len(indices))
     if "zdev"           in steps: p.set_totals("zdev",           len(stocks) + len(indices))
@@ -332,6 +339,24 @@ def main():
                 p.end("zdev", index, index_sym, time.time() - t0)
             except Exception as e:
                 p.end("zdev", index, index_sym, time.time() - t0, status="error", note=str(e)[:100])
+
+    # ── P/E-only views (e.g. VN30 ex-VIC) ─────────────────────────────────────
+    for view in views:
+        view_sym = view.upper()
+        members  = set(db.load_index_members(PE_VIEWS[view])["symbol"].unique())
+        v_force  = force or bool(members & readjusted)
+        v_since  = None if v_force else min(
+            (d for s, d in restated.items() if s in members), default=None)
+
+        if "pe" in steps:
+            t0 = time.time()
+            p.begin("pe", view, view_sym)
+            try:
+                from_date = None if v_force else v_since or db.load_latest_pe_date(view_sym)
+                sync_pe(index=view, from_date=from_date, override=v_force)
+                p.end("pe", view, view_sym, time.time() - t0)
+            except Exception as e:
+                p.end("pe", view, view_sym, time.time() - t0, status="error", note=str(e)[:100])
 
     # ── Breadth ───────────────────────────────────────────────────────────────
     # After every per-symbol step, because a row is a statistic over the whole
