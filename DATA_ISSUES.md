@@ -85,3 +85,34 @@ includes them.
 - HOSE index review announcements list the free-float factor per constituent at
   each review; those are point-in-time by construction, which is the right shape.
 - Failing both, drop size as a proxy rather than continue tuning against it.
+
+---
+
+## 5. Profit is used from the quarter-end, not from publication (HIGH IMPACT)
+
+**What's wrong:**  
+TTM profit switches to a new quarter on that quarter's last day (30/06 for Q2).
+The report itself arrives weeks later — typically late July for Q2. So every
+P/E between the quarter-end and the publication date uses a figure nobody had
+on that date.
+
+**Root cause:**  
+No publication dates are collected; the quarter-end is the only date each
+quarter carries. Since the fix that recomputes P/E when a profit quarter
+arrives late (sync.py feeds the arrival back from the quarter-end), the recent
+tail follows the same convention as the rest of history — before it, the
+stretch between quarter-end and arrival was accidentally point-in-time.
+
+**Impact:**  
+Look-ahead of roughly a month after every quarter-end, across the whole series.
+P/E and anything built on it (zones, range_stats, signals, backtests) can react
+to an earnings change before the market could have. A backtest that trades on
+P/E is shown that quarter's result early — it is a view of the future from the
+moment of decision, not a view the decision could have had.
+
+**Resolution options:**  
+- Use profit from quarter-end + a fixed lag (the reporting deadline, ~30–45
+  days) instead of the quarter-end. Simple, conservative, point-in-time.
+- Collect real publication dates per report and switch on those.
+- Until then, treat any edge measured within ~45 days after a quarter-end as
+  suspect.

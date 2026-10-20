@@ -8,7 +8,8 @@ Formula:
     both price and at least 4 quarters of net profit available.
 
 TTM (Trailing Twelve Months) for a stock on date D:
-    sum of the 4 most recent quarterly profits whose quarter-end ≤ D.
+    sum of the 4 consecutive quarters ending at the latest reported quarter
+    whose quarter-end ≤ D. A gap among those four leaves TTM missing.
 
 Shares on date D:
     most recent quarterly shares whose quarter-end ≤ D.
@@ -105,16 +106,22 @@ def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFra
                 return v
         return None
     profit_df["net_profit"] = profit_df.apply(_coalesce, axis=1)
-    profit_df["ttm"] = profit_df["net_profit"].rolling(4).sum()
-    profit_ts = (
-        profit_df.dropna(subset=["ttm"])
-        .set_index("quarter_end")["ttm"]
-    )
+    # A row with no profit is a quarter not reported yet (shares arrive first)
+    # or never reported; either way it is not a quarter we have.
+    profit_df = profit_df.dropna(subset=["net_profit"]).reset_index(drop=True)
+    # Four rows are only a TTM when they are four consecutive quarters. A
+    # missing quarter otherwise pulls in one from a year earlier.
+    seq = profit_df["year"] * 4 + profit_df["quarter"]
+    profit_df["ttm"] = (profit_df["net_profit"].astype(float).rolling(4).sum()
+                        .where(seq - seq.shift(3) == 3))
+    profit_ts = profit_df.set_index("quarter_end")["ttm"]
 
-    # ── Reindex to daily, bfill+ffill shares, ffill TTM (no look-ahead) ──────
+    # ── Reindex to daily, bfill+ffill shares, TTM as of the latest quarter ───
+    # TTM takes the latest quarter's value even when that is NaN: falling back
+    # to an older TTM would present a stale figure as the current one.
     full_index = dates.union(shares_ts.index).union(profit_ts.index)
     daily_shares = shares_ts.reindex(full_index).ffill().bfill().reindex(dates)
-    daily_ttm    = profit_ts.reindex(full_index).ffill().reindex(dates)
+    daily_ttm    = profit_ts.reindex(dates, method="ffill")
 
     result = pd.DataFrame({"shares": daily_shares, "ttm_profit": daily_ttm})
     return result.dropna()

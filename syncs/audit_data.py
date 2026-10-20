@@ -2,7 +2,7 @@
 Audit the stored data against its sources and against itself, and optionally
 repair what it finds.
 
-Three checks, each catching a different way an incremental sync goes stale:
+Four checks, each catching a different way an incremental sync goes stale:
 
   prices   The source back-adjusts its whole history on a bonus issue, split or
            stock dividend. Our rows do not move, so the series breaks by a
@@ -12,6 +12,14 @@ Three checks, each catching a different way an incremental sync goes stale:
 
   shares   fill_merge protects a stored quarter, so a balance sheet the source
            later revises is never picked up.
+
+  profit   An incremental sync only adds quarters after the latest one, so a
+           quarter CafeF filled in late, or a value it served as 0 before it
+           had the real figure, stays missing. Compared against the raw JSON
+           the last fetch saved, plus the quarters sync derived from full-year
+           figures (data/raw/exception/derived_quarterly_profit.csv) — offline.
+           A source row is used only where it agrees with what is stored; see
+           syncs.profit.merge_profit.
 
   derived  pe_ratios stores price x shares as of when it ran. Repair the prices
            or restate the shares without recomputing it and the two drift
@@ -39,9 +47,12 @@ try:
 except AttributeError:
     pass
 
+import pandas as pd
+
 import database as db
 from syncs import calculate
-from syncs.sources import vnstock
+from syncs import profit
+from syncs.sources import vnstock, cafef
 from syncs._helpers import PRICE_START, call_with_retry
 from syncs.prices import detect_adjustment, _ADJ_TOLERANCE
 from syncs.shares import _SHARES_EPS
@@ -93,6 +104,19 @@ def check_shares(sym):
         if old > 0 and abs(new / old - 1) > _SHARES_EPS:
             bad.append((key, old, new))
     return bad
+
+
+def check_profit(sym):
+    """Returns (rows the raw file and the derived ledger can fill, [(quarter, reason) refused])."""
+    raw     = cafef.load_raw_net_profit(sym, profit.RAW_DIR)
+    derived = profit.load_derived(sym)
+    if not raw.empty:   # a quarter the raw file has needs no derived stand-in
+        have    = set(zip(raw.year, raw.quarter))
+        derived = derived[[k not in have for k in zip(derived.year, derived.quarter)]]
+    parts = [df[["year", "quarter", *profit._KQKD_COLS]] for df in (raw, derived) if not df.empty]
+    if not parts:
+        return pd.DataFrame(), []
+    return profit.merge_profit(pd.concat(parts, ignore_index=True), db.load_net_profit(sym))
 
 
 def check_derived(sym):
@@ -184,6 +208,8 @@ def repair(findings, index_hits):
             sync_prices(symbols=[sym], override=True)
         if f.get("shares"):
             sync_shares(symbols=[sym], override=True)
+        if f.get("profit") is not None:
+            profit.save(sym, f["profit"])
 
         # A price re-adjustment moved the scale under every date, so there is
         # no point to resume from. Anything else spoils a tail: take the
@@ -256,9 +282,19 @@ def main():
             except Exception as e:
                 notes.append(f"shares fetch failed: {str(e)[:60]}")
 
+        rows, refused = check_profit(sym)
+        if not rows.empty:
+            f["profit"] = rows
+            first = rows.sort_values(["year", "quarter"]).iloc[0]
+            f["since"] = _earliest(f.get("since"), _quarter_end_str(int(first.year), int(first.quarter)))
+            notes.append(f"profit {len(rows)} quarter(s) to fill from raw, from "
+                         f"{int(first.year)}Q{int(first.quarter)}")
+        if refused:
+            notes.append("profit refused " + ", ".join(f"{y}Q{q}" for (y, q), _ in refused))
+
         res = check_derived(sym)
         if res:
-            f.setdefault("since", res[0])
+            f["since"] = _earliest(f.get("since"), res[0])
             f["derived"] = res
             notes.append(f"pe_ratios off on {res[1]} dates from {res[0]}")
 
@@ -300,6 +336,8 @@ def main():
         price_syms = sorted(s for s, f in findings.items() if f.get("price"))
         if price_syms:
             print(f"  python sync.py {' '.join(price_syms)} --prices --force")
+        if any("profit" in f for f in findings.values()):
+            print("  (profit fills come from the raw files — only --fix writes them)")
         if findings:
             print(f"  python sync.py {' '.join(sorted(findings))} --pe --range-stats --force")
         if index_hits:

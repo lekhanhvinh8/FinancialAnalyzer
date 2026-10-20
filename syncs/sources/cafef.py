@@ -7,6 +7,10 @@ pages call in the browser. No login required; no rate-limit headers observed.
 Public interface:
     get_net_profit(symbol, raw_dir=None) -> DataFrame
         Columns: year, quarter, kqkd_14, kqkd_13, kqkd_10  (all in VND, NULL if absent)
+    get_annual_net_profit(symbol, raw_dir=None) -> DataFrame
+        Same columns, one row per fiscal year, quarter = 0.
+    load_raw_net_profit(symbol, raw_dir) -> DataFrame
+        Quarterly, read from the saved raw JSON instead of the API.
 
 Prices and shares are NOT available here — use sources.vnstock for those.
 
@@ -40,8 +44,9 @@ _HEADERS = {
 _PROFIT_CODES = ["KQKD_14", "KQKD_13", "KQKD_10"]
 
 
-def _fetch(symbol: str, report_type: str, raw_dir: Path | None = None) -> list[dict]:
-    """Fetch all quarterly periods for a report type in a single request."""
+def _fetch(symbol: str, report_type: str, raw_dir: Path | None = None,
+           type_time: str = "QUY") -> list[dict]:
+    """Fetch all periods (QUY = quarters, NAM = years) for a report type in one request."""
     r = requests.get(
         _BASE,
         params={
@@ -49,7 +54,7 @@ def _fetch(symbol: str, report_type: str, raw_dir: Path | None = None) -> list[d
             "pageIndex":  1,
             "pageSize":   100,
             "reportType": report_type,
-            "TypeTime":   "QUY",
+            "TypeTime":   type_time,
         },
         headers=_HEADERS,
         timeout=15,
@@ -60,7 +65,8 @@ def _fetch(symbol: str, report_type: str, raw_dir: Path | None = None) -> list[d
     if raw_dir is not None:
         raw_dir = Path(raw_dir)
         raw_dir.mkdir(parents=True, exist_ok=True)
-        out = raw_dir / f"{symbol.upper()}_{report_type}.json"
+        suffix = "" if type_time == "QUY" else f"_{type_time}"
+        out = raw_dir / f"{symbol.upper()}_{report_type}{suffix}.json"
         out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     if not payload.get("isSuccess"):
@@ -93,11 +99,30 @@ def get_net_profit(symbol: str, raw_dir: str | Path | None = None) -> pd.DataFra
     quarters = _fetch(symbol, "KQKD", raw_dir=raw_dir)
     if not quarters:
         raise ValueError(f"[cafef] No income statement data for {symbol}")
+    return _profit_frame(symbol, quarters)
 
+
+def get_annual_net_profit(symbol: str, raw_dir: str | Path | None = None) -> pd.DataFrame:
+    """Full-year net profit, same columns as get_net_profit with quarter = 0."""
+    years = _fetch(symbol, "KQKD", raw_dir=raw_dir, type_time="NAM")
+    return _profit_frame(symbol, years) if years else pd.DataFrame()
+
+
+def load_raw_net_profit(symbol: str, raw_dir: str | Path) -> pd.DataFrame:
+    """get_net_profit from the raw JSON a previous fetch saved; empty if none."""
+    path = Path(raw_dir) / f"{symbol.upper()}_KQKD.json"
+    if not path.exists():
+        return pd.DataFrame()
+    sections = json.loads(path.read_text(encoding="utf-8")).get("value", {}).get("data", [])
+    quarters = sections[0].get("data", []) if sections else []
+    return _profit_frame(symbol, quarters) if quarters else pd.DataFrame()
+
+
+def _profit_frame(symbol: str, quarters: list[dict]) -> pd.DataFrame:
     records = []
     for q in quarters:
         year    = int(q["year"])
-        quarter = int(q["quater"])
+        quarter = int(q.get("quater") or 0)   # 0 on a full-year row
         row = {
             "year":     year,
             "quarter":  quarter,

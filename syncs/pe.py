@@ -52,6 +52,9 @@ def _sync_index_pe(index: str, start: str | None) -> None:
 def _sync_stock_pe(sym: str, start: str | None) -> None:
     print(f"\n  Recalculating {sym} P/E …")
     pe_df = calculate.calc_stock_pe(sym, start=start)
+    # Only dates with a valid P/E come back, so a date that lost its P/E
+    # (TTM turned missing or negative) would otherwise keep its old row.
+    db.delete_pe_ratios(sym, start)
     if pe_df.empty:
         print(f"  [{sym}] no valid P/E rows")
         return

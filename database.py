@@ -399,6 +399,16 @@ def load_index_members(index_symbol: str, as_of: str | None = None) -> pd.DataFr
 
 # ── P/E ratios ────────────────────────────────────────────────────────────────
 
+def delete_pe_ratios(symbol: str, from_date: str | None = None) -> int:
+    """Delete a symbol's P/E rows from from_date on (all when None)."""
+    with _conn() as con:
+        cur = con.execute(
+            "DELETE FROM pe_ratios WHERE symbol = ? AND date >= ?",
+            (symbol, from_date or ""),
+        )
+    return cur.rowcount
+
+
 def save_pe_ratios(symbol: str, df: pd.DataFrame) -> dict:
     """
     Save P/E ratios for a symbol (stock or index).

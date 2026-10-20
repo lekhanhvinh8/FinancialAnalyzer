@@ -156,11 +156,16 @@ def main():
     # already hold are on the old scale — so those steps run as if forced.
     readjusted: set[str] = set()
 
-    # Symbols whose newly arrived quarter restates a share count that P/E has
-    # already been computed on, mapped to the quarter-end it goes stale from.
+    # Symbols whose newly arrived quarter changes data P/E has already been
+    # computed on, mapped to the quarter-end it goes stale from: a restated
+    # share count, or a profit quarter that lands a month after it ended.
     # Unlike a price re-adjustment this spoils only the tail of the series, so
     # these steps resume from that date instead of rebuilding everything.
     restated: dict[str, str] = {}
+
+    def _restate(found: dict[str, str]) -> None:
+        for s, d in found.items():
+            restated[s] = min(d, restated.get(s, d))
 
     for sym in stocks:
         if "prices" in steps:
@@ -183,8 +188,8 @@ def main():
                 last_y, last_q = (None, None) if force else (
                     db.load_latest_shares_quarter(sym) or (None, None)
                 )
-                restated.update(sync_shares(symbols=[sym], from_year=last_y,
-                                            from_quarter=last_q, override=force))
+                _restate(sync_shares(symbols=[sym], from_year=last_y,
+                                     from_quarter=last_q, override=force))
                 note = (f"share count restated — P/E stale from {restated[sym]}"
                         if sym in restated else "")
                 p.end("shares", sym, sym, time.time() - t0, note=note)
@@ -198,8 +203,11 @@ def main():
                 last_y, last_q = (None, None) if force else (
                     db.load_latest_profit_quarter(sym) or (None, None)
                 )
-                sync_profit(symbols=[sym], from_year=last_y, from_quarter=last_q, override=force)
-                p.end("profit", sym, sym, time.time() - t0)
+                found = sync_profit(symbols=[sym], from_year=last_y,
+                                    from_quarter=last_q, override=force)
+                _restate(found)
+                note = f"new profit — P/E stale from {found[sym]}" if sym in found else ""
+                p.end("profit", sym, sym, time.time() - t0, note=note)
             except Exception as e:
                 p.end("profit", sym, sym, time.time() - t0, status="error", note=str(e)[:100])
 

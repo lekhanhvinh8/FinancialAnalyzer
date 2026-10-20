@@ -54,3 +54,22 @@ Mapping: fiscal Q1 = calendar Q3, fiscal Q2 = calendar Q4, fiscal Q3 = calendar 
 - **Value**: 245,000,000,000
 - **Confidence**: High (directly stated)
 - **Source**: https://thuongtruong.com.vn/news/agris-sbt-loi-nhuan-quy-3-gan-245-ty-dong-du-kien-tang-von-len-9410-ty-dong-166360.html
+
+## Derived quarters — `derived_quarterly_profit.csv`
+
+Quarters CafeF has no row for, in a finished year that has the other three, are
+derived by `sync.py --profit` as full year − the other three quarters (the same
+arithmetic as several patches above) and recorded in
+`derived_quarterly_profit.csv`, one row per quarter, so the DB can be rebuilt
+without the API. A quarter patched in this file is never derived — the patch
+wins (VHC 2025Q3: derived 787B against 433B stated in the BCTC).
+
+The subtraction carries any error in the other three quarters. Rows worth a
+second look (sign or size out of line with the rest of the year): BID 2012Q1,
+BSR 2018Q1, NAB 2015Q4/2016Q4/2017Q4, OCB 2013Q4/2014Q4, SBT 2012Q4,
+VPB 2013Q4, VCB 2009Q2, PLX 2021Q3.
+
+Rebuilding profit offline, in order:
+
+    python syncs/audit_data.py --offline --fix         # raw CafeF files + derived CSV
+    python data/raw/exception/patch_quarterly_profit.py
