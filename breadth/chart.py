@@ -108,7 +108,12 @@ setTimeout(function wait() {{
                 title: {{text: '{axis_title or list(series)[0]}', font: {{size: 10}}}},
                 tickfont: {{size: 9}}, zeroline: false}},
     'xaxis.domain': [0, 0.94]
-  }}).then(function() {{ Plotly.addTraces(gd, {json.dumps(traces)}); }});
+  }}).then(function() {{
+    Plotly.addTraces(gd, {json.dumps(traces)});
+    // The P/E chart may carry its own extra right-hand axis (market-context
+    // prem, y9); let it lay the two out side by side.
+    if (window._fitRightAxes) _fitRightAxes();
+  }});
 }}, 1600);
 </script>
 </body>"""

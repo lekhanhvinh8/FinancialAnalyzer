@@ -47,13 +47,17 @@ _INDEX_PRICE_SYMBOL = {
     "vnfinlead":  "VNFINLEAD",
 }
 
+# Market context on every P/E chart, valuation and backtest alike: lines to read
+# the market by eye, which no strategy reads. Pinned here rather than imported
+# from breadth/ for the same reason save_backtest_chart takes its windows as
+# arguments — export/ must not depend on a strategy package. The prem basket is
+# the one the breadth profile decides on, so the two lines agree where both show.
+CONTEXT_EXVIC = "VN30EXVIC"                                   # pe_ratios symbol
+CONTEXT_PREM  = ("all-VIC-VIX", 1000, "base", "prem_median")  # breadth_signals key
+
 # Price-line colors/labels per P/E zone (cheap → expensive). The hover anchor
 # feeds these per point as customdata, so the tooltip's dot and label match the
 # line segment under the cursor.
-# Extra P/E series drawn as a plain line on an index's chart, for comparison.
-# These have no chart of their own: without index weights there is no price.
-_PE_OVERLAYS = {"vn30": "vn30exvic"}
-
 _ZONE_COLORS   = ["#2ca02c", "#f0c040", "#ff7f0e", "#d62728"]
 _ZONE_LABELS   = ["Cheap", "Fair", "High", "Exp."]
 _NO_ZONE_COLOR = "#888888"
@@ -99,6 +103,34 @@ def _fetch_index_price(index: str, start: str, end: str) -> pd.Series | None:
         return df.set_index("time").sort_index()["close"]
     except Exception:
         return None
+
+
+def _context_series(dates: list[str]) -> dict:
+    """
+    The market-context series (see CONTEXT_EXVIC / CONTEXT_PREM) on `dates`,
+    each carried forward from its last known day; None where it has no value
+    yet or where the stored value is missing (VN30 ex-VIC has no P/E through
+    2015–16). Empty when neither is stored.
+    """
+    idx = pd.DatetimeIndex(pd.to_datetime(dates))
+    with db._conn() as con:
+        exvic = pd.read_sql(
+            "SELECT date, pe_ratio AS v FROM pe_ratios WHERE symbol=? ORDER BY date",
+            con, params=(CONTEXT_EXVIC,))
+        prem = pd.read_sql(
+            "SELECT date, value AS v FROM breadth_signals WHERE universe=? AND window_days=?"
+            " AND variant=? AND signal=? ORDER BY date",
+            con, params=CONTEXT_PREM)
+    out = {}
+    for key, df in (("exvic", exvic), ("prem", prem)):
+        if df.empty:
+            continue
+        s = df.set_index(pd.to_datetime(df["date"]))["v"].astype(float)
+        # method="ffill" takes the value AT the nearest earlier date, NaN
+        # included, so a stored gap stays a gap instead of being bridged.
+        vals = s.reindex(idx, method="ffill")
+        out[key] = [None if v != v else float(v) for v in vals]
+    return out
 
 
 def _rolling_stat(values, window, stat):
@@ -291,20 +323,6 @@ def pe_chart(
             ),
         ))
 
-    # ── P/E overlay (e.g. VN30 ex-VIC on VN30) ────────────────────────────────
-    # Inserted before the P/E line: save_chart finds that line at n - 2.
-    overlay = _PE_OVERLAYS.get(index)
-    if overlay:
-        ov = load_pe(overlay, start, end, min_members)
-        if not ov.empty:
-            ov_label = _INDEX_LABELS[overlay]
-            fig.add_trace(go.Scatter(
-                x=ov["date"], y=ov["pe_ratio"],
-                mode="lines", name=f"{ov_label} P/E",
-                line=dict(color="#17becf", width=1.5), yaxis="y1",
-                hovertemplate=f"{ov_label}: %{{y:.2f}}x<extra></extra>",
-            ))
-
     # ── P/E line ──────────────────────────────────────────────────────────────
     fig.add_trace(go.Scatter(
         x=df["date"], y=pe_values,
@@ -394,6 +412,10 @@ def save_chart(
     global_med_json      = json.dumps(price_data[4] if price_data else None)
     global_p75_json      = json.dumps(price_data[5] if price_data else None)
 
+    ctx = _context_series(price_data[0]) if has_price else {}
+    exvic_json = json.dumps(ctx.get("exvic", []))
+    prem_json  = json.dumps(ctx.get("prem", []))
+
     pe_mean_idx_json      = json.dumps(pe_mean_idx)
     price_mean_idx_json   = json.dumps(price_mean_idx)
     price_anchor_idx_json = json.dumps(price_anchor_idx)
@@ -478,7 +500,7 @@ function recomputePricePct() {{
   const vis = document.getElementById('pricePctVis').checked;
   const subs = [...document.querySelectorAll('.pct-price-cb')].map(c => c.checked);
   const layoutUpd = {{'yaxis2.range': priceY2Range}};
-  if (priceValues.length > 0 && colorMode === 'price') {{
+  if (priceValues.length > 0 && _COLOR_SRC[colorMode].pctW === 'pricePctW') {{
     const zoneY = _computeZoneY();
     [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
     _syncAnchorZones(zoneY.zones);
@@ -533,10 +555,19 @@ function _applyColorSwitch() {{
     [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
     _syncAnchorZones(zoneY.zones);
     if (_hasBands) {{
+      // The bands follow the colour source: drawn on that series' own axis
+      // at its whole-history 25th/75th.
+      const ctxAxis = {{ exvic: 'y', prem: 'y9' }}[colorMode];
       if (colorMode === 'price') {{
         [0, 1, 2].forEach((ti, i) => {{
           gd.data[ti].y     = _priceBandY[i];
           gd.data[ti].yaxis = 'y2';
+        }});
+      }} else if (ctxAxis) {{
+        const [q25, , q75, lo, hi] = _COLOR_SRC[colorMode].g;
+        [[lo, q25], [q25, q75], [q75, hi]].forEach(([a, b], i) => {{
+          gd.data[i].y     = [a, a, b, b];
+          gd.data[i].yaxis = ctxAxis;
         }});
       }} else {{
         [0, 1, 2].forEach((ti, i) => {{
@@ -564,12 +595,15 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
     _applyColorSwitch();
   }});
 }});"""
-    color_mode_bar = """
+    ctx_radios = "".join(
+        f'\n    <label><input type="radio" name="colorMode" value="{k}"><span>{lbl}</span></label>'
+        for k, lbl in (("exvic", "P/E ex-VIC"), ("prem", "Prem")) if k in ctx)
+    color_mode_bar = f"""
 <div id="color-mode-bar">
   <strong>Color source:</strong>
   <div class="color-toggle">
     <label><input type="radio" name="colorMode" value="pe"><span>P/E</span></label>
-    <label><input type="radio" name="colorMode" value="price" checked><span>Price</span></label>
+    <label><input type="radio" name="colorMode" value="price" checked><span>Price</span></label>{ctx_radios}
   </div>
   <strong style="margin-left:16px">Color method:</strong>
   <div class="color-toggle">
@@ -638,6 +672,14 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   <div class="divider"></div>
   <span class="section-label">P/E Line</span>
   <label class="chk"><input type="checkbox" id="peLineVis"> Show</label>'''}
+  {''.join(f'''
+  <div class="divider"></div>
+  <span class="section-label">{lbl}</span>
+  <label class="chk" title="{tip}"><input type="checkbox" id="{k}Vis"> Show</label>'''
+    for k, lbl, tip in (
+        ("exvic", "VN30 ex-VIC P/E", "VN30 aggregate P/E without VIC — market context, not used by any strategy"),
+        ("prem",  "Prem", "Basket prem_median, all-VIC-VIX — market context, independent of the breadth profile's own line"),
+    ) if k in ctx)}
   <button onclick="updateAll()">Apply</button>
 </div>
 {color_mode_bar}
@@ -654,6 +696,9 @@ const globalP75       = {global_p75_json};
 const peLineIdx       = {pe_line_idx};
 const peMeanIdx       = {pe_mean_idx_json};
 const priceMeanIdx    = {price_mean_idx_json};
+// Market context, aligned to the price dates — see _context_series.
+const exvicValues     = {exvic_json};
+const premValues      = {prem_json};
 const gd = document.getElementById('peChart');
 
 // Stable y2 range derived from price data — used to prevent autorange shifting on restyle
@@ -753,27 +798,49 @@ function _syncAnchorZones(zones) {{
   );
 }}
 
+// rollingQuantile for series with holes: nulls are left out of each window
+// rather than sorted in as zeros. The context series have holes (VN30 ex-VIC
+// has no P/E through 2015–16); P/E and price keep the original function.
+function rollingQuantileNN(arr, w, p) {{
+  return arr.map((_, i) => {{
+    if (i < w - 1 || arr[i] == null) return null;
+    const sl = arr.slice(i - w + 1, i + 1).filter(v => v != null).sort((a, b) => a - b);
+    if (!sl.length) return null;
+    const pos = p * (sl.length - 1);
+    const lo = Math.floor(pos), hi = Math.ceil(pos);
+    return sl[lo] + (sl[hi] - sl[lo]) * (pos - lo);
+  }});
+}}
+function _staticQs(arr) {{
+  const s = arr.filter(v => v != null).sort((a, b) => a - b);
+  return s.length ? [_staticQ(s, 0.25), _staticQ(s, 0.50), _staticQ(s, 0.75), s[0], s[s.length - 1]]
+                  : [null, null, null, null, null];
+}}
+// What each "Color source" compares, which window inputs drive it, and its
+// whole-history quartiles (fallback before the window fills; also the bands).
+// VN30 ex-VIC is a P/E, so it follows the P/E windows; prem is measured on
+// prices, so it follows the price windows.
+const _COLOR_SRC = {{
+  pe:    {{ vals: peAlignedValues, pctW: 'pePctW',    meanW: 'peMeanW',    q: rollingQuantile,
+            g: [globalP25, globalMed, globalP75] }},
+  price: {{ vals: priceValues,     pctW: 'pricePctW', meanW: 'priceMeanW', q: rollingQuantile,
+            g: [globalPriceP25, globalPriceMed, globalPriceP75] }},
+  exvic: {{ vals: exvicValues,     pctW: 'pePctW',    meanW: 'peMeanW',    q: rollingQuantileNN,
+            g: _staticQs(exvicValues) }},
+  prem:  {{ vals: premValues,      pctW: 'pricePctW', meanW: 'priceMeanW', q: rollingQuantileNN,
+            g: _staticQs(premValues) }},
+}};
+
 function _computeZoneY() {{
+  const src = _COLOR_SRC[colorMode];
   if (colorBasis === 'mean') {{
-    const compareVals = colorMode === 'pe' ? peAlignedValues : priceValues;
-    const wId  = colorMode === 'pe' ? 'peMeanW' : 'priceMeanW';
-    const pw   = parseInt(document.getElementById(wId).value) || {mean_window};
-    const meanArr = rollingMean(compareVals, pw);
-    return splitByMean(priceValues, compareVals, meanArr);
+    const pw = parseInt(document.getElementById(src.meanW).value) || {mean_window};
+    return splitByMean(priceValues, src.vals, rollingMean(src.vals, pw));
   }}
-  if (colorMode === 'pe') {{
-    const pw = parseInt(document.getElementById('pePctW').value) || {pct_window};
-    const p25al = rollingQuantile(peAlignedValues, pw, 0.25);
-    const medal  = rollingQuantile(peAlignedValues, pw, 0.50);
-    const p75al  = rollingQuantile(peAlignedValues, pw, 0.75);
-    return splitByZone(priceValues, peAlignedValues, p25al, medal, p75al, globalP25, globalMed, globalP75);
-  }} else {{
-    const pw = parseInt(document.getElementById('pricePctW').value) || {pct_window};
-    const p25al = rollingQuantile(priceValues, pw, 0.25);
-    const medal  = rollingQuantile(priceValues, pw, 0.50);
-    const p75al  = rollingQuantile(priceValues, pw, 0.75);
-    return splitByZone(priceValues, priceValues, p25al, medal, p75al, globalPriceP25, globalPriceMed, globalPriceP75);
-  }}
+  const pw = parseInt(document.getElementById(src.pctW).value) || {pct_window};
+  return splitByZone(priceValues, src.vals,
+                     src.q(src.vals, pw, 0.25), src.q(src.vals, pw, 0.50), src.q(src.vals, pw, 0.75),
+                     src.g[0], src.g[1], src.g[2]);
 }}
 
 function recomputePePct() {{
@@ -832,6 +899,50 @@ Plotly.addTraces(gd, _offCfg.map(c => ({{
 }})));
 const _oi = {{}};
 _offCfg.forEach((c, i) => {{ _oi[c.id] = _offStart + i; }});
+
+// ── Market context lines ──────────────────────────────────────────────────────
+// VN30 ex-VIC on the P/E axis; prem on its own right-hand axis, y9 — y3..y7 are
+// the backtest's event and signal strips and y8 is the breadth profile's own
+// prem line, which this one is independent of. Hidden until ticked, like the
+// P/E line.
+const _ctxIdx = {{}};
+[
+  ['exvic', exvicValues, 'y',  '#17becf', 'VN30 ex-VIC P/E', 'VN30 ex-VIC: %{{y:.2f}}x'],
+  ['prem',  premValues,  'y9', '#8c564b', 'Prem (all-VIC-VIX)', 'Prem: %{{y:.1f}}%'],
+].forEach(([key, ys, ax, color, name, hover]) => {{
+  if (!ys.length) return;
+  _ctxIdx[key] = gd.data.length;
+  Plotly.addTraces(gd, {{
+    x: _prX, y: ys, mode: 'lines', name: name, yaxis: ax, visible: 'legendonly',
+    line: {{color: color, width: 1.5}}, hovertemplate: hover + '<extra></extra>',
+  }});
+}});
+if ('prem' in _ctxIdx) {{
+  Plotly.relayout(gd, {{ yaxis9: {{
+    overlaying: 'y', side: 'right', anchor: 'free', position: 1.0, visible: false,
+    showgrid: false, zeroline: true, zerolinecolor: '#ccc',
+    title: {{text: 'Prem %', font: {{size: 10}}}}, tickfont: {{size: 9}},
+  }} }});
+}}
+
+// Right-hand axes beyond the price axis (prem here, the breadth profile's y8)
+// each take a slot past the plot area, which shrinks to make room. Global so
+// breadth/chart.py can call it after adding y8.
+function _fitRightAxes() {{
+  const premOn = 'prem' in _ctxIdx && document.getElementById('premVis').checked;
+  const extra  = [premOn ? 'yaxis9' : null, gd.layout.yaxis8 ? 'yaxis8' : null].filter(Boolean);
+  const right  = 1 - 0.06 * extra.length;
+  const upd    = {{ 'xaxis.domain': [0, right] }};
+  if ('prem' in _ctxIdx) upd['yaxis9.visible'] = premOn;
+  extra.forEach((ax, k) => {{ upd[ax + '.position'] = right + 0.06 * (k + 1) - 0.01; }});
+  Plotly.relayout(gd, upd);
+}}
+Object.keys(_ctxIdx).forEach(key => {{
+  document.getElementById(key + 'Vis').addEventListener('change', function() {{
+    Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [_ctxIdx[key]]);
+    if (key === 'prem') _fitRightAxes();
+  }});
+}});
 
 function _applyOffset(key, baseY) {{
   const idx = _oi[key];
