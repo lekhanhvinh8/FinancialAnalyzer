@@ -111,6 +111,49 @@ def get_shares(symbol: str) -> pd.DataFrame:
     return pd.DataFrame(records).sort_values(["year", "quarter"]).reset_index(drop=True)
 
 
+def get_current_shares(symbol: str) -> float:
+    """
+    Shares in issue today, from the company overview rather than a balance sheet.
+
+    Two overviews carry five counts between them, and each lags a bonus issue
+    differently, in October 2026:
+
+        FPT  KBS charter capital 1,885.7M   KBS listed / VCI issue  1,714.3M
+        VPB  KBS listed         10,000.0M   KBS charter             7,933.9M
+        HDB  VCI issue           6,506.9M   every KBS count         5,005.3M
+        MBB  VCI issue          10,068.7M   every KBS count         9,263.2M
+
+    The left column is what smoney.com.vn and 24hmoney.vn report. The adjusted
+    price history is on the post-issue basis from the ex-date, so the largest
+    count is the one that matches it. The cost of taking the largest is treasury
+    or not-yet-listed shares, a few percent where they exist (MSN, VPL ≈ 4–5%);
+    a missed bonus is 10–100%.
+    """
+    from vnstock.api.company import Company
+    kbs = Company(symbol=symbol, source="KBS").overview().iloc[0]
+    vci = Company(symbol=symbol, source="VCI").overview()
+
+    def num(v, scale=1.0):
+        return float(v) * scale if v is not None and v == v and float(v) > 0 else None
+
+    exact = [num(kbs.get("outstanding_shares"))]
+    # VCI's overview repeats issue_share across several columns, with
+    # different values — the post-issue count is among them.
+    if "issue_share" in vci.columns:
+        exact += [num(v) for v in vci.loc[:, vci.columns == "issue_share"].iloc[0].tolist()]
+    rounded = [num(kbs.get("charter_capital"), 1e9 / _PAR_VALUE),   # billion VND
+               num(kbs.get("listed_volume"), 1e6)]                   # million shares
+    exact   = [c for c in exact if c]
+    counts  = exact + [c for c in rounded if c]
+    if not counts:
+        raise ValueError(f"[vnstock] no share count in the overviews for {symbol}")
+    best = max(counts)
+    # The rounded two are to 0.1M and 1M shares; prefer an exact count when it
+    # is the same figure.
+    match = [c for c in exact if abs(c / best - 1) < 0.001]
+    return max(match) if match else best
+
+
 def get_net_profit(symbol: str) -> pd.DataFrame:
     """
     Fetch quarterly net profit (after tax) from income statement.

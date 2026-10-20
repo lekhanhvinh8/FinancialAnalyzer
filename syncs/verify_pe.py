@@ -103,6 +103,11 @@ class Stock:
         shares = [(_q_end(y, q), s) for y, q, s, *_ in rows if s]
         self.share_dates  = [d for d, _ in shares]
         self.share_values = [s for _, s in shares]
+        # Today's count, used on every date when present: prices are adjusted
+        # onto today's share basis (see syncs/calculate.py).
+        cur = con.execute("SELECT shares FROM share_snapshots WHERE symbol=?"
+                          " ORDER BY as_of DESC LIMIT 1", (sym,)).fetchone()
+        self.current_shares = cur[0] if cur else None
 
         self.profit = {(y, q): p for y, q, _, *k in rows
                        if (p := _first_nonzero(*k)) is not None}
@@ -138,6 +143,8 @@ class Stock:
         return sum(self.profit[k] for k in window), ""
 
     def shares(self, d: str):
+        if self.current_shares is not None:
+            return self.current_shares
         if not self.share_values:
             return None
         i = bisect.bisect_right(self.share_dates, d) - 1

@@ -59,6 +59,17 @@ def init_db():
                 PRIMARY KEY (symbol, year, quarter)
             );
 
+            -- Shares in issue as of a day, one row per fetch. P/E multiplies the
+            -- latest by the adjusted price on every date: adjusted prices are on
+            -- today's share basis, so pairing them with a period's own count
+            -- (quarterly_fundamentals.shares) undercounts every bonus issue since.
+            CREATE TABLE IF NOT EXISTS share_snapshots (
+                symbol  TEXT  NOT NULL,
+                as_of   TEXT  NOT NULL,            -- ISO date of the fetch
+                shares  REAL  NOT NULL,
+                PRIMARY KEY (symbol, as_of)
+            );
+
             CREATE TABLE IF NOT EXISTS index_members (
                 index_symbol   TEXT  NOT NULL,
                 member_symbol  TEXT  NOT NULL,
@@ -284,6 +295,20 @@ def load_shares(symbol: str) -> pd.DataFrame:
             "SELECT year, quarter, shares FROM quarterly_fundamentals WHERE symbol = ? AND shares IS NOT NULL ORDER BY year, quarter",
             con, params=(symbol,),
         )
+
+
+def save_share_snapshot(symbol: str, shares: float, as_of: str) -> None:
+    with _conn() as con:
+        con.execute("INSERT OR REPLACE INTO share_snapshots (symbol, as_of, shares) VALUES (?, ?, ?)",
+                    (symbol, as_of, float(shares)))
+
+
+def load_current_shares(symbol: str) -> float | None:
+    """The latest share_snapshots count, or None when none was ever fetched."""
+    with _conn() as con:
+        row = con.execute("SELECT shares FROM share_snapshots WHERE symbol = ?"
+                          " ORDER BY as_of DESC LIMIT 1", (symbol,)).fetchone()
+    return row[0] if row else None
 
 
 def save_net_profit(symbol: str, df: pd.DataFrame) -> dict:

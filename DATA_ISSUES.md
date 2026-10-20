@@ -1,22 +1,38 @@
 # Known Data Quality Issues
 
-## 1. Shares backfilled from oldest available quarter (HIGH IMPACT)
+## 1. Market cap is adjusted price × today's share count (MEDIUM IMPACT)
 
-**What's wrong:**  
-Historical shares (pre-2025) are approximated by propagating the oldest known share count backwards. The actual share count on any given historical date may have been different.
+**What it is:**  
+Since 2026-10-20 a symbol's market cap on every date is its adjusted close
+times today's share count (`share_snapshots`: the largest of the counts in the
+vnstock KBS and VCI company overviews, refreshed on every share sync). Before, it was the adjusted close times that period's own quarterly
+count, which undercounted every bonus issue since the date: the adjusted price
+history is already divided by each issue, the period's count was not. VHM's
+2026 1:1 stock dividend halved its entire P/E history that way; FPT, HPG, VPB,
+MBB, HDB, ACB, SSI, SHB, VIB and BID were 4–23% low. VN30 read 10.8 against
+~11.7 rebuilt from smoney.com.vn's per-stock figures.
 
-**Root cause:**  
-vnstock free tier only provides the latest 4 quarters of balance sheet data (~2025-Q1 onward). CafeF balance sheet code `CDKT_32` ("Vốn đầu tư của chủ sở hữu") includes capital surplus — not usable for share count.
-
-**Impact:**  
-P/E is calculated as Σ(Price × Shares) / Σ(TTM Profit). If a company's share count was significantly lower in earlier years (e.g., before a large rights issue), the historical market cap — and therefore P/E — will be overstated for those dates.
-
-**Most affected symbols:**  
-Companies that have done large capital raises. Likely candidates: VPB, TCB, HDB, LPB (all grew rapidly post-2018 and issued significant new shares).
+**What's still wrong:**  
+- **Cash dividends.** vnstock (and CafeF's `GiaDieuChinh`) also adjust prices
+  for cash dividends. Today's count does not undo that, so a past market cap —
+  and P/E — reads low by the dividends paid between that date and now. VNM:
+  165,963bn at 2020-12-31 against 227,387bn reported (−27%). Small for
+  low-payers (most banks, VHM, VIC). Deliberately ignored for now: cash
+  dividends distort the backtests the same way, and are to be handled together.
+- **Treasury / unlisted shares.** The two overviews give five counts and each
+  lags a bonus issue differently, so the largest is taken. Checked against
+  smoney.com.vn and 24hmoney.vn it is exact for FPT, VPB, HDB, MBB, VHM, HPG,
+  ACB, TPB, GMD, NVL, KDH; it overcounts MSN (+5.1%) and VPL (+4.7%), SSI
+  (+0.07%), where the larger count includes shares that do not trade.
+- **Capital raised for cash** (rights, private placements, ESOP) is not
+  adjusted out of the price, so dates before such a raise read high by its size.
 
 **Resolution options:**  
-- Subscribe to vnstock paid tier or another provider (TCBS, SSI iBoard, Fireant Pro) that provides full historical quarterly balance sheets.
-- Manually collect charter capital history from HOSE annual reports for the most affected symbols.
+- Unadjusted close × point-in-time shares is exact. CafeF's price history has
+  the unadjusted close (`GiaDongCua`), and its balance sheet `CDKT_32` equals
+  charter capital for non-financial companies back to 2005–08 (verified VNM,
+  FPT, HPG, VHM, VIC). Banks' summary balance sheet has no charter capital line,
+  so they would still need another source.
 
 ---
 

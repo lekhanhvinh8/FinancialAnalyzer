@@ -12,11 +12,16 @@ TTM (Trailing Twelve Months) for a stock on date D:
     whose quarter-end ≤ D. A gap among those four leaves TTM missing.
 
 Shares on date D:
-    most recent quarterly shares whose quarter-end ≤ D.
-    Backfilled from oldest known value for dates before first quarter.
+    today's share count (share_snapshots), the same on every date. Prices are
+    adjusted back for every bonus issue and stock dividend, which puts the whole
+    history on today's share basis; adjusted price x today's count is the real
+    market cap on that basis. A period's own count would undercount every issue
+    since — VHM's 2026 1:1 stock dividend halved its whole P/E history that way.
+    Prices are also adjusted for cash dividends, which this does not undo: past
+    market caps read low by the dividends paid since (DATA_ISSUES.md #1).
 
-Note: the free vnstock tier provides only the latest 4 quarters of
-balance-sheet data. Shares are bfill-approximated for earlier dates.
+    Without a snapshot: the quarterly balance-sheet count whose quarter-end ≤ D,
+    backfilled from the oldest known before the first quarter.
 """
 
 import sys
@@ -74,23 +79,27 @@ def _quarter_end(year: int, quarter: int) -> pd.Timestamp:
 
 def _build_fundamental_daily(symbol: str, dates: pd.DatetimeIndex) -> pd.DataFrame | None:
     """
-    Return a DataFrame indexed by `dates` with columns [shares, ttm_profit]
-    using point-in-time correct values (no look-ahead).
+    Return a DataFrame indexed by `dates` with columns [shares, ttm_profit]:
+    today's share count (see the module docstring) and point-in-time TTM.
 
     Returns None if the symbol has fewer than 4 profit quarters.
     """
     shares_df = db.load_shares(symbol)
     profit_df = db.load_net_profit(symbol)
+    current   = db.load_current_shares(symbol)
 
-    if len(profit_df) < 4 or shares_df.empty:
+    if len(profit_df) < 4 or (shares_df.empty and current is None):
         return None
 
-    # ── Shares: one value per quarter-end, bfill + ffill ─────────────────────
-    shares_ts = pd.Series(
-        shares_df["shares"].values,
-        index=[_quarter_end(int(r.year), int(r.quarter)) for _, r in shares_df.iterrows()],
-        name="shares",
-    ).sort_index()
+    # ── Shares: today's count on every date, else one per quarter-end ────────
+    if current is not None:
+        shares_ts = pd.Series([current], index=[dates.min()], name="shares")
+    else:
+        shares_ts = pd.Series(
+            shares_df["shares"].values,
+            index=[_quarter_end(int(r.year), int(r.quarter)) for _, r in shares_df.iterrows()],
+            name="shares",
+        ).sort_index()
 
     # ── TTM profit: rolling 4-quarter sum, one value per quarter-end ─────────
     profit_df = profit_df.sort_values(["year", "quarter"]).reset_index(drop=True)
