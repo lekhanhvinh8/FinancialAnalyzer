@@ -19,6 +19,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import json
+import math
+import re
 import pandas as pd
 import plotly.graph_objects as go
 
@@ -248,13 +250,11 @@ def pe_chart(
         zones = [_zone(v) for v in pe_aligned]
         n_p   = len(price_values)
 
-        PRICE_ZONES = [
-            (0, _ZONE_COLORS[0], f"Cheap  P/E<{p25_s:.1f}"),
-            (1, _ZONE_COLORS[1], f"Fair   P/E {p25_s:.1f}–{median_s:.1f}"),
-            (2, _ZONE_COLORS[2], f"High   P/E {median_s:.1f}–{p75_s:.1f}"),
-            (3, _ZONE_COLORS[3], f"Exp.   P/E>{p75_s:.1f}"),
-        ]
-        for z, color, name in PRICE_ZONES:
+        # Named by zone only: what they are measured against (P/E, price, …)
+        # is picked at runtime with "Color source", so fixed P/E cut-offs here
+        # would mislabel every other source.
+        for z, (color, zl) in enumerate(zip(_ZONE_COLORS, _ZONE_LABELS)):
+            name = f"Price {zl}"
             y_zone = []
             for i in range(n_p):
                 if zones[i] == z:
@@ -266,7 +266,7 @@ def pe_chart(
                 x=idx_price.index, y=y_zone,
                 mode="lines", name=name,
                 line=dict(color=color, width=1.5),
-                legendgroup="price_color", legendgrouptitle_text=f"{label} Price",
+                legendgroup="price_color",
                 yaxis="y2",
                 # Hover is served by the gap-free anchor trace below: these four are
                 # null outside their zone, and "x unified" would otherwise pull each
@@ -401,6 +401,40 @@ def save_chart(
         pe_line_idx      = n - 2
         marker_idx       = n - 1
 
+    ctx = _context_series(price_data[0]) if has_price else {}
+
+    # The P/E axis is pinned to everything that can be drawn on it (P/E and
+    # VN30 ex-VIC), so ticking a line on or off no longer rescales it and the
+    # colour bands, which run out to the axis edges, never leave a gap.
+    pe_pos = [v for v in pe_values + ctx.get("exvic", []) if v is not None and v > 0]
+    if pe_pos:
+        lo, hi = math.log10(min(pe_pos)), math.log10(max(pe_pos))
+        pad = (hi - lo) * 0.05 or 0.05
+        fig.update_layout(yaxis_range=[lo - pad, hi + pad])
+    # Dates pinned to the data too: autorange pads them for the markers, which
+    # left a blank strip either side of the bands.
+    all_dates = pe_dates + (price_data[0] if has_price else [])
+    if all_dates:
+        fig.update_layout(xaxis_range=[min(all_dates), max(all_dates)])
+
+    # Lines the toolbar switches stay out of the legend: two switches for one
+    # line drift apart, and they made the legend taller than the plot.
+    for i in pe_pct_idx + price_pct_idx + [pe_mean_idx, price_mean_idx, pe_line_idx]:
+        if i is not None:
+            fig.data[i].showlegend = False
+    fig.data[marker_idx].textposition = "top left"   # right of it is the price axis
+
+    # The title moves out of the figure into the page: in the figure it shared
+    # the top margin with the legend, which grows into it.
+    title_html = fig.layout.title.text or ""
+    fig.update_layout(
+        title=None,
+        legend=dict(orientation="h", yanchor="bottom", y=1.01, xanchor="left", x=0,
+                    traceorder="normal", font=dict(size=11)),
+        xaxis_title=None,
+        margin=dict(t=30),
+    )
+
     plot_html = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
 
     pe_dates_json        = json.dumps(pe_dates)
@@ -412,7 +446,6 @@ def save_chart(
     global_med_json      = json.dumps(price_data[4] if price_data else None)
     global_p75_json      = json.dumps(price_data[5] if price_data else None)
 
-    ctx = _context_series(price_data[0]) if has_price else {}
     exvic_json = json.dumps(ctx.get("exvic", []))
     prem_json  = json.dumps(ctx.get("prem", []))
 
@@ -425,7 +458,7 @@ def save_chart(
     no_zone_label_json    = json.dumps(_NO_ZONE_LABEL)
 
     pe_mean_control = f"""
-  <div class="divider"></div>
+  </div><div class="grp">
   <span class="section-label">P/E Mean</span>
   <div class="ma-group">
     <label class="chk"><input type="checkbox" id="peMeanVis"> Show</label>
@@ -440,10 +473,10 @@ def save_chart(
 
     if has_price:
         price_pct_control = f"""
-  <div class="divider"></div>
+  </div><div class="grp">
   <span class="section-label">P/E Line</span>
   <label class="chk"><input type="checkbox" id="peLineVis"> Show</label>
-  <div class="divider"></div>
+  </div><div class="grp">
   <span class="section-label">Price Mean</span>
   <div class="ma-group">
     <label class="chk"><input type="checkbox" id="priceMeanVis"> Show</label>
@@ -451,10 +484,10 @@ def save_chart(
     <span class="unit">d</span>
   </div>
   <span class="off-wrap"><input type="checkbox" id="off-en-prMean">±<input type="number" id="off-pct-prMean" class="off-pct" value="50">%</span>
-  <div class="divider"></div>
+  </div><div class="grp">
   <span class="section-label">Price Line</span>
   <label class="chk"><input type="checkbox" id="priceColorVis" checked> Show</label>
-  <div class="divider"></div>
+  </div><div class="grp">
   <span class="section-label">Price Percentiles</span>
   <div class="ma-group">
     <label class="chk"><input type="checkbox" id="pricePctVis" checked> Show</label>
@@ -500,11 +533,6 @@ function recomputePricePct() {{
   const vis = document.getElementById('pricePctVis').checked;
   const subs = [...document.querySelectorAll('.pct-price-cb')].map(c => c.checked);
   const layoutUpd = {{'yaxis2.range': priceY2Range}};
-  if (priceValues.length > 0 && _COLOR_SRC[colorMode].pctW === 'pricePctW') {{
-    const zoneY = _computeZoneY();
-    [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
-    _syncAnchorZones(zoneY.zones);
-  }}
   const prP25Y = rollingQuantile(priceValues, ppw, 0.25);
   const prMedY = rollingQuantile(priceValues, ppw, 0.50);
   const prP75Y = rollingQuantile(priceValues, ppw, 0.75);
@@ -520,6 +548,7 @@ function recomputePricePct() {{
   _applyOffset('prPct25', prP25Y);
   _applyOffset('prPctMed', prMedY);
   _applyOffset('prPct75', prP75Y);
+  if (_usesWindow('pricePctW')) _recolor();
 }}
 document.getElementById('pricePctVis').addEventListener('change', togglePricePct);
 document.querySelectorAll('.pct-price-cb').forEach(cb => cb.addEventListener('change', togglePricePct));
@@ -534,65 +563,24 @@ function recomputePriceMean() {{
     visible: [vis ? true : 'legendonly'],
   }}, {{'yaxis2.range': priceY2Range}}, [priceMeanIdx]);
   _applyOffset('prMean', meanY);
+  if (_usesWindow('priceMeanW')) _recolor();
 }}
 document.getElementById('priceMeanVis').addEventListener('change', function() {{
   Plotly.update(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, {{'yaxis2.range': priceY2Range}}, [priceMeanIdx]);
 }});
 document.getElementById('priceMeanW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePriceMean(); }});
-// Save original band state (PE-based, y1) and pre-compute price bands (y2)
-const _hasBands     = gd.data[0] && gd.data[0].fill === 'toself';
-const _origBandY    = _hasBands ? [0,1,2].map(i => gd.data[i].y.slice()) : null;
-const _origBandYax  = _hasBands ? [0,1,2].map(i => gd.data[i].yaxis)    : null;
-const _origBandName = _hasBands ? [0,1,2].map(i => gd.data[i].name)      : null;
-const _priceBandY   = _hasBands ? [
-  [_priceMin, _priceMin, globalPriceP25, globalPriceP25],
-  [globalPriceP25, globalPriceP25, globalPriceP75, globalPriceP75],
-  [globalPriceP75, globalPriceP75, _priceMax, _priceMax],
-] : null;
-function _applyColorSwitch() {{
-  if (priceValues.length > 0) {{
-    const zoneY = _computeZoneY();
-    [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
-    _syncAnchorZones(zoneY.zones);
-    if (_hasBands) {{
-      // The bands follow the colour source: drawn on that series' own axis
-      // at its whole-history 25th/75th.
-      const ctxAxis = {{ exvic: 'y', prem: 'y9' }}[colorMode];
-      if (colorMode === 'price') {{
-        [0, 1, 2].forEach((ti, i) => {{
-          gd.data[ti].y     = _priceBandY[i];
-          gd.data[ti].yaxis = 'y2';
-        }});
-      }} else if (ctxAxis) {{
-        const [q25, , q75, lo, hi] = _COLOR_SRC[colorMode].g;
-        [[lo, q25], [q25, q75], [q75, hi]].forEach(([a, b], i) => {{
-          gd.data[i].y     = [a, a, b, b];
-          gd.data[i].yaxis = ctxAxis;
-        }});
-      }} else {{
-        [0, 1, 2].forEach((ti, i) => {{
-          gd.data[ti].y     = _origBandY[i];
-          gd.data[ti].yaxis = _origBandYax[i];
-        }});
-      }}
-    }}
-    gd.layout.yaxis2.range     = priceY2Range;
-    gd.layout.yaxis2.autorange = false;
-    Plotly.redraw(gd);
-  }}
-}}
-
 document.querySelectorAll('input[name="colorBasis"]').forEach(r => {{
   r.addEventListener('change', function() {{
     colorBasis = this.value;
-    _applyColorSwitch();
+    _recolor();
   }});
 }});
 
 document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   r.addEventListener('change', function() {{
     colorMode = this.value;
-    _applyColorSwitch();
+    _recolor();
+    if ('prem' in _ctxIdx) _fitRightAxes();
   }});
 }});"""
     ctx_radios = "".join(
@@ -616,8 +604,8 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
 <style>
   #ctrl {{
     font-family: sans-serif; font-size: 13px;
-    display: flex; gap: 14px; align-items: center;
-    padding: 10px 16px; background: #f8f9fa;
+    display: flex; gap: 8px; align-items: center;
+    padding: 8px 12px; background: #f8f9fa;
     border: 1px solid #dee2e6; border-radius: 6px;
     margin-bottom: 8px; flex-wrap: wrap;
   }}
@@ -629,7 +617,9 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   }}
   .ma-group {{ display: flex; align-items: center; gap: 7px; }}
   .dot {{ width: 16px; height: 3px; display: inline-block; border-radius: 2px; }}
-  .divider {{ width: 1px; height: 28px; background: #ced4da; flex-shrink: 0; }}
+  /* One box per section, so a wrap moves a whole section, never half of one. */
+  .grp {{ display: flex; align-items: center; gap: 7px; padding: 4px 10px;
+          background: #fff; border: 1px solid #e3e6ea; border-radius: 6px; }}
   .unit {{ color: #777; font-size: 12px; }}
   button {{ padding: 4px 14px; cursor: pointer; border-radius: 4px; border: 1px solid #aaa; }}
   .off-wrap {{ display: flex; align-items: center; gap: 2px; font-size: 11px; color: #888; }}
@@ -649,6 +639,7 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   }}
 </style>
 <div id="ctrl">
+  <div class="grp">
   <span class="section-label">P/E Percentiles</span>
   <div class="ma-group">
     <label class="chk"><input type="checkbox" id="pePctVis" checked> Show</label>
@@ -669,17 +660,18 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   <span class="off-wrap"><input type="checkbox" id="off-en-pePct75">±<input type="number" id="off-pct-pePct75" class="off-pct" value="50">%</span>
   {pe_mean_control}
   {price_pct_control if has_price else '''
-  <div class="divider"></div>
+  </div><div class="grp">
   <span class="section-label">P/E Line</span>
   <label class="chk"><input type="checkbox" id="peLineVis"> Show</label>'''}
   {''.join(f'''
-  <div class="divider"></div>
+  </div><div class="grp">
   <span class="section-label">{lbl}</span>
   <label class="chk" title="{tip}"><input type="checkbox" id="{k}Vis"> Show</label>'''
     for k, lbl, tip in (
         ("exvic", "VN30 ex-VIC P/E", "VN30 aggregate P/E without VIC — market context, not used by any strategy"),
         ("prem",  "Prem", "Basket prem_median, all-VIC-VIX — market context, independent of the breadth profile's own line"),
     ) if k in ctx)}
+  </div>
   <button onclick="updateAll()">Apply</button>
 </div>
 {color_mode_bar}
@@ -743,51 +735,9 @@ function togglePePct() {{
   }}, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
 }}
 
-function splitByZone(priceVals, compareVals, p25arr, medArr, p75arr, fbP25, fbMed, fbP75) {{
-  const n = priceVals.length;
-  const zones = new Array(n).fill(-1);
-  for (let i = 0; i < n; i++) {{
-    const pv = compareVals[i];
-    if (pv == null) continue;
-    const p25 = p25arr[i] != null ? p25arr[i] : fbP25;
-    const med = medArr[i] != null ? medArr[i] : fbMed;
-    const p75 = p75arr[i] != null ? p75arr[i] : fbP75;
-    if (p25 == null) continue;
-    if (pv < p25)       zones[i] = 0;
-    else if (pv < med)  zones[i] = 1;
-    else if (pv < p75)  zones[i] = 2;
-    else                zones[i] = 3;
-  }}
-  const out = [0,1,2,3].map(z => priceVals.map((v, i) => {{
-    if (zones[i] === z) return v;
-    const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
-    return adj ? v : null;
-  }}));
-  out.zones = zones;  // owning zone per point — drives the hover dot color
-  return out;
-}}
-
-function splitByMean(priceVals, compareVals, meanArr) {{
-  const n = priceVals.length;
-  const zones = new Array(n).fill(-1);
-  for (let i = 0; i < n; i++) {{
-    const cv = compareVals[i];
-    const m  = meanArr[i];
-    if (cv == null || m == null) continue;
-    zones[i] = cv < m ? 0 : 3;
-  }}
-  const out = [0,1,2,3].map(z => priceVals.map((v, i) => {{
-    if (zones[i] === z) return v;
-    const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
-    return adj ? v : null;
-  }}));
-  out.zones = zones;
-  return out;
-}}
-
 // The hover anchor is one dense trace, so Plotly's per-trace row swatch can't
 // show the zone. Feed [color, label] per point instead; the hovertemplate paints
-// a ● and names the zone. Must be re-run wherever gd.data[6..9].y is recomputed.
+// a ● and names the zone. Kept in step by _recolor().
 const ZONE_COLORS = {zone_colors_json};
 const ZONE_LABELS = {zone_labels_json};
 function _syncAnchorZones(zones) {{
@@ -816,31 +766,96 @@ function _staticQs(arr) {{
   return s.length ? [_staticQ(s, 0.25), _staticQ(s, 0.50), _staticQ(s, 0.75), s[0], s[s.length - 1]]
                   : [null, null, null, null, null];
 }}
-// What each "Color source" compares, which window inputs drive it, and its
-// whole-history quartiles (fallback before the window fills; also the bands).
-// VN30 ex-VIC is a P/E, so it follows the P/E windows; prem is measured on
-// prices, so it follows the price windows.
+// What each "Color source" compares, which window inputs drive it, its
+// whole-history quartiles (fallback before the window fills) and the axis it
+// is drawn on. VN30 ex-VIC is a P/E, so it follows the P/E windows; prem is
+// measured on prices, so it follows the price windows.
 const _COLOR_SRC = {{
   pe:    {{ vals: peAlignedValues, pctW: 'pePctW',    meanW: 'peMeanW',    q: rollingQuantile,
-            g: [globalP25, globalMed, globalP75] }},
+            g: [globalP25, globalMed, globalP75],     axis: 'yaxis' }},
   price: {{ vals: priceValues,     pctW: 'pricePctW', meanW: 'priceMeanW', q: rollingQuantile,
-            g: [globalPriceP25, globalPriceMed, globalPriceP75] }},
+            g: [globalPriceP25, globalPriceMed, globalPriceP75], axis: 'yaxis2' }},
   exvic: {{ vals: exvicValues,     pctW: 'pePctW',    meanW: 'peMeanW',    q: rollingQuantileNN,
-            g: _staticQs(exvicValues) }},
+            g: _staticQs(exvicValues), axis: 'yaxis' }},
   prem:  {{ vals: premValues,      pctW: 'pricePctW', meanW: 'priceMeanW', q: rollingQuantileNN,
-            g: _staticQs(premValues) }},
+            g: _staticQs(premValues),  axis: 'yaxis9' }},
 }};
 
-function _computeZoneY() {{
+// Does the current colouring read this window input?
+function _usesWindow(id) {{
+  return _COLOR_SRC[colorMode][colorBasis === 'mean' ? 'meanW' : 'pctW'] === id;
+}}
+
+// The cut-offs the price line is coloured on, per date, as [low, mid, high]:
+// the source's rolling 25th/50th/75th (whole-history ones until the window
+// fills), or its rolling mean three times over. null where the source has no
+// value, so that date belongs to no zone.
+function _thresholds() {{
   const src = _COLOR_SRC[colorMode];
   if (colorBasis === 'mean') {{
-    const pw = parseInt(document.getElementById(src.meanW).value) || {mean_window};
-    return splitByMean(priceValues, src.vals, rollingMean(src.vals, pw));
+    const w = parseInt(document.getElementById(src.meanW).value) || {mean_window};
+    const m = rollingMean(src.vals, w).map((v, i) => src.vals[i] == null ? null : v);
+    return [m, m, m];
   }}
-  const pw = parseInt(document.getElementById(src.pctW).value) || {pct_window};
-  return splitByZone(priceValues, src.vals,
-                     src.q(src.vals, pw, 0.25), src.q(src.vals, pw, 0.50), src.q(src.vals, pw, 0.75),
-                     src.g[0], src.g[1], src.g[2]);
+  const w = parseInt(document.getElementById(src.pctW).value) || {pct_window};
+  return [0.25, 0.50, 0.75].map((p, k) =>
+    src.q(src.vals, w, p).map((v, i) => src.vals[i] == null ? null : (v != null ? v : src.g[k])));
+}}
+
+// Below low → Cheap, below mid → Fair, below high → High, else Exp. With the
+// mean as all three cut-offs that is just below → Cheap, above → Exp.
+function _splitZones(compareVals, [lo, mid, hi]) {{
+  const n = priceValues.length;
+  const zones = compareVals.map((v, i) =>
+    (v == null || lo[i] == null) ? -1 : v < lo[i] ? 0 : v < mid[i] ? 1 : v < hi[i] ? 2 : 3);
+  const out = [0,1,2,3].map(z => priceValues.map((v, i) => {{
+    if (zones[i] === z) return v;
+    const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
+    return adj ? v : null;
+  }}));
+  out.zones = zones;  // owning zone per point — drives the hover dot color
+  return out;
+}}
+
+// Background bands from the very cut-offs the line is split on — Cheap below
+// the low one, Fair between, Expensive above the high one — on the source's own
+// axis, out to that axis' edges. Dates where the source has no value get none.
+const _hasBands = gd.data[0] && gd.data[0].fill === 'toself';
+const _BAND_NAMES = {{
+  percentiles: ['Cheap (< 25th)', 'Fair (25–75th)', 'Expensive (> 75th)'],
+  mean:        ['Below mean', '', 'Above mean'],
+}};
+function _drawBands([lo, , hi]) {{
+  if (!_hasBands) return;
+  const src  = _COLOR_SRC[colorMode];
+  const ax   = gd.layout[src.axis];   // every source's axis has a pinned range
+  const edge = ax.type === 'log' ? ax.range.map(v => Math.pow(10, v)) : ax.range;
+  const x    = gd.data[{price_anchor_idx_json}].x;
+  const xs   = x.concat(x.slice().reverse());
+  const bot  = lo.map(() => edge[0]);
+  const low  = lo.map(v => v == null ? edge[0] : v);
+  const high = hi.map(v => v == null ? edge[0] : v);
+  const top  = hi.map(v => v == null ? edge[0] : edge[1]);
+  [[bot, low], [low, high], [high, top]].forEach(([a, b], k) => {{
+    Object.assign(gd.data[k], {{
+      x: xs, y: a.concat(b.slice().reverse()), yaxis: src.axis.replace('axis', ''),
+      name: _BAND_NAMES[colorBasis][k], showlegend: !!_BAND_NAMES[colorBasis][k],
+    }});
+  }});
+}}
+
+// Re-colour the price line and redraw the bands. Everything that changes the
+// colour source, the method or a window the colouring reads ends here.
+function _recolor() {{
+  if (!priceValues.length) return;
+  const th = _thresholds();
+  const zoneY = _splitZones(_COLOR_SRC[colorMode].vals, th);
+  [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+  _syncAnchorZones(zoneY.zones);
+  gd.layout.yaxis2.range     = priceY2Range;
+  gd.layout.yaxis2.autorange = false;
+  _drawBands(th);
+  Plotly.redraw(gd);
 }}
 
 function recomputePePct() {{
@@ -859,14 +874,8 @@ function recomputePePct() {{
       (vis && subs[2]) ? true : 'legendonly',
     ]
   }};
-  const layoutUpd = {{}};
-  if (priceValues.length > 0) {{
-    const zoneY = _computeZoneY();
-    [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
-    _syncAnchorZones(zoneY.zones);
-    layoutUpd['yaxis2.range'] = priceY2Range;
-  }}
-  Plotly.update(gd, dataUpd, layoutUpd, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
+  Plotly.update(gd, dataUpd, {{}}, [{pe_pct_idx[0]}, {pe_pct_idx[1]}, {pe_pct_idx[2]}]);
+  if (_usesWindow('pePctW')) _recolor();
 }}
 
 function rollingMean(arr, w) {{
@@ -893,7 +902,7 @@ const _prX  = priceValues.length ? gd.data[6].x : [];
 Plotly.addTraces(gd, _offCfg.map(c => ({{
   x: c.ax === 'y' ? _peX : _prX,
   y: new Array(c.ax === 'y' ? peValues.length : priceValues.length).fill(null),
-  mode: 'lines', name: c.name,
+  mode: 'lines', name: c.name, showlegend: false,
   line: {{color: c.color, width: 1.2, dash: 'dash'}},
   yaxis: c.ax, visible: 'legendonly',
 }})));
@@ -913,13 +922,16 @@ const _ctxIdx = {{}};
   if (!ys.length) return;
   _ctxIdx[key] = gd.data.length;
   Plotly.addTraces(gd, {{
-    x: _prX, y: ys, mode: 'lines', name: name, yaxis: ax, visible: 'legendonly',
+    x: _prX, y: ys, mode: 'lines', name: name, yaxis: ax, visible: 'legendonly', showlegend: false,
     line: {{color: color, width: 1.5}}, hovertemplate: hover + '<extra></extra>',
   }});
 }});
 if ('prem' in _ctxIdx) {{
+  // Pinned range, like the P/E and price axes, for the colour bands' edges.
+  const [, , , pLo, pHi] = _COLOR_SRC.prem.g, pPad = (pHi - pLo) * 0.05 || 1;
   Plotly.relayout(gd, {{ yaxis9: {{
     overlaying: 'y', side: 'right', anchor: 'free', position: 1.0, visible: false,
+    range: [pLo - pPad, pHi + pPad],
     showgrid: false, zeroline: true, zerolinecolor: '#ccc',
     title: {{text: 'Prem %', font: {{size: 10}}}}, tickfont: {{size: 9}},
   }} }});
@@ -929,12 +941,18 @@ if ('prem' in _ctxIdx) {{
 // each take a slot past the plot area, which shrinks to make room. Global so
 // breadth/chart.py can call it after adding y8.
 function _fitRightAxes() {{
-  const premOn = 'prem' in _ctxIdx && document.getElementById('premVis').checked;
+  // Shown while the prem line is on or its bands are the colour source.
+  const premOn = 'prem' in _ctxIdx
+                 && (document.getElementById('premVis').checked || colorMode === 'prem');
   const extra  = [premOn ? 'yaxis9' : null, gd.layout.yaxis8 ? 'yaxis8' : null].filter(Boolean);
-  const right  = 1 - 0.06 * extra.length;
+  // A slot is a fixed 90px, not a share of the width: the axis to its left
+  // needs room for "30,000" plus its title, which a share ran out of on
+  // narrower windows.
+  const slot   = 90 / gd._fullLayout._size.w;
+  const right  = 1 - slot * extra.length;
   const upd    = {{ 'xaxis.domain': [0, right] }};
   if ('prem' in _ctxIdx) upd['yaxis9.visible'] = premOn;
-  extra.forEach((ax, k) => {{ upd[ax + '.position'] = right + 0.06 * (k + 1) - 0.01; }});
+  extra.forEach((ax, k) => {{ upd[ax + '.position'] = right + slot * (k + 1) - 0.01; }});
   Plotly.relayout(gd, upd);
 }}
 Object.keys(_ctxIdx).forEach(key => {{
@@ -974,6 +992,7 @@ function recomputePeMean() {{
     visible: [vis ? true : 'legendonly'],
   }}, {{}}, [peMeanIdx]);
   _applyOffset('peMean', meanY);
+  if (_usesWindow('peMeanW')) _recolor();
 }}
 
 function updateAll() {{ recomputePePct(); recomputePeMean(); {('recomputePricePct(); recomputePriceMean();' if has_price else '')} }}
@@ -999,19 +1018,20 @@ document.getElementById('peLineVis').addEventListener('change', function() {{
 {price_checkbox_js}
 // Sync initial visibility with checkbox defaults
 togglePePct();
-togglePricePct();
 Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [peMeanIdx]);
 Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [peLineIdx]);
-Plotly.restyle(gd, {{ visible: ['legendonly'] }}, [priceMeanIdx]);
+{'togglePricePct();' if has_price else ''}
+{'Plotly.restyle(gd, { visible: ["legendonly"] }, [priceMeanIdx]);' if has_price else ''}
 // Apply default color mode (price)
-_applyColorSwitch();
+_recolor();
 </script>
 """
 
     full_html = f"""<!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>P/E Chart</title></head>
-<body style="margin:16px">
+<head><meta charset="utf-8"><title>{re.sub(r"<[^>]+>.*", "", title_html).strip() or "P/E Chart"}</title></head>
+<body style="margin:16px;background:#fff">
+<h2 style="font:600 20px sans-serif;margin:0 0 10px;color:#2a3f5f">{title_html}</h2>
 {controls_html}
 {plot_html}
 {script}
@@ -1089,13 +1109,9 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
 
         zones = [_zone(v) for v in pe_vals]
         n_p   = len(prices)
-        PRICE_ZONES = [
-            (0, _ZONE_COLORS[0], f"Cheap  P/E<{p25:.1f}"),
-            (1, _ZONE_COLORS[1], f"Fair   P/E {p25:.1f}–{med:.1f}"),
-            (2, _ZONE_COLORS[2], f"High   P/E {med:.1f}–{p75:.1f}"),
-            (3, _ZONE_COLORS[3], f"Exp.   P/E>{p75:.1f}"),
-        ]
-        for z, color, name in PRICE_ZONES:
+        # Named by zone only — see pe_chart().
+        for z, (color, zl) in enumerate(zip(_ZONE_COLORS, _ZONE_LABELS)):
+            name = f"Price {zl}"
             y_zone = []
             for i in range(n_p):
                 if zones[i] == z:
@@ -1107,7 +1123,7 @@ def _stock_pe_chart(df: pd.DataFrame, symbol: str,
                 x=dates, y=y_zone,
                 mode="lines", name=name,
                 line=dict(color=color, width=1.5),
-                legendgroup="price_color", legendgrouptitle_text=f"{symbol} Price",
+                legendgroup="price_color",
                 yaxis="y2",
                 # Hover is served by the gap-free anchor trace below — see pe_chart().
                 hoverinfo="skip",
@@ -1330,17 +1346,21 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
     // Four strips when z_dev is present, three when it is not — the older layout
     // is kept so a symbol with no z_dev rows does not leave an empty band.
     const zTop = HAS_ZDEV ? 0.39 : 0.30;
+    // automargin and nticks: on strips this short the title otherwise lands
+    // on top of the tick labels.
+    const strip = (domain, text) => ({{ domain: domain, anchor: 'x', showgrid: false, zeroline: true,
+      automargin: true, nticks: 3, tickfont: {{size: 9}}, title: {{text: text, font: {{size: 9}}}} }});
     const relayoutArgs = {{
-      '{ya_key}': {{ domain: [0.22, 0.29], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Slope',   font: {{size: 9}}}} }},
-      '{yb_key}': {{ domain: [0.11, 0.18], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Return%', font: {{size: 9}}}} }},
-      '{yc_key}': {{ domain: [0.00, 0.07], anchor: 'x', showgrid: false, zeroline: true, tickfont: {{size: 9}}, title: {{text: 'Sharpe',  font: {{size: 9}}}} }},
+      '{ya_key}': strip([0.22, 0.29], 'Slope'),
+      '{yb_key}': strip([0.11, 0.18], 'Return%'),
+      '{yc_key}': strip([0.00, 0.07], 'Sharpe'),
+      // Dates along the bottom of the last strip, not under the main plot,
+      // where the strip below would sit on them.
+      'xaxis.anchor': 'free', 'xaxis.position': 0,
     }};
     if (HAS_ZDEV) {{
-      relayoutArgs['{yd_key}'] = {{
-        domain: [0.32, zTop], anchor: 'x', showgrid: false,
-        zeroline: true, zerolinecolor: '#888', zerolinewidth: 1,
-        tickfont: {{size: 9}}, title: {{text: 'z_dev', font: {{size: 9}}}},
-      }};
+      relayoutArgs['{yd_key}'] = Object.assign(strip([0.32, zTop], 'z_dev'),
+                                               {{ zerolinecolor: '#888', zerolinewidth: 1 }});
     }}
     const mainTop = HAS_ZDEV ? 0.42 : 0.32;
     if (resizeMain) {{
@@ -1357,7 +1377,7 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
     // so any shapes the base chart already owns survive.
     if (HAS_ZDEV) {{
       const refs = [1, -1, 2, -2].map(function(v) {{
-        return {{ type: 'line', xref: 'paper', x0: 0, x1: 1, yref: '{yd_ref}', y0: v, y1: v,
+        return {{ type: 'line', xref: 'x domain', x0: 0, x1: 1, yref: '{yd_ref}', y0: v, y1: v,
                  line: {{ color: Math.abs(v) === 1 ? '#cbd5e1' : '#f0a0a0', width: 1, dash: 'dot' }},
                  layer: 'below' }};
       }});
@@ -1368,16 +1388,16 @@ def _build_signal_js(all_windows: dict, yaxis_start: int = 3, is_backtest: bool 
       const baseLen = gd.data.length;
       const d1 = ALL_SIGNALS[initW1], d2 = ALL_SIGNALS[initW2], d3 = ALL_SIGNALS[initW3];
       const newTraces = [
-        {{ name: 'Signal 1 — Slope',    mode: 'markers', yaxis: '{ya_ref}', x: d1.dates, y: d1.s1, marker: {{ color: d1.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-        {{ name: 'Signal 2 — Return %', mode: 'markers', yaxis: '{yb_ref}', x: d2.dates, y: d2.s2, marker: {{ color: d2.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
-        {{ name: 'Signal 3 — Sharpe',   mode: 'markers', yaxis: '{yc_ref}', x: d3.dates, y: d3.s3, marker: {{ color: d3.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 1 — Slope',    mode: 'markers', showlegend: false, yaxis: '{ya_ref}', x: d1.dates, y: d1.s1, marker: {{ color: d1.s1, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 2 — Return %', mode: 'markers', showlegend: false, yaxis: '{yb_ref}', x: d2.dates, y: d2.s2, marker: {{ color: d2.s2, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
+        {{ name: 'Signal 3 — Sharpe',   mode: 'markers', showlegend: false, yaxis: '{yc_ref}', x: d3.dates, y: d3.s3, marker: {{ color: d3.s3, colorscale: 'RdYlGn', size: 3, showscale: false }} }},
       ];
       if (HAS_ZDEV) {{
         const dz = ALL_ZDEV[initWZ];
         // A line, not coloured markers: z_dev's sign is the point, so it has to be
         // read against the zero baseline rather than by hue.
         newTraces.push({{
-          name: 'z_dev', mode: 'lines', yaxis: '{yd_ref}',
+          name: 'z_dev', mode: 'lines', yaxis: '{yd_ref}', showlegend: false,
           x: dz.dates, y: dz.z,
           line: {{ color: '#7c3aed', width: 1.2 }},
           hovertemplate: 'z_dev: %{{y:.2f}}<extra></extra>',
@@ -1504,7 +1524,7 @@ def _inject_signals_into_html(symbol: str, path: str, available_windows: list,
         hi = wmax if hi is None else hi
         return (
             f'<div style="display:flex;align-items:center;gap:8px">'
-            f'<span style="width:80px;font-weight:600;color:#555">{label}</span>'
+            f'<span style="width:140px;font-weight:600;color:#555;white-space:nowrap">{label}</span>'
             f'<input id="{range_id}" type="range" min="{lo}" max="{hi}" step="1" value="{init_w}" style="width:460px;cursor:pointer">'
             f'<input id="{num_id}" type="number" min="{lo}" max="{hi}" step="1" value="{init_w}" '
             f'style="width:70px;font-size:13px;font-weight:600;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px 4px">'
@@ -1635,7 +1655,7 @@ def save_backtest_chart(
 
     _known_indices = {"vn30", "vndiamond", "vnfinlead", "vnindex"}
     if index.lower() in _known_indices:
-        fig, pe_dates, pe_values, price_data = pe_chart(index=index, bands=True)
+        fig, pe_dates, pe_values, price_data = pe_chart(index=index, bands=True, title=title)
         save_chart(fig, pe_dates, pe_values, price_data, path)
         symbol = index.upper()
         with db._conn() as con:
