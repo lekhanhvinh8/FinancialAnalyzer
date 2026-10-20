@@ -437,11 +437,16 @@ def save_chart(
 
     plot_html = fig.to_html(include_plotlyjs="cdn", full_html=False, div_id="peChart")
 
+    # NaN as null: json.dumps writes NaN, which JS compares as neither below
+    # nor above anything — a stock's days before its first P/E came out "Exp.".
+    def _series_json(vals):
+        return json.dumps([None if v is None or v != v else v for v in vals])
+
     pe_dates_json        = json.dumps(pe_dates)
-    pe_values_json       = json.dumps(pe_values)
+    pe_values_json       = _series_json(pe_values)
     price_dates_json     = json.dumps(price_data[0] if price_data else [])
-    price_values_json    = json.dumps(price_data[1] if price_data else [])
-    pe_aligned_json      = json.dumps(price_data[2] if price_data else [])
+    price_values_json    = _series_json(price_data[1] if price_data else [])
+    pe_aligned_json      = _series_json(price_data[2] if price_data else [])
     global_p25_json      = json.dumps(price_data[3] if price_data else None)
     global_med_json      = json.dumps(price_data[4] if price_data else None)
     global_p75_json      = json.dumps(price_data[5] if price_data else None)
@@ -515,7 +520,7 @@ document.getElementById('priceColorVis').addEventListener('change', function() {
   const v = this.checked ? true : 'legendonly';
   // {price_anchor_idx} is the invisible hover-anchor trace — hide it with the
   // colored zone lines so the tooltip's price row disappears too.
-  Plotly.restyle(gd, {{ visible: [v, v, v, v, v] }}, [6, 7, 8, 9, {price_anchor_idx}]);
+  Plotly.restyle(gd, {{ visible: [v, v, v, v, v, v] }}, [6, 7, 8, 9, _noZoneIdx, {price_anchor_idx}]);
 }});
 function togglePricePct() {{
   const vis = document.getElementById('pricePctVis').checked;
@@ -587,7 +592,6 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   r.addEventListener('change', function() {{
     colorMode = this.value;
     _recolor();
-    if ('prem' in _ctxIdx) _fitRightAxes();
   }});
 }});"""
     ctx_radios = "".join(
@@ -726,10 +730,14 @@ let colorMode  = 'price';
 let colorBasis = 'percentiles';
 let bandMode   = 'fixed';
 
+// Nulls are left out of each window rather than sorted in as zeros: the context
+// series have holes (VN30 ex-VIC has no P/E through 2015–16) and a stock's P/E
+// starts after its price.
 function rollingQuantile(arr, w, p) {{
   return arr.map((_, i) => {{
-    if (i < w - 1) return null;
-    const sl = arr.slice(i - w + 1, i + 1).slice().sort((a, b) => a - b);
+    if (i < w - 1 || arr[i] == null) return null;
+    const sl = arr.slice(i - w + 1, i + 1).filter(v => v != null).sort((a, b) => a - b);
+    if (!sl.length) return null;
     const pos = p * (sl.length - 1);
     const lo = Math.floor(pos), hi = Math.ceil(pos);
     return sl[lo] + (sl[hi] - sl[lo]) * (pos - lo);
@@ -761,19 +769,6 @@ function _syncAnchorZones(zones) {{
   );
 }}
 
-// rollingQuantile for series with holes: nulls are left out of each window
-// rather than sorted in as zeros. The context series have holes (VN30 ex-VIC
-// has no P/E through 2015–16); P/E and price keep the original function.
-function rollingQuantileNN(arr, w, p) {{
-  return arr.map((_, i) => {{
-    if (i < w - 1 || arr[i] == null) return null;
-    const sl = arr.slice(i - w + 1, i + 1).filter(v => v != null).sort((a, b) => a - b);
-    if (!sl.length) return null;
-    const pos = p * (sl.length - 1);
-    const lo = Math.floor(pos), hi = Math.ceil(pos);
-    return sl[lo] + (sl[hi] - sl[lo]) * (pos - lo);
-  }});
-}}
 function _staticQs(arr) {{
   const s = arr.filter(v => v != null).sort((a, b) => a - b);
   return s.length ? [_staticQ(s, 0.25), _staticQ(s, 0.50), _staticQ(s, 0.75), s[0], s[s.length - 1]]
@@ -784,13 +779,13 @@ function _staticQs(arr) {{
 // is drawn on. VN30 ex-VIC is a P/E, so it follows the P/E windows; prem is
 // measured on prices, so it follows the price windows.
 const _COLOR_SRC = {{
-  pe:    {{ vals: peAlignedValues, pctW: 'pePctW',    meanW: 'peMeanW',    q: rollingQuantile,
+  pe:    {{ vals: peAlignedValues, pctW: 'pePctW',    meanW: 'peMeanW',
             g: [globalP25, globalMed, globalP75],     axis: 'yaxis' }},
-  price: {{ vals: priceValues,     pctW: 'pricePctW', meanW: 'priceMeanW', q: rollingQuantile,
+  price: {{ vals: priceValues,     pctW: 'pricePctW', meanW: 'priceMeanW',
             g: [globalPriceP25, globalPriceMed, globalPriceP75], axis: 'yaxis2' }},
-  exvic: {{ vals: exvicValues,     pctW: 'pePctW',    meanW: 'peMeanW',    q: rollingQuantileNN,
+  exvic: {{ vals: exvicValues,     pctW: 'pePctW',    meanW: 'peMeanW',
             g: _staticQs(exvicValues), axis: 'yaxis' }},
-  prem:  {{ vals: premValues,      pctW: 'pricePctW', meanW: 'priceMeanW', q: rollingQuantileNN,
+  prem:  {{ vals: premValues,      pctW: 'pricePctW', meanW: 'priceMeanW',
             g: _staticQs(premValues),  axis: 'yaxis9' }},
 }};
 
@@ -812,7 +807,7 @@ function _thresholds() {{
   }}
   const w = parseInt(document.getElementById(src.pctW).value) || {pct_window};
   return [0.25, 0.50, 0.75].map((p, k) =>
-    src.q(src.vals, w, p).map((v, i) => src.vals[i] == null ? null : (v != null ? v : src.g[k])));
+    rollingQuantile(src.vals, w, p).map((v, i) => src.vals[i] == null ? null : (v != null ? v : src.g[k])));
 }}
 
 // Below low → Cheap, below mid → Fair, below high → High, else Exp. With the
@@ -821,7 +816,8 @@ function _splitZones(compareVals, [lo, mid, hi]) {{
   const n = priceValues.length;
   const zones = compareVals.map((v, i) =>
     (v == null || lo[i] == null) ? -1 : v < lo[i] ? 0 : v < mid[i] ? 1 : v < hi[i] ? 2 : 3);
-  const out = [0,1,2,3].map(z => priceValues.map((v, i) => {{
+  // Zones 0..3, then -1: dates with no zone, drawn grey rather than dropped.
+  const out = [0,1,2,3,-1].map(z => priceValues.map((v, i) => {{
     if (zones[i] === z) return v;
     const adj = (i > 0 && zones[i-1] === z) || (i < n-1 && zones[i+1] === z);
     return adj ? v : null;
@@ -872,7 +868,7 @@ function _recolor() {{
   if (!priceValues.length) return;
   const th = _thresholds();
   const zoneY = _splitZones(_COLOR_SRC[colorMode].vals, th);
-  [6, 7, 8, 9].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
+  [6, 7, 8, 9, _noZoneIdx].forEach((ti, i) => {{ gd.data[ti].y = zoneY[i]; }});
   _syncAnchorZones(zoneY.zones);
   gd.layout.yaxis2.range     = priceY2Range;
   gd.layout.yaxis2.autorange = false;
@@ -928,6 +924,14 @@ Plotly.addTraces(gd, _offCfg.map(c => ({{
   line: {{color: c.color, width: 1.2, dash: 'dash'}},
   yaxis: c.ax, visible: 'legendonly',
 }})));
+// The price line where the colour source has no value — VN30 ex-VIC through
+// 2015–16, P/E before a stock's first one. Without it those dates had no line.
+const _noZoneIdx = gd.data.length;
+if (priceValues.length) Plotly.addTraces(gd, {{
+  x: _prX, y: priceValues.map(() => null), mode: 'lines', name: 'Price (no zone)',
+  line: {{color: {no_zone_color_json}, width: 1.5}}, yaxis: 'y2',
+  showlegend: false, legendgroup: 'price_color', hoverinfo: 'skip',
+}});
 const _oi = {{}};
 _offCfg.forEach((c, i) => {{ _oi[c.id] = _offStart + i; }});
 
@@ -963,9 +967,9 @@ if ('prem' in _ctxIdx) {{
 // each take a slot past the plot area, which shrinks to make room. Global so
 // breadth/chart.py can call it after adding y8.
 function _fitRightAxes() {{
-  // Shown while the prem line is on or its bands are the colour source.
-  const premOn = 'prem' in _ctxIdx
-                 && (document.getElementById('premVis').checked || colorMode === 'prem');
+  // Only with the prem line itself. Prem as colour source keeps its bands on
+  // the hidden axis: a whole axis slot for that squeezed the plot.
+  const premOn = 'prem' in _ctxIdx && document.getElementById('premVis').checked;
   const extra  = [premOn ? 'yaxis9' : null, gd.layout.yaxis8 ? 'yaxis8' : null].filter(Boolean);
   // A slot is a fixed 90px, not a share of the width: the axis to its left
   // needs room for "30,000" plus its title, which a share ran out of on
@@ -977,6 +981,12 @@ function _fitRightAxes() {{
   extra.forEach((ax, k) => {{ upd[ax + '.position'] = right + slot * (k + 1) - 0.01; }});
   Plotly.relayout(gd, upd);
 }}
+// The slots are in pixels, so a resize has to recompute them.
+let _fitT;
+window.addEventListener('resize', () => {{
+  clearTimeout(_fitT);
+  _fitT = setTimeout(() => {{ if (gd.layout.yaxis8 || 'prem' in _ctxIdx) _fitRightAxes(); }}, 300);
+}});
 Object.keys(_ctxIdx).forEach(key => {{
   document.getElementById(key + 'Vis').addEventListener('change', function() {{
     Plotly.restyle(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, [_ctxIdx[key]]);
