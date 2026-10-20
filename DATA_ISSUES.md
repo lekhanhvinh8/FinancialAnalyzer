@@ -132,3 +132,41 @@ moment of decision, not a view the decision could have had.
 - Collect real publication dates per report and switch on those.
 - Until then, treat any edge measured within ~45 days after a quarter-end as
   suspect.
+
+---
+
+## 6. CafeF revisions to a stored quarter are not applied (BY DESIGN)
+
+**What happens:**  
+Profit sync fills an empty or zero value and adds new quarters, but never
+overwrites a value already stored (`syncs/profit.py`, `merge_profit`). When
+CafeF later changes a quarter we hold, the DB keeps the old figure.
+
+**What the raw-file history shows** (git history of `data/raw/cafef/`,
+checked 2026-10-20): of 330 quarters CafeF changed between downloads, 257
+filled empty values (mostly banks' `KQKD_14`) and went in; ~60 changed only in
+rounding; 12 changed a real stored figure and were not applied:
+
+| Quarter | DB (bn) | CafeF later (bn) | Reading |
+|---|---|---|---|
+| VPB 2020Q2 | 2,951 | 5,265 | CafeF wrong — cumulative half-year |
+| NAB 2021Q2, 2022Q3 | 490, 546 | 0 | CafeF lost the figure |
+| OCB 2020Q4 | 1,527 | 517 | unresolved |
+| BID 2021Q3, 2022Q4 | 2,122, 4,262 | 1,916, 4,169 | possibly a restatement |
+| SHB 2022Q4 | 479 | 552 | possibly a restatement |
+| MSB 2023Q1 | 1,194 | 1,218 | possibly a restatement |
+| VCI 2022Q4 | 28 | 16 | possibly a restatement |
+| VND 2020Q2, 2021Q2, 2024Q2 | 135, 450, 369 | 193, 431, 345 | possibly a restatement |
+
+**Conclusion:**  
+Keeping the stored figure is the right default. The revisions that are
+demonstrably wrong (VPB, NAB) are exactly the kind that would otherwise have
+overwritten good data silently, and the plausible restatements move TTM by
+2–10% over at most four quarters each, all in 2020–2024. These 12 are what
+`syncs/verify_pe.py` lists under "DB ≠ raw CafeF file".
+
+**If one needs correcting:**  
+Confirm it against the company's own report and add it to
+`data/raw/exception/patch_quarterly_profit.py`, then recompute that symbol
+(`python sync.py SYM --pe --range-stats --force`). Do not use
+`sync.py --profit --force`: it takes every CafeF figure, the wrong ones included.
