@@ -1,0 +1,1495 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Thu nhập lãi thuần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Lãi/lỗ thuần từ hoạt động dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lãi/lỗ thuần từ hoạt động kinh doanh ngoại hối và vàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Lãi/lỗ thuần từ mua bán chứng khoán đầu tư",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Lãi/lỗ thuần từ hoạt động khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Thu nhập từ góp vốn, mua cổ phần",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Chi phí hoạt động",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh trước chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Chi phí dự phòng rủi ro tín dụng",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông của Ngân hàng mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 17,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "VIB",
+            "year": 2025,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16092160000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2105341000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -154292000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 79774000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1880913000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2745000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7435006000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12571635000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3467019000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9104616000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7285430000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7285430000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2140,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2024,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 16750412000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1765459000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 500968000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 247967000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1300500000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3746000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7211292000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13357760000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4353458000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9004302000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7204470000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7204470000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2385,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2023,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17360553000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3326781000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 548470000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 129730000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 791614000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3345000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 6610743000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 15549750000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4845805000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10703945000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8563053000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 8563053000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3332000000,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2022,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14962555000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3188381000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -275032000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -175843000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 354882000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2895000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 6197114000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11860724000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1279609000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 10581115000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8468767000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 8468767000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3971,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2021,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 11816147000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2741952000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -86748000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 196796000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 220990000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1766000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5281843000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9609060000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1598048000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 8011012000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 6409750000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 6409750000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4067,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2020,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8496107000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2388675000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 20789000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 25240000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 282762000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1941000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4464872000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6750642000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 947635000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5803007000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4642334000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4642334000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4096,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2019,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6213215000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1797300000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -121708000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 37147000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 224362000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1766000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4714982000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 632725000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4082257000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3266402000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3894,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2018,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4825493000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 734745000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -25871000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 35757000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 515114000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 535000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3396057000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 653487000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2742570000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2193921000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3873,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2017,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3455599000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 406893000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -62705000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 161339000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 129626000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1380000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2325230000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1766902000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 361446000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1405456000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1124641000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2002,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2626238000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 255637000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 24814000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 149445000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 317281000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 27556000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2092628000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1308343000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 606127000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 702216000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 561732000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1125,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2015,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2344114000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 166103000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -10503000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 88991000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 320353000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 20397000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1765240000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1164215000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 509071000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 655144000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 521066000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2014,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2292922538015,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 160954729330,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -23982727809,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 92118571186,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 946939029981,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1402500000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1633955279626,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1836399361077,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1188008554275,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 648390806802,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 522353461663,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2013,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2110023802881,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 135536194289,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 23025759472,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 228468674187,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 95126371871,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5069654000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1635277981935,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 961972474765,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 879210273533,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 82762201232,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 52262201232,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 118,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2012,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2988700000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 126940000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 38199000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -31110000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 129847000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8410000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1816259000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1444727000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 743964000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 700763000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 520389000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1231,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2011,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3734294000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 190997000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 53948000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -62540000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -405620000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7942000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1696284000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1822737000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 973837000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 848900000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 638995000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2010,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2094748000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 231350000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 97562000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12798000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 78710000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 19196000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1190830000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1343534000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 292301000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1051233000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 790929000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2389,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIB",
+            "year": 2009,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1135168000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 156265000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 122213000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 67443000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 102244000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 9931000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 866602000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 726662000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 112351000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 614311000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 463216000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

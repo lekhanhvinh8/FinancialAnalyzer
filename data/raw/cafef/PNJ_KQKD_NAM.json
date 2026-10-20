@@ -1,0 +1,1735 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 20,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "PNJ",
+            "year": 2025,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34976042929392,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27292194621378,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7683848308014,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 136303226388,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 153168770819,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3322701974507,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 824395851865,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3519884937211,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 27954553580,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3547839490791,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2828497462890,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2828497462890,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 7652,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2024,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 37822837171385,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 31149334531193,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6673502640192,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 75567438524,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 93616780951,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3207574691174,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 795749355922,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2652129250669,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1116801361,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2651012449308,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2112916282946,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2112916282946,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5713,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2023,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 33136929196429,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27078338249235,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6058590947194,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 97825547538,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 142580680640,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2835769469802,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 693934934718,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2484131409572,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4628592802,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2488760002374,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1971099177135,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1971099177135,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5436,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2022,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 33876454559153,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 27949348024381,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5927106534772,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 54036974170,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 141471203463,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2828208644376,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 673996996684,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2337466664419,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -25139109706,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2312327554713,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1810691843397,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1810691843397,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5223,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2021,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 19547058364834,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 15948760134458,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3598298230376,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16326114795,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 118252734395,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1687654952494,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 501819303928,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1306897354354,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -27666832323,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1279230522031,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1029042165645,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1029042165645,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4197,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2020,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17510788650999,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14076055770112,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3434732880887,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2368958316,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 161541087492,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1420855653447,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 505572794605,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1349132303659,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -3151834944,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1345980468715,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1069310105261,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1069310105261,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4308,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2019,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17000681080523,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13539967588262,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3460713492261,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16820020734,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 133678118497,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1361807553507,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 475831697930,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1506216143061,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 496242490,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1506712385551,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1193924957243,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1193924957243,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4896,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2018,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14571135744850,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11792052183391,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2779083561459,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6846027091,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 66345864211,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1170069069426,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 345868153940,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1203646500973,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1903772148,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1205550273121,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 959923347147,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 959923347147,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 6481,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2017,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10976836889964,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9064872939048,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1911963950916,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 8794872100,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 56475629564,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 774978169326,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 187936351549,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 901368672577,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6010723280,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 907379395857,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 724856448060,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 724856448060,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 6434,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8564590490217,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7153297291319,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1411293198898,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5265793888,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 181560472623,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 553623183284,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 133281909539,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 547179488029,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 43448478550,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -913939311,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 590627966579,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 450488049260,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 450488049260,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4383,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2014,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9199218097552,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8309982541638,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 889235555914,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 18739496430,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 79682197799,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 354954031945,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 129618733552,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 333147632622,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1082301259,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 335033546883,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 255871804695,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 242495305974,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3208,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2013,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8914182586335,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8244494727893,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 669687858442,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 23797867875,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 83525727307,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 262496218357,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 113373916451,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 232644910693,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 941854008,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 233007287265,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 169037255757,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 163171192453,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2239,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2012,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6716843366423,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6118336274620,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 598507091803,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 120569293310,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 101497808442,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 267972724506,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 89631912787,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 270066053392,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 29733747351,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 310093877728,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 254408662493,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 254408662493,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3534,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2011,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 17963840471772,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17225520872828,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 738319598944,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 64754928074,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 289530963640,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 98126294532,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 289882576295,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 17617077939,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 318165893441,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 257506607337,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 257105282358,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4285,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2010,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 13752380665696,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13210528300660,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 541852365036,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 64650321180,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 243304931356,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 79166636200,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 223640817189,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18808685999,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 263892214917,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 211341345223,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 212018177014,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3533,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2009,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 10256299761886,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 9755444424582,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 500855337304,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 74014998344,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 185512985806,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 61079143055,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 252470814856,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 11062301671,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 274720370552,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 219831879486,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 204491513039,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5112,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2008,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4178849182584,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3828808852408,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 350040330176,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 56899530012,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 32978648561,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 140191777752,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 47245266782,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 156265224695,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10244938789,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 166510163484,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 131863822863,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 125563575821,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4185,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2007,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2379635175930,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2177499663010,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 202135512920,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 54519052631,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 23670855391,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 85838569417,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 22535447136,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 122738600850,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7811639833,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 130550240683,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 115012808631,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 114381554250,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 54650,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2006,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1788790118934,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1618936674276,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 169853444658,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46841386617,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 16539934743,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 73478012889,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 12728572577,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 27413066110,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6759431291,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 34172497401,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 30148805075,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 30148805075,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 54816,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PNJ",
+            "year": 2005,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2005",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1246450359992,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1137160671694,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 109289688298,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7218540159,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 13101209357,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 51673221260,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 9921072660,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 25026833747,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18932140586,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 43958974333,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 43958974333,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 43958974333,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 80,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

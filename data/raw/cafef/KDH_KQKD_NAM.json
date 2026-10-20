@@ -1,0 +1,1655 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 19,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "KDH",
+            "year": 2025,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4651105050000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1897567306000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2753537744000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 40419727000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 179874386000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 373476956000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 220033227000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2020572902000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18392142000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2038965044000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1626638365000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1045471436000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 870,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2024,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3278584206000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1539036889000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1739547317000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 38189200000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 216021728000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 222684170000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 209183836000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1129846783000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -78798067000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1051048716000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 803639057000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 810413554000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 800,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2023,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2087770677000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 501132984000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1586637693000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 49704916000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 147648608000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 162401036000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 204561098000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1121731867000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -52703448000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1069028419000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 729500026000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 715673834000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 0,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2022,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2911963203000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1452443758000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1459519445000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 17711841000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 91011692000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 175245966000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 219168679000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 991804949000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 418784405000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1410589354000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1082246744000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1102953667000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1440,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2021,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3738367541000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1944624143000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1793743398000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 20873540000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 72701117000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 204822813000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 181777919000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1355315089000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 184667104000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1539982193000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1204548860000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1202474135000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1791,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2020,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4532068519000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2568451212000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1963617307000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 34994379000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 84692054000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 246995212000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 169410471000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1497513949000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -39105815000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1458408134000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1154467461000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1152765513000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2019,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2813353428000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1312924322000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1500429106000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 41460133000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 41617734000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 115390554000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 162284584000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1222596367000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -32756210000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1189840157000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 916876662000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 915232845000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1.7,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2018,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2916595423000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1677391701000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1239203722000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 199814534000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 88660889000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 99262050000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 158135349000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1096959686000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -21458127000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 3999718000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1075501559000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 809593240000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 808078193000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2021,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2017,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3054811937000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2019002526000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1035809411000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 72217799000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 124950967000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 109679562000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 133862974000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 747847761000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -18811544000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 8314054000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 729036217000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 558889933000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 502251041000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3931642994000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2951969940000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 979673054000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16495930000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 110647824000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 173123320000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 117510214000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 605612261000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -23014309000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 10724635000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 582597952000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 405356052000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 371774722000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2014,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 621078707000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 530324691000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 90754016000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 113786204000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 35098794000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 27618868000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 35216057000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 92051144000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 17326785000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 104885646000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 62811530000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 102109114000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2013,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 112493208000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 144041991000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -31548783000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 17253489000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 29521985000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 3054559000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 46719465000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -177966851000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5057425000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -176055551000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -136661951000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -124545666000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -3,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2012,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3749428000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5060513000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -1311085000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 9125748000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 33667310000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 567786000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 25596748000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -53725644000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 10807006000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -63798344000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -57003767000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -55507663000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2011,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 227012435000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 163590925000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 63421510000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 66144520000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 68439889000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6019048000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 48610270000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 298944000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4402220000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -1240102000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2380773000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 10310442000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2010,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 771758415000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 468424404000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 303334011000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 60864975000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 23519623000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18910628000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 20354401000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 301295933000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -195144000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 307940051000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 226095297000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 174719786000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2009,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 122664102000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 45069734000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 77594368000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4923437000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3741478000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1113913000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 15602737000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 54825054000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 890492000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 61273685000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 44897834000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 45790649000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2008,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 35077674000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 29756401000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 5321273000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46614241000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 18000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 449863000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 16733317000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 30822703000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 492377000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 30684678000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 22683289000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 21549587000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2007,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 131166808000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 77963720000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 53203088000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2074452000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 649632000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 8379245000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 39904930000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 206793000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 40111723000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 26674329000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 25931414000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "KDH",
+            "year": 2006,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8025432000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4386932000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3638500000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 4587000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 58642000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2127184000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1457261000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1033000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1458294000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 893913000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 893913000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

@@ -1,0 +1,1655 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 19,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "PPC",
+            "year": 2025,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6565825977006,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6312930648665,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 252895328341,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 46447348298,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2044035022,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 103159644136,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 194138997481,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 990343409,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 195129340890,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 165179498132,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 165179498132,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 515,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2024,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7681064352700,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7453083514206,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 227980838494,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 326675392336,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3120557355,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 140198970406,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 411336703069,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 26803297083,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 438140000152,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 427065519869,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 427065519869,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1332,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2023,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5813760220061,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5777306693477,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 36453526584,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 464407804783,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -825719205,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 116842404736,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 384844645836,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -2455701777,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 382388944059,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 380102277161,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 380102277161,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1186,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2022,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5277791567042,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4892916201756,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 384875365286,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 295252599448,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2622681836,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 119483288880,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 558021994018,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 610932044,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 558632926062,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 497202717339,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 497202717339,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1551,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2021,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3868169547310,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4101719921770,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -233550374460,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 452375776029,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -24082105363,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 86738774829,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 156168732103,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21105635157,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 177274367260,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 216187739296,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 216187739296,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 674,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2020,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7929383128819,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6920070149562,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1009312979257,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 286815236538,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6632011758,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 80938315202,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1208557888835,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2090071515,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1210647960350,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1011036144487,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1011036144487,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3153,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2019,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 8182925335631,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6904567813675,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1278357521956,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 310366539655,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -14687061772,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 75226267402,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1528184855981,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1340637895,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1529525493876,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1260867471637,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1260867471637,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3933,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2018,
+            "quater": 0,
+            "type": "K",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7116831965809,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5969677400843,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1147154564966,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 249311744777,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -114551881898,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 88785391307,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1422232800334,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -14362792724,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1407870007610,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1122451954727,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1122451954727,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3501,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2017,
+            "quater": 0,
+            "type": "N",
+            "content": "",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6235981560327,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5445269600925,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 790711959402,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 412270190612,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 119937680022,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 80673450670,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1002371019322,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 825009755,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1003196029077,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 853998499818,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 853998499818,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2680,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5977372622068,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5473565932854,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 503806689214,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 411092288442,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 253671669059,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 108134688150,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 617527787702,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1545511605,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 64435167255,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 615982276097,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 554351017583,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 548569752403,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1724,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2014,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7481943053019,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 6984692900556,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 497250152463,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1055226537734,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 138841465702,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 106537523669,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1303068772541,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8435582015,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1301513251540,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1054114112673,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1044705397065,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3284,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2013,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6588538129558,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5558156409385,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1030381720173,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1625146781108,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 155070875542,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 103078282638,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2317354698362,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2548806901,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2250268286844,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1639100413840,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1629530689782,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5122,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2012,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4130557827173,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3666402548504,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 464155278669,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 658193920825,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 206288239379,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 97219222549,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 755696394155,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 40225600387,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 780237511160,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 513217609707,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 504817799959,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1587,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2011,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3738172128116,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3261869967453,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 476302160663,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 461438051020,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 232659740923,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 83952172983,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 11409678291,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -1724844990,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9684833301,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7795980653,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3897990326,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 12,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2010,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4183076709876,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3468930572509,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 714146137367,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 409708367074,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 203183084743,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 64991417004,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 6181568178,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -143819561,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 6037748617,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4125959040,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4125959040,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 13,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2009,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4420949771326,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3139703837594,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1281245933732,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 379645834443,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 72737625968,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 885034795675,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1435659060,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 886470454735,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 892014465088,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 892014465088,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2743,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2008,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3881915350482,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2798492740811,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1083422609671,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 293005863348,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 61718954616,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -480869160696,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12816234498,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -468052926198,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -212783660031,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -212783660031,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -654,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2007,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3807068101594,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2692735194061,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1114332907533,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 125400962447,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 167312007638,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 58405947672,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 772307078795,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5514465797,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 777821544592,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 824353221586,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 824353221586,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2528,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "PPC",
+            "year": 2006,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3607073060582,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2347512365318,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1259560695264,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 11719740119,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 167302511556,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 118557019786,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 963553589256,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1877884297,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 965431473553,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 979339575156,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 979339575156,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3152,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

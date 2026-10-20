@@ -1,0 +1,1415 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 16,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "NLG",
+            "year": 2025,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5645086579147,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3287806525861,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2357280053286,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 655397369463,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 647435554870,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 699653852065,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 592751051880,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1148882948912,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 39337860067,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 76045984978,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1188220808979,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 946308935190,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 701371622402,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1363,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2024,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7196050482193,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4138682327725,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3057368154468,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 336671172433,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 331295750642,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 742444656616,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 651169651824,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1768846651531,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 55945050235,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 99717383712,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1824791701766,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1387388524753,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 517894708641,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1285,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2023,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3181421790727,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1619384397999,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1562037392728,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 237739905957,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 296192334382,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 418209811139,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 562074252374,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 941506534970,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 26576143828,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 418205634180,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 968082678798,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 800477434350,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 483736401573,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1187,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2022,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4338841417665,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 2354883285339,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1983958132326,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 385657856775,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 198578934809,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 510912974361,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 643621150136,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1041048454304,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28783345194,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 24545524509,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1069831799498,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 865545546331,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 556273710440,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1345,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2021,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 5205519498702,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3427291699557,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1778227799145,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 444860619834,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 112362201726,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 416066783990,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 580803603474,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1204916189427,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 434991890405,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 91060359638,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1639908079832,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1477958903137,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1070826325922,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3099,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2020,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2216719170121,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1545950061294,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 670769108827,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 726710134272,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 102522834354,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 67658769303,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 366813609445,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1002132831600,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 12706106385,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 141648801603,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1014838937985,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 850327198650,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 834865877302,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3078,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2019,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2546100778645,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1479645666849,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1066455111796,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 96747896996,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21052917497,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 119286865591,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 305567667299,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 843671708390,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 382605127697,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 126376149985,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1226276836087,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1007272679090,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 960564301342,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4479,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2018,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3479607604703,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1976149458962,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1503458145741,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 129045327116,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 37014682063,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 251780398726,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 238797348671,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1118893162044,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 9111613244,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 13982118647,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1128004775288,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 887192574858,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 763470215198,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3521,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2017,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3161311646166,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1866368242306,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1294943403860,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 94750864340,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 29336737626,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 218510752801,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 195173267757,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 943805312254,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6436630071,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -2868197762,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 950241942325,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 756164781552,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 535017043345,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3314,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2533798820045,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1710918684683,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 822880135362,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 25688673908,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 28610444253,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 188619929874,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 154386517693,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 477550826997,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 6790089456,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 598909547,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 484340916453,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 387570169878,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 345217739625,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2367,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2014,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 866929052587,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 562755566552,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 304173486035,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 27528807062,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 10820914492,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 70840845879,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 127401888870,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 115304935427,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 23832351117,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 139293611354,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 103553887958,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 95572700860,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 782,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2013,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 601746505592,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 370250973823,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 231495531769,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 10412531711,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 30032327113,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 35369302374,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 110878240719,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 55866475736,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -320891056,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 55627243020,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 34492060979,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 21174500545,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 232,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2012,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 461749748210,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 260014365114,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 201735383096,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7139637307,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 75258243463,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 25932094089,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 100133542310,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 6836480728,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 52357886116,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 59591126270,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 30544762268,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 24640745882,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 264,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2011,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 734003518146,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 459440120547,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 274563397599,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 17651952059,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22151356317,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 34668324874,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 125214522587,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 103510481940,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 87942922070,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 193280334342,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 137172483909,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 107201923431,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1772,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2010,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 839784297000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 490355699000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 349428598000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 15998643000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 17041347000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 33122354000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 79472943000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 227807638000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7803996000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 245916203000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 181719103000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 186633064000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4688,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "NLG",
+            "year": 2009,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 630599178000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 330158800000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 300440378000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 13987858000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 6256389000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 23366945000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 67205814000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 216777277000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3272108000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 226871526000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 189441857000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 158631682000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4170,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

@@ -1,0 +1,1815 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 21,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "VIC",
+            "year": 2025,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 331837561000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 279154754000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 52682807000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 50463250000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 47292957000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 31065065000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 17988849000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7937379000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18499996000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 1138193000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 26437375000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 11064814000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11349934000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1432,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2024,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 189068039884264,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 161767221892960,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 27300817991304,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 47925491691245,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 31208094556027,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 18053918921032,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 15148306916772,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 11664762144419,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 5073944770184,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 848772855701,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 16738706914603,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5276059232598,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 11903027709922,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3045,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2023,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 161427568240156,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 137919092093569,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 23508476146587,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 20502485425963,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 22841357050846,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12513906732222,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13463255249474,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -4905382948148,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18674735482623,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -97825488156,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 13769352534475,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2056061274243,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2156925239572,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 565,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2022,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 101793581792276,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 87099749924627,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 14693831867649,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 33048100039132,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 14326299237423,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 9371096342576,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 15953648754048,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 8004363164586,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 4751154552656,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -86524408148,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 12755517717242,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2044343630344,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 8781861114366,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2367,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2021,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 125687870000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 91623165000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 34064705000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 16045903000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 11363667000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6909908000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 24034459000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 7760906000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -4614455000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -41668000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3146451000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -7558164000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -2513883000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -685,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2020,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 110490033000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 93177227000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 17312806000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 31068411000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12804561000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 7253585000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13403089000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 14654704000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -712149000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -265278000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 13942555000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4545573000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5464627000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1691,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2019,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 130036014000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 92484797000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 37551217000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 14000889000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 8181371000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 14248448000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 12677438000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 15756406000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -118982000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -688443000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 15637424000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7716613000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7545915000000,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2433,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2018,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 121894400421104,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 92971050559634,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 28923349861470,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 7478549889431,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4908949587074,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10112288715044,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 7367839332550,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 13587903269723,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 265734380685,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -424918846510,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 13853637650408,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 6190881470603,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3776727785918,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1270,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2017,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 89350048597913,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 62796326957038,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 26553721640875,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1636951439612,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3786983558714,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 8150455992627,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 6852447761955,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 9445186694788,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -330905216212,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 44400927597,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9114281478576,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5654941791226,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4462411670513,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1816,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 57614343665894,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 40184632606036,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 17429711059858,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 5861556630724,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 5389034072187,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 6672815695018,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 5526090462009,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5723151050108,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 69607916270,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 19823588740,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5792758966378,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3513067892506,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2439510861997,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1178,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2015,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2015",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 34047966313102,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 22338933561491,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 11709032751611,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1931520080322,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 3282074915976,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 2957825676439,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 3922773154112,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 3517106839606,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -665005874205,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 39227754200,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2852100965401,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1501475443451,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1215774826080,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 636,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2014,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 27723633371036,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 17284911479916,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 10438721891120,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1346022091036,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 2711269664974,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 739332476177,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 2170716923462,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5383641995457,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 34809302295,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 5409680638498,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 3776045741483,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 3158582676074,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2447,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2013,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 18377638845706,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 11346984128307,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7030654717399,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6436048755221,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1459922785660,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 450072453875,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 1466422267061,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 9606581419123,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 78804374970,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9740085981878,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7149288120557,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 6779512147953,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 7896,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2012,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7904472849072,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4092056174334,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3812416674738,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1178267763042,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1097254164113,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 204739744706,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 980959525269,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2563499467407,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 74121180034,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2655063125963,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1846667924525,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1571311686488,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1819,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2011,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 2313739781730,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1306236537557,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1007503244173,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1687365816306,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 807484484862,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 100146853126,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 444155874833,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1245865772324,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 28894334555,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1471471446573,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1073560198764,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 821285875959,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2238,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2010,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3872979781266,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 927026108077,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2945953673189,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1280461859797,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 511476475135,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 29435956071,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 239695200820,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2969827481648,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 107691380619,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3143054802940,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2432014997377,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2306898786227,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 6837,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2009,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1974446241603,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 537310953326,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1437135288277,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 432861235107,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 244415376742,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 12326530155,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 109705812478,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1369843816406,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 2301325242,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1384202221891,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1101737157913,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 898642166913,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5328,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2008,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 239180299742,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 60710735035,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 178469564707,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 413039174035,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 279310334841,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13423575248,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 120526070670,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 141542371494,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13423657553,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 156768324696,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 125994789445,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 124725100943,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1091,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2007,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 180195234984,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 52133045589,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 128062189395,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 262312749373,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 21211308650,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 13482819793,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 30075537578,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 324624451751,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8597666588,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 333222118339,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 268796701668,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 269350462935,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4449,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2006,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2006",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 548413023816,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 191748134726,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 356664889090,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 6137173610,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 10907816595,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 13174818726,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 338715676758,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8510171768,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 347225848526,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 343772424294,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 343772424294,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "VIC",
+            "year": 2005,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2005",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 136954915012,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 42293126252,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 94661788760,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 817814635,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 4325836010,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 5992723424,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 11179390902,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 73645360344,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -5120858265,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 68524502079,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 68524502079,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 68524502079,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

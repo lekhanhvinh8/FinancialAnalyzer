@@ -1,0 +1,1495 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 17,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "CTD",
+            "year": 2025,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 24884531092428,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 24069388803441,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 815142288987,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 256009612494,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 205279530585,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1272382275,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 331352351831,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 533227600808,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 18783564139,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -20035982,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 552011164947,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 456211888815,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 456184761211,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4560,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2024,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 21045158770378,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 20332643665141,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 712515105237,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 279824951938,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 104946612923,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 4588182,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 580878265015,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 306498724661,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 80063305970,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -11866394,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 386562030631,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 309592561393,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 309570213495,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 3320,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2022,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14536948503110,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 14050214386118,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 486734116992,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 380957178884,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 162645814471,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 734758141359,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -53535463128,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 88361017007,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -23822803174,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 34825553879,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 20791833411,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 20712200279,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 280,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2021,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 9077915407373,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 8802717841835,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 275197565538,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 277061261737,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 12928113078,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 516298035944,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -7282363679,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 45436311346,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -30315041932,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 38153947667,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 24110828208,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 24007379559,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 323,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2020,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 14558086434968,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 13701679421556,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 856407013412,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 228216305252,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 462594755,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 655860103467,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 401295900144,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 26660344819,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -27004720298,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 427956244963,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 334554278023,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 334374615618,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4164,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2019,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 23733028252165,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 22684921110980,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1048107141185,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 263864493550,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 9346944,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 458979143450,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 857052417888,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 33678508977,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 4069273547,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 890730926865,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 710916598665,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 710890717770,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 8859,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2018,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 28560857297395,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 26727845024426,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1833012272969,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 321096425107,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 256508001,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 505217213266,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1746253181723,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 126721103841,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 97618204914,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1872974285564,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1510407549274,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1510407549274,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 18357,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2017,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 27153453093560,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 25137240993127,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 2016212100433,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 325276488942,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 45704258,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 394573473301,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1978546390545,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 82196148468,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 31676978729,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 2060742539013,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1652679229340,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1652679229340,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 20436,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 20782721033541,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 18983319033277,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 1799402000264,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 170167561778,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 281190168,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1887854700,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 297253276693,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 1702739355095,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 60182548023,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 32592114614,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 1762921903118,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 1422143918540,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 1422143918540,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 20669,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2014,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2014",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 7633621860050,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 7077701608676,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 555920251374,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 118764053874,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 214752054120,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 459559274865,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 13995022122,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 464287418714,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 357465707491,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 327353295195,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 7769,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2013,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2013",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 6189651406151,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 5725278429936,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 464372976215,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 118290538249,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 216761609146,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 366858250129,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 16768201380,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 393151115840,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 279877662378,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 257137686890,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 6103,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2012,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2012",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4477276306689,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4154661217829,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 322615088860,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 92101922673,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 444017567,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 122250135432,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 292251533739,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 7455586871,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 299707120610,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 218527457715,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 218527457715,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 5596,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2011,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2011",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 4509632778509,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 4163015671336,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 346617107173,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 59573964435,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 117721937758,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 280080844577,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3161471729,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 283242316306,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 211064102351,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 211064102351,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 6812,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2010,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2010",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 3303784360148,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 3021569424561,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 282214935587,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 85097329977,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 77030162379,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 290987175470,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 21854220217,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 312841395687,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 240327120990,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 240327120990,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 7816,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2009,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2009",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1962328197802,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1691643004702,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 270685193100,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 48537745746,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 37146394811,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 261304574782,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3935949605,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 265240524387,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 228099912734,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 228099912734,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 12516,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2008,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2008",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1823189206312,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1656423673775,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 166765532537,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 35618880438,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 80722262,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 33889962467,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 164376524514,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 3026163854,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 167402688368,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 144187594522,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 144187594522,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 12016,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "CTD",
+            "year": 2007,
+            "quater": 0,
+            "type": "H",
+            "content": "",
+            "time": "2007",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 1344555263125,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 1215600907557,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 128954355568,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 35519807090,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 88563367,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 22878237668,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 141484524120,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 1717937471,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 143202461591,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 125384413603,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 125384413603,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 14442,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

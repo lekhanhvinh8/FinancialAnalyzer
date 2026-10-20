@@ -1,0 +1,935 @@
+{
+  "isSuccess": true,
+  "value": {
+    "templace": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_2",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_3",
+            "name": "Giá vốn hàng bán",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_4",
+            "name": "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_5",
+            "name": "Doanh thu hoạt động tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_6",
+            "name": "Chi phí tài chính",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_7",
+            "name": "Chi phí bán hàng",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_8",
+            "name": "Chi phí quản lý doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_9",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_10",
+            "name": "Lợi nhuận khác",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_11",
+            "name": "Phần lợi nhuận/lỗ từ công ty liên kết liên doanh",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_12",
+            "name": "Tổng lợi nhuận kế toán trước thuế",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_13",
+            "name": "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+            "static": false
+          },
+          {
+            "lever": 1,
+            "number": 0,
+            "code": "KQKD_14",
+            "name": "Lợi nhuận sau thuế của cổ đông Công ty mẹ",
+            "static": false
+          },
+          {
+            "lever": 2,
+            "number": 0,
+            "code": "KQKD_15",
+            "name": "Lãi cơ bản trên cổ phiếu (VNÐ)",
+            "static": true
+          }
+        ]
+      }
+    ],
+    "count": 10,
+    "unit": null,
+    "listType": [
+      {
+        "name": "Bản cân đối kế toán",
+        "code": "CDKT"
+      },
+      {
+        "name": "Kết quả kinh doanh",
+        "code": "KQKD"
+      }
+    ],
+    "type": null,
+    "data": [
+      {
+        "code": "KQKD",
+        "name": "Kết quả kinh doanh",
+        "number": 0,
+        "data": [
+          {
+            "symbol": "BSR",
+            "year": 2025,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2025",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 141582149107302,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 135468230531406,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6113918575896,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1917349826881,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 481124098984,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 824373238880,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 751408854458,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 5974362210455,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 30339825825,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 6004702036280,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 5216952296337,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 5213612063223,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 1040,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2024,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2024",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 123027063879559,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 122535994149733,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 491069729826,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2230357606975,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 799915742468,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 652066552695,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 561376142119,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 708068899519,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 27929911099,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 735998810618,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 591091587455,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 631130749304,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 203,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2023,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2023",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 147423365943576,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 137663837918959,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9759528024617,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 2652368561043,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1154774797936,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 1032111954829,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 623486470367,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 9601523362528,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 37811659713,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 9639335022241,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 8592578972011,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 8649771483353,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2790,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2022,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2022",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 167123712786024,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 151027307397420,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 16096405388604,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1750275299515,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 923195487108,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 908980731417,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 514762438322,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 15499742031272,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 86066115846,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 15585808147118,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 14669336789079,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 14725833852993,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 4750,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2021,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2021",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 101080035258130,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 93381313715080,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 7698721543050,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 1014896787839,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 619255475339,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 781029744856,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 406693387067,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 6906639723627,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 34036911583,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 6940676635210,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 6683539852376,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 6715504313658,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 2108,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2020,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2020",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 57959112673412,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 60183939693526,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": -2224827020114,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 666178306758,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 497659186225,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 551873123765,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 269294376639,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": -2877475399985,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 25047961455,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": -2852427438530,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": -2858127502374,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": -2818841515440,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -909,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2019,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2019",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 102823752645297,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 98850991293829,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 3972761351468,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 536775450247,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 416118869286,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 714115014949,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 389424547940,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 2989878369540,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 64515872130,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 3054394241670,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 2872997410347,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 2913820263418,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 898,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2018,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2018",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 56058842429120,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 55111289678611,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 947552750509,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 335764591549,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 494697028827,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 374634440194,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 168627162125,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 245358710912,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": 8065879882,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 253424590794,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 226139161721,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 250790073767,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": 81,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2017,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2017",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 81332531189780,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 72239469655221,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 9093061534559,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 782628947337,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 571712433072,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 588195412527,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 571112198825,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 8144670437472,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -34601104322,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": -1,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 8110069333150,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 7672518844206,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 7710713725518,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          },
+          {
+            "symbol": "BSR",
+            "year": 2016,
+            "quater": 0,
+            "type": "HK",
+            "content": "Đã kiểm toán",
+            "time": "2016",
+            "data": [
+              {
+                "code": "KQKD_2",
+                "value": 73686050815612,
+                "static": false
+              },
+              {
+                "code": "KQKD_3",
+                "value": 67353007246481,
+                "static": false
+              },
+              {
+                "code": "KQKD_4",
+                "value": 6333043569131,
+                "static": false
+              },
+              {
+                "code": "KQKD_5",
+                "value": 928278797340,
+                "static": false
+              },
+              {
+                "code": "KQKD_6",
+                "value": 1098134057429,
+                "static": false
+              },
+              {
+                "code": "KQKD_7",
+                "value": 617839488165,
+                "static": false
+              },
+              {
+                "code": "KQKD_8",
+                "value": 830705955545,
+                "static": false
+              },
+              {
+                "code": "KQKD_9",
+                "value": 4714642865332,
+                "static": false
+              },
+              {
+                "code": "KQKD_10",
+                "value": -10819091681,
+                "static": false
+              },
+              {
+                "code": "KQKD_11",
+                "value": 0,
+                "static": false
+              },
+              {
+                "code": "KQKD_12",
+                "value": 4703823773651,
+                "static": false
+              },
+              {
+                "code": "KQKD_13",
+                "value": 4435734601163,
+                "static": false
+              },
+              {
+                "code": "KQKD_14",
+                "value": 4483216556061,
+                "static": false
+              },
+              {
+                "code": "KQKD_15",
+                "value": -1,
+                "static": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}
