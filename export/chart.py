@@ -569,6 +569,13 @@ document.getElementById('priceMeanVis').addEventListener('change', function() {{
   Plotly.update(gd, {{ visible: [this.checked ? true : 'legendonly'] }}, {{'yaxis2.range': priceY2Range}}, [priceMeanIdx]);
 }});
 document.getElementById('priceMeanW').addEventListener('keydown', e => {{ if (e.key==='Enter') recomputePriceMean(); }});
+document.querySelectorAll('input[name="bandMode"]').forEach(r => {{
+  r.addEventListener('change', function() {{
+    bandMode = this.value;
+    _recolor();
+  }});
+}});
+
 document.querySelectorAll('input[name="colorBasis"]').forEach(r => {{
   r.addEventListener('change', function() {{
     colorBasis = this.value;
@@ -597,6 +604,11 @@ document.querySelectorAll('input[name="colorMode"]').forEach(r => {{
   <div class="color-toggle">
     <label><input type="radio" name="colorBasis" value="percentiles" checked><span>Percentiles</span></label>
     <label><input type="radio" name="colorBasis" value="mean"><span>Mean</span></label>
+  </div>
+  <strong style="margin-left:16px" title="Fixed: the colour source's whole-history 25th/75th (or mean). Rolling: the window cut-offs the line is coloured on.">Bands:</strong>
+  <div class="color-toggle">
+    <label><input type="radio" name="bandMode" value="fixed" checked><span>Fixed</span></label>
+    <label><input type="radio" name="bandMode" value="rolling"><span>Rolling</span></label>
   </div>
 </div>"""
 
@@ -712,6 +724,7 @@ const globalPriceP75 = _sortedPrices.length ? _staticQ(_sortedPrices, 0.75) : nu
 
 let colorMode  = 'price';
 let colorBasis = 'percentiles';
+let bandMode   = 'fixed';
 
 function rollingQuantile(arr, w, p) {{
   return arr.map((_, i) => {{
@@ -817,9 +830,11 @@ function _splitZones(compareVals, [lo, mid, hi]) {{
   return out;
 }}
 
-// Background bands from the very cut-offs the line is split on — Cheap below
-// the low one, Fair between, Expensive above the high one — on the source's own
-// axis, out to that axis' edges. Dates where the source has no value get none.
+// Background bands on the colour source's own axis, out to that axis' edges:
+// Cheap below the low cut-off, Fair between, Expensive above the high one.
+// "Fixed" (the default) takes the cut-offs from the source's whole history —
+// 25th/75th, or its mean — so they are flat lines. "Rolling" takes the very
+// cut-offs the line is split on; dates where the source has no value get none.
 const _hasBands = gd.data[0] && gd.data[0].fill === 'toself';
 const _BAND_NAMES = {{
   percentiles: ['Cheap (< 25th)', 'Fair (25–75th)', 'Expensive (> 75th)'],
@@ -828,6 +843,13 @@ const _BAND_NAMES = {{
 function _drawBands([lo, , hi]) {{
   if (!_hasBands) return;
   const src  = _COLOR_SRC[colorMode];
+  if (bandMode === 'fixed') {{
+    const ok = src.vals.filter(v => v != null);
+    const m  = ok.reduce((a, b) => a + b, 0) / ok.length;
+    const [a, b] = colorBasis === 'mean' ? [m, m] : [src.g[0], src.g[2]];
+    lo = lo.map(() => a);
+    hi = hi.map(() => b);
+  }}
   const ax   = gd.layout[src.axis];   // every source's axis has a pinned range
   const edge = ax.type === 'log' ? ax.range.map(v => Math.pow(10, v)) : ax.range;
   const x    = gd.data[{price_anchor_idx_json}].x;
