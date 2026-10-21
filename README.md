@@ -1,8 +1,23 @@
 # PriceToEarn v2
 
-Aggregate P/E calculator for Vietnamese stock indices (VN30, VN Diamond, VN Fin Lead).
+Aggregate P/E calculator for Vietnamese stock indices (VN30, VN Diamond, VN Fin Lead),
+and the backtesting ground built on top of it: three independent methods for trading
+on the valuation signal it produces, each measured against buy-and-hold rather than
+assumed to beat it.
 
 **Formula:** `P/E = Σ(Price × Shares) / Σ(TTM Net Profit)` — market-cap weighted, point-in-time correct.
+
+## Contents
+
+- [Project Structure](#project-structure)
+- [Requirements](#requirements)
+- [First-time Setup](#first-time-setup)
+- [Ongoing: Sync to Today](#ongoing-sync-to-today)
+- [Sync Functions](#sync-functions)
+- [Reproduce Outputs](#reproduce-outputs)
+- [Update Index Membership](#update-index-membership)
+- [Data Sources](#data-sources)
+- [Tests](#tests)
 
 ---
 
@@ -104,6 +119,19 @@ python -m breadth.run                                 # VN30 on the basket signa
 python -m portfolio.run                               # one wallet, whole basket
 python -m portfolio.run --top-k=5
 ```
+
+---
+
+## Requirements
+
+Python 3.10+. Third-party dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+`vnstock` provides prices and shares outstanding; `requests` talks to the CafeF API
+directly for net profit. No API keys — both sources are free-tier, no login.
 
 ---
 
@@ -252,3 +280,23 @@ python sync.py vn30
 Raw CafeF JSON responses are cached in `data/raw/cafef/` for auditing.
 
 See [DATA_ISSUES.md](DATA_ISSUES.md) for known data quality limitations.
+
+---
+
+## Tests
+
+No test runner — each file runs as a script and returns a non-zero exit code on
+failure, same as the sync and backtest entry points above.
+
+```bash
+python -m test_layout                      # package-shape rules (test_layout.py)
+python -m core.test_rules
+python -m core.test_breadth_calc
+python -m breadth.test_engine
+python -m portfolio.test_position_cap
+python -m single.multi_signal.test_profiles
+python -m single.multi_signal.test_sweeps
+python -m single.multi_signal.test_trend
+python -m syncs.test_breadth
+python -m syncs.test_listings
+```
