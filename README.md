@@ -2,16 +2,10 @@
 
 # FinancialAnalyzer
 
-### Vietnamese equity valuation, market breadth & backtesting
-
-*An audited price / shares / profit database, four signal layers derived from it, and
-three independent strategies that trade on what they find — each measured against
-buy-and-hold, not assumed to beat it.*
+### Valuation, market breadth and backtesting for Vietnamese stocks
 
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](#requirements)
-[![Market](https://img.shields.io/badge/market-HOSE%20(VN30%20·%20VN%20Diamond%20·%20VN%20Fin%20Lead)-444444?style=flat-square)](#data-sources)
-[![Status](https://img.shields.io/badge/status-active%20research-informational?style=flat-square)](nextstep.txt)
-[![Data audit](https://img.shields.io/badge/data-audited-success?style=flat-square)](DATA_ISSUES.md)
+[![Market](https://img.shields.io/badge/market-HOSE-444444?style=flat-square)](#data-sources)
 
 </div>
 
@@ -19,17 +13,22 @@ buy-and-hold, not assumed to beat it.*
 
 ## Capabilities
 
-This is not a P/E calculator with trading bolted on. P/E is one of four signal layers;
-trading is one of three independent uses of them.
+Collects prices, share counts and quarterly net profit for HOSE stocks into a SQLite
+database, computes valuation and market indicators from it, and backtests buy/sell
+strategies on those indicators.
 
-| Layer | What it computes | Lives in |
+| Area | What it does | Code |
 |---|---|---|
-| **Valuation** | Aggregate P/E — market-cap weighted, point-in-time correct: `Σ(Price × Shares) / Σ(TTM Net Profit)` | `syncs/pe.py` |
-| **Relative valuation** | `z_dev` — a symbol's price as a standardized log-deviation from its own rolling median; cheap relative to *itself*, not the market | `core/zdev_calc.py` |
-| **Market breadth** | The whole basket reduced to one row a day — share of names below their own median, and the shape of the premium distribution (p25/median/p75, trimmed mean) | `core/breadth_calc.py` |
-| **Trend signals** | Rolling slope, simulated periodic-buy return, and a Sharpe-like ratio, swept across window sizes | `syncs/trend_signals.py` |
-| **Data audit** | Cross-checks stored prices, shares, profit, and derived P/E against source and against each other; repairs with `--fix`. [DATA_ISSUES.md](DATA_ISSUES.md) is the running log — including a bug that silently halved VHM's entire P/E history after a stock dividend | `syncs/audit_data.py` |
-| **Backtesting** | Three independent strategies trading on the signals above (see [Project Structure](#project-structure)) | `single/` `portfolio/` `breadth/` |
+| **Data collection** | Daily prices and share counts (vnstock), quarterly net profit (CafeF) | `syncs/` |
+| **Index P/E** | Aggregate P/E of VN30, VN Diamond and VN Fin Lead: `Σ(Price × Shares) / Σ(TTM Net Profit)` | `syncs/pe.py` |
+| **z_dev** | Each stock's log-distance from its own rolling median, standardized | `core/zdev_calc.py` |
+| **Market breadth** | Daily statistics across the basket: share of stocks below their median, distribution of premiums | `core/breadth_calc.py` |
+| **Trend signals** | Rolling slope, periodic-buy return, Sharpe-like ratio | `syncs/trend_signals.py` |
+| **Data audit** | Checks stored data against its sources and against itself; `--fix` repairs | `syncs/audit_data.py` |
+| **Backtesting** | Three methods: per stock, one portfolio across the basket, VN30 timed by breadth | `single/` `portfolio/` `breadth/` |
+| **Reports** | Plotly charts, Excel snapshots, HTML backtest reports | `export/` and each method's report module |
+
+Known data limitations are listed in [DATA_ISSUES.md](DATA_ISSUES.md).
 
 ## Contents
 
