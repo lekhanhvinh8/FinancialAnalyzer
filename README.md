@@ -1,14 +1,34 @@
 # PriceToEarn v2
 
-Aggregate P/E calculator for Vietnamese stock indices (VN30, VN Diamond, VN Fin Lead),
-and the backtesting ground built on top of it: three independent methods for trading
-on the valuation signal it produces, each measured against buy-and-hold rather than
-assumed to beat it.
+A data and backtesting platform for Vietnamese equities (VN30, VN Diamond, VN Fin Lead) —
+not just a P/E calculator. It builds an audited price/shares/profit database, derives four
+kinds of signal from it (valuation, relative valuation, market breadth, trend), and runs
+three independent strategies that trade on what those signals find, each measured against
+buy-and-hold rather than assumed to beat it.
 
-**Formula:** `P/E = Σ(Price × Shares) / Σ(TTM Net Profit)` — market-cap weighted, point-in-time correct.
+## What This Covers
+
+- **Valuation** — aggregate P/E, market-cap weighted and point-in-time correct:
+  `P/E = Σ(Price × Shares) / Σ(TTM Net Profit)`.
+- **Relative valuation (`z_dev`)** — a symbol's price as a standardized log-deviation from
+  its own rolling median, so "cheap" means cheap relative to its own history, not to the market.
+- **Market breadth** — the whole basket reduced to one row per day: the share of names
+  trading below their own median, and the shape of the premium distribution across the
+  basket (p25/median/p75, trimmed mean, cap-weighted mean). Used to time the index on what
+  the crowd is doing, not just what any one name costs.
+- **Trend signals** — rolling slope, simulated periodic-buy return, and a Sharpe-like ratio,
+  swept across window sizes, feeding the per-symbol strategies in `single/`.
+- **Data audit** — `syncs/audit_data.py` cross-checks stored prices, shares, profit, and
+  derived P/E against their sources and against each other, and repairs what it finds with
+  `--fix`. [DATA_ISSUES.md](DATA_ISSUES.md) is the running log of what it has caught —
+  including a bug that silently halved VHM's entire P/E history after a stock dividend.
+- **Three backtests on top** — `single/`, `portfolio/`, `breadth/` (see
+  [Project Structure](#project-structure)), each asking a different question of the same
+  data.
 
 ## Contents
 
+- [What This Covers](#what-this-covers)
 - [Project Structure](#project-structure)
 - [Requirements](#requirements)
 - [First-time Setup](#first-time-setup)
@@ -24,8 +44,8 @@ assumed to beat it.
 ## Project Structure
 
 Three concerns, three places. The split is the important thing about this layout:
-the two INVESTMENT METHODS are independent of each other, and both read the same
-data rather than each keeping its own idea of what a price was.
+the three INVESTMENT METHODS below are independent of each other, and all three read
+the same data rather than each keeping its own idea of what a price was.
 
 ```
 database.py          SQLite storage layer — the one definition of market facts
